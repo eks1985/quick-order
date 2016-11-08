@@ -4,6 +4,7 @@ import auth from './auth';
 import goods from './goods';
 import goodsGroups from './goods-groups';
 import orders from './orders';
+import currentContent from './currentContent';
 import modal from './../../lib/modal/reducers/modal';
 
 const rootReducer = combineReducers({
@@ -11,7 +12,8 @@ const rootReducer = combineReducers({
 	goods,
 	goodsGroups,
 	orders,
-	modal
+	modal,
+	currentContent
 });
 
 export default rootReducer;

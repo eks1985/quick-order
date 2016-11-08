@@ -1,10 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Goods from './../../goods';
 import Orders from './../../orders';
 import Checkout from './../../checkout';
 import Profile from './../../profile';
 import Help from './../../help';
-export default () => {
+const Content = ({
+  currentContent
+}) => {
   const style = {
     display: 'flex',
     flexDirection: 'column',
@@ -13,11 +16,15 @@ export default () => {
   };
   return (
     <div className='content' style={style}>
-      <Goods />
-      <Orders />
-      <Checkout />
-      <Profile />
-      <Help />
+      {currentContent === 'goods' && <Goods />}
+      {currentContent === 'orders' && <Orders />}
+      {currentContent === 'checkout' && <Checkout />}
+      {currentContent === 'profile' && <Profile />}
+      {currentContent === 'help' && <Help />}
     </div>
   );
 };
+
+export default connect(
+  state => ({currentContent: state.currentContent})
+)(Content);
