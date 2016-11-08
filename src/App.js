@@ -1,16 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Auth from './components/auth';
 import './App.css';
+import Auth from './components/auth';
+import Layout from './components/layout';
+import Modal from './lib/modal/components/modal';
 
 class App extends Component {
   render() {
+    const style = {
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100vh'
+    }
     return (
-      <div className="App">
-        <div className="App-header">
-          <Auth />
-          <h2>Hello quick order</h2>
-        </div>
+      <div className="App" style={style}>
+        <Auth />
+        <Layout />
+        <Modal />
       </div>
     );
   }
