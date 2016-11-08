@@ -1,9 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as currentContentActions from './../../../../actions/currentContent';
+import * as modalActions from './../../../../lib/modal/actions/modal';
 const Nav = ({
   //actions
-  setCurrentContent
+  setCurrentContent,
+  setModal
 }) => {
   const style = {
     display: 'flex'
@@ -41,6 +43,7 @@ const Nav = ({
         onClick={
           () => {
             setCurrentContent('profile');
+            setModal({ content: 'profile', fullScreen: true});
           }
         }
       >
@@ -50,6 +53,7 @@ const Nav = ({
         onClick={
           () => {
             setCurrentContent('help');
+            setModal({ content: 'help', fullScreen: true});
           }
         }
       >
@@ -61,5 +65,5 @@ const Nav = ({
 
 export default connect(
   null,
-  currentContentActions
+  { ...currentContentActions, ...modalActions }
 )(Nav);

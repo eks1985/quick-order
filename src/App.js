@@ -4,6 +4,7 @@ import './App.css';
 import Auth from './components/auth';
 import Layout from './components/layout';
 import Modal from './lib/modal/components/modal';
+import ModalContent from './components/modal-content';
 
 class App extends Component {
   render() {
@@ -16,7 +17,9 @@ class App extends Component {
       <div className="App" style={style}>
         <Auth />
         <Layout />
-        <Modal />
+        <Modal>
+          <ModalContent />
+        </Modal>
       </div>
     );
   }
