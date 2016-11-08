@@ -1,20 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import Root from './root';
 import './index.css';
 import { AppContainer } from 'react-hot-loader'
 
 ReactDOM.render(
   <AppContainer>
-    <App />
+    <Root />
   </AppContainer>,
   document.getElementById('root')
 );
 
 // Hot Module Replacement API
 if (module.hot) {
-  module.hot.accept('./App', () => { 
-    const NextApp = require('./App').default;
+  module.hot.accept('./root', () => {
+    const NextApp = require('./root').default;
     ReactDOM.render(
       <AppContainer>
         <NextApp/>
