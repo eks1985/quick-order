@@ -1,7 +1,7 @@
 import React from 'react';
 import Catalog from './catalog';
 import Cart from './cart';
-import GoodsCategories from './goods-categories';
+import GoodsGroups from './goods-groups';
 export default () => {
   const style = {
     display: 'flex',
@@ -26,7 +26,7 @@ export default () => {
       </div>
       <div style={cartCategoriesStyle}>
         <Cart />
-        <GoodsCategories />
+        <GoodsGroups />
       </div>
     </div>
   );

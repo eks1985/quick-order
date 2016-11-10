@@ -1,14 +1,19 @@
 import React from 'react';
+import Pagination from './pagination';
+import List from './list';
 
 export default () => {
   const style = {
     display: 'flex',
     flex: '1 0 auto',
-    border: '1px solid gray'
+    flexDirection: 'column',
+    border: '1px solid gray',
+    padding: '10px'
   }
   return (
     <div className='catalog' style={style}>
-      Catalog
+      <Pagination />
+      <List />
     </div>
   );
 };

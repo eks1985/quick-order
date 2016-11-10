@@ -4,7 +4,7 @@ export default () => {
   const style = {
     display: 'flex',
     flexDirection: 'column',
-    height: '150px',
+    flex: '0 0 60px',
     border: '1px solid gray',
   };
   return (

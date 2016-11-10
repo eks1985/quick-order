@@ -3,16 +3,16 @@ import { connect } from 'react-redux';
 import * as authActions from '../actions/auth';
 
 let Auth = ({
-  authStatus, 
-  authUid, 
+  authStatus,
+  authUid,
   //actions
-  openAuth, 
+  openAuth,
   logoutUser
 }) => {
-  
+
   const getAuthJsx = () => {
     return (
-      <div>
+      <div style={{display: 'flex', justifyContent: 'flex-end'}}>
         {
           authStatus === 'AUTH_ANONYMOUS' &&
           <button
@@ -39,21 +39,21 @@ let Auth = ({
             >Log out</button>
             {' '} Logged as: {authUid}
           </span>
-          
+
         }
       </div>
     );
   };
-  
+
   return (
     <div>
       {getAuthJsx()}
     </div>
   );
-  
+
 };
 
 export default connect(
   state => ({authStatus: state.auth.status, authUid: state.auth.uid}),
-  { ...authActions }  
+  { ...authActions }
 )(Auth);
