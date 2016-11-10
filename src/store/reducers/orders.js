@@ -64,7 +64,7 @@ const qtyPages = (state = 0, action) => {
 
 const isLastPage = (state = false, action) => {
   switch (action.type) {
-    case 'SET_QTY_PAGES_ORDERS':
+    case 'SET_IS_LAST_PAGE_ORDERS':
       return action.qtyPages;
     default:
      return state;

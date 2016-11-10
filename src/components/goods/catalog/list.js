@@ -1,18 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getGoodsVisible } from './../../../store/reducers/goods';
+import { getGoodsVisibleIds } from './../../../store/reducers/goods';
 
 const List = ({
-  items
+  items,
+  itemsIds
 }) => {
+  // console.log("render list");
   const style = {
     overflowY: 'scroll',
     maxHeight: '70vh',
     paddingTop: '10px'
   }
   const getItemsJsx = () => {
-    const keys = Object.keys(items);
-    return keys.map( key => {
+    // const keys = Object.keys(items);
+    return itemsIds.map( key => {
       return (
         <div key={key}>{`${items[key].code}  ${items[key].description}`}</div>
       );
@@ -26,5 +28,5 @@ const List = ({
 }
 
 export default connect(
-  state => ({items: getGoodsVisible(state.goods)})
+  state => ({items: state.goods.items, itemsIds: getGoodsVisibleIds(state.goods)})
 )(List);

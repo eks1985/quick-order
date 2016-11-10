@@ -5,8 +5,14 @@ import Auth from './components/auth';
 import Layout from './components/layout';
 import Modal from './lib/modal/components/modal';
 import ModalContent from './components/modal-content';
+import { setQtyPagesGoods } from './actions/goods';
 
 class App extends Component {
+
+  componentDidMount() {
+    this.props.dispatch(setQtyPagesGoods());
+  }
+
   render() {
     const style = {
       display: 'flex',
