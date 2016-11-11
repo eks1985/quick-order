@@ -19,7 +19,7 @@ const Nav = ({
           }
         }
       >
-        Goods
+        Каталог
       </button>
       <button
         onClick={
@@ -28,7 +28,7 @@ const Nav = ({
           }
         }
       >
-        Orders
+        Заказы
       </button>
       <button
         onClick={
@@ -37,7 +37,7 @@ const Nav = ({
           }
         }
       >
-        Checkout
+        Оформить
       </button>
       <button
         onClick={
@@ -47,7 +47,7 @@ const Nav = ({
           }
         }
       >
-        Profile
+        Профиль
       </button>
       <button
         onClick={
@@ -57,7 +57,7 @@ const Nav = ({
           }
         }
       >
-        Help
+        Помощь
       </button>
     </div>
   );

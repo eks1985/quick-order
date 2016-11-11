@@ -6,6 +6,8 @@ import customer from './customer';
 import goodsGroups from './goods-groups';
 import orders from './orders';
 import currentContent from './current-content';
+import cart from './cart';
+import checkout from './checkout';
 import modal from './../../lib/modal/reducers/modal';
 
 const rootReducer = combineReducers({
@@ -15,7 +17,9 @@ const rootReducer = combineReducers({
 	goodsGroups,
 	orders,
 	modal,
-	currentContent
+	currentContent,
+	cart,
+	checkout
 });
 
 export default rootReducer;

@@ -18,6 +18,7 @@ const Pagination = ({
       <input
         type="text"
         value={pageNumber}
+        style={{width: '40px'}}
         onChange={
           (e) => {
             const page = parseInt(e.target.value, 10) ? parseInt(e.target.value, 10) : 1
@@ -26,13 +27,22 @@ const Pagination = ({
         }
       ></input>
       <button
-      onClick={
-        () => {
-          goToGoodsPage(1);
+        onClick={
+          () => {
+            goToGoodsPage(1);
+          }
         }
-      }
       >
-        Обнулить
+        Первая
+      </button>
+      <button
+        onClick={
+          () => {
+            goToGoodsPage(qtyPages);
+          }
+        }
+      >
+        Последняя
       </button>
       <span>{`${pageNumber}/${qtyPages}`}</span>
     </div>
