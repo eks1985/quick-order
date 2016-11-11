@@ -26,21 +26,23 @@ let Modal = ({
   }
 
   if (!content) {
-    return null;  
+    return null;
   }
 
   return (
     <div style={style}>
-      <div>
-        {children}
-      </div>
-      <button
+      <div style={{padding: '10px'}}>
+        <button
         onClick={
           () => {
             setModal({dataSource: ''});
           }
         }
-      >сlose</button>
+        >Закрыть</button>
+      </div>
+      <div>
+        {children}
+      </div>
     </div>
   );
 };

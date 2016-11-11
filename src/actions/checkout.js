@@ -6,5 +6,6 @@ export const checkout = () => {
       cartItems: getState().cart.items
     })
     dispatch(cleanCart());
+    dispatch({type: 'RESET_CHECKOUT'});
   };
 };
