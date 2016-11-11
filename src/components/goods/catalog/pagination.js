@@ -34,6 +34,7 @@ const Pagination = ({
       >
         Обнулить
       </button>
+      <span>{`${pageNumber}/${qtyPages}`}</span>
     </div>
   );
 }

@@ -1,8 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import * as goodsGroupsActions from './../../../actions/goods-groups';
 
 const GoodsGroups =  ({
-  items
+  items,
+  // actions
+  filterGoodsByGroup
 }) => {
   const style = {
     border: '1px solid gray',
@@ -15,7 +18,16 @@ const GoodsGroups =  ({
     return keys.map( key => {
         return (
           <div key={key}>
-            <a href="#" >{items[key]}</a>
+            <a
+              href="#"
+              onClick={
+                () => {
+                  filterGoodsByGroup(key);
+                }
+              }
+            >
+              {items[key]}
+            </a>
           </div>
         )
     });
@@ -29,5 +41,6 @@ const GoodsGroups =  ({
 };
 
 export default connect(
-  state => ({items: state.goodsGroups})
+  state => ({items: state.goodsGroups}),
+  goodsGroupsActions
 )(GoodsGroups);

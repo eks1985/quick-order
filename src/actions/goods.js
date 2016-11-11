@@ -8,32 +8,34 @@ export const setQtyPagesGoods = () => {
   };
 };
 
-export const moveGoodsForward = () => {
+export const detectIsLastPage = () => {
   return (dispatch, getState) => {
-    const { pageNumber, qtyPages } = getState().goods;
-    if (pageNumber + 1 === qtyPages) {
+      const { qtyPages, pageNumber } = getState().goods;
+      const payload = qtyPages === pageNumber;
       dispatch({
         type: 'SET_IS_LAST_PAGE_GOODS',
-        payload: true
+        payload: payload
       });
-    }
+  };
+};
+
+export const moveGoodsForward = () => {
+  return (dispatch, getState) => {
     dispatch({
       type: 'INCREASE_PAGE_NUMBER_GOODS'
     });
-  }
-}
+    dispatch(detectIsLastPage());
+  };
+};
 
 export const moveGoodsBack = () => {
   return (dispatch, getState) => {
     dispatch({
-      type: 'SET_IS_LAST_PAGE_GOODS',
-      payload: false
-    });
-    dispatch({
       type: 'DECREASE_PAGE_NUMBER_GOODS'
     });
-  }
-}
+    dispatch(detectIsLastPage());
+  };
+};
 
 export const goToGoodsPage = (pageNumber) => {
   return (dispatch, getState) => {
@@ -41,17 +43,6 @@ export const goToGoodsPage = (pageNumber) => {
       type: 'SET_PAGE_NUMBER_GOODS',
       pageNumber: pageNumber
     });
-    const qtyPages = getState().goods.qtyPages;
-    if (pageNumber === qtyPages) {
-      dispatch({
-        type: 'SET_IS_LAST_PAGE_GOODS',
-        payload: true
-      });
-    } else {
-      dispatch({
-        type: 'SET_IS_LAST_PAGE_GOODS',
-        payload: false
-      });
-    }
-  }
-}
+    dispatch(detectIsLastPage());
+  };
+};

@@ -2,6 +2,23 @@ import { combineReducers } from 'redux';
 
 import initialState from './initialData/goods';
 
+// Utils
+
+const filterByGroupGuid = (groupGuid, items) => {
+  console.log("items", items);
+  const keys = Object.keys(items);
+  return keys.reduce( (result, key) => {
+    if (items[key].group_guid === groupGuid) {
+      result[key] = { ...items[key] };
+      return result;
+    } else {
+      return result;
+    }
+  }, {});
+};
+
+//
+
 const itemsInitial = (state, action) => {
   switch (action.type) {
     default:
@@ -14,7 +31,11 @@ const items = (state, action) => {
     case 'SET_GOODS_LIST':
       // action.itemsInitial
       // action.filterData
-      return { ...state, ...action.payload }
+      // return { ...state, ...action.payload }
+      if (action.filterData.filterType === 'goodsGroup') {
+        return filterByGroupGuid(action.filterData.groupGuid, action.filterData.itemsInitial);
+      }
+      return state;
     default:
       return state || initialState;
   }
