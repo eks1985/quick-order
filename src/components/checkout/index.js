@@ -7,7 +7,8 @@ const Checkout = ({
   checkout,
   // actions
   updateCart,
-  removeFromCart
+  removeFromCart,
+  cleanCart
 }) => {
   const style = {
     display: 'flex',
@@ -164,7 +165,9 @@ const Checkout = ({
         <button>
           Отправить заказ
         </button>
-        <button>
+        <button
+          onClick={cleanCart}
+        >
           Очистить корзину
         </button>
       </div>
