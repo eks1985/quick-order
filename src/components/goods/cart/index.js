@@ -1,15 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as cartActions from './../../../actions/cart';
+import * as currentContentActions from './../../../actions/currentContent';
 
 const Cart = ({
   cart,
   //actions
-  cleanCart
+  cleanCart,
+  setCurrentContent
 }) => {
   const { totalItems, totalAmount } = cart;
   const style = {
-    height: '50px',
+    height: '60px',
     border: '1px solid gray',
     display: 'flex',
     flexDirection: 'column',
@@ -30,6 +32,15 @@ const Cart = ({
             <button onClick={cleanCart}>
               Очистить
             </button>
+            <button
+              onClick={
+                () => {
+                  setCurrentContent('checkout');
+                }
+              }
+            >
+              Оформить
+            </button>
           </div>
       </div>
     </div>
@@ -38,5 +49,5 @@ const Cart = ({
 
 export default connect(
   state => ({cart: state.cart}),
-  cartActions
+  { ...cartActions, ...currentContentActions }
 )(Cart);

@@ -33,15 +33,6 @@ const Nav = ({
       <button
         onClick={
           () => {
-            setCurrentContent('checkout');
-          }
-        }
-      >
-        Оформить
-      </button>
-      <button
-        onClick={
-          () => {
             setCurrentContent('profile');
             setModal({ content: 'profile', fullScreen: true});
           }
