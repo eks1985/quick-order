@@ -2,8 +2,11 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 const Pagination = ({qtyPages, pageNumber, isLastPage}) => {
+    const style = {
+      padding: '10px',
+    }
     return (
-        <div>
+        <div style={style}>
             <button>Назад</button>
             <button>Вперед</button>
             <input type="text" style={{

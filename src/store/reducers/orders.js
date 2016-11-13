@@ -1,7 +1,9 @@
 import { combineReducers } from 'redux';
-// import { v4 } from 'node-uuid';
+import { ordersInitialState } from './../../utils/init';
 
-const initialStateHeaders = {};
+const ordersIntiialStateGenerated = ordersInitialState();
+
+const initialStateHeaders = ordersIntiialStateGenerated.ordersHeads;
 
 const headers = (state, action) => {
   switch (action.type) {
@@ -14,7 +16,7 @@ const headers = (state, action) => {
   }
 };
 
-const initialStateItems = {};
+const initialStateItems = ordersIntiialStateGenerated.ordersItems;
 const items = (state, action) => {
   switch (action.type) {
     case 'CHECKOUT':
