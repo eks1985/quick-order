@@ -1,13 +1,48 @@
 import React from 'react';
-export default () => {
+import { connect } from 'react-redux';
+
+const Profile = ({
+  customer
+}) => {
   const style = {
     display: 'flex',
+    flexDirection: 'column',
     flex: '1 0 auto',
-    // border: '1px solid gray'
   };
+  const propTytleStyle = {
+    fontStyle: 'italic',
+    background: '#ccc'
+  }
   return (
     <div className='profile' style={style}>
-      Профиль
+      <div style={propTytleStyle}>
+        Код клиента
+      </div>
+      <div>
+        <p>
+          {customer.code}
+        </p>
+      </div>
+      <div style={propTytleStyle}>
+        Наименование
+      </div>
+      <div>
+        <p>
+          {customer.name}
+        </p>
+      </div>
+      <div style={propTytleStyle}>
+        Адрес доставки
+      </div>
+      <div>
+        <p>
+          {customer.address}
+        </p>
+      </div>
     </div>
   );
 };
+
+export default connect(
+  state => ({customer: state.customer})
+)(Profile);

@@ -1,3 +1,10 @@
+export const setCurentGuid = (guid) => {
+  return {
+    type: 'SET_CURRENT_GOODS_GUID',
+    payload: guid
+  };
+};
+
 export const setQtyPagesGoods = () => {
   return (dispatch, getState) => {
       const keysLength = Object.keys(getState().goods.items).length;

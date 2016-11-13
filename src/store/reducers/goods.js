@@ -25,6 +25,15 @@ const itemsInitial = (state, action) => {
   }
 }
 
+const currentGuid = (state = '', action) => {
+  switch (action.type) {
+    case 'SET_CURRENT_GOODS_GUID':
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
 const items = (state, action) => {
   switch (action.type) {
     case 'SET_GOODS_LIST':
@@ -82,6 +91,7 @@ export const getGoodsVisibleIds = (state) => { //state = goods.state
 }
 
 export default combineReducers({
+  currentGuid,
   itemsInitial,
   items,
   pageNumber,

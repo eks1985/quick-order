@@ -5,7 +5,7 @@ const randomInt = (min, max) => {
   let rand = min + Math.random() * (max - min);
   rand = Math.round(rand);
   return rand;
-}
+};
 
 export const customerInitialState = () => {
   return  {
@@ -14,7 +14,7 @@ export const customerInitialState = () => {
     name: 'Клиент 1',
     address: 'РОССИЯ, г. Москва, ул. Пушкина',
     discount: 20
-  }
+  };
 };
 
 export const ordersInitialState = () => {
@@ -40,12 +40,21 @@ export const ordersInitialState = () => {
       const goodsCurrent = goodsInitial[goodsKeys[randomKeyPos]];
       generatedRows[goodsKeys[randomKeyPos]] = {qty, price, amount: qty*price, code: goodsCurrent.code, description: goodsCurrent.description};
       totalAmount += qty*price;
-    }
+    };
     ordersItems[ordNr] = generatedRows;
     ordersHeaders[ordNr].amount = totalAmount;
 
-  }
+  };
 
   return {ordersHeads: ordersHeaders, ordersItems: ordersItems}
 
-}
+};
+
+export const pricesInitialState = () => {
+  const keys = Object.keys(goodsInitial);
+  const prices = {};
+  keys.forEach(key => {
+    prices[key] = randomInt(1, 100);
+  });
+  return prices;
+};

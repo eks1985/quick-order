@@ -8,6 +8,7 @@ import orders from './orders';
 import currentContent from './current-content';
 import cart from './cart';
 import checkout from './checkout';
+import prices from './prices';
 import modal from './../../lib/modal/reducers/modal';
 
 const rootReducer = combineReducers({
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
 	modal,
 	currentContent,
 	cart,
-	checkout
+	checkout,
+	prices
 });
 
 export default rootReducer;

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getGoodsVisibleIds } from './../../../store/reducers/goods';
 import * as cartActions from './../../../actions/cart';
+import * as goodsActions from './../../../actions/goods';
 import * as modalActions from './../../../lib/modal/actions/modal';
 
 const List = ({
@@ -10,10 +11,12 @@ const List = ({
   handleAssignQty,
   qtyAssigned,
   cartItems,
+  prices,
   // actions
   addToCart,
   removeFromCart,
-  setModal
+  setModal,
+  setCurentGuid
 }) => {
   const style = {
     overflowY: 'scroll',
@@ -100,6 +103,7 @@ const List = ({
               href="#"
               onClick={
                 () => {
+                  setCurentGuid(key);
                   setModal({ content: 'goodsCard', fullScreen: true});
                 }
               }
@@ -107,7 +111,7 @@ const List = ({
               {items[key].description}
             </a>
           </div>
-          <div style={rowStyle.price}>{100}</div>
+          <div style={rowStyle.price}>{prices[key]}</div>
           <div style={rowStyle.qty}>
             <input
               type="text"
@@ -201,6 +205,6 @@ class ListContainer extends Component {
 }
 
 export default connect(
-  state => ({items: state.goods.items, itemsIds: getGoodsVisibleIds(state.goods), cartItems: state.cart.items}),
-  { ...cartActions, ...modalActions }
+  state => ({items: state.goods.items, itemsIds: getGoodsVisibleIds(state.goods), cartItems: state.cart.items, prices: state.prices}),
+  { ...cartActions, ...modalActions, ...goodsActions }
 )(ListContainer);
