@@ -131,7 +131,7 @@ const List = ({
               <button
                 onClick={
                   () => {
-                    addToCart(key, qtyAssigned[key] || 0, 100);
+                    addToCart(key, qtyAssigned[key] || 0, prices[key]);
                   }
                 }
               >

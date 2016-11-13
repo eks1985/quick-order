@@ -62,3 +62,15 @@ export const cleanCart = () => {
     dispatch(setTotalCartAmount());
   };
 };
+
+export const updateCart = (guid, qty) => {
+  return (dispatch, getState) => {
+    dispatch({ //this will be handled by cart.items reducer
+      type: 'UPDATE_CART',
+      guid,
+      qty
+    });
+    dispatch(setTotalCartItems());
+    dispatch(setTotalCartAmount());
+  };
+};

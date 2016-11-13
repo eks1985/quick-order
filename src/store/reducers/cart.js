@@ -11,6 +11,11 @@ const items = (state, action) => {
       const stateCopy = { ...state };
       delete stateCopy[guid];
       return stateCopy;
+    case 'UPDATE_CART':
+      const stateCopyUpdateCart = { ...state };
+      const newAmount = qty*state[guid].price;
+      stateCopyUpdateCart[guid] = {...stateCopyUpdateCart[guid], qty, amount: newAmount};
+      return stateCopyUpdateCart;
     case 'CLEAN_CART':
       return initialState;
     default:
