@@ -34,11 +34,17 @@ const Checkout = ({
     },
     description: {
       display: 'flex',
-      flex: '0 0 50%',
+      flex: '0 0 40%',
       padding: '3px',
       justifyContent: 'flex-start'
     },
     price: {
+      display: 'flex',
+      flex: '0 0 10%',
+      padding: '3px',
+      justifyContent: 'flex-end'
+    },
+    amount: {
       display: 'flex',
       flex: '0 0 10%',
       padding: '3px',
@@ -68,11 +74,17 @@ const Checkout = ({
     },
     description: {
       display: 'flex',
-      flex: '0 0 50%',
+      flex: '0 0 40%',
       padding: '3px',
       justifyContent: 'center'
     },
     price: {
+      display: 'flex',
+      flex: '0 0 10%',
+      padding: '3px',
+      justifyContent: 'flex-end'
+    },
+    amount: {
       display: 'flex',
       flex: '0 0 10%',
       padding: '3px',
@@ -97,7 +109,7 @@ const Checkout = ({
         <div key={key} style={rowStyle.container}>
           <div style={rowStyle.code}>{cartItems[key].code}</div>
           <div style={rowStyle.description}>{cartItems[key].description}</div>
-          <div style={rowStyle.price}>{100}</div>
+          <div style={rowStyle.price}>{cartItems[key].price}</div>
           <div style={rowStyle.qty}>
             <input
               type="text"
@@ -112,6 +124,7 @@ const Checkout = ({
             >
             </input>
           </div>
+          <div style={rowStyle.amount}>{cartItems[key].amount}</div>
           <div style={rowStyle.add}>
               <span>
                 <span style={{fontSize: '10px', marginRight: '3px'}}>
@@ -139,6 +152,7 @@ const Checkout = ({
         <div style={headerStyle.description}>Наименование</div>
         <div style={headerStyle.price}>Цена</div>
         <div style={headerStyle.qty}>Количество</div>
+        <div style={headerStyle.price}>Сумма</div>
         <div style={headerStyle.add}></div>
       </div>
     );

@@ -3,10 +3,10 @@ import { combineReducers } from 'redux';
 
 const initialState = {}; //guid. qty, price
 const items = (state, action) => {
-  const { guid, qty, price } = action;
+  const { guid, qty, price, code, description, amount } = action;
   switch(action.type) {
     case 'ADD_TO_CART':
-      return { ...state, [guid]: {qty: qty, price: price}};
+      return { ...state, [guid]: {qty, price, code, description, amount}};
     case 'REMOVE_FROM_CART':
       const stateCopy = { ...state };
       delete stateCopy[guid];

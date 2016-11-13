@@ -26,11 +26,16 @@ export const setTotalCartAmount = () => {
 
 export const addToCart = (guid, qty, price) => {
   return (dispatch, getState) => {
+    const goodsItems = getState().goods.items;
+    const { code, description } = goodsItems[guid];
     dispatch({
       type: 'ADD_TO_CART',
       guid,
       qty,
-      price
+      price,
+      code,
+      description,
+      amount: qty*price
     });
     dispatch(setTotalCartItems());
     dispatch(setTotalCartAmount());
