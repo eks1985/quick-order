@@ -37,9 +37,6 @@ const currentGuid = (state = '', action) => {
 const items = (state, action) => {
   switch (action.type) {
     case 'SET_GOODS_LIST':
-      // action.itemsInitial
-      // action.filterData
-      // return { ...state, ...action.payload }
       if (action.filterData.filterType === 'goodsGroup') {
         return filterByGroupGuid(action.filterData.groupGuid, action.filterData.itemsInitial);
       }

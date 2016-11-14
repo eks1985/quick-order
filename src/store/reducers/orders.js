@@ -58,6 +58,16 @@ const isLastPage = (state = false, action) => {
   }
 }
 
+// Selectors
+
+export const getOrdersVisibleIds = (state) => { //state = orders.state
+  const pageNumber = state.pageNumber;
+  const keys = Object.keys(state.items);
+  return  keys.reduce((result, key, i) => {
+    return i >= (pageNumber-1)*10 && i < pageNumber*10 ? result.concat(key) : result;
+  }, []);
+}
+
 export default combineReducers(
   {
     headers,
