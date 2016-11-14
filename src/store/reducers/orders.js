@@ -9,8 +9,11 @@ const headers = (state, action) => {
   switch (action.type) {
     case 'RECEIVE_ORDERS_HEADERS':
       return { ...state, ...action.payload }
+    //TODO implement this action
     case 'CHECKOUT':
-      return state;
+      const itemKeys = Object.keys(action.cartItems);
+      const amount = itemKeys.reduce((result, key) => result += action.cartItems[key].qty * action.cartItems[key].price, 0);
+      return { ...state, [action.header.guid]: { nr: action.header.guid, enterpriseNr:action.header.guid.substring(0, 10), date: action.header.date, amount} };
     default:
       return state || initialStateHeaders;
   }
@@ -20,7 +23,9 @@ const initialStateItems = ordersIntiialStateGenerated.ordersItems;
 const items = (state, action) => {
   switch (action.type) {
     case 'CHECKOUT':
-      return state;
+      const guid = action.header.guid;
+      const items = action.cartItems;
+      return { ...state, [guid]: items}
     default:
       return state || initialStateItems;
   }

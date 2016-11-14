@@ -27,14 +27,14 @@ const List = ({
             <div className='orderItemDescription' style={{flex: '0 0 50%'}}>
               {orderItems[key].description}
             </div>
-            <div className='orderItemQty' style={{flex: '0 0 10%'}}>
+            <div className='orderItemQty' style={{flex: '0 0 10%', display: 'flex', justifyContent: 'flex-end'}}>
               {orderItems[key].qty}
             </div>
-            <div className='orderItemPrice' style={{flex: '0 0 10%'}}>
-              {orderItems[key].price}
+            <div className='orderItemPrice' style={{flex: '0 0 10%', display: 'flex', justifyContent: 'flex-end'}}>
+              {format1(orderItems[key].price, "")}
             </div>
-            <div className='orderItemAmount' style={{flex: '0 0 10%'}}>
-              {orderItems[key].amount}
+            <div className='orderItemAmount' style={{flex: '0 0 10%', display: 'flex', justifyContent: 'flex-end'}}>
+              {format1(orderItems[key].amount, "")}
             </div>
           </div>
         )
@@ -47,9 +47,9 @@ const List = ({
       <div className='orderItemsHeader' style={{display: 'flex', fontStyle: 'italic', padding: '3px', background: '#eee'}}>
         <div style={{flex: '0 0 20%'}}>Код</div>
         <div style={{flex: '0 0 50%'}}>Наименование</div>
-        <div style={{flex: '0 0 10%'}}>Цена</div>
-        <div style={{flex: '0 0 10%'}}>Количество</div>
-        <div style={{flex: '0 0 10%'}}>Сумма</div>
+        <div style={{flex: '0 0 10%', display: 'flex', justifyContent: 'flex-end'}}>Количество</div>
+        <div style={{flex: '0 0 10%', display: 'flex', justifyContent: 'flex-end'}}>Цена</div>
+        <div style={{flex: '0 0 10%', display: 'flex', justifyContent: 'flex-end'}}>Сумма</div>
       </div>
     );
   }
@@ -66,12 +66,12 @@ const List = ({
     return (
       keys.map(key => {
         const headerCurrent = headers[key];
-        const { nr, date, amount } = headerCurrent;
+        const { enterpriseNr, date, amount } = headerCurrent;
         return (
           <div key={key} className='orderContainer'>
             <div  className='orderHeader' style={style}>
               <div style={{flex: '0 0 40%'}}>
-              {`Номер: ${nr}`}
+              {`Номер: ${enterpriseNr}`}
               </div>
               <div style={{flex: '0 0 20%'}}>
               {`Дата: ${date.toISOString().slice(0,10)}`}

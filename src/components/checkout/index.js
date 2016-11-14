@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as cartActions from './../../actions/cart';
+import * as checkoutActions from './../../actions/checkout';
 
 const Checkout = ({
   cartItems,
@@ -8,7 +9,8 @@ const Checkout = ({
   // actions
   updateCart,
   removeFromCart,
-  cleanCart
+  cleanCart,
+  checkoutOrder
 }) => {
   const style = {
     display: 'flex',
@@ -162,7 +164,9 @@ const Checkout = ({
   return (
     <div className='checkout' style={style}>
       <div>
-        <button>
+        <button
+          onClick={checkoutOrder}
+        >
           Отправить заказ
         </button>
         <button
@@ -184,5 +188,5 @@ const Checkout = ({
 
 export default connect(
   state => ({ cartItems: state.cart.items, checkout: state.checkout }),
-  cartActions
+  { ...cartActions, ...checkoutActions }
 )(Checkout);

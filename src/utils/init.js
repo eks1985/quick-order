@@ -25,7 +25,7 @@ export const ordersInitialState = () => {
     //headers
     const ordNr = v4();
     const date  = new Date();
-    ordersHeaders[ordNr] = {nr: ordNr, date}
+    ordersHeaders[ordNr] = {nr: ordNr, enterpriseNr: ordNr.substr(0, 10), date}
 
     //items
     const rowsQty = randomInt(1, 10);
