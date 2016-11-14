@@ -6,11 +6,13 @@ import Layout from './components/layout';
 import Modal from './lib/modal/components/modal';
 import ModalContent from './components/modal-content';
 import { setQtyPagesGoods } from './actions/goods';
+import { setQtyPagesOrders } from './actions/orders';
 
 class App extends Component {
 
   componentDidMount() {
     this.props.dispatch(setQtyPagesGoods());
+    this.props.dispatch(setQtyPagesOrders());
   }
 
   render() {

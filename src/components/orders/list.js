@@ -1,19 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { format1 } from './../../utils/format';
+import { getOrdersVisibleIds } from './../../store/reducers/orders';
 
 const List = ({
-  orders
+  orders,
+  headersIds,
 }) => {
-
   const style = {
     display: 'flex',
     flexDirection: 'column',
     flex: '1 0 auto'
   }
-
   const { headers, items } = orders;
-
   const getOrderItemsJsx = (guid) => {
     const orderItems = items[guid];
     const keys = Object.keys(orderItems);
@@ -62,9 +61,8 @@ const List = ({
       padding: '5px',
       fontWeight: 'bold'
     };
-    const keys = Object.keys(headers);
     return (
-      keys.map(key => {
+      headersIds.map(key => {
         const headerCurrent = headers[key];
         const { enterpriseNr, date, amount } = headerCurrent;
         return (
@@ -98,5 +96,5 @@ const List = ({
 };
 
 export default connect(
-  state => ({orders: state.orders})
+  state => ({orders: state.orders, headersIds: getOrdersVisibleIds(state.orders)})
 )(List);

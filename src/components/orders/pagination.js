@@ -7,14 +7,14 @@ const Pagination = ({
   pageNumber,
   isLastPage,
   //actions
-  moveordersForward,
-  moveordersBack,
-  goToordersPage
+  moveOrdersForward,
+  moveOrdersBack,
+  goToOrdersPage
 }) => {
   return (
     <div>
-      <button onClick={moveordersBack} disabled={pageNumber === 1}>Назад</button>
-      <button onClick={moveordersForward} disabled={isLastPage}>Вперед</button>
+      <button onClick={moveOrdersBack} disabled={pageNumber === 1}>Назад</button>
+      <button onClick={moveOrdersForward} disabled={isLastPage}>Вперед</button>
       <input
         type="text"
         value={pageNumber}
@@ -22,14 +22,14 @@ const Pagination = ({
         onChange={
           (e) => {
             const page = parseInt(e.target.value, 10) ? parseInt(e.target.value, 10) : 1
-            goToordersPage(page);
+            goToOrdersPage(page);
           }
         }
       ></input>
       <button
         onClick={
           () => {
-            goToordersPage(1);
+            goToOrdersPage(1);
           }
         }
       >
@@ -38,7 +38,7 @@ const Pagination = ({
       <button
         onClick={
           () => {
-            goToordersPage(qtyPages);
+            goToOrdersPage(qtyPages);
           }
         }
       >

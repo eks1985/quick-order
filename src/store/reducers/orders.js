@@ -31,10 +31,14 @@ const items = (state, action) => {
   }
 };
 
-const pageNumber = (state = 0, action) => {
+const pageNumber = (state = 1, action) => {
   switch (action.type) {
+    case 'INCREASE_PAGE_NUMBER_ORDERS':
+      return state +=1;
+    case 'DECREASE_PAGE_NUMBER_ORDERS':
+        return state -=1;
     case 'SET_PAGE_NUMBER_ORDERS':
-      return action.pageNumber;
+        return action.pageNumber;
     default:
      return state;
   }
@@ -52,7 +56,7 @@ const qtyPages = (state = 0, action) => {
 const isLastPage = (state = false, action) => {
   switch (action.type) {
     case 'SET_IS_LAST_PAGE_ORDERS':
-      return action.qtyPages;
+      return action.payload;
     default:
      return state;
   }
@@ -62,9 +66,9 @@ const isLastPage = (state = false, action) => {
 
 export const getOrdersVisibleIds = (state) => { //state = orders.state
   const pageNumber = state.pageNumber;
-  const keys = Object.keys(state.items);
+  const keys = Object.keys(state.headers);
   return  keys.reduce((result, key, i) => {
-    return i >= (pageNumber-1)*10 && i < pageNumber*10 ? result.concat(key) : result;
+    return i >= (pageNumber-1)*3 && i < pageNumber*3 ? result.concat(key) : result;
   }, []);
 }
 

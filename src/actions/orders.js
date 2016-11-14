@@ -3,7 +3,7 @@ export const setQtyPagesOrders = () => {
       const keysLength = Object.keys(getState().orders.items).length;
       dispatch({
         type: 'SET_QTY_PAGES_ORDERS',
-        qtyPages: keysLength % 10 === 0 ? keysLength / 10  : Math.floor(keysLength / 10) + 1
+        qtyPages: keysLength % 3 === 0 ? keysLength / 3  : Math.floor(keysLength / 3) + 1
       });
   };
 };
