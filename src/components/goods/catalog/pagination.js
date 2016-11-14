@@ -12,7 +12,7 @@ const Pagination = ({
   goToGoodsPage
 }) => {
   return (
-    <div>
+    <div style={{paddingBottom: '10px'}}>
       <button onClick={moveGoodsBack} disabled={pageNumber === 1}>Назад</button>
       <button onClick={moveGoodsForward} disabled={isLastPage}>Вперед</button>
       <input
