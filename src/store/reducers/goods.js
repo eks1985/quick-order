@@ -2,6 +2,8 @@ import { combineReducers } from 'redux';
 
 import initialState from './initialData/goods';
 
+import { generateCodes, generateDescriptions } from './initialData/searchData';
+
 // Utils
 
 const filterByGroupGuid = (groupGuid, items) => {
@@ -17,6 +19,20 @@ const filterByGroupGuid = (groupGuid, items) => {
 };
 
 //
+
+const codes = (state, action) => {
+  switch (action.type) {
+    default:
+      return generateCodes();
+  }
+}
+
+const descriptions = (state, action) => {
+  switch (action.type) {
+    default:
+      return generateDescriptions();
+  }
+}
 
 const itemsInitial = (state, action) => {
   switch (action.type) {
@@ -39,6 +55,8 @@ const items = (state, action) => {
     case 'SET_GOODS_LIST':
       if (action.filterData.filterType === 'goodsGroup') {
         return filterByGroupGuid(action.filterData.groupGuid, action.filterData.itemsInitial);
+      } else if (action.filterData.filterType === 'field') {
+        return state;
       }
       return state;
     default:
@@ -93,5 +111,7 @@ export default combineReducers({
   items,
   pageNumber,
   qtyPages,
-  isLastPage
+  isLastPage,
+  codes,
+  descriptions
 });

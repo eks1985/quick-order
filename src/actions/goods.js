@@ -53,3 +53,32 @@ export const goToGoodsPage = (pageNumber) => {
     dispatch(detectIsLastPage());
   };
 };
+
+export const search = (text) => {
+  return (dispatch, getState) => {
+    const state = getState().goods;
+    const { codes, descriptions } = state;
+    const codesKeys = Object.keys(codes);
+    const descriptionsKeys = Object.keys(descriptions);
+    //search by code
+    let result  = codesKeys.reduce((result, key) => {
+      return key.includes(text) ? [ ...result, ...codes[key] ] : result
+    }, []);
+    // search by description
+    result  = descriptionsKeys.reduce((result, key) => {
+      // if (key.includes(text)) {
+      //   console.log(key);
+      // }
+      return key.includes(text) ? [ ...result, ...descriptions[key] ] : result
+    }, result);
+
+    const obj = result.reduce((result, elem) => {
+      result[elem] = true;
+      return result;
+    }, {})
+
+    console.log('seach result', Object.keys(obj));
+    console.log("search end", new Date());
+    //return Object.keys(obj);
+  }
+}

@@ -1,6 +1,7 @@
 import React from 'react';
 import Pagination from './pagination';
 import List from './list';
+import Search from './search';
 
 export default () => {
   const style = {
@@ -13,6 +14,7 @@ export default () => {
   return (
     <div className='catalog' style={style}>
       <Pagination />
+      <Search />
       <List />
     </div>
   );

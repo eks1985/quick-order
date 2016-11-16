@@ -1,7 +1,7 @@
 import goodsInitial from './../store/reducers/initialData/goods.json';
 import { v4 } from 'node-uuid';
 
-const randomInt = (min, max) => {
+export const randomInt = (min, max) => {
   let rand = min + Math.random() * (max - min);
   rand = Math.round(rand);
   return rand;
