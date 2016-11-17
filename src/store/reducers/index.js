@@ -9,6 +9,7 @@ import currentContent from './current-content';
 import cart from './cart';
 import checkout from './checkout';
 import prices from './prices';
+import quickList from './quick-list';
 import modal from './../../lib/modal/reducers/modal';
 
 const rootReducer = combineReducers({
@@ -21,7 +22,8 @@ const rootReducer = combineReducers({
 	currentContent,
 	cart,
 	checkout,
-	prices
+	prices,
+	quickList
 });
 
 export default rootReducer;

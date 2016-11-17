@@ -80,7 +80,7 @@ export const updateCart = (guid, qty) => {
 const detectGuid = (codes, row) => {
   const words = row.trim().split(' ');
   if (words.length > 0) {
-    let first = words[0];
+    let first = words[0].toLowerCase();
     return codes[first] ? codes[first][0] : '';
   } else {
     return '';
@@ -97,7 +97,7 @@ const detectQty = (row) => {
   }
 };
 
-export const parseQuickOrder = (text) => {
+export const parseQuickList = (text) => {
   return (dispatch, getState) => {
     const codes = getState().goods.codes;
     const rows = text.split("\n");
@@ -105,10 +105,33 @@ export const parseQuickOrder = (text) => {
       res[row] = {'guid': detectGuid(codes, row), 'qty': detectQty(row)};
       return res;
     }, {});
-    // console.log(listItems);
     dispatch({
       type: 'RECEIVE_QUICK_LIST_ITEMS',
       payload: listItems
     });
   };
 };
+
+export const addQuickListToCart = (clean) => {
+  return (dispatch, getState) => {
+    clean && dispatch(cleanCart());
+    const state = getState();
+    const { quickList, prices } = state;
+    for (let key in quickList) {
+      if (quickList.hasOwnProperty(key)) {
+        let current = quickList[key];
+        if (current.guid && current.qty) {
+          let price = prices[current.guid];
+          dispatch(addToCart(current.guid, current.qty, price));
+        }
+      }
+    }
+    dispatch({
+      type: 'RESET_QUICK_LIST_ITEMS'
+    });
+    dispatch({
+      type: 'SET_CURRENT_CONTENT',
+      contentName: 'checkout'
+    });
+  }
+}

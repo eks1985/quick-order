@@ -33,7 +33,7 @@ const Nav = ({
       <button
         onClick={
           () => {
-            setCurrentContent('quick-order');
+            setCurrentContent('quick-list');
           }
         }
       >

@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import * as cartActions from './../actions/cart';
+import * as cartActions from './../../actions/cart';
 
-const QuickOrder = ({
-  parseQuickOrder
+const Header = ({
+  parseQuickList
 }) => {
   let textArea;
   return (
@@ -31,7 +31,7 @@ const QuickOrder = ({
         <button
         onClick={
           () => {
-            parseQuickOrder(textArea.value)
+            textArea.value !== '' && parseQuickList(textArea.value)
           }
         }
         >Обработать</button>
@@ -43,4 +43,4 @@ const QuickOrder = ({
 export default connect(
   state => ({quckList: state.quickList}),
   cartActions
-)(QuickOrder);
+)(Header);
