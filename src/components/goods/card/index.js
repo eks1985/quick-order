@@ -53,7 +53,7 @@ const Card = ({
           </div>
 
       </div>
-      <div className='picture' style={{flexDirection: 'column', flex: '0 0 50%'}}>
+      <div className='picture' style={{flexDirection: 'column', flex: '0 1 50%'}}>
           <img style={{width: '100%', padding: '10px'}} src={pictData().base64data} alt=''></img>
       </div>
     </div>

@@ -5,6 +5,7 @@ import * as checkoutActions from './../../actions/checkout';
 
 const Checkout = ({
   cartItems,
+  totalItems,
   checkout,
   // actions
   updateCart,
@@ -163,18 +164,20 @@ const Checkout = ({
 
   return (
     <div className='checkout' style={style}>
-      <div>
-        <button
-          onClick={checkoutOrder}
-        >
-          Отправить заказ
-        </button>
-        <button
-          onClick={cleanCart}
-        >
-          Очистить корзину
-        </button>
-      </div>
+      {totalItems > 0 &&
+        <div>
+          <button
+            onClick={checkoutOrder}
+          >
+            Отправить заказ
+          </button>
+          <button
+            onClick={cleanCart}
+          >
+            Очистить корзину
+          </button>
+        </div>
+      }
       <div className='cart' style={containerStyle}>
         {getHeaderJsx()}
         {getItemsJsx()}
@@ -191,6 +194,6 @@ const Checkout = ({
 };
 
 export default connect(
-  state => ({ cartItems: state.cart.items, checkout: state.checkout }),
+  state => ({ cartItems: state.cart.items, totalItems: state.cart.totalItems, checkout: state.checkout }),
   { ...cartActions, ...checkoutActions }
 )(Checkout);

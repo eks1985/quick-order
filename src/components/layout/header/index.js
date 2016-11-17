@@ -11,7 +11,6 @@ export default () => {
     <div className='header' style={style}>
       <Nav />
       <div>
-        Header
       </div>
     </div>
   );

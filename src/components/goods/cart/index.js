@@ -17,6 +17,7 @@ const Cart = ({
     flexDirection: 'column',
     padding: '8px'
   };
+  const hasItems = cart.totalItems > 0;
   return (
     <div className='cart' style={style}>
       <div style={{display: 'flex'}}>
@@ -28,20 +29,22 @@ const Cart = ({
               {`На сумму: ${totalAmount}`}
             </div>
           </div>
-          <div style={{flex: '0 0 30%'}}>
-            <button onClick={cleanCart}>
-              Очистить
-            </button>
-            <button
-              onClick={
-                () => {
-                  setCurrentContent('checkout');
+          {hasItems &&
+            <div style={{flex: '0 0 30%'}}>
+              <button onClick={cleanCart}>
+                Очистить
+              </button>
+              <button
+                onClick={
+                  () => {
+                    setCurrentContent('checkout');
+                  }
                 }
-              }
-            >
-              Оформить
-            </button>
-          </div>
+              >
+                Оформить
+              </button>
+            </div>
+          }
       </div>
     </div>
   );

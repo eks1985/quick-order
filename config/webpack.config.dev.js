@@ -110,7 +110,8 @@ module.exports = {
           }),
           plugins: [
             'react-hot-loader/babel'
-          ]
+          ],
+          compact: false
         }
       },
       // "postcss" loader applies autoprefixer to our CSS.

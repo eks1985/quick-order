@@ -7,7 +7,6 @@ export default () => {
   };
   return (
     <div className='footer' style={style}>
-      Footer
     </div>
   );
 };
