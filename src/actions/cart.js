@@ -78,7 +78,7 @@ export const updateCart = (guid, qty) => {
 };
 
 const detectGuid = (codes, row) => {
-  const words = row.trim().split(' ');
+  const words = row.trim().split(String.fromCharCode(9));
   if (words.length > 0) {
     let first = words[0].toLowerCase();
     return codes[first] ? codes[first][0] : '';
@@ -88,7 +88,7 @@ const detectGuid = (codes, row) => {
 };
 
 const detectQty = (row) => {
-  const words = row.trim().split(' ');
+  const words = row.trim().split(String.fromCharCode(9));
   if (words.length > 0) {
     let last = words[words.length - 1];
     return isNumeric(last) ? parseFloat(last) : 0;
