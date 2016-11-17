@@ -1,3 +1,5 @@
+import { isNumeric } from './../utils/index';
+
 export const setTotalCartItems = () => {
   return (dispatch, getState) => {
     const itemsKeys = Object.keys(getState().cart.items);
@@ -72,5 +74,41 @@ export const updateCart = (guid, qty) => {
     });
     dispatch(setTotalCartItems());
     dispatch(setTotalCartAmount());
+  };
+};
+
+const detectGuid = (codes, row) => {
+  const words = row.trim().split(' ');
+  if (words.length > 0) {
+    let first = words[0];
+    return codes[first] ? codes[first][0] : '';
+  } else {
+    return '';
+  }
+};
+
+const detectQty = (row) => {
+  const words = row.trim().split(' ');
+  if (words.length > 0) {
+    let last = words[words.length - 1];
+    return isNumeric(last) ? parseFloat(last) : 0;
+  } else {
+    return 0;
+  }
+};
+
+export const parseQuickOrder = (text) => {
+  return (dispatch, getState) => {
+    const codes = getState().goods.codes;
+    const rows = text.split("\n");
+    const listItems = rows.reduce((res, row) => {
+      res[row] = {'guid': detectGuid(codes, row), 'qty': detectQty(row)};
+      return res;
+    }, {});
+    // console.log(listItems);
+    dispatch({
+      type: 'RECEIVE_QUICK_LIST_ITEMS',
+      payload: listItems
+    });
   };
 };

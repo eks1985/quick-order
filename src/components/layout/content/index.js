@@ -5,6 +5,7 @@ import Orders from './../../orders';
 import Checkout from './../../checkout';
 import Profile from './../../profile';
 import Help from './../../help';
+import QuickOrder from './../../quick-order';
 const Content = ({
   currentContent
 }) => {
@@ -21,6 +22,7 @@ const Content = ({
       {currentContent === 'checkout' && <Checkout />}
       {currentContent === 'profile' && <Profile />}
       {currentContent === 'help' && <Help />}
+      {currentContent === 'quick-order' && <QuickOrder />}
     </div>
   );
 };

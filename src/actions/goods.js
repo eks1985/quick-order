@@ -55,9 +55,10 @@ export const goToGoodsPage = (pageNumber) => {
 };
 
 export const search = (text) => {
+  text = text.toLowerCase();
   return (dispatch, getState) => {
     const state = getState().goods;
-    const { codes, descriptions } = state;
+    const { codes, descriptions, itemsInitial } = state;
     const codesKeys = Object.keys(codes);
     const descriptionsKeys = Object.keys(descriptions);
     //search by code
@@ -66,19 +67,19 @@ export const search = (text) => {
     }, []);
     // search by description
     result  = descriptionsKeys.reduce((result, key) => {
-      // if (key.includes(text)) {
-      //   console.log(key);
-      // }
       return key.includes(text) ? [ ...result, ...descriptions[key] ] : result
     }, result);
 
-    const obj = result.reduce((result, elem) => {
-      result[elem] = true;
-      return result;
+    const filteredGoods = result.reduce((res, elem) => {
+      res[elem] = itemsInitial[elem];
+      return res;
     }, {})
-
-    console.log('seach result', Object.keys(obj));
-    console.log("search end", new Date());
-    //return Object.keys(obj);
+    dispatch({
+      type: 'SET_GOODS_LIST',
+      payload: filteredGoods,
+      filterData: {filterType: 'field'}
+    });
+    dispatch(setQtyPagesGoods());
+    dispatch(goToGoodsPage(1));
   }
 }

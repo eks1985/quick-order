@@ -56,7 +56,7 @@ const items = (state, action) => {
       if (action.filterData.filterType === 'goodsGroup') {
         return filterByGroupGuid(action.filterData.groupGuid, action.filterData.itemsInitial);
       } else if (action.filterData.filterType === 'field') {
-        return state;
+        return action.payload;
       }
       return state;
     default:

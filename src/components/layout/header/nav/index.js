@@ -33,6 +33,15 @@ const Nav = ({
       <button
         onClick={
           () => {
+            setCurrentContent('quick-order');
+          }
+        }
+      >
+        Быстрый заказ
+      </button>
+      <button
+        onClick={
+          () => {
             setCurrentContent('profile');
             setModal({ content: 'profile', fullScreen: true});
           }

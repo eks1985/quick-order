@@ -5,7 +5,6 @@ import * as goodsActions from './../../../actions/goods';
 let Search = ({
   search,
 }) => {
-  console.log(search);
   let input;
   return (
     <div style={{display: 'flex'}}>
@@ -18,12 +17,18 @@ let Search = ({
       </input>
       <button onClick={
         () => {
-          console.log("search start", new Date());
           search(input.value);
         }
       }>
         Найти
-        </button>
+      </button>
+      <button onClick={
+        () => {
+          search('');
+        }
+      }>
+        Очистить
+      </button>
     </div>
   );
 };

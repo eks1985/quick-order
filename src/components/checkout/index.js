@@ -180,7 +180,11 @@ const Checkout = ({
         {getItemsJsx()}
       </div>
       <div className='checkout'>
-        <textarea style={{minWidth: '500px', minHeight: '200px'}} defaultValue={checkout.comment}></textarea>
+        <textarea
+          style={{minWidth: '500px', minHeight: '200px'}}
+          defaultValue={checkout.comment}
+        >
+        </textarea>
       </div>
     </div>
   );
