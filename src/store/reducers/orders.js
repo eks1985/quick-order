@@ -66,7 +66,7 @@ const isLastPage = (state = false, action) => {
 
 export const getOrdersVisibleIds = (state) => { //state = orders.state
   const pageNumber = state.pageNumber;
-  const keys = Object.keys(state.headers);
+  const keys = Object.keys(state.headers).reverse();
   return  keys.reduce((result, key, i) => {
     return i >= (pageNumber-1)*3 && i < pageNumber*3 ? result.concat(key) : result;
   }, []);

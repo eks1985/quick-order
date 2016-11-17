@@ -22,9 +22,11 @@ let Search = ({
       }>
         Найти
       </button>
-      <button onClick={
-        () => {
-          search('');
+      <button
+        onClick={
+          () => {
+            search('');
+            input.value = '';
         }
       }>
         Очистить

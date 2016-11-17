@@ -6,7 +6,8 @@ let Modal = ({
   children,
   modal,
   //actions
-  setModal
+  setModal,
+  handlerClose
 }) => {
   const { x, y, fullScreen, content } = modal;
   const style = {
@@ -35,6 +36,10 @@ let Modal = ({
         <button
         onClick={
           () => {
+            console.log(handlerClose);
+            if (handlerClose) {
+              handlerClose();
+            }
             setModal({dataSource: ''});
           }
         }

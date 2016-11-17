@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as cartActions from './../../../actions/cart';
-import * as currentContentActions from './../../../actions/currentContent';
+import * as currentContentActions from './../../../actions/current-content';
 
 const Cart = ({
   cart,

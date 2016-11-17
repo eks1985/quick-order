@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import * as currentContentActions from './../../../../actions/currentContent';
+import * as currentContentActions from './../../../../actions/current-content';
 import * as modalActions from './../../../../lib/modal/actions/modal';
 const Nav = ({
+  currentContent,
   //actions
   setCurrentContent,
   setModal
@@ -13,6 +14,7 @@ const Nav = ({
   return (
     <div className='headerNav' style={style}>
       <button
+        style={currentContent === 'goods' ? {background: 'yellow'} : {}}
         onClick={
           () => {
             setCurrentContent('goods');
@@ -22,6 +24,7 @@ const Nav = ({
         Каталог
       </button>
       <button
+        style={currentContent === 'orders' ? {background: 'yellow'} : {}}
         onClick={
           () => {
             setCurrentContent('orders');
@@ -31,6 +34,7 @@ const Nav = ({
         Заказы
       </button>
       <button
+        style={currentContent === 'quick-list' ? {background: 'yellow'} : {}}
         onClick={
           () => {
             setCurrentContent('quick-list');
@@ -64,6 +68,6 @@ const Nav = ({
 };
 
 export default connect(
-  null,
+  state => ({ currentContent: state.currentContent }),
   { ...currentContentActions, ...modalActions }
 )(Nav);

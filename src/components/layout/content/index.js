@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import Goods from './../../goods';
 import Orders from './../../orders';
 import Checkout from './../../checkout';
-import Profile from './../../profile';
-import Help from './../../help';
+// import Profile from './../../profile';
+// import Help from './../../help';
 import QuickList from './../../quick-list';
 const Content = ({
   currentContent
@@ -20,8 +20,8 @@ const Content = ({
       {currentContent === 'goods' && <Goods />}
       {currentContent === 'orders' && <Orders />}
       {currentContent === 'checkout' && <Checkout />}
-      {currentContent === 'profile' && <Profile />}
-      {currentContent === 'help' && <Help />}
+      {/* {currentContent === 'profile' && <Profile />}
+      {currentContent === 'help' && <Help />} */}
       {currentContent === 'quick-list' && <QuickList />}
     </div>
   );

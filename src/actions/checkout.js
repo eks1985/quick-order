@@ -1,6 +1,7 @@
 import { cleanCart } from './cart';
 import { v4 } from 'node-uuid';
-import { setQtyPagesOrders, detectIsLastPage } from './orders';
+import { setQtyPagesOrders, detectIsLastPage, goToOrdersPage } from './orders';
+import { setCurrentContent } from './current-content';
 
 export const checkoutOrder = () => {
   return (dispatch, getState) => {
@@ -12,6 +13,8 @@ export const checkoutOrder = () => {
     dispatch(cleanCart());
     dispatch({type: 'RESET_CHECKOUT'});
     dispatch(setQtyPagesOrders());
+    dispatch(goToOrdersPage(1))
     dispatch(detectIsLastPage());
+    dispatch(setCurrentContent('orders'));
   };
 };

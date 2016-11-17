@@ -1,4 +1,4 @@
-import reducer from './../currentContent';
+import reducer from './../current-content';
 
 
 describe('reducer currentContent', () => {

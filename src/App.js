@@ -7,6 +7,7 @@ import Modal from './lib/modal/components/modal';
 import ModalContent from './components/modal-content';
 import { setQtyPagesGoods } from './actions/goods';
 import { setQtyPagesOrders } from './actions/orders';
+import { setCurrentContent } from './actions/current-content';
 
 class App extends Component {
 
@@ -25,7 +26,13 @@ class App extends Component {
       <div className="App" style={style}>
         <Auth />
         <Layout />
-        <Modal>
+        <Modal
+          handlerClose={
+            () => {
+              setCurrentContent('goods')(this.props.dispatch);
+            }
+          }
+        >
           <ModalContent />
         </Modal>
       </div>
