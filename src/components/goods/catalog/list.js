@@ -94,6 +94,7 @@ const List = ({
     }
   }
   const getItemsJsx = () => {
+    console.log(qtyAssigned);
     return itemsIds.map( key => {
       return (
         <div key={key} style={rowStyle.container}>
@@ -126,9 +127,10 @@ const List = ({
             >
             </input>
           </div>
-          <div style={rowStyle.add}>
+          <div style={rowStyle.add} >
             {!cartItems[key] && //if not inside cart - show Add to cart
               <button
+                disabled={!qtyAssigned[key]}
                 onClick={
                   () => {
                     addToCart(key, qtyAssigned[key] || 0, prices[key]);
