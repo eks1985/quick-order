@@ -8,9 +8,10 @@ export const setCurentGuid = (guid) => {
 export const setQtyPagesGoods = () => {
   return (dispatch, getState) => {
       const keysLength = Object.keys(getState().goods.items).length;
+      const qtyPages = keysLength % 10 === 0 ? keysLength / 10  : Math.floor(keysLength / 10) + 1;
       dispatch({
         type: 'SET_QTY_PAGES_GOODS',
-        qtyPages: keysLength % 10 === 0 ? keysLength / 10  : Math.floor(keysLength / 10) + 1
+        qtyPages: qtyPages || 1
       });
   };
 };

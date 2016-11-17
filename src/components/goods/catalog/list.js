@@ -94,7 +94,6 @@ const List = ({
     }
   }
   const getItemsJsx = () => {
-    console.log(qtyAssigned);
     return itemsIds.map( key => {
       return (
         <div key={key} style={rowStyle.container}>

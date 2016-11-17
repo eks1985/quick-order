@@ -1,9 +1,10 @@
 export const setQtyPagesOrders = () => {
   return (dispatch, getState) => {
       const keysLength = Object.keys(getState().orders.items).length;
+      const qtyPages = keysLength % 3 === 0 ? keysLength / 3  : Math.floor(keysLength / 3) + 1;
       dispatch({
         type: 'SET_QTY_PAGES_ORDERS',
-        qtyPages: keysLength % 3 === 0 ? keysLength / 3  : Math.floor(keysLength / 3) + 1
+        qtyPages: qtyPages || 1
       });
   };
 };
