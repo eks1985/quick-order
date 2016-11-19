@@ -55,6 +55,12 @@ export const goToGoodsPage = (pageNumber) => {
   };
 };
 
+const searchByDescription = (descriptions, keys, text) => {
+  return keys.reduce((result, key) => {
+    return key.includes(text) ? [ ...result, ...descriptions[key] ] : result
+  }, []);
+}
+
 export const search = (text) => {
   text = text.toLowerCase();
   return (dispatch, getState) => {
@@ -67,10 +73,13 @@ export const search = (text) => {
       return key.includes(text) ? [ ...result, ...codes[key] ] : result
     }, []);
     // search by description
-    result  = descriptionsKeys.reduce((result, key) => {
-      return key.includes(text) ? [ ...result, ...descriptions[key] ] : result
+    // result  = descriptionsKeys.reduce((result, key) => {
+    //   return key.includes(text) ? [ ...result, ...descriptions[key] ] : result
+    // }, result);
+    const words = text.split(' ');
+    result = words.reduce( (res, word) => {
+      return [ ...result, ...searchByDescription(descriptions, descriptionsKeys, word.trim()) ]
     }, result);
-
     const filteredGoods = result.reduce((res, elem) => {
       res[elem] = itemsInitial[elem];
       return res;
