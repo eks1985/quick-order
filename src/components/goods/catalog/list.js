@@ -98,8 +98,9 @@ const List = ({
       return (
         <div key={key} style={rowStyle.container}>
           <div style={rowStyle.code}>{items[key].code}</div>
-          <div style={rowStyle.description}>
+          <div style={rowStyle.description} tabIndex={-1}>
             <a
+              tabIndex={-1}
               href="#"
               onClick={
                 () => {

@@ -93,3 +93,5 @@ export const search = (text) => {
     dispatch(goToGoodsPage(1));
   }
 }
+
+//Firebase

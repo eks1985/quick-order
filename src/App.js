@@ -9,13 +9,25 @@ import { setQtyPagesGoods } from './actions/goods';
 import { setQtyPagesOrders } from './actions/orders';
 import { setCurrentContent } from './actions/current-content';
 import { setModal } from './lib/modal/actions/modal';
+import { search } from './actions/goods';
 
 class App extends Component {
 
   componentDidMount() {
-    this.props.dispatch(setModal({ fullScreen: true, content: 'login', style: {display: 'flex', justifyContent: 'center', alignItems: 'center'}, showClose: false }));
-    this.props.dispatch(setQtyPagesGoods());
-    this.props.dispatch(setQtyPagesOrders());
+    const { dispatch } = this.props;
+    dispatch(setModal({ fullScreen: true, content: 'login', style: {display: 'flex', justifyContent: 'center', alignItems: 'center'}, showClose: false }));
+    dispatch(setQtyPagesGoods());
+    dispatch(setQtyPagesOrders());
+    document.addEventListener('keyup', this.handleKeyUp.bind(this), false)
+  }
+
+  handleKeyUp(e) {
+    if (e.key === '/') {
+      document.querySelector('#search').focus();
+    } else if (e.key === 'Enter' && document.activeElement.id === 'search') {
+      // console.log(document.activeElement);
+      this.props.dispatch(search(document.querySelector('#search').value));
+    }
   }
 
   render() {

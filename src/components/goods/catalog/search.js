@@ -9,6 +9,9 @@ let Search = ({
   return (
     <div style={{display: 'flex'}}>
       <input
+        placeholder='для перехода нажмите /'
+        id='search'
+        autoFocus
         type="text"
         ref={(node) => {
           input = node;
