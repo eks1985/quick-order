@@ -7,6 +7,10 @@ import { listenToGoods } from './actions/goods-firebase';
 import { listenToPrices } from './actions/prices-firebase';
 import { listenToAuth } from './actions/auth';
 
+import darkBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+
 export default class root extends Component {
 
   componentWillMount()  {
@@ -19,7 +23,9 @@ export default class root extends Component {
   render() {
     return (
       <Provider store={store}>
-        <App />
+        <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+          <App />
+        </MuiThemeProvider>
       </Provider>
     );
   }

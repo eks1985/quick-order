@@ -12,7 +12,7 @@ const Cart = ({
   const { totalItems, totalAmount } = cart;
   const style = {
     height: '60px',
-    border: '1px solid gray',
+    // border: '1px solid gray',
     display: 'flex',
     flexDirection: 'column',
     padding: '8px'

@@ -1,15 +1,14 @@
 import React from 'react';
+import Paper from 'material-ui/Paper';
+
 export default () => {
   const style = {
     display: 'flex',
     height: '100px',
-    border: '1px solid gray'
+    background: '#eee'
+    // border: '1px solid gray'
   };
   return (
-    <div className='footer' style={style}>
-      <button
-      >
-      </button>
-    </div>
+    <Paper className='footer' style={style} />
   );
 };

@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as currentContentActions from './../../../../actions/current-content';
 import * as modalActions from './../../../../lib/modal/actions/modal';
+import FlatButton from 'material-ui/FlatButton'
+
 const Nav = ({
   currentContent,
   //actions
@@ -13,37 +15,46 @@ const Nav = ({
   }
   return (
     <div className='headerNav' style={style}>
-      <button
-        style={currentContent === 'goods' ? {background: 'yellow'} : {}}
+      <FlatButton
+        rippleColor='#eee'
+        label='Каталог'
+        // style={currentContent === 'goods' ? {background: 'yellow'} : {}}
+        backgroundColor={currentContent === 'goods' ? '#ddd' : '#eee'}
         onClick={
           () => {
             setCurrentContent('goods');
           }
         }
       >
-        Каталог
-      </button>
-      <button
-        style={currentContent === 'orders' ? {background: 'yellow'} : {}}
+      </FlatButton>
+      <FlatButton
+        rippleColor='#eee'
+        label='Заказы'
+        // style={currentContent === 'orders' ? {background: 'yellow'} : {}}
+        backgroundColor={currentContent === 'orders' ? '#ddd' : '#eee'}
         onClick={
           () => {
             setCurrentContent('orders');
           }
         }
       >
-        Заказы
-      </button>
-      <button
-        style={currentContent === 'quick-list' ? {background: 'yellow'} : {}}
+      </FlatButton>
+      <FlatButton
+        rippleColor='#eee'
+        label='Быстрый заказ'
+        // style={currentContent === 'quick-list' ? {background: 'yellow'} : {}}
+        backgroundColor={currentContent === 'quick-list' ? '#ddd' : '#eee'}
         onClick={
           () => {
             setCurrentContent('quick-list');
           }
         }
       >
-        Быстрый заказ
-      </button>
-      <button
+      </FlatButton>
+      <FlatButton
+        rippleColor='#eee'
+        label='Профиль'
+        backgroundColor={currentContent === 'profile' ? '#ddd' : '#eee'}
         onClick={
           () => {
             setCurrentContent('profile');
@@ -51,9 +62,11 @@ const Nav = ({
           }
         }
       >
-        Профиль
-      </button>
-      <button
+      </FlatButton>
+      <FlatButton
+        rippleColor='#eee'
+        label='Помощь'
+        backgroundColor={currentContent === 'help' ? '#ddd' : '#eee'}
         onClick={
           () => {
             setCurrentContent('help');
@@ -61,8 +74,7 @@ const Nav = ({
           }
         }
       >
-        Помощь
-      </button>
+      </FlatButton>
     </div>
   );
 };

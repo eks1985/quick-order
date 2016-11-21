@@ -13,7 +13,7 @@ const Content = ({
     display: 'flex',
     flexDirection: 'column',
     flex: '1 0 auto',
-    border: '1px solid gray',
+    // border: '1px solid gray',
   };
   return (
     <div className='content' style={style}>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as goodsGroupsActions from './../../../actions/goods-groups';
+import Paper from 'material-ui/Paper';
 
 const GoodsGroups =  ({
   items,
@@ -8,7 +9,7 @@ const GoodsGroups =  ({
   filterGoodsByGroup
 }) => {
   const style = {
-    border: '1px solid gray',
+    // border: '1px solid gray',
     flex: '1 0 auto',
     padding: '10px'
   };
@@ -34,9 +35,9 @@ const GoodsGroups =  ({
   }
 
   return (
-    <div className='goodsCategories' style={style}>
+    <Paper className='goodsCategories' style={style} rounded={false} zDepth={2}>
       {getItemsJsx()}
-    </div>
+    </Paper>
   );
 };
 

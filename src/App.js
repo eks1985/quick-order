@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './App.css';
-import Auth from './components/auth';
+// import Auth from './components/auth';
 import Layout from './components/layout';
 import Modal from './lib/modal/components/modal';
 import ModalContent from './components/modal-content';
@@ -15,7 +15,7 @@ class App extends Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    dispatch(setModal({ fullScreen: true, content: 'login', style: {display: 'flex', justifyContent: 'center', alignItems: 'center'}, showClose: false }));
+    dispatch(setModal({ fullScreen: true, content: '', style: {display: 'flex', justifyContent: 'center', alignItems: 'center'}, showClose: false }));
     dispatch(setQtyPagesGoods());
     dispatch(setQtyPagesOrders());
     document.addEventListener('keyup', this.handleKeyUp.bind(this), false)
@@ -38,7 +38,7 @@ class App extends Component {
     }
     return (
       <div className="App" style={style}>
-        <Auth />
+        {/* <Auth /> */}
         <Layout />
         <Modal
           handlerClose={

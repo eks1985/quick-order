@@ -1,6 +1,7 @@
 import React from 'react';
 import * as modalActions from '../actions/modal';
 import { connect } from 'react-redux';
+import RaisedButton from 'material-ui/RaisedButton'
 
 let Modal = ({
   children,
@@ -27,7 +28,8 @@ let Modal = ({
     <div style={style}>
       {modal.showClose &&
         <div style={{padding: '10px'}}>
-          <button
+          <RaisedButton
+          label='Закрыть'
           onClick={
             () => {
               if (handlerClose) {
@@ -36,7 +38,8 @@ let Modal = ({
               setModal({dataSource: ''});
             }
           }
-          >Закрыть</button>
+          >
+          </RaisedButton>
         </div>
       }
       <div>
