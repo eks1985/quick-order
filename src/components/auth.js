@@ -21,11 +21,11 @@ let Auth = ({
                 openAuth();
               }
             }
-          >Log in</button>
+          >Войти</button>
         }
         {
           authStatus === 'AUTH_AWAITING_RESPONSE' &&
-          <label>Logging in...</label>
+          <label>Подключение...</label>
         }
         {
           authStatus === 'AUTH_LOGGED_IN' &&
@@ -36,8 +36,8 @@ let Auth = ({
                   logoutUser();
                 }
               }
-            >Log out</button>
-            {' '} Logged as: {authUid}
+            >Выйти</button>
+            {' '} Пользователь: {authUid}
           </span>
 
         }

@@ -10,15 +10,8 @@ let Modal = ({
   handlerClose
 }) => {
   const { x, y, fullScreen, content } = modal;
-  const style = {
-    position: "absolute",
-    left: x,
-    top: y,
-    background: "#ddd",
-    border: "1px solid #bbb",
-    padding: "10px",
-    zIndex: 1000
-  };
+
+  const style = { ...modal.style, ...{x: x, y:y} }
   if (fullScreen) {
     style.left   = "0px";
     style.right  = "0px";
@@ -32,19 +25,20 @@ let Modal = ({
 
   return (
     <div style={style}>
-      <div style={{padding: '10px'}}>
-        <button
-        onClick={
-          () => {
-            console.log(handlerClose);
-            if (handlerClose) {
-              handlerClose();
+      {modal.showClose &&
+        <div style={{padding: '10px'}}>
+          <button
+          onClick={
+            () => {
+              if (handlerClose) {
+                handlerClose();
+              }
+              setModal({dataSource: ''});
             }
-            setModal({dataSource: ''});
           }
-        }
-        >Закрыть</button>
-      </div>
+          >Закрыть</button>
+        </div>
+      }
       <div>
         {children}
       </div>

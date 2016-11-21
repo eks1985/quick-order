@@ -8,10 +8,12 @@ import ModalContent from './components/modal-content';
 import { setQtyPagesGoods } from './actions/goods';
 import { setQtyPagesOrders } from './actions/orders';
 import { setCurrentContent } from './actions/current-content';
+import { setModal } from './lib/modal/actions/modal';
 
 class App extends Component {
 
   componentDidMount() {
+    this.props.dispatch(setModal({ fullScreen: true, content: 'login', style: {display: 'flex', justifyContent: 'center', alignItems: 'center'}, showClose: false }));
     this.props.dispatch(setQtyPagesGoods());
     this.props.dispatch(setQtyPagesOrders());
   }

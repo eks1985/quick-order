@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Help from './help';
 import Profile from './profile';
 import GoodsCard from './goods/card';
+import Login from './log-in';
 const ModalContent = ({
   modal
 }) => {
@@ -11,6 +12,7 @@ const ModalContent = ({
       {modal.content === 'profile' && <Profile />}
       {modal.content === 'help' && <Help />}
       {modal.content === 'goodsCard' && <GoodsCard />}
+      {modal.content === 'login' && <Login />}
     </div>
   );
 };

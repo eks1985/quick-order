@@ -104,7 +104,7 @@ const List = ({
               onClick={
                 () => {
                   setCurentGuid(key);
-                  setModal({ content: 'goodsCard', fullScreen: true});
+                  setModal({ content: 'goodsCard', fullScreen: true, style: {display: 'initial'} });
                 }
               }
             >
