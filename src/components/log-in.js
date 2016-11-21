@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as modalActions from './../lib/modal/actions/modal';
+import * as authActions from './../actions/auth';
 
 const Login = ({
   //actions
-  setModal
+  setModal,
+  openAuth,
 }) => {
   return (
     <div style={{display: 'flex', padding: '30px', border: '1px solid #bbb'}}>
@@ -24,6 +26,7 @@ const Login = ({
             onClick={
               () => {
                 setModal({ content: ''});
+                openAuth();
               }
             }
           >
@@ -38,6 +41,7 @@ const Login = ({
             onClick={
               () => {
                 setModal({ content: ''});
+                openAuth();
               }
             }
           >
@@ -51,5 +55,5 @@ const Login = ({
 
 export default connect(
   null,
-  modalActions
+  { ...modalActions, ...authActions }
 )(Login);

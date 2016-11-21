@@ -20,7 +20,7 @@ const Profile = ({
       </div>
       <div>
         <p>
-          {customer.code}
+          {customer.guid}
         </p>
       </div>
       <div style={propTytleStyle}>
@@ -28,7 +28,7 @@ const Profile = ({
       </div>
       <div>
         <p>
-          {customer.name}
+          {customer.description}
         </p>
       </div>
       <div style={propTytleStyle}>

@@ -2,14 +2,12 @@ import { combineReducers } from 'redux';
 
 import initialState from './initialData/goods';
 
-import { generateCodes, generateDescriptions } from './initialData/searchData';
-
 // Utils
 
 const filterByGroupGuid = (groupGuid, items) => {
   const keys = Object.keys(items);
   return keys.reduce( (result, key) => {
-    if (items[key].group_guid === groupGuid) {
+    if (items[key].groupRef === groupGuid) {
       result[key] = { ...items[key] };
       return result;
     } else {
@@ -20,24 +18,31 @@ const filterByGroupGuid = (groupGuid, items) => {
 
 //
 
-const codes = (state, action) => {
+const codes = (state = {}, action) => {
   switch (action.type) {
+    case 'RECEIVE_CODES':
+      return { ...state, ...action.payload }
     default:
-      return generateCodes();
+      return state;
   }
 }
 
-const descriptions = (state, action) => {
+const descriptions = (state = {}, action) => {
   switch (action.type) {
+    case 'RECEIVE_DESCRIPTIONS':
+      return { ...state, ...action.payload }
     default:
-      return generateDescriptions();
+      return state;
   }
 }
 
 const itemsInitial = (state, action) => {
   switch (action.type) {
+    case 'RECEIVE_GOODS':
+    console.log("items initial receive goods");
+      return { ...state, ...action.payload }
     default:
-    return initialState;
+      return state || initialState;
   }
 }
 
@@ -52,6 +57,9 @@ const currentGuid = (state = '', action) => {
 
 const items = (state, action) => {
   switch (action.type) {
+    case 'RECEIVE_GOODS':
+      console.log("items receive goods");
+      return { ...state, ...action.payload }
     case 'SET_GOODS_LIST':
       if (action.filterData.filterType === 'goodsGroup') {
         return filterByGroupGuid(action.filterData.groupGuid, action.filterData.itemsInitial);

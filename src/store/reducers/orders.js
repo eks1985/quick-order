@@ -22,6 +22,8 @@ const headers = (state, action) => {
 const initialStateItems = ordersIntiialStateGenerated.ordersItems;
 const items = (state, action) => {
   switch (action.type) {
+    case 'RECEIVE_ORDERS_ITEMS':
+      return { ...state, ...action.payload }
     case 'CHECKOUT':
       const guid = action.header.guid;
       const items = action.cartItems;

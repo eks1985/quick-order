@@ -1,3 +1,51 @@
+//{Search index
+
+export const generateCodes = () => {
+  return (dispatch, getState) => {
+    const goods = getState().goods.items;
+    const goodsKeys = Object.keys(goods);
+    const codes = goodsKeys.reduce((result, key) => {
+      const code = goods[key].code;
+      result[code.toLowerCase()] = [key];
+      return result;
+    }, {});
+    dispatch({
+      type: 'RECEIVE_CODES',
+      payload: codes
+    });
+  }
+};
+
+
+const generateDescrGuids = (goods, descr) => {
+  const goodsKeys = Object.keys(goods);
+  return goodsKeys.reduce((res, key) => {
+    return goods[key].description === descr ? res.concat(key) : res;
+  }, []);
+}
+
+export const generateDescriptions = () => {
+  return (dispatch, getState) => {
+    const goods = getState().goods.items;
+    const keys = Object.keys(goods);
+    const descrArr = keys.reduce((res, key) => {
+      res.push(goods[key].description);
+      return res;
+    }, []);
+    const descriptions =  descrArr.reduce((res, descr) => {
+      const guids = generateDescrGuids(goods, descr);
+      res[descr.toLowerCase()] = guids;
+      return res;
+    }, {});
+    dispatch({
+      type: 'RECEIVE_DESCRIPTIONS',
+      payload: descriptions
+    });
+  }
+};
+
+//Search index }
+
 export const setCurentGuid = (guid) => {
   return {
     type: 'SET_CURRENT_GOODS_GUID',
@@ -72,18 +120,16 @@ export const search = (text) => {
     let result  = codesKeys.reduce((result, key) => {
       return key.includes(text) ? [ ...result, ...codes[key] ] : result
     }, []);
-    // search by description
-    // result  = descriptionsKeys.reduce((result, key) => {
-    //   return key.includes(text) ? [ ...result, ...descriptions[key] ] : result
-    // }, result);
     const words = text.split(' ');
     result = words.reduce( (res, word) => {
       return [ ...result, ...searchByDescription(descriptions, descriptionsKeys, word.trim()) ]
     }, result);
+    console.log("resulted keys", result);
     const filteredGoods = result.reduce((res, elem) => {
       res[elem] = itemsInitial[elem];
       return res;
     }, {})
+    console.log("filtered goods", filteredGoods);
     dispatch({
       type: 'SET_GOODS_LIST',
       payload: filteredGoods,

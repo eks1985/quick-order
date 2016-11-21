@@ -6,12 +6,12 @@ export const listenToGoodsGroups = () => {
 		goodsGroupsRef.off();
 		goodsGroupsRef.on('value', (snapshot) => {
 			dispatch({
-				type: 'GOODS_GROUPS_RECEIVE_DATA',
+				type: 'RECEIVE_GOODS_GROUPS',
 				payload: snapshot.val()
 			});
 		}, (error) => {
 			dispatch({
-				type: 'GOODS_GROUPS_RECEIVE_DATA_ERROR',
+				type: 'RECEIVE_GOODS_GROUPS_ERROR',
 				message: error.message
 			});
 		});

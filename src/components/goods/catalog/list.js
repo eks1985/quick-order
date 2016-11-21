@@ -4,6 +4,7 @@ import { getGoodsVisibleIds } from './../../../store/reducers/goods';
 import * as cartActions from './../../../actions/cart';
 import * as goodsActions from './../../../actions/goods';
 import * as modalActions from './../../../lib/modal/actions/modal';
+import { format1 } from './../../../utils/format';
 
 const List = ({
   items,
@@ -112,7 +113,7 @@ const List = ({
               {items[key].description}
             </a>
           </div>
-          <div style={rowStyle.price}>{prices[key]}</div>
+          <div style={rowStyle.price}>{format1(prices[key], '')}</div>
           <div style={rowStyle.qty}>
             <input
               type="text"
