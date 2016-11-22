@@ -18,13 +18,14 @@ class App extends Component {
     dispatch(setModal({ fullScreen: true, content: 'login', style: {display: 'flex', justifyContent: 'center', alignItems: 'center'}, showClose: false }));
     dispatch(setQtyPagesGoods());
     dispatch(setQtyPagesOrders());
-    document.addEventListener('keyup', this.handleKeyUp.bind(this), false)
+    document.addEventListener('keyup', this.handleKeyUp.bind(this), false);
   }
 
   handleKeyUp(e) {
-    if (e.key === '/') {
+    console.log(e);
+    if (e.key === '/' || e.keyIdentifier === "U+004F") {
       document.querySelector('#search').focus();
-    } else if (e.key === 'Enter' && document.activeElement.id === 'search') {
+    } else if ( (e.key === 'Enter' || e.keyIdentifier === "Enter") && document.activeElement.id === 'search') {
       // console.log(document.activeElement);
       this.props.dispatch(search(document.querySelector('#search').value));
     }
@@ -35,7 +36,7 @@ class App extends Component {
       display: 'flex',
       flexDirection: 'column',
       height: '100vh'
-    }
+    };
     return (
       <div className="App" style={style}>
         <Auth />
