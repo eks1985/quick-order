@@ -1,6 +1,6 @@
 export const setQtyPagesOrders = () => {
   return (dispatch, getState) => {
-      const keysLength = Object.keys(getState().orders.items).length;
+      const keysLength = Object.keys(getState().orders.headers).length;
       const qtyPages = keysLength % 3 === 0 ? keysLength / 3  : Math.floor(keysLength / 3) + 1;
       dispatch({
         type: 'SET_QTY_PAGES_ORDERS',

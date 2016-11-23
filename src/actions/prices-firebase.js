@@ -6,12 +6,12 @@ export const listenToPrices = () => {
 		pricesRef.off();
 		pricesRef.on('value', (snapshot) => {
 			dispatch({
-				type: 'PRICES_RECEIVE_DATA',
+				type: 'RECEIVE_PRICES',
 				payload: snapshot.val()
 			});
 		}, (error) => {
 			dispatch({
-				type: 'PRICES_RECEIVE_DATA_ERROR',
+				type: 'RECEIVE_PRICES_ERROR',
 				message: error.message
 			});
 		});

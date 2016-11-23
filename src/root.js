@@ -4,7 +4,7 @@ import store from './store';
 import App from './App';
 import { listenToGoodsGroups } from './actions/goods-groups-firebase';
 import { listenToGoods } from './actions/goods-firebase';
-// import { listenToPrices } from './actions/prices-firebase';
+import { listenToPrices } from './actions/prices-firebase';
 import { listenToAuth, logoutUser } from './actions/auth';
 
 import darkBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
@@ -17,8 +17,8 @@ export default class root extends Component {
 		store.dispatch(listenToAuth());
     store.dispatch(listenToGoodsGroups());
     store.dispatch(listenToGoods());
+    store.dispatch(listenToPrices());
     store.dispatch(logoutUser());
-    // store.dispatch(listenToPrices());
 	}
 
   render() {

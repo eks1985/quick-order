@@ -5,5 +5,5 @@ export const setCurrentContent = (contentName) => {
       type: 'SET_CURRENT_CONTENT',
       contentName
     });
-  }
-}
+  };
+};

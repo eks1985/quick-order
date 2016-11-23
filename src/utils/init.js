@@ -12,6 +12,9 @@ export const customerInitialState = () => {
     guid: '',
     description: '',
     address: '',
+    email: '',
+    phone: '',
+    inn: ''
   };
 };
 
@@ -23,7 +26,7 @@ export const ordersInitialState = () => {
     //headers
     const ordNr = v4();
     const date  = new Date();
-    ordersHeaders[ordNr] = {nr: ordNr, enterpriseNr: ordNr.substr(0, 10), date}
+    ordersHeaders[ordNr] = {nr: ordNr, enterpriseNr: ordNr.substr(0, 10), date};
 
     //items
     const rowsQty = randomInt(1, 10);
@@ -38,13 +41,13 @@ export const ordersInitialState = () => {
       const goodsCurrent = goodsInitial[goodsKeys[randomKeyPos]];
       generatedRows[goodsKeys[randomKeyPos]] = {qty, price, amount: qty*price, code: goodsCurrent.code, description: goodsCurrent.description};
       totalAmount += qty*price;
-    };
+    }
     ordersItems[ordNr] = generatedRows;
     ordersHeaders[ordNr].amount = totalAmount;
 
-  };
+  }
 
-  return {ordersHeads: ordersHeaders, ordersItems: ordersItems}
+  return {ordersHeads: ordersHeaders, ordersItems: ordersItems};
 
 };
 

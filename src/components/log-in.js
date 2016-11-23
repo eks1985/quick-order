@@ -4,10 +4,14 @@ import * as modalActions from './../lib/modal/actions/modal';
 import * as authActions from './../actions/auth';
 
 const Login = ({
+  auth,
   //actions
   setModal,
   openAuth,
+  openAuthAnonimously
 }) => {
+  let inputEmail;
+  let inputPwd;
   return (
     <div style={{display: 'flex', padding: '30px', border: '1px solid #bbb'}}>
       <div style={{display: 'flex', flexDirection: 'column'}}>
@@ -17,16 +21,31 @@ const Login = ({
             <div style={{height: '30px'}}>Пароль</div>
           </div>
           <div>
-            <div style={{height: '30px'}}><input type='text' /></div>
-            <div style={{height: '30px'}}><input type='password' /></div>
+            <div style={{height: '30px'}}>
+              <input 
+                type='text'
+                // value='alfa1@alfa.com'
+                ref={(node) => {
+                  inputEmail = node;  
+                }}
+              />
+            </div>
+            <div style={{height: '30px'}}>
+              <input 
+                type='password' 
+                // value='123456'
+                ref={(node) => {
+                  inputPwd = node;  
+                }}
+              />
+            </div>
           </div>
         </div>
         <div style={{display: 'flex', justifyContent: 'flex-end'}}>
           <button
             onClick={
-              () => {
-                setModal({ content: ''});
-                openAuth();
+              ()=>{
+                openAuth({ email: inputEmail.value, password: inputPwd.value });
               }
             }
           >
@@ -40,20 +59,22 @@ const Login = ({
           <button
             onClick={
               () => {
-                setModal({ content: ''});
-                openAuth();
+                openAuthAnonimously();
               }
             }
           >
             Войти анонимно
           </button>
         </div>
+        <p style={{height: '16px', fontSize: '14px', color: 'red'}}>
+          {auth.error && auth.error}
+        </p>
       </div>
     </div>
   );
-}
+};
 
 export default connect(
-  null,
+  state => ({ auth: state.auth }),
   { ...modalActions, ...authActions }
 )(Login);

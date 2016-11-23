@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './App.css';
-import Auth from './components/auth';
+// import Auth from './components/auth';
 import Layout from './components/layout';
 import Modal from './lib/modal/components/modal';
 import ModalContent from './components/modal-content';
@@ -9,7 +9,7 @@ import { setQtyPagesGoods } from './actions/goods';
 import { setQtyPagesOrders } from './actions/orders';
 import { setCurrentContent } from './actions/current-content';
 import { setModal } from './lib/modal/actions/modal';
-import { search } from './actions/goods';
+// import { search } from './actions/goods';
 
 class App extends Component {
 
@@ -22,13 +22,12 @@ class App extends Component {
   }
 
   handleKeyUp(e) {
-    console.log(e);
-    if (e.key === '/' || e.keyIdentifier === "U+004F") {
-      document.querySelector('#search').focus();
-    } else if ( (e.key === 'Enter' || e.keyIdentifier === "Enter") && document.activeElement.id === 'search') {
-      // console.log(document.activeElement);
-      this.props.dispatch(search(document.querySelector('#search').value));
-    }
+    // console.log(e);
+    // if (e.key === '/' || e.keyIdentifier === "U+004F") {
+    //   document.querySelector('#search').focus();
+    // } else if ( (e.key === 'Enter' || e.keyIdentifier === "Enter") && document.activeElement.id === 'search') {
+    //   this.props.dispatch(search(document.querySelector('#search').value));
+    // }
   }
 
   render() {
@@ -39,7 +38,7 @@ class App extends Component {
     };
     return (
       <div className="App" style={style}>
-        <Auth />
+        {/* <Auth /> */}
         <Layout />
         <Modal
           handlerClose={

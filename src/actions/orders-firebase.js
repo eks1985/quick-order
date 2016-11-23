@@ -1,28 +1,35 @@
 import { database } from '../firebase/firebase-app';
 
+import { setQtyPagesOrders } from './orders';
+
 export const listenToOrdersHeaders = () => {
-	return (getState, dispatch) => {
+	return (dispatch, getState) => {
     const customerGuid = getState().customer.guid;
     if (customerGuid) {
-      const goodsGroupsRef = database.ref('orders/heders/' + customerGuid);
+      const goodsGroupsRef = database.ref('orders/headers/' + customerGuid);
       goodsGroupsRef.off();
-      goodsGroupsRef.on('value', (snapshot) => {
+      goodsGroupsRef.on('value', snapshot => {
         dispatch({
           type: 'RECEIVE_ORDERS_HEADERS',
           payload: snapshot.val()
         });
+        dispatch(setQtyPagesOrders());
       }, (error) => {
         dispatch({
           type: 'RECEIVE_ORDERS_HEADERS_ERROR',
           message: error.message
         });
       });
+    } else {
+      dispatch({
+        type: 'RESET_ORDERS_HEADERS'
+      });
     }
 	};
 };
 
 export const listenToOrdersItems= () => {
-	return (getState, dispatch) => {
+	return (dispatch, getState) => {
     const customerGuid = getState().customer.guid;
     if (customerGuid) {
       const goodsGroupsRef = database.ref('orders/items/' + customerGuid);
@@ -37,6 +44,10 @@ export const listenToOrdersItems= () => {
           type: 'RECEIVE_ORDERS_HEADERS_ERROR',
           message: error.message
         });
+      });
+    } else {
+      dispatch({
+        type: 'RESET_ORDERS_ITEMS'
       });
     }
 	};

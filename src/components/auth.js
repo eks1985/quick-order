@@ -5,6 +5,7 @@ import * as authActions from '../actions/auth';
 let Auth = ({
   authStatus,
   authUid,
+  authEmail,
   //actions
   openAuth,
   logoutUser
@@ -37,7 +38,7 @@ let Auth = ({
                 }
               }
             >Выйти</button>
-            {' '} Пользователь: {authUid}
+            {authEmail}
           </span>
 
         }
@@ -54,6 +55,6 @@ let Auth = ({
 };
 
 export default connect(
-  state => ({authStatus: state.auth.status, authUid: state.auth.uid}),
+  state => ({ authStatus: state.auth.status, authUid: state.auth.uid, authEmail: state.auth.email }),
   { ...authActions }
 )(Auth);

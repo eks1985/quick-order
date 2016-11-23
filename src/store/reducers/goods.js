@@ -21,30 +21,30 @@ const filterByGroupGuid = (groupGuid, items) => {
 const codes = (state = {}, action) => {
   switch (action.type) {
     case 'RECEIVE_CODES':
-      return { ...state, ...action.payload }
+      return { ...state, ...action.payload };
     default:
       return state;
   }
-}
+};
 
 const descriptions = (state = {}, action) => {
   switch (action.type) {
     case 'RECEIVE_DESCRIPTIONS':
-      return { ...state, ...action.payload }
+      return { ...state, ...action.payload };
     default:
       return state;
   }
-}
+};
 
 const itemsInitial = (state, action) => {
   switch (action.type) {
     case 'RECEIVE_GOODS':
     console.log("items initial receive goods");
-      return { ...state, ...action.payload }
+      return { ...state, ...action.payload };
     default:
       return state || initialState;
   }
-}
+};
 
 const currentGuid = (state = '', action) => {
   switch (action.type) {
@@ -53,13 +53,13 @@ const currentGuid = (state = '', action) => {
     default:
       return state;
   }
-}
+};
 
 const items = (state, action) => {
   switch (action.type) {
     case 'RECEIVE_GOODS':
       console.log("items receive goods");
-      return { ...state, ...action.payload }
+      return { ...state, ...action.payload };
     case 'SET_GOODS_LIST':
       if (action.filterData.filterType === 'goodsGroup') {
         return filterByGroupGuid(action.filterData.groupGuid, action.filterData.itemsInitial);
@@ -83,7 +83,7 @@ const pageNumber = (state = 1, action) => {
     default:
      return state;
   }
-}
+};
 
 const qtyPages = (state = 0, action) => {
   switch (action.type) {
@@ -92,7 +92,7 @@ const qtyPages = (state = 0, action) => {
     default:
      return state;
   }
-}
+};
 
 const isLastPage = (state = false, action) => {
   switch (action.type) {
@@ -101,7 +101,7 @@ const isLastPage = (state = false, action) => {
     default:
      return state;
   }
-}
+};
 
 // Selectors
 
@@ -111,7 +111,7 @@ export const getGoodsVisibleIds = (state) => { //state = goods.state
   return  keys.reduce((result, key, i) => {
     return i >= (pageNumber-1)*10 && i < pageNumber*10 ? result.concat(key) : result;
   }, []);
-}
+};
 
 export default combineReducers({
   currentGuid,

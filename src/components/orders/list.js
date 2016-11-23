@@ -65,6 +65,7 @@ const List = ({
       headersIds.map(key => {
         const headerCurrent = headers[key];
         const { enterpriseNr, date, amount } = headerCurrent;
+        const dateFormatted = new Date(date).toISOString().slice(0,10);
         return (
           <div key={key} className='orderContainer'>
             <div  className='orderHeader' style={style}>
@@ -72,7 +73,7 @@ const List = ({
               {`Номер: ${enterpriseNr}`}
               </div>
               <div style={{flex: '0 0 20%'}}>
-              {`Дата: ${date.toISOString().slice(0,10)}`}
+              {`Дата: ${dateFormatted}`}
               </div>
               <div style={{flex: '0 0 20%'}}>
               {`Сумма: ${format1(amount, "руб.")}`}
@@ -86,7 +87,7 @@ const List = ({
         );
       })
     );
-  }
+  };
 
   return (
     <div style={style}>

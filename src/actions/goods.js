@@ -13,7 +13,7 @@ export const generateCodes = () => {
       type: 'RECEIVE_CODES',
       payload: codes
     });
-  }
+  };
 };
 
 
@@ -22,7 +22,7 @@ const generateDescrGuids = (goods, descr) => {
   return goodsKeys.reduce((res, key) => {
     return goods[key].description === descr ? res.concat(key) : res;
   }, []);
-}
+};
 
 export const generateDescriptions = () => {
   return (dispatch, getState) => {
@@ -41,7 +41,7 @@ export const generateDescriptions = () => {
       type: 'RECEIVE_DESCRIPTIONS',
       payload: descriptions
     });
-  }
+  };
 };
 
 //Search index }
@@ -105,9 +105,9 @@ export const goToGoodsPage = (pageNumber) => {
 
 const searchByDescription = (descriptions, keys, text) => {
   return keys.reduce((result, key) => {
-    return key.includes(text) ? [ ...result, ...descriptions[key] ] : result
+    return key.includes(text) ? [ ...result, ...descriptions[key] ] : result;
   }, []);
-}
+};
 
 export const search = (text) => {
   text = text.toLowerCase();
@@ -118,18 +118,16 @@ export const search = (text) => {
     const descriptionsKeys = Object.keys(descriptions);
     //search by code
     let result  = codesKeys.reduce((result, key) => {
-      return key.includes(text) ? [ ...result, ...codes[key] ] : result
+      return key.includes(text) ? [ ...result, ...codes[key] ] : result;
     }, []);
     const words = text.split(' ');
     result = words.reduce( (res, word) => {
-      return [ ...result, ...searchByDescription(descriptions, descriptionsKeys, word.trim()) ]
+      return [ ...result, ...searchByDescription(descriptions, descriptionsKeys, word.trim()) ];
     }, result);
-    console.log("resulted keys", result);
     const filteredGoods = result.reduce((res, elem) => {
       res[elem] = itemsInitial[elem];
       return res;
-    }, {})
-    console.log("filtered goods", filteredGoods);
+    }, {});
     dispatch({
       type: 'SET_GOODS_LIST',
       payload: filteredGoods,
@@ -137,7 +135,7 @@ export const search = (text) => {
     });
     dispatch(setQtyPagesGoods());
     dispatch(goToGoodsPage(1));
-  }
-}
+  };
+};
 
 //Firebase

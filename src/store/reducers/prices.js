@@ -2,7 +2,7 @@ import { pricesInitialState } from './../../utils/init';
 
 export default (state, action) => {
   switch (action.type) {
-    case 'PRICES_RECEIVE_DATA':
+    case 'RECEIVE_PRICES':
       return { ...state, ...action.payload};
     default:
       return state || pricesInitialState();
