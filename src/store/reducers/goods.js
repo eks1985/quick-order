@@ -39,7 +39,6 @@ const descriptions = (state = {}, action) => {
 const itemsInitial = (state, action) => {
   switch (action.type) {
     case 'RECEIVE_GOODS':
-    console.log("items initial receive goods");
       return { ...state, ...action.payload };
     default:
       return state || initialState;

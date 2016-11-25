@@ -4,6 +4,7 @@ import { listenToGoodsGroups } from './goods-groups-firebase';
 import { listenToGoods } from './goods-firebase';
 import { listenToPrices } from './prices-firebase';
 import { listenToOrdersHeaders, listenToOrdersItems } from './orders-firebase';
+// import { setQtyPagesOrders } from './orders';
 import { setModal } from './../lib/modal/actions/modal';
 import { setCustomer } from './customer';
 import { setCurrentContent } from './current-content';
@@ -41,6 +42,7 @@ export const listenToAuth = () => {
   						dispatch(setCustomer(guid, description, address, phone, email, inn));
   						dispatch(listenToOrdersHeaders());
   						dispatch(listenToOrdersItems());
+  						// dispatch(setQtyPagesOrders())
   					});
   				});
     		}
