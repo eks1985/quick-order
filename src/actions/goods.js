@@ -138,4 +138,8 @@ export const search = (text) => {
   };
 };
 
+export const resetPagination = () => {
+  
+};
+
 //Firebase

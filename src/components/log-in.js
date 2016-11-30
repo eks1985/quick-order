@@ -22,20 +22,20 @@ const Login = ({
           </div>
           <div>
             <div style={{height: '30px'}}>
-              <input 
+              <input
                 type='text'
-                // value='alfa1@alfa.com'
+                value='alfa1@alfa.com'
                 ref={(node) => {
-                  inputEmail = node;  
+                  inputEmail = node;
                 }}
               />
             </div>
             <div style={{height: '30px'}}>
-              <input 
-                type='password' 
-                // value='123456'
+              <input
+                type='password'
+                value='123456'
                 ref={(node) => {
-                  inputPwd = node;  
+                  inputPwd = node;
                 }}
               />
             </div>

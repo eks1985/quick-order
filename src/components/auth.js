@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as authActions from '../actions/auth';
+import RaisedButton from 'material-ui/RaisedButton';
 
 let Auth = ({
   authStatus,
@@ -16,13 +17,14 @@ let Auth = ({
       <div style={{display: 'flex', justifyContent: 'flex-end'}}>
         {
           authStatus === 'AUTH_ANONYMOUS' &&
-          <button
+          <RaisedButton
+            label='Войти'
             onClick={
               () => {
                 openAuth();
               }
             }
-          >Войти</button>
+          ></RaisedButton>
         }
         {
           authStatus === 'AUTH_AWAITING_RESPONSE' &&

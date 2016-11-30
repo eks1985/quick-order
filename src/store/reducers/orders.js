@@ -1,9 +1,5 @@
 import { combineReducers } from 'redux';
-// import { ordersInitialState } from './../../utils/init';
 
-// const ordersIntiialStateGenerated = ordersInitialState();
-
-// const initialStateHeaders = ordersIntiialStateGenerated.ordersHeads;
 const headers = (state = {}, action) => {
   switch (action.type) {
     case 'RECEIVE_ORDERS_HEADERS':
@@ -11,15 +7,13 @@ const headers = (state = {}, action) => {
     case 'RESET_ORDERS_HEADERS':
       return {};
     case 'CHECKOUT':
-      const itemKeys = Object.keys(action.cartItems);
-      const amount = itemKeys.reduce((result, key) => result += action.cartItems[key].qty * action.cartItems[key].price, 0);
-      return { ...state, [action.header.guid]: { nr: action.header.guid, enterpriseNr:action.header.guid.substring(0, 10), date: action.header.date, amount} };
+      const { nr, date, amount, enterpriseNr } = action.header;
+      return { ...state, [nr]: { nr, enterpriseNr, date, amount} };
     default:
       return state;
   }
 };
 
-// const initialStateItems = ordersIntiialStateGenerated.ordersItems;
 const items = (state = {}, action) => {
   switch (action.type) {
     case 'RECEIVE_ORDERS_ITEMS':
@@ -27,9 +21,8 @@ const items = (state = {}, action) => {
     case 'RESET_ORDERS_ITEMS':
       return {};
     case 'CHECKOUT':
-      const guid = action.header.guid;
-      const items = action.cartItems;
-      return { ...state, [guid]: items};
+      const nr = action.header.nr;
+      return { ...state, [nr]: action.cartItems};
     default:
       return state;
   }

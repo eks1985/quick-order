@@ -14,9 +14,12 @@ export default () => {
   }
   return (
     <Paper className='catalog' style={style} zDepth={2}>
-        <Pagination />
+      <div style={{display: 'flex', justifyContent: 'space-between', height: '65px'}}>
         <Search />
-        <List />
+        <Pagination />
+      </div>
+
+      <List />
     </Paper>
   );
 };

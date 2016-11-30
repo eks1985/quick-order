@@ -20,8 +20,9 @@ const Nav = ({
         <FlatButton
           rippleColor='#eee'
           label='Каталог'
-          // style={currentContent === 'goods' ? {background: 'yellow'} : {}}
-          backgroundColor={currentContent === 'goods' ? '#ddd' : '#eee'}
+          backgroundColor={currentContent === 'goods' ? '#aaa' : '#eee'}
+          hoverColor="transparent"
+          labelStyle={currentContent === 'goods' ? {color: 'white'} : {color: 'black'}}
           onClick={
             () => {
               setCurrentContent('goods');
@@ -32,8 +33,9 @@ const Nav = ({
         <FlatButton
           rippleColor='#eee'
           label='Заказы'
-          // style={currentContent === 'orders' ? {background: 'yellow'} : {}}
-          backgroundColor={currentContent === 'orders' ? '#ddd' : '#eee'}
+          backgroundColor={currentContent === 'orders' ? '#aaa' : '#eee'}
+          hoverColor="transparent"
+          labelStyle={currentContent === 'orders' ? {color: 'white'} : {color: 'black'}}
           onClick={
             () => {
               setCurrentContent('orders');
@@ -44,8 +46,9 @@ const Nav = ({
         <FlatButton
           rippleColor='#eee'
           label='Быстрый заказ'
-          // style={currentContent === 'quick-list' ? {background: 'yellow'} : {}}
-          backgroundColor={currentContent === 'quick-list' ? '#ddd' : '#eee'}
+          backgroundColor={currentContent === 'quick-list' ? '#aaa' : '#eee'}
+          hoverColor="transparent"
+          labelStyle={currentContent === 'quick-list' ? {color: 'white'} : {color: 'black'}}
           onClick={
             () => {
               setCurrentContent('quick-list');
@@ -56,7 +59,9 @@ const Nav = ({
         <FlatButton
           rippleColor='#eee'
           label='Профиль'
-          backgroundColor={currentContent === 'profile' ? '#ddd' : '#eee'}
+          backgroundColor={currentContent === 'profile' ? '#aaa' : '#eee'}
+          hoverColor="transparent"
+          labelStyle={currentContent === 'profile' ? {color: 'white'} : {color: 'black'}}
           onClick={
             () => {
               setCurrentContent('profile');
@@ -68,7 +73,9 @@ const Nav = ({
         <FlatButton
           rippleColor='#eee'
           label='Помощь'
-          backgroundColor={currentContent === 'help' ? '#ddd' : '#eee'}
+          backgroundColor={currentContent === 'help' ? '#aaa' : '#eee'}
+          hoverColor="transparent"
+          labelStyle={currentContent === 'help' ? {color: 'white'} : {color: 'black'}}
           onClick={
             () => {
               setCurrentContent('help');

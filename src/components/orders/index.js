@@ -12,7 +12,9 @@ export default () => {
   };
   return (
     <div className='orders' style={style}>
-      <Pagination />
+      <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+        <Pagination />
+      </div>
       <List />
     </div>
   );

@@ -5,11 +5,16 @@ import * as cartActions from './../../../actions/cart';
 import * as goodsActions from './../../../actions/goods';
 import * as modalActions from './../../../lib/modal/actions/modal';
 import { format1 } from './../../../utils/format';
+import IconButton from 'material-ui/IconButton';
+import IconAddShoppingCart from 'material-ui/svg-icons/action/add-shopping-cart';
+import IconRemoveShoppingCart from 'material-ui/svg-icons/action/remove-shopping-cart';
+import { ListItem } from 'material-ui/List';
 
 const List = ({
   items,
   itemsIds,
   handleAssignQty,
+  handleRemoveAssignQty,
   qtyAssigned,
   cartItems,
   prices,
@@ -20,15 +25,18 @@ const List = ({
   setCurentGuid
 }) => {
   const style = {
-    overflowY: 'scroll',
+    // overflowY: 'scroll',
     maxHeight: '70vh',
-    paddingTop: '10px',
+    // paddingTop: '10px',
     display: 'flex',
     flexDirection: 'column'
   }
   const rowStyle = {
     container: {
-      display: 'flex'
+      display: 'flex',
+      alignItems: 'center',
+      height: '40px',
+      flex: '0 0 auto'
     },
     code: {
       display: 'flex',
@@ -62,7 +70,12 @@ const List = ({
   };
   const headerStyle = {
     container: {
-      display: 'flex'
+      display: 'flex',
+      height: '40px',
+      flex: '0 0 auto',
+      background: '#eee',
+      alignItems: 'center'
+
     },
     code: {
       display: 'flex',
@@ -103,6 +116,7 @@ const List = ({
             <a
               tabIndex={-1}
               href="#"
+              style={{textDecoration: 'none'}}
               onClick={
                 () => {
                   setCurentGuid(key);
@@ -110,14 +124,19 @@ const List = ({
                 }
               }
             >
-              {items[key].description}
+              <ListItem
+                tabIndex={-1}
+                innerDivStyle={{padding: '10px'}}
+              >
+                {items[key].description}
+              </ListItem>
             </a>
           </div>
           <div style={rowStyle.price}>{format1(prices[key], '')}</div>
           <div style={rowStyle.qty}>
             <input
               type="text"
-              style={{width: '50px', textAlign: 'right'}}
+              style={{width: '50px', textAlign: 'right', padding: '3px', fontSize: '16px'}}
               value={qtyAssigned[key] || ''}
               onChange={
                 (e) => {
@@ -130,7 +149,7 @@ const List = ({
           </div>
           <div style={rowStyle.add} >
             {!cartItems[key] && //if not inside cart - show Add to cart
-              <button
+              <IconButton
                 disabled={!qtyAssigned[key]}
                 onClick={
                   () => {
@@ -138,24 +157,21 @@ const List = ({
                   }
                 }
               >
-                В корзину
-              </button>
+                <IconAddShoppingCart />
+              </IconButton>
             }
             {cartItems[key] && //if inside cart - show Remove from cart
-              <span>
-                <span style={{fontSize: '10px', marginRight: '3px'}}>
-                  В корзине
-                </span>
-                <button
-                  onClick={
-                    () => {
-                      removeFromCart(key);
-                    }
+              <IconButton
+                disabled={!qtyAssigned[key]}
+                onClick={
+                  () => {
+                    removeFromCart(key);
+                    handleRemoveAssignQty(key);
                   }
-                >
-                  X
-                </button>
-              </span>
+                }
+              >
+                <IconRemoveShoppingCart />
+              </IconButton>
             }
           </div>
         </div>
@@ -201,8 +217,14 @@ class ListContainer extends Component {
     this.setState({qtyAssigned: newQtyAssigned});
   }
 
+  handleRemoveAssignQty(guid, qty) {
+    const newQtyAssigned = { ...this.state.qtyAssigned };
+    delete newQtyAssigned[guid];
+    this.setState({qtyAssigned: newQtyAssigned});
+  }
+
   render() {
-    return <List {...this.props} handleAssignQty={this.handleAssignQty.bind(this)} qtyAssigned={this.state.qtyAssigned} />;
+    return <List {...this.props} handleAssignQty={this.handleAssignQty.bind(this)} handleRemoveAssignQty={this.handleRemoveAssignQty.bind(this)} qtyAssigned={this.state.qtyAssigned} />;
   }
 
 }

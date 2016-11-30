@@ -12,16 +12,27 @@ const receiveHeaders = (dispatch, data) => {
   });  
 };
 
+// const receiveItems = (dispatch, data) => {
+//   return new Promise(resolve => {
+//     dispatch({
+//       type: 'RECEIVE_ORDERS_ITEMS',
+//       payload: data
+//     });
+//     resolve();
+//   });  
+// };
+
 export const listenToOrdersHeaders = () => {
 	return (dispatch, getState) => {
     const customerGuid = getState().customer.guid;
     if (customerGuid) {
-      const goodsGroupsRef = database.ref('orders/headers/' + customerGuid);
-      goodsGroupsRef.off();
-      goodsGroupsRef.on('value', snapshot => {
+      const ordersRef = database.ref('orders/headers/' + customerGuid);
+      ordersRef.off();
+      return ordersRef.once('value', snapshot => {
         receiveHeaders(dispatch, snapshot.val()).then(
           () => {
             dispatch(setQtyPagesOrders());
+            // Promise.resolve();
           }  
         );
       }, (error) => {
@@ -44,7 +55,7 @@ export const listenToOrdersItems= () => {
     if (customerGuid) {
       const goodsGroupsRef = database.ref('orders/items/' + customerGuid);
       goodsGroupsRef.off();
-      goodsGroupsRef.on('value', (snapshot) => {
+      return goodsGroupsRef.once('value', snapshot => {
         dispatch({
           type: 'RECEIVE_ORDERS_ITEMS',
           payload: snapshot.val()
