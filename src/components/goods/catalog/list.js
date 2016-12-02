@@ -14,9 +14,6 @@ import { ListItem } from 'material-ui/List';
 const List = ({
   items,
   itemsIds,
-  handleAssignQty,
-  handleRemoveAssignQty,
-  qtyAssigned,
   cartItems,
   prices,
   catalogQty,
@@ -27,7 +24,6 @@ const List = ({
   setCurentGuid,
   addCatalogQty, 
   removeCatalogQty,
-  changeCatalogQty
 }) => {
   const style = {
     display: 'flex',
@@ -209,39 +205,7 @@ const List = ({
   );
 };
 
-class ListContainer extends Component {
-
-  constructor(props){
-    super(props);
-    this.state = { qtyAssigned: {}};
-  }
-
-  componentDidMount() {
-    const qtyAssigned = {};
-    this.props.itemsIds.forEach(itemId => {
-      qtyAssigned[itemId] = '';
-    });
-    this.setState({qtyAssigned: qtyAssigned});
-  }
-
-  handleAssignQty(guid, qty) {
-    const newQtyAssigned = { ...this.state.qtyAssigned, [guid]: qty };
-    this.setState({qtyAssigned: newQtyAssigned});
-  }
-
-  handleRemoveAssignQty(guid, qty) {
-    const newQtyAssigned = { ...this.state.qtyAssigned };
-    delete newQtyAssigned[guid];
-    this.setState({qtyAssigned: newQtyAssigned});
-  }
-
-  render() {
-    return <List {...this.props} handleAssignQty={this.handleAssignQty.bind(this)} handleRemoveAssignQty={this.handleRemoveAssignQty.bind(this)} qtyAssigned={this.state.qtyAssigned} />;
-  }
-
-}
-
 export default connect(
   state => ({ items: state.goods.items, itemsIds: getGoodsVisibleIds(state.goods), cartItems: state.cart.items, prices: state.prices , catalogQty: state.catalogQty }),
   { ...cartActions, ...modalActions, ...goodsActions, ...catalogQtyActions }
-)(ListContainer);
+)(List);
