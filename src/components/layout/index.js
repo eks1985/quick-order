@@ -8,7 +8,7 @@ export default () => {
     display: 'flex',
     flexDirection: 'column',
     height: '100vh'
-  }
+  };
   return (
     <div className='layout' style={style}>
       <Header />

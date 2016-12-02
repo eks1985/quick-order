@@ -5,10 +5,8 @@ import * as modalActions from './../../../../lib/modal/actions/modal';
 import FlatButton from 'material-ui/FlatButton';
 import Auth from './../../../auth';
 
-// import injectTapEventPlugin from 'react-tap-event-plugin';
-// injectTapEventPlugin();
-
 const Nav = ({
+  auth,
   currentContent,
   //actions
   setCurrentContent,
@@ -87,6 +85,21 @@ const Nav = ({
           }
         >
         </FlatButton>
+        {auth.email === 'alfa1@alfa.com' &&
+          <FlatButton
+            rippleColor='#eee'
+            label='Настройки'
+            backgroundColor={currentContent === 'settings' ? '#aaa' : '#eee'}
+            hoverColor={currentContent === 'settings' ? '#aaa' : '#eee'}
+            labelStyle={currentContent === 'settings' ? {color: 'white'} : {color: 'black'}}
+            onClick={
+              () => {
+                setCurrentContent('settings');
+              }
+            }
+          >
+          </FlatButton>
+        }
       </div>
       <div style={{display: 'flex', flex: '0 1 50%', justifyContent: 'flex-end'}}>
         <Auth />
@@ -96,6 +109,6 @@ const Nav = ({
 };
 
 export default connect(
-  state => ({ currentContent: state.currentContent }),
+  state => ({ currentContent: state.currentContent, auth:  state.auth }),
   { ...currentContentActions, ...modalActions }
 )(Nav);

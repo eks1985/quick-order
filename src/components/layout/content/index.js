@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import Goods from './../../goods';
 import Orders from './../../orders';
 import Checkout from './../../checkout';
-// import Profile from './../../profile';
-// import Help from './../../help';
+import Options from './../../options';
 import QuickList from './../../quick-list';
 const Content = ({
   currentContent
@@ -13,15 +12,14 @@ const Content = ({
     display: 'flex',
     flexDirection: 'column',
     flex: '1 0 auto',
-    // border: '1px solid gray',
+    alignItems: 'stretch'
   };
   return (
     <div className='content' style={style}>
       {currentContent === 'goods' && <Goods />}
       {currentContent === 'orders' && <Orders />}
       {currentContent === 'checkout' && <Checkout />}
-      {/* {currentContent === 'profile' && <Profile />}
-      {currentContent === 'help' && <Help />} */}
+      {currentContent === 'settings' && <Options />}
       {currentContent === 'quick-list' && <QuickList />}
     </div>
   );

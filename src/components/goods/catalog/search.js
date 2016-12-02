@@ -20,6 +20,7 @@ let Search = ({
       <TextField
         placeholder='для перехода нажмите /'
         id='search'
+        // ref='search'
         autoFocus 
         type="text"
       >

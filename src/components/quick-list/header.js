@@ -21,6 +21,7 @@ const Header = ({
       <div style={{display: 'flex', flexDirection: 'column'}}>
         <TextField
           // hintText="Вначале строки должен быть артикул, а в конце количество"
+          id='quckListArea'
           multiLine={true}
           rows={10}
           style={{width: '100%', background: 'rgba(238, 238, 238, 0.7)'}}

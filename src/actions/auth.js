@@ -35,15 +35,16 @@ export const listenToAuth = () => {
   				let usersRef  = database.ref(`users/${email}`);
   				usersRef.once('value', snapshot => {
   					let customerGuid = snapshot.val();
-  					let customerRef = database.ref(`customers/${customerGuid}`);
-  					customerRef.once('value', snapshot => {
-  						const customerData = snapshot.val();
-  						const { guid, description, address, phone, email, inn } = customerData;
-  						dispatch(setCustomer(guid, description, address, phone, email, inn));
-  						dispatch(listenToOrdersHeaders());
-  						dispatch(listenToOrdersItems());
-  						// dispatch(setQtyPagesOrders())
-  					});
+  					if (customerGuid) {
+  						let customerRef = database.ref(`customers/${customerGuid}`);
+	  					customerRef.once('value', snapshot => {
+	  						const customerData = snapshot.val();
+	  						const { guid, description, address, phone, email, inn } = customerData;
+	  						dispatch(setCustomer(guid, description, address, phone, email, inn));
+	  						dispatch(listenToOrdersHeaders());
+	  						dispatch(listenToOrdersItems());
+	  					});					
+  					}
   				});
     		}
 			} else {

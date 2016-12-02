@@ -46,7 +46,7 @@ const List = ({
   let cleanCartInput;
 
   return (
-    <div style={{display: 'flex', flexDirection: 'column'}}>
+    <div style={{display: 'flex', flexDirection: 'column', flex:'1'}}>
       {hasItems && <div>{rowsHeaderJsx()}</div>}
       {hasItems && <div style={{border: '1px solid #eee'}}>{rowsJsx()}</div>}
       {hasItems &&

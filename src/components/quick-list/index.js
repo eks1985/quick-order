@@ -5,8 +5,8 @@ import Paper from 'material-ui/Paper';
 
 export default () => {
   return (
-    <div>
-      <Paper style={{padding: '10px'}}>
+    <div style={{display: 'flex', alignItems: 'stretch', flex: '1'}}>
+      <Paper style={{padding: '10px', flex: '1'}}>
         <Header />
         <List />
       </Paper>

@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as cartActions from './../../actions/cart';
 import * as checkoutActions from './../../actions/checkout';
+// import Paper from 'material-ui/Paper';
+// import RaisedButton from 'material-ui/RaisedButton';
 
 const Checkout = ({
   cartItems,
@@ -148,7 +150,7 @@ const Checkout = ({
         </div>
       );
     });
-  }
+  };
   const getHeaderJsx = () => {
     return (
       <div style={headerStyle.container}>
@@ -160,7 +162,7 @@ const Checkout = ({
         <div style={headerStyle.add}></div>
       </div>
     );
-  }
+  };
 
   return (
     <div className='checkout' style={style}>
