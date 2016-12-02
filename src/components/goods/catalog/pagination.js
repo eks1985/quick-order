@@ -21,8 +21,9 @@ const Pagination = ({
   const iconStyle = {width: 24, height: 24};
   const iconButtonStyle = {padding: '5px', width: 32};
   return (
-    <div style={{display: 'flex', alignItems: 'center', paddingRight: '20px'}}>
+    <div style={{display: 'flex', alignItems: 'center', paddingRight: '20px'}} tabIndex="-1">
       <IconButton
+        tabIndex={-1}
         iconStyle={iconStyle}
         style={iconButtonStyle}
         onClick={
@@ -33,9 +34,9 @@ const Pagination = ({
       >
         <IconFirstPage />
       </IconButton>
-      <IconButton onClick={moveGoodsBack} disabled={pageNumber === 1} iconStyle={iconStyle} style={iconButtonStyle}><IconBack /></IconButton>
+      <IconButton tabIndex={-1} onClick={moveGoodsBack} disabled={pageNumber === 1} iconStyle={iconStyle} style={iconButtonStyle}><IconBack /></IconButton>
       <TextField
-        // type="text"
+        tabIndex="-1"
         id='page'
         value={pageNumber}
         style={{width: '20px', fontSize: '14px'}}
@@ -47,8 +48,9 @@ const Pagination = ({
           }
         }
       ></TextField>
-      <IconButton onClick={moveGoodsForward} disabled={isLastPage} iconStyle={iconStyle} style={iconButtonStyle}><IconForward /></IconButton>
+      <IconButton  tabIndex={-1} onClick={moveGoodsForward} disabled={isLastPage} iconStyle={iconStyle} style={iconButtonStyle}><IconForward /></IconButton>
       <IconButton
+        tabIndex={-1}
         iconStyle={iconStyle}
         style={iconButtonStyle}
         onClick={
@@ -59,7 +61,7 @@ const Pagination = ({
       >
         <IconLastPage />
       </IconButton>
-      <IconFunctions style={{display: "inline-block", color: "rgba(0, 0, 0, 0.870588)", fill: "black", height: "16px", width: "16px"}} />
+      <IconFunctions  tabIndex={-1} style={{display: "inline-block", color: "rgba(0, 0, 0, 0.870588)", fill: "black", height: "16px", width: "16px"}} />
       <div style={{fontSize: '14px'}}>{`${qtyPages}`}</div>
     </div>
   );

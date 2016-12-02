@@ -60,7 +60,6 @@ const currentGuid = (state = '', action) => {
 const items = (state, action) => {
   switch (action.type) {
     case 'RECEIVE_GOODS':
-      console.log("items receive goods");
       return { ...state, ...action.payload };
     case 'SET_GOODS_LIST':
       if (action.filterData.filterType === 'goodsGroup') {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as goodsActions from './../../../actions/goods';
 import TextField from 'material-ui/TextField';
@@ -14,21 +14,19 @@ let Search = ({
     padding: '0px',
     height: '36px',
     width: '36px'
-  }
+  };
   return (
     <div style={{display: 'flex', alignItems: 'center'}}>
       <TextField
         placeholder='для перехода нажмите /'
         id='search'
-        autoFocus
+        autoFocus 
         type="text"
-        ref={(node) => {
-          input = node;
-        }}
       >
       </TextField>
       {'  '}
       <IconButton
+        tabIndex={-1}
         style={iconButtonStyle}
         onClick={
           () => {
@@ -40,6 +38,7 @@ let Search = ({
       </IconButton>
       {'  '}
       <IconButton
+        tabIndex={-1}
         style={iconButtonStyle}
         onClick={
           () => {
@@ -53,7 +52,27 @@ let Search = ({
   );
 };
 
+class SearchContainer extends Component {
+  
+  componentDidMount() {
+    // // console.log(this.refs);
+    // console.log(document.querySelector('#search'));
+    // document.querySelector('#search').focus();
+  }
+  
+  componentDidUpdate() {
+    // console.log("did update");
+  }
+  
+  render () {
+    // document.querySelector('#search').focus();
+    // console.log('search render');
+    return <Search {...this.props} />;
+  }
+  
+}
+
 export default connect(
   null,
   goodsActions
-)(Search);
+)(SearchContainer);

@@ -11,7 +11,7 @@ export default () => {
     flexDirection: 'column',
     // border: '1px solid gray',
     padding: '10px'
-  }
+  };
   return (
     <Paper className='catalog' style={style} zDepth={2}>
       <div style={{display: 'flex', justifyContent: 'space-between', height: '65px'}}>

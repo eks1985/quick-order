@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { getGoodsVisibleIds } from './../../../store/reducers/goods';
 import * as cartActions from './../../../actions/cart';
@@ -6,9 +6,9 @@ import * as goodsActions from './../../../actions/goods';
 import * as modalActions from './../../../lib/modal/actions/modal';
 import * as catalogQtyActions from './../../../actions/catalog-qty';
 import { format1 } from './../../../utils/format';
-import IconButton from 'material-ui/IconButton';
-import IconAddShoppingCart from 'material-ui/svg-icons/action/add-shopping-cart';
-import IconRemoveShoppingCart from 'material-ui/svg-icons/action/remove-shopping-cart';
+// import IconButton from 'material-ui/IconButton';
+// import IconAddShoppingCart from 'material-ui/svg-icons/action/add-shopping-cart';
+// import IconRemoveShoppingCart from 'material-ui/svg-icons/action/remove-shopping-cart';
 import { ListItem } from 'material-ui/List';
 
 const List = ({
@@ -135,6 +135,23 @@ const List = ({
           </div>
           <div style={rowStyle.price}>{format1(prices[key], '')}</div>
           <div style={rowStyle.qty}>
+            <div 
+              style={{width: '12px', cursor: 'pointer', background: 'rgba(238, 238, 238, 0.5)'}}
+              onClick={
+                () => {
+                  if (catalogQty[key]) {
+                    const v = catalogQty[key] - 1;
+                    if (v === 0) {
+                      removeFromCart(key);
+                      removeCatalogQty(key);
+                    } else {
+                      addCatalogQty(key, v);
+                      addToCart(key, v, prices[key]);                      
+                    }
+                  }
+                }
+              }
+            ></div>
             <input
               type="text"
               style={{width: '50px', textAlign: 'right', padding: '3px', fontSize: '16px'}}
@@ -143,18 +160,35 @@ const List = ({
                 (e) => {
                   const val = parseInt(e.target.value, 10) ? parseInt(e.target.value, 10) : '';
                     addCatalogQty(key, val);
-                    cartItems[key] && addToCart(key, val, prices[key]);
+                    addToCart(key, val, prices[key]);
                     if (val === '') {
                       removeFromCart(key);
                       removeCatalogQty(key);
                     }
+                    // addCatalogQty(key, val);
+                    // cartItems[key] && addToCart(key, val, prices[key]);
+                    // if (val === '') {
+                    //   removeFromCart(key);
+                    //   removeCatalogQty(key);
+                    // }
                 }
               }
             >
             </input>
+            <div 
+              style={{width: '12px', cursor: 'pointer', background: 'rgba(238, 238, 238, 0.5)'}}
+              onClick={
+                () => {
+                  const v = catalogQty[key] ? catalogQty[key] + 1 :  1;
+                  addCatalogQty(key, v);
+                  addToCart(key, v, prices[key]);                  
+                }
+              }
+            >
+            </div>
           </div>
           <div style={rowStyle.add} >
-            {!cartItems[key] && //if not inside cart - show Add to cart
+            {/* {!cartItems[key] && //if not inside cart - show Add to cart
               <IconButton
                 disabled={!catalogQty[key]}
                 onClick={
@@ -178,7 +212,7 @@ const List = ({
               >
                 <IconRemoveShoppingCart />
               </IconButton>
-            }
+            } */}
           </div>
         </div>
       );

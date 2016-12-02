@@ -25,7 +25,7 @@ const Checkout = ({
     paddingTop: '10px',
     display: 'flex',
     flexDirection: 'column'
-  }
+  };
   const rowStyle = {
     container: {
       display: 'flex'
@@ -105,7 +105,7 @@ const Checkout = ({
       flex: '0 0 10%',
       padding: '3px'
     }
-  }
+  };
   const getItemsJsx = () => {
     const itemsIds = Object.keys(cartItems);
     return itemsIds.map( key => {
