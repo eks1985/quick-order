@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as goodsActions from './../../../actions/goods';
-// import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import IconButton from 'material-ui/IconButton';
 import IconFirstPage from 'material-ui/svg-icons/navigation/first-page';
@@ -43,7 +42,7 @@ const Pagination = ({
         inputStyle={{ textAlign: 'center'}}
         onChange={
           (e) => {
-            const page = parseInt(e.target.value, 10) ? parseInt(e.target.value, 10) : 1
+            const page = parseInt(e.target.value, 10) ? parseInt(e.target.value, 10) : 1;
             goToGoodsPage(page);
           }
         }
@@ -64,7 +63,7 @@ const Pagination = ({
       <div style={{fontSize: '14px'}}>{`${qtyPages}`}</div>
     </div>
   );
-}
+};
 
 export default connect(
   state => ({qtyPages: state.goods.qtyPages, pageNumber: state.goods.pageNumber, isLastPage: state.goods.isLastPage}),

@@ -9,7 +9,10 @@ import { setQtyPagesGoods } from './actions/goods';
 import { setQtyPagesOrders } from './actions/orders';
 import { setCurrentContent } from './actions/current-content';
 import { setModal } from './lib/modal/actions/modal';
-// import { search } from './actions/goods';
+import { search } from './actions/goods';
+
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
 
 class App extends Component {
 
@@ -23,11 +26,11 @@ class App extends Component {
 
   handleKeyUp(e) {
     // console.log(e);
-    // if (e.key === '/' || e.keyIdentifier === "U+004F") {
-    //   document.querySelector('#search').focus();
-    // } else if ( (e.key === 'Enter' || e.keyIdentifier === "Enter") && document.activeElement.id === 'search') {
-    //   this.props.dispatch(search(document.querySelector('#search').value));
-    // }
+    if (e.key === '/' || e.which === 111) {
+      document.querySelector('#search').focus();
+    } else if ( (e.key === 'Enter' || e.keyIdentifier === "Enter") && document.activeElement.id === 'search') {
+      this.props.dispatch(search(document.querySelector('#search').value));
+    }
   }
 
   render() {

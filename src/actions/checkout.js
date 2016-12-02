@@ -23,6 +23,7 @@ export const checkoutOrder = () => {
     // })
     dispatch(cleanCart());
     dispatch({type: 'RESET_CHECKOUT'});
+    dispatch({type: 'RESET_CATALOG_QTY'});
     // dispatch(setQtyPagesOrders());
     // dispatch(goToOrdersPage(1))
     // dispatch(detectIsLastPage());

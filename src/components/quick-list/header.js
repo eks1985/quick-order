@@ -1,40 +1,46 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as cartActions from './../../actions/cart';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 
 const Header = ({
   parseQuickList
 }) => {
-  let textArea;
+  let textToParse = '';
   return (
     <div>
       <div>
       <p>
-        Скопируте данные для заказа из буфера и вставьте в поле
+        Скопируйте данные для заказа из Excel файла и вставьте в поле
       </p>
       <p>
         Вначале строки должен быть артикул, а в конце количество
       </p>
       </div>
-      <div>
-        <textarea
-        style={{width: '600px', height: '200px'}}
-        ref={
-          (node) => {
-            textArea = node;
+      <div style={{display: 'flex', flexDirection: 'column'}}>
+        <TextField
+          // hintText="Вначале строки должен быть артикул, а в конце количество"
+          multiLine={true}
+          rows={10}
+          style={{width: '100%', background: 'rgba(238, 238, 238, 0.7)'}}
+          onChange={
+            (e) => {
+              textToParse = e.target.value.trim();
+            }
           }
-        }
-        >
-        </textarea>
+        />
+        
       </div>
-      <div>
-        <button
-        onClick={
-          () => {
-            textArea.value !== '' && parseQuickList(textArea.value)
+      <div style={{marginTop: '10px'}}>
+        <RaisedButton
+          label='Обработать'
+          onClick={
+            () => {
+              textToParse !== '' && parseQuickList(textToParse);
+            }
           }
-        }
-        >Обработать</button>
+        ></RaisedButton>
       </div>
     </div>
   );

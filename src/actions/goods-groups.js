@@ -8,5 +8,5 @@ export const filterGoodsByGroup = (groupGuid) => {
     });
     dispatch(setQtyPagesGoods());
     dispatch(goToGoodsPage(1));
-  }
-}
+  };
+};

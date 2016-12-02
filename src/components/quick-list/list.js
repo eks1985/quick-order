@@ -20,7 +20,7 @@ const List = ({
         <div style={{display: 'flex', flex: '0 0 15%'}}>{qty}</div>
       </div>
     );
-  }
+  };
   const rowsJsx = () => {
     const keys = Object.keys(quickList);
     return keys.map(key => {
@@ -30,7 +30,7 @@ const List = ({
         </div>
       );
     });
-  }
+  };
   const rowsHeaderJsx = () => {
     return (
       <div style={{display: 'flex', padding: '10px', background: '#eee', marginTop: '10px', border: '1px solid #eee'}}>
@@ -39,7 +39,7 @@ const List = ({
         <div style={{display: 'flex', flex: '0 0 15%'}}>Количество</div>
       </div>
     );
-  }
+  };
 
   const hasItems = Object.keys(quickList).length > 0;
 

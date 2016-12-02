@@ -5,6 +5,9 @@ import initialState from './initialData/goods';
 // Utils
 
 const filterByGroupGuid = (groupGuid, items) => {
+  if (!groupGuid) {
+    return items;
+  }
   const keys = Object.keys(items);
   return keys.reduce( (result, key) => {
     if (items[key].groupRef === groupGuid) {

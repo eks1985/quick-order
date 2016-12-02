@@ -5,6 +5,9 @@ import * as modalActions from './../../../../lib/modal/actions/modal';
 import FlatButton from 'material-ui/FlatButton';
 import Auth from './../../../auth';
 
+// import injectTapEventPlugin from 'react-tap-event-plugin';
+// injectTapEventPlugin();
+
 const Nav = ({
   currentContent,
   //actions
@@ -21,7 +24,7 @@ const Nav = ({
           rippleColor='#eee'
           label='Каталог'
           backgroundColor={currentContent === 'goods' ? '#aaa' : '#eee'}
-          hoverColor="transparent"
+          hoverColor={currentContent === 'goods' ? '#aaa' : '#eee'}
           labelStyle={currentContent === 'goods' ? {color: 'white'} : {color: 'black'}}
           onClick={
             () => {
@@ -34,7 +37,7 @@ const Nav = ({
           rippleColor='#eee'
           label='Заказы'
           backgroundColor={currentContent === 'orders' ? '#aaa' : '#eee'}
-          hoverColor="transparent"
+          hoverColor={currentContent === 'orders' ? '#aaa' : '#eee'}
           labelStyle={currentContent === 'orders' ? {color: 'white'} : {color: 'black'}}
           onClick={
             () => {
@@ -47,7 +50,7 @@ const Nav = ({
           rippleColor='#eee'
           label='Быстрый заказ'
           backgroundColor={currentContent === 'quick-list' ? '#aaa' : '#eee'}
-          hoverColor="transparent"
+          hoverColor={currentContent === 'quick-list' ? '#aaa' : '#eee'}
           labelStyle={currentContent === 'quick-list' ? {color: 'white'} : {color: 'black'}}
           onClick={
             () => {
@@ -60,7 +63,7 @@ const Nav = ({
           rippleColor='#eee'
           label='Профиль'
           backgroundColor={currentContent === 'profile' ? '#aaa' : '#eee'}
-          hoverColor="transparent"
+          hoverColor={currentContent === 'profile' ? '#aaa' : '#eee'}
           labelStyle={currentContent === 'profile' ? {color: 'white'} : {color: 'black'}}
           onClick={
             () => {
@@ -74,7 +77,7 @@ const Nav = ({
           rippleColor='#eee'
           label='Помощь'
           backgroundColor={currentContent === 'help' ? '#aaa' : '#eee'}
-          hoverColor="transparent"
+          hoverColor={currentContent === 'help' ? '#aaa' : '#eee'}
           labelStyle={currentContent === 'help' ? {color: 'white'} : {color: 'black'}}
           onClick={
             () => {

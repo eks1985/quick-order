@@ -2,11 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as cartActions from './../../../actions/cart';
 import * as currentContentActions from './../../../actions/current-content';
-import Subheader from 'material-ui/Subheader';
+// import Subheader from 'material-ui/Subheader';
 import RaisedButton from 'material-ui/RaisedButton';
 import IconRemoveCart from 'material-ui/svg-icons/action/remove-shopping-cart';
 import IconRowing from 'material-ui/svg-icons/action/rowing';
 // import IconCart from 'material-ui/svg-icons/action/shopping-basket';
+import IconShoppingCart from 'material-ui/svg-icons/action/shopping-cart';
 import { format1 } from './../../../utils/format';
 
 const Cart = ({
@@ -30,28 +31,57 @@ const Cart = ({
   const getCartStyledJsx = () => {
     return (
       <div style={{display: 'flex', flexDirection: 'column'}}>
-        <div style={{display: 'flex', flexDirection: 'column', height: '73px'}}>
-          <Subheader style={{display: 'flex', alignItems: 'center'}}>
+        {/* <div style={{display: 'flex', flexDirection: 'column', height: '73px'}}>
+          <Subheader style={{display: 'flex', alignItems: 'center', lineHeight: '40px'}}>
             Корзина
           </Subheader>
           <div style={{display: 'flex', justifyContent: 'center'}}>
             {`Позиций `}<span style={{paddingLeft: '3px', paddingRight: '3px', fontWeight: 'bold'}}>{totalItems}</span>{` на сумму: `}<span style={{paddingLeft: '3px', paddingRight: '3px', fontWeight: 'bold'}}>{format1(totalAmount, 'руб.')}</span>
           </div>
-        </div>
-        {hasItems &&
-          <div style={{display: 'flex', flex: '1 0 100%', justifyContent: 'space-around'}}>
-          <div >
-            <RaisedButton
-              icon={<IconRowing />}
-              label='Заказать'
-              onClick={
-                () => {
-                  setCurrentContent('checkout');
-                }
-              }
-            />
+        </div> */}
+        
+        <div 
+          style={{display: 'flex', height: '73px', alignItems: 'center', paddingLeft: '10px', cursor: 'pointer'}}
+          onClick={
+            () => {
+              setCurrentContent('checkout');
+            }
+          }
+        >
+          <div>
+            <IconShoppingCart style={{width: 42, height: 42}} />
           </div>
-            <div >
+          {hasItems &&
+            <div style={{display: 'flex', flexDirection: 'column', paddingLeft: '10px'}}>
+              <div style={{fontSize: '16px', fontWeight: 'bold'}}>
+                {format1(totalAmount, 'руб.')}  
+              </div>
+              <div style={{fontSize: '12px'}}>
+                {`${totalItems} позиций`}
+              </div>
+            </div>
+          }
+          {!hasItems &&
+            <div style={{display: 'flex', flexDirection: 'column', paddingLeft: '10px', fontSize: '20px'}}>
+              Корзина пуста
+            </div>
+          }
+        </div>
+        
+        {hasItems &&
+          <div style={{display: 'flex', flex: '1 0 100%', justifyContent: 'center'}}>
+            <div style={{marginRight: '3px'}}>
+              <RaisedButton
+                icon={<IconRowing />}
+                label='Заказать'
+                onClick={
+                  () => {
+                    setCurrentContent('checkout');
+                  }
+                }
+              />
+            </div>
+            <div style={{marginLeft: '3px'}}>
               <RaisedButton
                 icon={<IconRemoveCart />}
                 label='Очистить'
@@ -64,7 +94,7 @@ const Cart = ({
 
 
     );
-  }
+  };
 
   // const getCartJsx = () => {
   //   return (

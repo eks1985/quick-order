@@ -4,6 +4,7 @@ import { getGoodsVisibleIds } from './../../../store/reducers/goods';
 import * as cartActions from './../../../actions/cart';
 import * as goodsActions from './../../../actions/goods';
 import * as modalActions from './../../../lib/modal/actions/modal';
+import * as catalogQtyActions from './../../../actions/catalog-qty';
 import { format1 } from './../../../utils/format';
 import IconButton from 'material-ui/IconButton';
 import IconAddShoppingCart from 'material-ui/svg-icons/action/add-shopping-cart';
@@ -18,19 +19,23 @@ const List = ({
   qtyAssigned,
   cartItems,
   prices,
+  catalogQty,
   // actions
   addToCart,
   removeFromCart,
   setModal,
-  setCurentGuid
+  setCurentGuid,
+  addCatalogQty, 
+  removeCatalogQty,
+  changeCatalogQty
 }) => {
   const style = {
-    // overflowY: 'scroll',
-    maxHeight: '70vh',
-    // paddingTop: '10px',
     display: 'flex',
     flexDirection: 'column'
-  }
+  };
+  const zebraStyle = {
+    background: 'rgba(238, 238, 238, 0.7)'
+  };
   const rowStyle = {
     container: {
       display: 'flex',
@@ -106,11 +111,11 @@ const List = ({
       flex: '0 0 10%',
       padding: '3px'
     }
-  }
+  };
   const getItemsJsx = () => {
-    return itemsIds.map( key => {
+    return itemsIds.map( (key, i) => {
       return (
-        <div key={key} style={rowStyle.container}>
+        <div className='row' key={key} style={i % 2 === 0 ? rowStyle.container: { ...rowStyle.container, ...zebraStyle }}>
           <div style={rowStyle.code}>{items[key].code}</div>
           <div style={rowStyle.description} tabIndex={-1}>
             <a
@@ -137,11 +142,16 @@ const List = ({
             <input
               type="text"
               style={{width: '50px', textAlign: 'right', padding: '3px', fontSize: '16px'}}
-              value={qtyAssigned[key] || ''}
+              value={catalogQty[key] || ''}
               onChange={
                 (e) => {
                   const val = parseInt(e.target.value, 10) ? parseInt(e.target.value, 10) : '';
-                  handleAssignQty(key, val);
+                    addCatalogQty(key, val);
+                    cartItems[key] && addToCart(key, val, prices[key]);
+                    if (val === '') {
+                      removeFromCart(key);
+                      removeCatalogQty(key);
+                    }
                 }
               }
             >
@@ -150,10 +160,10 @@ const List = ({
           <div style={rowStyle.add} >
             {!cartItems[key] && //if not inside cart - show Add to cart
               <IconButton
-                disabled={!qtyAssigned[key]}
+                disabled={!catalogQty[key]}
                 onClick={
                   () => {
-                    addToCart(key, qtyAssigned[key] || 0, prices[key]);
+                    addToCart(key, catalogQty[key] || 0, prices[key]);
                   }
                 }
               >
@@ -162,11 +172,11 @@ const List = ({
             }
             {cartItems[key] && //if inside cart - show Remove from cart
               <IconButton
-                disabled={!qtyAssigned[key]}
+                disabled={!catalogQty[key]}
                 onClick={
                   () => {
                     removeFromCart(key);
-                    handleRemoveAssignQty(key);
+                    removeCatalogQty(key);
                   }
                 }
               >
@@ -177,7 +187,7 @@ const List = ({
         </div>
       );
     });
-  }
+  };
   const getHeaderJsx = () => {
     return (
       <div style={headerStyle.container}>
@@ -188,20 +198,22 @@ const List = ({
         <div style={headerStyle.add}></div>
       </div>
     );
-  }
+  };
   return (
     <div style={style}>
       {getHeaderJsx()}
-      {getItemsJsx()}
+      <div className='items'>
+        {getItemsJsx()}
+      </div>
     </div>
   );
-}
+};
 
 class ListContainer extends Component {
 
   constructor(props){
     super(props);
-    this.state = { qtyAssigned: {}}
+    this.state = { qtyAssigned: {}};
   }
 
   componentDidMount() {
@@ -230,6 +242,6 @@ class ListContainer extends Component {
 }
 
 export default connect(
-  state => ({items: state.goods.items, itemsIds: getGoodsVisibleIds(state.goods), cartItems: state.cart.items, prices: state.prices}),
-  { ...cartActions, ...modalActions, ...goodsActions }
+  state => ({ items: state.goods.items, itemsIds: getGoodsVisibleIds(state.goods), cartItems: state.cart.items, prices: state.prices , catalogQty: state.catalogQty }),
+  { ...cartActions, ...modalActions, ...goodsActions, ...catalogQtyActions }
 )(ListContainer);

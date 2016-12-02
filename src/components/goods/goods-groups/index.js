@@ -14,7 +14,8 @@ const GoodsGroups =  ({
     flex: '1 0 auto',
     padding: '10px',
     height: '60vh',
-    overflowY: 'scroll'
+    overflowY: 'scroll',
+    paddingTop: '3px'
   };
 
   const getItemsStyledJsx = () => {
@@ -24,7 +25,7 @@ const GoodsGroups =  ({
           <ListItem
             // style={{minHeight: '30px'}}
             innerDivStyle={{padding: '10px'}}
-            style={{fontSize: '12px', fontWeight: 'bold'}}
+            style={{fontSize: '13px'}}
             key={key}
             primaryText={items[key]}
             onClick={
@@ -33,19 +34,19 @@ const GoodsGroups =  ({
               }
             }
           />
-        )
+        );
     });
-  }
+  };
 
   return (
     <Paper className='goodsCategories' style={style} rounded={false} zDepth={2}>
       <List>
-        <Subheader>Категории</Subheader>
+        <Subheader style={{lineHeight: '40px'}}>Категории</Subheader>
         <ListItem
           innerDivStyle={{padding: '10px'}}
-          style={{fontSize: '12px', fontWeight: 'bold'}}
+          style={{fontSize: '13px', fontWeight: 'bold'}}
           key={9999}
-          primaryText='Все'
+          primaryText='Все категории'
           onClick={
             () => {
               filterGoodsByGroup('');

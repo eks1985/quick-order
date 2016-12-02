@@ -24,7 +24,7 @@ const Login = ({
             <div style={{height: '30px'}}>
               <input
                 type='text'
-                value='alfa1@alfa.com'
+                defaultValue='alfa1@alfa.com'
                 ref={(node) => {
                   inputEmail = node;
                 }}
@@ -33,7 +33,7 @@ const Login = ({
             <div style={{height: '30px'}}>
               <input
                 type='password'
-                value='123456'
+                defaultValue='123456'
                 ref={(node) => {
                   inputPwd = node;
                 }}

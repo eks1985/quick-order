@@ -33,14 +33,15 @@ let Auth = ({
         {
           authStatus === 'AUTH_LOGGED_IN' &&
           <span>
-            <button
+            <span style={{marginRight: '8px'}}>{authEmail}</span>
+            <RaisedButton
               onClick={
                 () => {
                   logoutUser();
                 }
               }
-            >Выйти</button>
-            {authEmail}
+            >Выйти</RaisedButton>
+            
           </span>
 
         }
