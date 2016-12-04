@@ -96,6 +96,6 @@ export const logoutUser = () => {
 	return (dispatch) => {
 		dispatch({ type: 'AUTH_LOGOUT' });
 		auth.signOut();
-		dispatch(setModal({ content: 'login', fullScreen: true,  showClose: false, style:{display: 'flex', justifyContent: 'center', alignItems: 'center'}}));
+		dispatch(setModal({ content: 'login', fullScreen: true, center: true, showClose: false }));
 	};
 };

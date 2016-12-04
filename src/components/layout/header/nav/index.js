@@ -66,7 +66,7 @@ const Nav = ({
           onClick={
             () => {
               setCurrentContent('profile');
-              setModal({ content: 'profile', fullScreen: true, style: {display: 'initial'} });
+              setModal({ content: 'profile', fullScreen: true });
             }
           }
         >
@@ -80,7 +80,7 @@ const Nav = ({
           onClick={
             () => {
               setCurrentContent('help');
-              setModal({ content: 'help', fullScreen: true, style: {display: 'initial'} });
+              setModal({ content: 'help', fullScreen: true });
             }
           }
         >

@@ -16,6 +16,7 @@ import modal from './../../lib/modal/reducers/modal';
 
 const rootReducer = combineReducers({
 	auth,
+	options,
 	goods,
 	customer,
 	goodsGroups,
@@ -26,8 +27,7 @@ const rootReducer = combineReducers({
 	checkout,
 	prices,
 	quickList,
-	catalogQty,
-	options
+	catalogQty
 });
 
 export default rootReducer;

@@ -1,7 +1,7 @@
 import React from 'react';
 import * as modalActions from '../actions/modal';
 import { connect } from 'react-redux';
-import RaisedButton from 'material-ui/RaisedButton'
+import RaisedButton from 'material-ui/RaisedButton';
 
 let Modal = ({
   children,
@@ -10,16 +10,17 @@ let Modal = ({
   setModal,
   handlerClose
 }) => {
-  const { x, y, fullScreen, content } = modal;
-
-  const style = { ...modal.style, ...{x: x, y:y} }
+  const { x, y, fullScreen, center, content } = modal;
+  let style = { ...modal.style, ...{left: x, top:y} };
   if (fullScreen) {
     style.left   = "0px";
     style.right  = "0px";
     style.top    = "0px";
     style.bottom = "0px";
   }
-
+  if (center) {
+    style = { ...style, ...{display: 'flex', alignItems: 'center', justifyContent: 'center' } };  
+  }
   if (!content) {
     return null;
   }

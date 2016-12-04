@@ -4,6 +4,8 @@ import Help from './help';
 import Profile from './profile';
 import GoodsCard from './goods/card';
 import Login from './log-in';
+import CatalogListSettings from './goods/catalog/list-settings';
+
 const ModalContent = ({
   modal
 }) => {
@@ -13,6 +15,7 @@ const ModalContent = ({
       {modal.content === 'help' && <Help />}
       {modal.content === 'goodsCard' && <GoodsCard />}
       {modal.content === 'login' && <Login />}
+      {modal.content === 'catalogListSettings' && <CatalogListSettings />}
     </div>
   );
 };

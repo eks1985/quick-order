@@ -55,6 +55,50 @@ export const removeFromCart = (guid) => {
   };
 };
 
+export const increaseCart = (guid) => {
+  return (dispatch, getState) => {
+    const current = getState().cart.items[guid];
+    if (current) {
+      const { qty, price, code, description } = current;
+      dispatch({
+        type: 'ADD_TO_CART',
+        guid,
+        qty: qty + 1,
+        price,
+        code,
+        description,
+        amount: (qty + 1)*price
+      });
+      dispatch(setTotalCartItems());
+      dispatch(setTotalCartAmount());
+    }
+  };
+};
+
+export const decreaseCart = (guid) => {
+  return (dispatch, getState) => {
+    const current = getState().cart.items[guid];
+    if (current) {
+      const { qty, price, code, description } = current;
+      if (qty > 1) {
+        dispatch({
+          type: 'ADD_TO_CART',
+          guid,
+          qty: qty - 1,
+          price,
+          code,
+          description,
+          amount: (qty - 1)*price
+        });
+        dispatch(setTotalCartItems());
+        dispatch(setTotalCartAmount());
+      } else if (qty === 1) {
+        dispatch(removeFromCart(guid));
+      }
+    }
+  };
+};
+
 export const cleanCart = () => {
   return (dispatch, getState) => {
     dispatch({
@@ -62,6 +106,9 @@ export const cleanCart = () => {
     });
     dispatch(setTotalCartItems());
     dispatch(setTotalCartAmount());
+    dispatch({
+      type: 'RESET_CATALOG_QTY',
+    });
   };
 };
 

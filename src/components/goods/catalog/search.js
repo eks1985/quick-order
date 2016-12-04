@@ -18,9 +18,14 @@ let Search = ({
   return (
     <div style={{display: 'flex', alignItems: 'center'}}>
       <TextField
+        className='search'
         placeholder='для перехода нажмите /'
         id='search'
-        // ref='search'
+        ref={
+          (node) => {
+            input = node;
+          }
+        }
         autoFocus 
         type="text"
       >

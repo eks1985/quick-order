@@ -6,7 +6,6 @@ import * as authActions from './../actions/auth';
 const Login = ({
   auth,
   //actions
-  setModal,
   openAuth,
   openAuthAnonimously
 }) => {

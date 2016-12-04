@@ -13,8 +13,38 @@ export const removeCatalogQty = (guid) => {
   };  
 };  
 
-export const changeCatalogQty = () => {
+export const resetCatalogQty = () => {
   return {
     type: 'RESET_CATALOG_QTY',
   };  
 };  
+
+export const increaseCatalogQty = (guid) => {
+  return (dispatch, getState) => {
+    const current = getState().catalogQty[guid];
+    if (current) {
+      dispatch({
+        type: 'ADD_CATALOG_QTY',
+        guid,
+        qty: current + 1
+      });
+    }
+  };
+};
+
+export const decreaseCatalogQty = (guid) => {
+  return (dispatch, getState) => {
+    const current = getState().catalogQty[guid];
+    if (current) {
+      if (current > 1) {
+        dispatch({
+          type: 'ADD_CATALOG_QTY',
+          guid,
+          qty: current - 1
+        });
+      } else if (current === 1) {
+        dispatch(removeCatalogQty(guid));
+      }
+    }
+  };
+};

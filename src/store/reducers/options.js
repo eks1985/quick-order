@@ -1,17 +1,18 @@
 const initialState = {
-  manageGoodsOnStockQty: false,
+  manageGoodsOnStockQty: true,
   managePositionIsActiveProp: false,
-  orderNoActivePositions: false, 
+  orderNoActivePositions: false,
   positionIsActiveDefinition: 'positionData',
   showGoodsOnStockQty: false,
-  showNoActivePosition: false
+  showNoActivePosition: false,
+  catalogListSettings: ['code', 'description', 'qty', 'price']
 };
 
-export default (state = {}, action) => {
+export default (state, action) => {
   switch (action.type) {
     case 'SET_OPTION':
       return { ...state, [action.option]: action.value };
-    default:
-      return state || initialState;
+    default: 
+      return initialState;
   }
 };

@@ -6,11 +6,12 @@ const style = {
   border: '1px solid #bbb',
   padding: '10px',
   zIndex: 1000,
+  content: 'login'
   // display: 'flex',
   // alignItems: 'center',
   // justifyContent: 'center'
-}
-const initialState = {x: 0, y: 0, fullScreen: true, content: '', data: {}, style: style, showClose:  true };
+};
+const initialState = {x: 0, y: 0, fullScreen: true, center: false, content: '', data: {}, style: style, showClose:  true };
 export default (state , action) => {
   switch (action.type) {
     case 'SET_MODAL':

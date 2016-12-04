@@ -1,34 +1,32 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './App.css';
-// import Auth from './components/auth';
 import Layout from './components/layout';
 import Modal from './lib/modal/components/modal';
 import ModalContent from './components/modal-content';
 import { setQtyPagesGoods } from './actions/goods';
 import { setQtyPagesOrders } from './actions/orders';
 import { setCurrentContent } from './actions/current-content';
-import { setModal } from './lib/modal/actions/modal';
 import { search } from './actions/goods';
-
-import injectTapEventPlugin from 'react-tap-event-plugin';
-injectTapEventPlugin();
+// eslint-disable-next-line
+import rtep from './rtep';
 
 class App extends Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    dispatch(setModal({ fullScreen: true, content: 'login', style: {display: 'flex', justifyContent: 'center', alignItems: 'center'}, showClose: false }));
     dispatch(setQtyPagesGoods());
     dispatch(setQtyPagesOrders());
     document.addEventListener('keyup', this.handleKeyUp.bind(this), false);
   }
 
   handleKeyUp(e) {
-    // console.log(e);
     if (e.key === '/' || e.which === 111) {
       document.querySelector('#search').focus();
-    } else if ( (e.key === 'Enter' || e.keyIdentifier === "Enter") && document.activeElement.id === 'search') {
+    // } else if ( (e.key === 'Enter' || e.keyIdentifier === "Enter") && document.activeElement.id === 'search') {
+    //   this.props.dispatch(search(document.querySelector('#search').value));
+    }
+    if (e.which === 13 && document.activeElement.id === 'search') {
       this.props.dispatch(search(document.querySelector('#search').value));
     }
   }
@@ -41,7 +39,6 @@ class App extends Component {
     };
     return (
       <div className="App" style={style}>
-        {/* <Auth /> */}
         <Layout />
         <Modal
           handlerClose={
