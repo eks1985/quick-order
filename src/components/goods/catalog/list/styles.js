@@ -1,4 +1,4 @@
-export const styles ={
+export default {
   style: {
     display: 'flex',
     flexDirection: 'column'
@@ -100,6 +100,27 @@ export const styles ={
       display: 'flex',
       flex: '0 0 10%',
       padding: '3px'
-    }
+    },
+  },
+  headerSettingsIBStyle: {
+    position: 'absolute', 
+    top: '0px', 
+    right: '5px'
+  },
+  headerSettingsIconStyle: {
+    height: '24px', 
+    width:'24px', 
+    padding: '2px'
+  },
+  incDecSmallQtyPane: {
+    width: '12px', 
+    cursor: 'pointer', 
+    background: 'rgba(238, 238, 238, 0.5)'
+  },
+  qtyInputStyle: {
+    width: '50px', 
+    textAlign: 'right', 
+    padding: '3px', 
+    fontSize: '16px'
   }
 };

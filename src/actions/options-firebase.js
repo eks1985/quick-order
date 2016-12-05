@@ -1,6 +1,6 @@
 import { database } from '../firebase/firebase-app';
 
-export const optionsRef = database.ref('options');
+export const optionsRef = database.ref('options/common');
 export const listenToOptions = () => {
 	return (dispatch) => {
 		optionsRef.off();
@@ -18,6 +18,15 @@ export const listenToOptions = () => {
 	};
 };
 
-export const setOptionFirebase = (option, value) => {
-  
+export const setCommonOptionFirebase = (option, value) => {
+};
+
+export const setCustomerOptionFirebase = (option, value) => {
+	return (dispatch, getState) => {
+		const customerGuid = getState().customer.guid;
+	  if (customerGuid) {
+	  	const customerOptionsRef = database.ref('options/' + customerGuid);	
+	  	customerOptionsRef.update({[option]: value});
+	  }
+	};
 };

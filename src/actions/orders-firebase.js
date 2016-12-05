@@ -12,16 +12,6 @@ const receiveHeaders = (dispatch, data) => {
   });  
 };
 
-// const receiveItems = (dispatch, data) => {
-//   return new Promise(resolve => {
-//     dispatch({
-//       type: 'RECEIVE_ORDERS_ITEMS',
-//       payload: data
-//     });
-//     resolve();
-//   });  
-// };
-
 export const listenToOrdersHeaders = () => {
 	return (dispatch, getState) => {
     const customerGuid = getState().customer.guid;

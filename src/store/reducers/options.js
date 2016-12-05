@@ -5,14 +5,16 @@ const initialState = {
   positionIsActiveDefinition: 'positionData',
   showGoodsOnStockQty: false,
   showNoActivePosition: false,
-  catalogListSettings: ['code', 'description', 'qty', 'price']
+  catalogListSettings: ['code', 'description', 'price', 'qty']
 };
 
 export default (state, action) => {
   switch (action.type) {
+    case 'RECEIVE_OPTIONS':
+      return { ...state, ...action.payload };
     case 'SET_OPTION':
       return { ...state, [action.option]: action.value };
     default: 
-      return initialState;
+      return state || initialState;
   }
 };

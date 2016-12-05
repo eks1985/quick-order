@@ -10,9 +10,10 @@ export default ({
     catalogListSettings,
     headerSettingsMode,
     setHeaderSettingsMode,
-    removeHeaderSettingsMode
+    removeHeaderSettingsMode,
+    moveHeaderColumn
 }) => {
-    const { headerStyle, arrowStyle } = styles;
+    const { headerStyle, arrowStyle, headerSettingsIBStyle, headerSettingsIconStyle } = styles;
     const columnNames = {
       code: 'Код',
       description: 'Наименование',
@@ -20,33 +21,59 @@ export default ({
       qty: 'Количество',
       add: '',
     };
-    const getColumnJsx = (columnName) => {
+    const getColumnJsx = (columnName, i, length) => {
       return (
-        <div style={headerStyle[columnName]}>
-          {headerSettingsMode && <IconButton style={arrowStyle.button} iconStyle={arrowStyle.icon}><IconArrowBack /></IconButton>}
+        <div key={columnName} style={headerStyle[columnName]}>
+          {headerSettingsMode && i > 0 && 
+            <IconButton 
+              style={arrowStyle.button} 
+              iconStyle={arrowStyle.icon}
+              onClick={
+                ()=>{
+                  moveHeaderColumn(columnName, 'back');
+                }
+              }
+            >
+              <IconArrowBack />
+            </IconButton>
+          }
           <div>{columnNames[columnName]}</div>
-          {headerSettingsMode && <IconButton style={arrowStyle.button} iconStyle={arrowStyle.icon}><IconArrowForward /></IconButton>}
+          {headerSettingsMode && i + 1 < length && 
+            <IconButton 
+              style={arrowStyle.button} 
+              iconStyle={arrowStyle.icon}
+              onClick={
+                ()=>{
+                  moveHeaderColumn(columnName, 'forward');
+                }
+              }
+            >
+              <IconArrowForward />
+            </IconButton>
+          }
         </div>
       );  
     };
     
     const getSettingsBtnJsx = () => {
       return (
-        <div style={{position: 'absolute', top: '0px', right: '5px'}}>
+        <div style={headerSettingsIBStyle}>
           {!headerSettingsMode &&
             <IconButton 
-              style={{height: '24px', width:'24px', padding: '2px'}}
+              tabIndex={-1}
+              style={headerSettingsIconStyle}
               onClick={setHeaderSettingsMode}
             >
-              <IconSettings color='#ccc' viewBox='0 0 24 24' />
+              <IconSettings color='#ccc' />
             </IconButton>
           }
           {headerSettingsMode &&
             <IconButton 
-              style={{height: '24px', width:'24px', padding: '2px'}}
+              tabIndex={-1}
+              style={headerSettingsIconStyle}
               onClick={removeHeaderSettingsMode}
             >
-              <IconDone viewBox='0 0 24 24' />
+              <IconDone />
             </IconButton>
           }
         </div>
@@ -56,7 +83,7 @@ export default ({
     return (
       <div style={headerStyle.container}>
         {getSettingsBtnJsx()}
-        {catalogListSettings.map(key => getColumnJsx(key))}
+        {catalogListSettings.map((key, i) => getColumnJsx(key, i, catalogListSettings.length))}
       </div>
     );
 };

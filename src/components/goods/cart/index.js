@@ -85,7 +85,14 @@ const Cart = ({
               <RaisedButton
                 icon={<IconRemoveCart />}
                 label='Очистить'
-                onClick={cleanCart}
+                onClick={
+                  () => {
+                    const yes = confirm("Уверены?");
+                    if (yes) {
+                      cleanCart();
+                    }
+                  }
+                }
               />
             </div>
           </div>

@@ -3,8 +3,8 @@ import { auth } from '../firebase/firebase-app';
 import { listenToGoodsGroups } from './goods-groups-firebase';
 import { listenToGoods } from './goods-firebase';
 import { listenToPrices } from './prices-firebase';
+import { listenToOptions } from './options-firebase';
 import { listenToOrdersHeaders, listenToOrdersItems } from './orders-firebase';
-// import { setQtyPagesOrders } from './orders';
 import { setModal } from './../lib/modal/actions/modal';
 import { setCustomer } from './customer';
 import { setCurrentContent } from './current-content';
@@ -17,6 +17,7 @@ export const listenToAuth = () => {
 			dispatch({type: 'RESET_CUSTOMER'});
 			dispatch({type: 'RESET_QTY_PAGES_ORDERS'});
 			dispatch(setCurrentContent('goods'));
+			dispatch(listenToOptions());
 			if (authData) {
 				dispatch(setModal({ content: ''}));
 				dispatch({
@@ -43,7 +44,14 @@ export const listenToAuth = () => {
 	  						dispatch(setCustomer(guid, description, address, phone, email, inn));
 	  						dispatch(listenToOrdersHeaders());
 	  						dispatch(listenToOrdersItems());
-	  					});					
+	  					});	
+	  					let customerOptionsRef = database.ref(`options/${customerGuid}`);
+	  					customerOptionsRef.once('value', snapshot => {
+	  						dispatch({
+	  							type: 'RECEIVE_OPTIONS',
+	  							payload: snapshot.val()
+	  						});
+	  					});
   					}
   				});
     		}
