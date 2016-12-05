@@ -87,7 +87,7 @@ const Cart = ({
                 label='Очистить'
                 onClick={
                   () => {
-                    const yes = confirm("Уверены?");
+                    const yes = confirm("Уверены? Будут очищены все введеные значения количеств на страницах списка товаров");
                     if (yes) {
                       cleanCart();
                     }
