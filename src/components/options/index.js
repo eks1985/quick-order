@@ -151,6 +151,30 @@ const Options = ({
       </div>
     );
   };
+  
+  const showNoActivePosition = () => {
+    let showNoActivePosition;
+    return (
+      <div style={{flex: '1'}}>
+        <Toggle
+          defaultToggled={options.showNoActivePosition}
+          label="Показывать Не активные позиции"
+          labelPosition="right"
+          style={toggleStyles.toggle}
+          ref={
+            (node) => {
+              showNoActivePosition = node;
+            }
+          }
+          onToggle={
+            () => {
+              setOption("showNoActivePosition", !showNoActivePosition.state.switched);
+            }
+          }
+        />
+      </div>
+    );
+  };
 
   return (
     <Paper style={{display: 'flex', flexDirection: 'column', padding: '10px', flex: '1 0 auto'}}>
@@ -169,6 +193,10 @@ const Options = ({
 
       <div style={rowStyle}>
         {positionIsActiveDefinition()}
+      </div>
+      
+      <div style={rowStyle}>
+        {showNoActivePosition()}
       </div>
 
     </Paper>

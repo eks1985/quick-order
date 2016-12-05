@@ -85,7 +85,7 @@ const Nav = ({
           }
         >
         </FlatButton>
-        {auth.email === 'admin@admin.com' &&
+        {auth.email === 'alfa1@alfa.com' &&
           <FlatButton
             rippleColor='#eee'
             label='Настройки'

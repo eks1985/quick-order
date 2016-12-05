@@ -56,6 +56,7 @@ export const listenToAuth = () => {
   				});
     		}
 			} else {
+				dispatch(setModal({ content: 'login', fullScreen: true, center: true, showClose: false }));
 				if (getState().auth.status !== 'AUTH_ANONYMOUS') {
 					dispatch({ type: 'AUTH_LOGOUT' });
 				}
