@@ -22,35 +22,36 @@ export default {
       display: 'flex',
       alignItems: 'center',
       height: '40px',
-      flex: '0 0 auto'
+      flex: '0 0 auto',
+      paddingRight: '50px'
     },
     code: {
       display: 'flex',
-      flex: '0 0 20%',
+      flex: '0 0 100px',
       padding: '3px',
       justifyContent: 'flex-start'
     },
     description: {
       display: 'flex',
-      flex: '0 0 50%',
+      flex: '1 0 50%',
       padding: '3px',
       justifyContent: 'flex-start'
     },
     price: {
       display: 'flex',
-      flex: '0 0 10%',
+      flex: '0 0 100px',
       padding: '3px',
       justifyContent: 'flex-end'
     },
     qty: {
       display: 'flex',
-      flex: '0 0 10%',
+      flex: '0 0 100px',
       padding: '3px',
       justifyContent: 'center',
     },
     add: {
       display: 'flex',
-      flex: '0 0 10%',
+      flex: '0 0 100px',
       padding: '3px'
     }
   },
@@ -61,11 +62,12 @@ export default {
       flex: '0 0 auto',
       background: '#eee',
       position: 'relative',
-      fontSize: '14px'
+      fontSize: '14px',
+      paddingRight: '50px'
     },
     code: {
       display: 'flex',
-      flex: '0 0 20%',
+      flex: '0 0 100px',
       padding: '3px',
       justifyContent: 'center',
       alignItems: 'center',
@@ -74,7 +76,7 @@ export default {
     },
     description: {
       display: 'flex',
-      flex: '0 0 50%',
+      flex: '1 0 50%',
       padding: '3px',
       justifyContent: 'center',
       alignItems: 'center',
@@ -82,7 +84,7 @@ export default {
     },
     price: {
       display: 'flex',
-      flex: '0 0 90px',
+      flex: '0 0 100px',
       padding: '3px',
       justifyContent: 'center',
       alignItems: 'center',
@@ -90,7 +92,7 @@ export default {
     },
     qty: {
       display: 'flex',
-      flex: '0 0 90px',
+      flex: '0 0 100px',
       padding: '3px',
       justifyContent: 'center',
       alignItems: 'center',
@@ -98,7 +100,7 @@ export default {
     },
     add: {
       display: 'flex',
-      flex: '0 0 10%',
+      flex: '0 0 100px',
       padding: '3px'
     },
   },
