@@ -77,19 +77,25 @@ export const detectIsLastPage = () => {
 
 export const moveGoodsForward = () => {
   return (dispatch, getState) => {
-    dispatch({
-      type: 'INCREASE_PAGE_NUMBER_GOODS'
-    });
-    dispatch(detectIsLastPage());
+    const isLastPage = getState().goods.isLastPage;
+    if (!isLastPage) {
+      dispatch({
+        type: 'INCREASE_PAGE_NUMBER_GOODS'
+      });
+      dispatch(detectIsLastPage());
+    }
   };
 };
 
 export const moveGoodsBack = () => {
   return (dispatch, getState) => {
-    dispatch({
-      type: 'DECREASE_PAGE_NUMBER_GOODS'
-    });
-    dispatch(detectIsLastPage());
+    const isFirstPage = getState().goods.pageNumber === 1;
+    if (!isFirstPage) {
+      dispatch({
+        type: 'DECREASE_PAGE_NUMBER_GOODS'
+      });
+      dispatch(detectIsLastPage());
+    }
   };
 };
 

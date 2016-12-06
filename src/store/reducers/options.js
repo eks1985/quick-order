@@ -2,7 +2,7 @@ const initialState = {
   manageGoodsOnStockQty: true,
   managePositionIsActiveProp: false,
   orderNoActivePositions: false,
-  positionIsActiveDefinition: 'positionData',
+  positionIsActiveDefinition: '',
   showGoodsOnStockQty: false,
   showNoActivePosition: false,
   catalogListSettings: ['code', 'description', 'price', 'qty']

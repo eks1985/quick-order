@@ -26,20 +26,30 @@ class ListContainer extends Component {
   }
 
   handleKeyUp(e) {
-    const current = this.state.current;
+    // const current = this.state.current;
     if(e.which === 13 && document.activeElement.className === "catalogQtyInput") {
       const index = $('.catalogQtyInput').index(document.activeElement) + 1;
       $('.catalogQtyInput').eq(index).focus();
     }
-    if (e.which === 38) {
-      e.preventDefault();
-      current && this.props.increaseCart(current);
-      current && this.props.increaseCatalogQty(current);
+    if (e.which === 40 && document.activeElement.className === "catalogQtyInput") {
+      // e.preventDefault();
+      // current && this.props.increaseCart(current);
+      // current && this.props.increaseCatalogQty(current);
+      const index = $('.catalogQtyInput').index(document.activeElement) + 1;
+      $('.catalogQtyInput').eq(index).focus();
     }
-    if (e.which === 40) {
-      e.preventDefault();
-      current && this.props.decreaseCart(current);
-      current && this.props.decreaseCatalogQty(current);    
+    if (e.which === 38 && document.activeElement.className === "catalogQtyInput") {
+      // e.preventDefault();
+      // current && this.props.decreaseCart(current);
+      // current && this.props.decreaseCatalogQty(current); 
+      const index = $('.catalogQtyInput').index(document.activeElement) - 1;
+      $('.catalogQtyInput').eq(index).focus();
+    }
+    if (e.which === 34) {
+      this.props.moveGoodsForward();
+    }
+    if (e.which === 33) {
+      this.props.moveGoodsBack();
     }
   }
   

@@ -62,8 +62,6 @@ const Options = ({
           onToggle={
             () => {
               setOption("manageGoodsOnStockQty", !manageGoodsOnStockQty.state.switched);
-              manageGoodsOnStockQty.state.switched && setOption("showGoodsOnStockQty", false);
-              manageGoodsOnStockQty.state.switched && setOption("positionIsActiveDefinition", "positionData");
             }
           }
         />
@@ -119,44 +117,13 @@ const Options = ({
       </div>
     );
   };
-
-  const positionIsActiveDefinition = () => {
-    console.log(options);
-    return (
-      <div style={{flex: '1'}}>
-        <Subheader>
-          Определение активных/не активных позиций
-        </Subheader>
-        <RadioButtonGroup
-          name="positionIsActiveDefinition"
-          defaultSelected={options.positionIsActiveDefinition}
-          onChange={
-            (e, value)=>{
-              setOption("positionIsActiveDefinition", value);
-            }
-          }
-        >
-          <RadioButton
-            value='positionData'
-            label='Непосредственно из данных от 1с'
-            style={radioStyles.radioButton}
-          />
-          <RadioButton
-            disabled={options.manageGoodsOnStockQty}
-            value='stock'
-            label='Позиция активна если остаток на складе > 0'
-            style={radioStyles.radioButton}
-          />
-        </RadioButtonGroup>
-      </div>
-    );
-  };
   
   const showNoActivePosition = () => {
     let showNoActivePosition;
     return (
       <div style={{flex: '1'}}>
         <Toggle
+          disabled={!options.managePositionIsActiveProp}
           defaultToggled={options.showNoActivePosition}
           label="Показывать Не активные позиции"
           labelPosition="right"
@@ -175,7 +142,66 @@ const Options = ({
       </div>
     );
   };
+  
+  const orderNoActivePositions = () => {
+    let orderNoActivePositions;
+    return (
+      <div style={{flex: '1'}}>
+        <Toggle
+          disabled={!options.managePositionIsActiveProp}
+          defaultToggled={options.orderNoActivePositions}
+          label="Разрешать заказывать Не активные позиции"
+          labelPosition="right"
+          style={toggleStyles.toggle}
+          ref={
+            (node) => {
+              orderNoActivePositions = node;
+            }
+          }
+          onToggle={
+            () => {
+              setOption("orderNoActivePositions", !orderNoActivePositions.state.switched);
+            }
+          }
+        />
+      </div>
+    );
+  };
 
+  const positionIsActiveDefinition = () => {
+    return (
+      <div style={{flex: '1', marginBottom: '20px'}}>
+        <Subheader>
+          Определение активных/не активных позиций
+        </Subheader>
+        <RadioButtonGroup
+          name="positionIsActiveDefinition"
+          defaultSelected={options.positionIsActiveDefinition}
+          valueSelected={options.positionIsActiveDefinition}
+          selected={options.positionIsActiveDefinition}
+          onChange={
+            (e, value)=>{
+              setOption("positionIsActiveDefinition", value);
+            }
+          }
+        >
+          <RadioButton
+            disabled={!options.managePositionIsActiveProp}
+            value='positionData'
+            label='Непосредственно из данных от 1с'
+            style={radioStyles.radioButton}
+          />
+          <RadioButton
+            disabled={!options.manageGoodsOnStockQty || !options.managePositionIsActiveProp}
+            value='stock'
+            label={<span><span>Позиция активна если остаток на складе > 0 </span><span style={{color: 'goldenrod', marginLeft: '3px'}}>(опция доступна при Учитывать складские остатки = Да)</span></span>}
+            style={radioStyles.radioButton}
+          />
+        </RadioButtonGroup>
+      </div>
+    );
+  };
+  
   return (
     <Paper style={{display: 'flex', flexDirection: 'column', padding: '10px', flex: '1 0 auto'}}>
 
@@ -190,15 +216,19 @@ const Options = ({
       <div style={rowStyle}>
         {managePositionIsActiveProp()}
       </div>
+      
+      <div style={{ ...rowStyle, ...{marginLeft: '50px'} }}>
+        {showNoActivePosition()}
+      </div>
+      
+      <div style={{ ...rowStyle, ...{marginLeft: '50px'} }}>
+        {orderNoActivePositions()}
+      </div>
 
-      <div style={rowStyle}>
+      <div style={{ ...rowStyle, ...{marginLeft: '50px'} }}>
         {positionIsActiveDefinition()}
       </div>
       
-      <div style={rowStyle}>
-        {showNoActivePosition()}
-      </div>
-
     </Paper>
   );
 };

@@ -27,7 +27,7 @@ export default {
     },
     code: {
       display: 'flex',
-      flex: '0 0 100px',
+      flex: '0 0 120px',
       padding: '3px',
       justifyContent: 'flex-start'
     },
@@ -67,7 +67,7 @@ export default {
     },
     code: {
       display: 'flex',
-      flex: '0 0 100px',
+      flex: '0 0 120px',
       padding: '3px',
       justifyContent: 'center',
       alignItems: 'center',

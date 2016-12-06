@@ -24,7 +24,7 @@ const GoodsGroups =  ({
         return (
           <ListItem
             // style={{minHeight: '30px'}}
-            innerDivStyle={{padding: '10px'}}
+            innerDivStyle={{padding: '5px 10px 5px 10px'}}
             style={{fontSize: '13px'}}
             key={key}
             primaryText={items[key]}
@@ -43,7 +43,7 @@ const GoodsGroups =  ({
       <List>
         <Subheader style={{lineHeight: '40px'}}>Категории</Subheader>
         <ListItem
-          innerDivStyle={{padding: '10px'}}
+          innerDivStyle={{padding: '5px 10px 5px 10px'}}
           style={{fontSize: '13px', fontWeight: 'bold'}}
           key={9999}
           primaryText='Все категории'

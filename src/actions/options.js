@@ -7,7 +7,42 @@ export const setOption = (option, value) => {
       option,
       value
     });
-    // setOptionFirebase(option, value);  
+    if (option  === 'manageGoodsOnStockQty' && value === false) {
+      dispatch({
+        type: 'SET_OPTION',
+        option: 'showGoodsOnStockQty',
+        value: false
+      });
+      dispatch({
+        type: 'SET_OPTION',
+        option: 'positionIsActiveDefinition',
+        value: 'positionData'
+      });
+    } 
+    if (option  === 'managePositionIsActiveProp' && value === false) {
+      dispatch({
+        type: 'SET_OPTION',
+        option: 'showNoActivePosition',
+        value: false
+      });
+      dispatch({
+        type: 'SET_OPTION',
+        option: 'orderNoActivePositions',
+        value: false
+      });
+      dispatch({
+        type: 'SET_OPTION',
+        option: 'positionIsActiveDefinition',
+        value: ''
+      });
+    }
+    if (option  === 'managePositionIsActiveProp' && value === true) {
+      dispatch({
+        type: 'SET_OPTION',
+        option: 'positionIsActiveDefinition',
+        value: 'positionData'
+      });
+    }
   };
 };
 
