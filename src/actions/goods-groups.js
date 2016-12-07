@@ -1,10 +1,18 @@
-import { setQtyPagesGoods, goToGoodsPage } from './goods';
+import { setQtyPagesGoods, goToGoodsPage, search } from './goods';
 
 export const filterGoodsByGroup = (groupGuid) => {
   return (dispatch, getState) => {
+    const searchText = getState().goods.seatchText;
+    let items;
+    if (searchText) {
+      search(searchText);
+      items = getState().goods.items;
+    } else {
+      items = getState().goods.itemsInitial;
+    }
     dispatch({
       type: 'SET_GOODS_LIST',
-      filterData: {filterType: 'goodsGroup', groupGuid, itemsInitial: getState().goods.itemsInitial}
+      filterData: {filterType: 'goodsGroup', groupGuid, itemsInitial: items}
     });
     dispatch(setQtyPagesGoods());
     dispatch(goToGoodsPage(1));

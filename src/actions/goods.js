@@ -46,6 +46,13 @@ export const generateDescriptions = () => {
 
 //Search index }
 
+export const setSearchText = (payload) => {
+  return {
+    type: 'SET_SEARCH_TEXT',
+    payload
+  }
+}
+
 export const setCurentGuid = (guid) => {
   return {
     type: 'SET_CURRENT_GOODS_GUID',
@@ -134,6 +141,9 @@ export const search = (text) => {
       res[elem] = itemsInitial[elem];
       return res;
     }, {});
+
+    // const goodsGroupsFiltersIds = getState().goodsGroups.filtetsIds;
+
     dispatch({
       type: 'SET_GOODS_LIST',
       payload: filteredGoods,
@@ -145,7 +155,7 @@ export const search = (text) => {
 };
 
 export const resetPagination = () => {
-  
+
 };
 
 //Firebase

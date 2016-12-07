@@ -21,6 +21,15 @@ const filterByGroupGuid = (groupGuid, items) => {
 
 //
 
+const searchText = (state = '', action) => {
+  switch (action.type) {
+    case 'SET_SEARCH_TEXT':
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
 const codes = (state = {}, action) => {
   switch (action.type) {
     case 'RECEIVE_CODES':
@@ -122,5 +131,6 @@ export default combineReducers({
   qtyPages,
   isLastPage,
   codes,
-  descriptions
+  descriptions,
+  searchText
 });

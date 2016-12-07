@@ -8,6 +8,8 @@ import IconClear from 'material-ui/svg-icons/content/clear';
 
 let Search = ({
   search,
+  //action
+  setSearchText
 }) => {
   let input;
   const iconButtonStyle = {
@@ -26,7 +28,7 @@ let Search = ({
             input = node;
           }
         }
-        autoFocus 
+        autoFocus
         type="text"
       >
       </TextField>
@@ -37,6 +39,7 @@ let Search = ({
         onClick={
           () => {
             search(input.input.value);
+            setSearchText(input.input.value);
           }
         }
       >
@@ -59,23 +62,11 @@ let Search = ({
 };
 
 class SearchContainer extends Component {
-  
-  componentDidMount() {
-    // // console.log(this.refs);
-    // console.log(document.querySelector('#search'));
-    // document.querySelector('#search').focus();
-  }
-  
-  componentDidUpdate() {
-    // console.log("did update");
-  }
-  
+
   render () {
-    // document.querySelector('#search').focus();
-    // console.log('search render');
     return <Search {...this.props} />;
   }
-  
+
 }
 
 export default connect(

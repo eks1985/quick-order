@@ -47,7 +47,7 @@ const GoodsGroups =  ({
         );
     });
   };
-  
+
   const getFilterJsx = (filterKey, filterDescr) => {
     return (
       <Chip
@@ -58,27 +58,27 @@ const GoodsGroups =  ({
             removeFilter(filterKey);
           }
         }
-        style={{margin: 2, height: '24px', justifyContent: 'space-between', maxWidth: '100%'}}
-        labelStyle={{fontSize: '12px', lineHeight: '24px', maxWidth: '90%', overflow: 'hidden'}}
+        style={{margin: 2, height: '24px', justifyContent: 'space-between', maxWidth: '100%', whiteSpace: 'initial'}}
+        labelStyle={{fontSize: '12px', lineHeight: '24px', maxWidth: '90%', overflow: 'hidden',  whiteSpace: 'initial'}}
       >
         {filterDescr}
       </Chip>
     );
   };
-  
+
   const getFiltersJsx = () => {
     return Object.keys(filters).map(filterKey => getFilterJsx(filterKey, filters[filterKey]));
   };
-  
+
   return (
     <Paper className='goodsCategories' style={style} rounded={false} zDepth={2}>
       <List>
         <div style={{paddingLeft: '10px'}}>
-          <TextField 
+          <TextField
             placeholder='фильтр категорий'
             className='search'
             id='searchGoodsGroups'
-            autoFocus 
+            autoFocus
             type="text"
             onChange={
               (e) => {
@@ -87,7 +87,7 @@ const GoodsGroups =  ({
             }
           />
           <div style={{display: 'flex', flexWrap: 'wrap'}}>
-            {getFiltersJsx()}            
+            {getFiltersJsx()}
           </div>
         </div>
         <ListItem

@@ -4,7 +4,7 @@ import './App.css';
 import Layout from './components/layout';
 import Modal from './lib/modal/components/modal';
 import ModalContent from './components/modal-content';
-import { setQtyPagesGoods } from './actions/goods';
+import { setQtyPagesGoods, setSearchText } from './actions/goods';
 import { setQtyPagesOrders } from './actions/orders';
 import { setCurrentContent } from './actions/current-content';
 import { search } from './actions/goods';
@@ -27,7 +27,9 @@ class App extends Component {
     //   this.props.dispatch(search(document.querySelector('#search').value));
     }
     if (e.which === 13 && document.activeElement.id === 'search') {
-      this.props.dispatch(search(document.querySelector('#search').value));
+      const text = document.querySelector('#search').value;
+      this.props.dispatch(search(text));
+      this.props.dispatch(setSearchText(text));
     }
   }
 
