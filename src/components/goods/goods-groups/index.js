@@ -1,17 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as goodsGroupsActions from './../../../actions/goods-groups';
+import { getFiltersByIds } from './../../../store/reducers/goods-groups';
 import Paper from 'material-ui/Paper';
 import { List, ListItem } from 'material-ui/List';
-import Subheader from 'material-ui/Subheader';
 import TextField from 'material-ui/TextField';
-import throttle from 'lodash/throttle';
+import Chip from 'material-ui/Chip';
+// import throttle from 'lodash/throttle';
+import './style.css';
 
 const GoodsGroups =  ({
   items,
+  filters,
   // actions
   filterGoodsByGroup,
-  filterGoodsGroups
+  filterGoodsGroupsByText,
+  addFilter,
+  removeFilter,
+  resetFilters
 }) => {
   const style = {
     flex: '1 0 auto',
@@ -32,16 +38,42 @@ const GoodsGroups =  ({
             key={key}
             primaryText={items[key]}
             onClick={
-              throttle(() => {filterGoodsByGroup(key)}, 5000)
+              () => {
+                // filterGoodsByGroup(key);
+                addFilter(key);
+              }
             }
           />
         );
     });
   };
+  
+  const getFilterJsx = (filterKey, filterDescr) => {
+    return (
+      <Chip
+        className='goodsGroupChip'
+        key={filterKey}
+        onRequestDelete={
+          () => {
+            removeFilter(filterKey);
+          }
+        }
+        style={{margin: 2, height: '24px', justifyContent: 'space-between', maxWidth: '100%'}}
+        labelStyle={{fontSize: '12px', lineHeight: '24px', maxWidth: '90%', overflow: 'hidden'}}
+      >
+        {filterDescr}
+      </Chip>
+    );
+  };
+  
+  const getFiltersJsx = () => {
+    return Object.keys(filters).map(filterKey => getFilterJsx(filterKey, filters[filterKey]));
+  };
+  
   return (
     <Paper className='goodsCategories' style={style} rounded={false} zDepth={2}>
       <List>
-        <Subheader style={{lineHeight: '40px'}}>
+        <div style={{paddingLeft: '10px'}}>
           <TextField 
             placeholder='фильтр категорий'
             className='search'
@@ -50,19 +82,23 @@ const GoodsGroups =  ({
             type="text"
             onChange={
               (e) => {
-                filterGoodsGroups(e.target.value);
+                filterGoodsGroupsByText(e.target.value);
               }
             }
           />
-        </Subheader>
+          <div style={{display: 'flex', flexWrap: 'wrap'}}>
+            {getFiltersJsx()}            
+          </div>
+        </div>
         <ListItem
           innerDivStyle={{padding: '5px 10px 5px 10px'}}
-          style={{fontSize: '13px', fontWeight: 'bold'}}
+          style={{fontSize: '13px', fontWeight: 'bold', marginTop: '4px'}}
           key={9999}
           primaryText='Все категории'
           onClick={
             () => {
-              filterGoodsByGroup('');
+              // filterGoodsByGroup('');
+              resetFilters();
             }
           }
         />
@@ -73,6 +109,6 @@ const GoodsGroups =  ({
 };
 
 export default connect(
-  state => ({items: state.goodsGroups.items}),
+  state => ({ items: state.goodsGroups.items, filters: getFiltersByIds(state.goodsGroups.itemsInitial, state.goodsGroups.filtersIds) }),
   goodsGroupsActions
 )(GoodsGroups);

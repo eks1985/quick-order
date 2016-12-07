@@ -23,8 +23,29 @@ const itemsInitial = (state, action) => {
   }
 };
 
+const filtersIds = (state = [], action) => {
+  switch (action.type) {
+    case 'ADD_GOODS_GROUPS_FILTER':
+      return [ ...state, action.guid];
+    case 'REMOVE_GOODS_GROUPS_FILTER':
+      const ind = state.indexOf(action.guid);
+      return [ ...state.slice(0, ind), ...state.slice(ind + 1)];
+    case 'RESET_GOODS_GROUPS_FILTERS':
+      return [];
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   items,
-  itemsInitial
+  itemsInitial,
+  filtersIds
 });
 
+
+// Selectors
+
+export const getFiltersByIds = (items, ids) => {
+  return ids.reduce((res, key) => ({ ...res, [key]: items[key] }), {});
+};

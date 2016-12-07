@@ -17,7 +17,7 @@ const searchByDescription = (goodsGroups, keys, text) => {
   }, {});
 };
 
-export const filterGoodsGroups = (text) => {
+export const filterGoodsGroupsByText = (text) => {
   return (dispatch, getState) => {
     const goodsGroups = getState().goodsGroups.itemsInitial;
     const keys = Object.keys(goodsGroups);
@@ -33,3 +33,17 @@ export const filterGoodsGroups = (text) => {
     });
   };
 };
+
+export const addFilter = guid => ({
+  type: 'ADD_GOODS_GROUPS_FILTER',
+  guid
+});
+
+export const removeFilter = guid => ({
+  type: 'REMOVE_GOODS_GROUPS_FILTER',
+  guid
+});
+
+export const resetFilters = () => ({
+  type: 'RESET_GOODS_GROUPS_FILTERS'
+});
