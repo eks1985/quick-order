@@ -1,3 +1,5 @@
+import { filterByGroupGuids } from './goods-groups';
+
 //{Search index
 
 export const generateCodes = () => {
@@ -45,13 +47,6 @@ export const generateDescriptions = () => {
 };
 
 //Search index }
-
-export const setSearchText = (payload) => {
-  return {
-    type: 'SET_SEARCH_TEXT',
-    payload
-  }
-}
 
 export const setCurentGuid = (guid) => {
   return {
@@ -122,32 +117,39 @@ const searchByDescription = (descriptions, keys, text) => {
   }, []);
 };
 
-export const search = (text) => {
-  text = text.toLowerCase();
+export const search = () => {
   return (dispatch, getState) => {
     const state = getState().goods;
-    const { codes, descriptions, itemsInitial } = state;
+    const { codes, descriptions, itemsInitial, searchText } = state;
     const codesKeys = Object.keys(codes);
     const descriptionsKeys = Object.keys(descriptions);
-    //search by code
-    let result  = codesKeys.reduce((result, key) => {
-      return key.includes(text) ? [ ...result, ...codes[key] ] : result;
-    }, []);
-    const words = text.split(' ');
-    result = words.reduce( (res, word) => {
-      return [ ...result, ...searchByDescription(descriptions, descriptionsKeys, word.trim()) ];
-    }, result);
-    const filteredGoods = result.reduce((res, elem) => {
-      res[elem] = itemsInitial[elem];
-      return res;
-    }, {});
+    let text = searchText.toLowerCase();
+    let result;
+    if (text.trim() === '') {
+      result = itemsInitial;
+    } else {
+      //search by code
+      result  = codesKeys.reduce((result, key) => {
+        return key.includes(text) ? [ ...result, ...codes[key] ] : result;
+      }, []);
+      const words = text.split(' ');
+      result = words.reduce( (res, word) => {
+        return [ ...result, ...searchByDescription(descriptions, descriptionsKeys, word.trim()) ];
+      }, result);
+      result = result.reduce((res, elem) => {
+        res[elem] = itemsInitial[elem];
+        return res;
+      }, {});
+    }
 
-    // const goodsGroupsFiltersIds = getState().goodsGroups.filtetsIds;
+    const goodsGroupsFiltersIds = getState().goodsGroups.filtersIds;
+    if (goodsGroupsFiltersIds.length > 0) {
+      result = filterByGroupGuids(goodsGroupsFiltersIds, result);
+    }
 
     dispatch({
       type: 'SET_GOODS_LIST',
-      payload: filteredGoods,
-      filterData: {filterType: 'field'}
+      payload: result,
     });
     dispatch(setQtyPagesGoods());
     dispatch(goToGoodsPage(1));
@@ -158,4 +160,13 @@ export const resetPagination = () => {
 
 };
 
-//Firebase
+export const setSearchText = (payload) => {
+  return dispatch => {
+    dispatch({
+      type: 'SET_SEARCH_TEXT',
+      payload
+    });
+    dispatch(search());
+  };
+};
+

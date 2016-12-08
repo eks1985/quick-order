@@ -1,23 +1,3 @@
-import { setQtyPagesGoods, goToGoodsPage, search } from './goods';
-
-export const filterGoodsByGroup = (groupGuid) => {
-  return (dispatch, getState) => {
-    const searchText = getState().goods.seatchText;
-    let items;
-    if (searchText) {
-      search(searchText);
-      items = getState().goods.items;
-    } else {
-      items = getState().goods.itemsInitial;
-    }
-    dispatch({
-      type: 'SET_GOODS_LIST',
-      filterData: {filterType: 'goodsGroup', groupGuid, itemsInitial: items}
-    });
-    dispatch(setQtyPagesGoods());
-    dispatch(goToGoodsPage(1));
-  };
-};
 
 const searchByDescription = (goodsGroups, keys, text) => {
   return keys.reduce((result, key) => {
@@ -55,3 +35,26 @@ export const removeFilter = guid => ({
 export const resetFilters = () => ({
   type: 'RESET_GOODS_GROUPS_FILTERS'
 });
+
+// Utils
+
+const filterByGroupGuid = (groupGuid, items) => {
+  const keys = Object.keys(items);
+  return keys.reduce( (result, key) => {
+    if (items[key].groupRef === groupGuid) {
+      result[key] = { ...items[key] };
+      return result;
+    } else {
+      return result;
+    }
+  }, {});
+}; 
+
+export const filterByGroupGuids = (groupGuids, items) => {
+  if (groupGuids.length === 0) {
+    return items;
+  }
+  return groupGuids.reduce((res, guid) => {
+    return { ...res, ...filterByGroupGuid(guid, items) };
+  }, {});
+};

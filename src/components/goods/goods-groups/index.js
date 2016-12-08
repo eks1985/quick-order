@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as goodsGroupsActions from './../../../actions/goods-groups';
+import * as goodsActions from './../../../actions/goods';
 import { getFiltersByIds } from './../../../store/reducers/goods-groups';
 import Paper from 'material-ui/Paper';
 import { List, ListItem } from 'material-ui/List';
@@ -13,7 +14,7 @@ const GoodsGroups =  ({
   items,
   filters,
   // actions
-  filterGoodsByGroup,
+  search,
   filterGoodsGroupsByText,
   addFilter,
   removeFilter,
@@ -32,15 +33,14 @@ const GoodsGroups =  ({
     return keys.map( key => {
         return (
           <ListItem
-            // style={{minHeight: '30px'}}
             innerDivStyle={{padding: '5px 10px 5px 10px'}}
             style={{fontSize: '13px'}}
             key={key}
             primaryText={items[key]}
             onClick={
               () => {
-                // filterGoodsByGroup(key);
                 addFilter(key);
+                search();
               }
             }
           />
@@ -56,6 +56,7 @@ const GoodsGroups =  ({
         onRequestDelete={
           () => {
             removeFilter(filterKey);
+            search();
           }
         }
         style={{margin: 2, height: '24px', justifyContent: 'space-between', maxWidth: '100%', whiteSpace: 'initial'}}
@@ -78,7 +79,7 @@ const GoodsGroups =  ({
             placeholder='фильтр категорий'
             className='search'
             id='searchGoodsGroups'
-            autoFocus
+            // autoFocus
             type="text"
             onChange={
               (e) => {
@@ -97,8 +98,8 @@ const GoodsGroups =  ({
           primaryText='Все категории'
           onClick={
             () => {
-              // filterGoodsByGroup('');
               resetFilters();
+              search();
             }
           }
         />
@@ -110,5 +111,5 @@ const GoodsGroups =  ({
 
 export default connect(
   state => ({ items: state.goodsGroups.items, filters: getFiltersByIds(state.goodsGroups.itemsInitial, state.goodsGroups.filtersIds) }),
-  goodsGroupsActions
+  { ...goodsGroupsActions, ...goodsActions }
 )(GoodsGroups);

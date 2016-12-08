@@ -38,7 +38,6 @@ let Search = ({
         style={iconButtonStyle}
         onClick={
           () => {
-            search(input.input.value);
             setSearchText(input.input.value);
           }
         }
@@ -51,7 +50,7 @@ let Search = ({
         style={iconButtonStyle}
         onClick={
           () => {
-            search('');
+            setSearchText('');
             input.input.value = '';
         }
       }>
@@ -62,11 +61,9 @@ let Search = ({
 };
 
 class SearchContainer extends Component {
-
   render () {
     return <Search {...this.props} />;
   }
-
 }
 
 export default connect(
