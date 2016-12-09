@@ -8,6 +8,7 @@ import { setQtyPagesGoods, setSearchText } from './actions/goods';
 import { setQtyPagesOrders } from './actions/orders';
 import { setCurrentContent } from './actions/current-content';
 import { search } from './actions/goods';
+// import { loadFirebaseConfig } from './actions/firebase-config';
 // eslint-disable-next-line
 import rtep from './rtep';
 
@@ -18,6 +19,7 @@ class App extends Component {
     dispatch(setQtyPagesGoods());
     dispatch(setQtyPagesOrders());
     document.addEventListener('keyup', this.handleKeyUp.bind(this), false);
+    // dispatch(loadFirebaseConfig());
   }
 
   handleKeyUp(e) {
@@ -50,7 +52,7 @@ class App extends Component {
           }
         >
           <ModalContent />
-        </Modal>
+        </Modal> 
       </div>
     );
   }

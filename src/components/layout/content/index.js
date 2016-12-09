@@ -5,6 +5,7 @@ import Orders from './../../orders';
 import Checkout from './../../checkout';
 import Options from './../../options';
 import QuickList from './../../quick-list';
+import Management from './../../management';
 const Content = ({
   currentContent
 }) => {
@@ -21,6 +22,7 @@ const Content = ({
       {currentContent === 'checkout' && <Checkout />}
       {currentContent === 'settings' && <Options />}
       {currentContent === 'quick-list' && <QuickList />}
+      {currentContent === 'management' && <Management />}
     </div>
   );
 };

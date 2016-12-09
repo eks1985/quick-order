@@ -77,6 +77,26 @@ class ListContainer extends Component {
       <div style={styles.style}>
         <Header {...props} />
         <Items {...props} />
+        {/*
+        <button
+          onClick={
+            ()=>{
+              this.props.sortGoods('code');
+            }
+          }
+        >
+          Сортировать по коду
+        </button>
+        <button
+          onClick={
+            ()=>{
+              this.props.sortGoods('description');
+            }
+          }
+        >
+          Сортировать по наименованию
+        </button>
+        */}
       </div>
     );
     

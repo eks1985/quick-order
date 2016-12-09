@@ -4,6 +4,7 @@ import Help from './help';
 import Profile from './profile';
 import GoodsCard from './goods/card';
 import Login from './log-in';
+import FirebaseConfig from './firebase-config';
 
 const ModalContent = ({
   modal
@@ -14,6 +15,7 @@ const ModalContent = ({
       {modal.content === 'help' && <Help />}
       {modal.content === 'goodsCard' && <GoodsCard />}
       {modal.content === 'login' && <Login />}
+      {modal.content === 'firebase-config' && <FirebaseConfig />}
     </div>
   );
 };

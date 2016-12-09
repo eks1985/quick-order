@@ -5,11 +5,14 @@ import Toggle from 'material-ui/Toggle';
 import Paper from 'material-ui/Paper';
 import Subheader from 'material-ui/Subheader';
 import * as actionsOptions from './../../actions/options';
+import * as firebaseConfigActions from './../../actions/firebase-config';
+import RaisedButton from 'material-ui/RadioButton';
 
 const Options = ({
   options,
   //actions
-  setOption
+  setOption,
+  resetFirebaseConfig
 }) => {
   const rowStyle = {
     display: 'flex',
@@ -204,6 +207,15 @@ const Options = ({
   
   return (
     <Paper style={{display: 'flex', flexDirection: 'column', padding: '10px', flex: '1 0 auto'}}>
+    
+      <RaisedButton 
+        label='Отвязать приложение от firebase'
+        onClick={
+          ()=>{
+            resetFirebaseConfig();
+          }
+        }
+      />
 
       <div style={rowStyle}>
         {manageGoodsOnStockQty()}
@@ -235,7 +247,7 @@ const Options = ({
 
 export default connect(
   state => ({ options: state.options }) ,
-  actionsOptions
+  { ...actionsOptions, ...firebaseConfigActions }
 )(Options);
 
 // управлять остатками

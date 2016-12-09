@@ -17,7 +17,7 @@ const Nav = ({
   };
   return (
     <div className='headerNav' style={style}>
-      <div style={{display: 'flex', flex: '1 0 50%'}}>
+      <div style={{display: 'flex'}}>
         <FlatButton
           rippleColor='#eee'
           label='Каталог'
@@ -81,6 +81,19 @@ const Nav = ({
             () => {
               setCurrentContent('help');
               setModal({ content: 'help', fullScreen: true });
+            }
+          }
+        >
+        </FlatButton>
+        <FlatButton
+          rippleColor='#eee'
+          label='Управление'
+          backgroundColor={currentContent === 'management' ? '#aaa' : '#eee'}
+          hoverColor={currentContent === 'management' ? '#aaa' : '#eee'}
+          labelStyle={currentContent === 'management' ? {color: 'white'} : {color: 'black'}}
+          onClick={
+            () => {
+              setCurrentContent('management');
             }
           }
         >

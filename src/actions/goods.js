@@ -170,3 +170,11 @@ export const setSearchText = (payload) => {
   };
 };
 
+// export const sortGoods = (column) => {
+//   return (dispatch, getState) => {
+//     const current = getState().goods.items;
+//     const keys = Object.keys(current);
+//     keys.sort();
+//   };
+// };
+

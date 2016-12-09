@@ -20,7 +20,6 @@ export default class root extends Component {
     store.dispatch(listenToGoods());
     store.dispatch(listenToPrices());
     store.dispatch(listenToOptions());
-    // store.dispatch(logoutUser());
 	}
 
   render() {

@@ -3,10 +3,13 @@ import ReactDOM from 'react-dom';
 import Root from './root';
 import './index.css';
 import { AppContainer } from 'react-hot-loader';
+import FirebaseConfig from './components/firebase-config';
+
+const firebaseConfig = localStorage.getItem('firebaseConfig');
 
 ReactDOM.render(
   <AppContainer>
-    <Root />
+    {firebaseConfig ? <Root /> : <FirebaseConfig /> }
   </AppContainer>,
   document.getElementById('root')
 );
