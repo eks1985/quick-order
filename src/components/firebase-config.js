@@ -89,7 +89,7 @@ const Config = ({
       />
       <p style={{marginTop: '50px'}}>Где найти <span style={{fontWeight: 'bold'}}>apiKey</span> и  <span style={{fontWeight: 'bold'}}>databaseURL</span> своего приложения?</p>
       <div style={{marginTop: '30px'}}>
-        <img alt='Поясняющая картинка' src='https://github.com/eks1985/quick-order/blob/master/deploy/firebase-reg/1.png' />      
+        <img alt='Поясняющая картинка' src='https://firebasestorage.googleapis.com/v0/b/quick-order-de84c.appspot.com/o/settings-fb.png?alt=media&token=858e1c69-97e7-4241-88a4-8b8e6422c1b1' />      
       </div>
     </div>
   );
