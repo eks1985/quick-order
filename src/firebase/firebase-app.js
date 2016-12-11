@@ -8,8 +8,6 @@ if (localStorage.getItem('firebaseConfig')) {
   appForCreateUsers  = firebase.initializeApp(config, 'appForCreateUsers');
 }
 
-console.log('firebase', firebase);
-
 export const auth = hasConfig ? firebase.auth() : {};
 export const database = hasConfig ? firebase.database() : {};
 

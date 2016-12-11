@@ -3,7 +3,8 @@ const initialState = {
 	uid: null,
 	status: 'AUTH_ANONYMOUS',
 	email: '',
-	error: ''
+	error: '',
+	firstAccess: true
 };
 
 //utils 
@@ -29,7 +30,8 @@ export default (state, action) => {
 				username: 'guest',
 				uid: null,
 				email: '',
-				error: ''
+				error: '', 
+				firstAccess: true
 			};
 		case 'AUTH_LOGIN':
 			return {
@@ -37,7 +39,8 @@ export default (state, action) => {
 				username: action.username,
 				uid: action.uid,
 				email: action.email,
-				error: ''
+				error: '',
+				firstAccess: true
 			};
 		case 'AUTH_LOGOUT':
 			return {
@@ -45,7 +48,8 @@ export default (state, action) => {
 				username: 'guest',
 				uid: null,
 				email: '',
-				error: state.error
+				error: state.error,
+				firstAccess: true
 			};
 		case 'AUTH_ERROR':
 			return {
@@ -53,7 +57,17 @@ export default (state, action) => {
 				username: '',
 				uid: null,
 				email: '',
-				error: translateError(action.error)
+				error: translateError(action.error),
+				firstAccess: true
+			};
+		case 'AUTH_RESET_FIRST_ACCESS':
+			return {
+				status: 'AUTH_RESET_FIRST_ACCESS',
+				username: '',
+				uid: null,
+				email: '',
+				error: '',
+				firstAccess: false
 			};
 		default: return state || initialState;
 	}

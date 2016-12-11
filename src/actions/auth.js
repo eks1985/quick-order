@@ -12,14 +12,18 @@ import { setCurrentContent } from './current-content';
 export const listenToAuth = () => {
 	return (dispatch, getState) => {
 		try {
-			auth.onAuthStateChanged((authData) => {
+			auth.onAuthStateChanged(authData => {
 				dispatch({type: 'RESET_ORDERS_HEADERS'});
 				dispatch({type: 'RESET_ORDERS_ITEMS'});
 				dispatch({type: 'RESET_CUSTOMER'});
 				dispatch({type: 'RESET_QTY_PAGES_ORDERS'});
 				dispatch(setCurrentContent('goods'));
 				dispatch(listenToOptions());
-				if (authData) {
+				if (authData && !authData.isAnonymous) {
+					// if (authData.isAnonymous) {
+					// 	dispatch(setModal({ content: 'login', fullScreen: true, center: true, showClose: false }));
+					// 	return;
+					// }
 					dispatch(setModal({ content: ''}));
 					dispatch({
 						type: 'AUTH_LOGIN',
@@ -141,5 +145,23 @@ export const createUser = (email, password) => {
 			  console.log(error);
 			});
 		} catch (e) {}
+	};
+};
+
+export const checkForUsersExist = () => {
+	return dispatch => {
+		auth.signInAnonymously().then(
+			(user) => {
+				const allUsersRef = database.ref('users');
+				allUsersRef.once('value').then(snapshot => {
+					console.log('snapshot users', snapshot.val());
+					if (snapshot.val() !== null) {
+						dispatch({
+							type: 'AUTH_RESET_FIRST_ACCESS'
+						});
+					}
+				});	
+			}
+		);
 	};
 };
