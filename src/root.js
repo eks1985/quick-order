@@ -7,6 +7,7 @@ import { listenToGoods } from './actions/goods-firebase';
 import { listenToPrices } from './actions/prices-firebase';
 import { listenToOptions } from './actions/options-firebase';
 import { listenToAuth, checkForUsersExist } from './actions/auth';
+import { listenToUsers } from './actions/users-firebase';
 
 import darkBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -21,6 +22,7 @@ export default class root extends Component {
     store.dispatch(listenToGoods());
     store.dispatch(listenToPrices());
     store.dispatch(listenToOptions());
+    store.dispatch(listenToUsers());
 	}
 
   render() {

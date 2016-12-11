@@ -8,7 +8,7 @@ const initialState = {
 	usersCheckComplete: false,
 };
 
-//utils 
+//utils
 
 const translateError = (error) => {
 	switch (error) {
@@ -18,7 +18,7 @@ const translateError = (error) => {
 			return 'Неверный пароль';
 		case 'There is no user record corresponding to this identifier. The user may have been deleted.':
 			return 'Пользователь не найден';
-		default: 
+		default:
 			return error;
 	}
 };
@@ -26,11 +26,11 @@ const translateError = (error) => {
 export default (state, action) => {
 	switch (action.type) {
 		case 'AUTH_OPEN':
-			return { ...state, status: 'AUTH_AWAITING_RESPONSE', username: 'guest', uid: null, email: '', error: '' }; 
+			return { ...state, status: 'AUTH_AWAITING_RESPONSE', username: 'guest', uid: null, email: '', error: '' };
 		case 'AUTH_LOGIN':
 			return { ...state, status: 'AUTH_LOGGED_IN', username: action.username, uid: action.uid, email: action.email, error: '' };
 		case 'AUTH_LOGOUT':
-			return { ...state, status: 'AUTH_ANONYMOUS', username: 'guest', uid: null, email: '', error: state.error };
+			return { ...state, status: 'AUTH_ANONYMOUS', username: 'guest', uid: null, email: '', error: state.error, firstAccess: false };
 		case 'AUTH_ERROR':
 			return { ...state, status: 'AUTH_ERROR', username: '', uid: null, email: '', error: translateError(action.error) };
 		case 'AUTH_RESET_FIRST_ACCESS':
@@ -40,4 +40,3 @@ export default (state, action) => {
 		default: return state || initialState;
 	}
 };
-

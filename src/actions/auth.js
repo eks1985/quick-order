@@ -9,6 +9,7 @@ import { listenToOrdersHeaders, listenToOrdersItems } from './orders-firebase';
 import { setModal } from './../lib/modal/actions/modal';
 import { setCustomer } from './customer';
 import { setCurrentContent } from './current-content';
+import { listenToUsers } from './users-firebase';
 
 export const openAuth = ( credentials = '') => {
 	return (dispatch) => {
@@ -74,7 +75,7 @@ export const listenToAuth = () => {
 		  						dispatch(setCustomer(guid, description, address, phone, email, inn));
 		  						dispatch(listenToOrdersHeaders());
 		  						dispatch(listenToOrdersItems());
-		  					});	
+		  					});
 		  					let customerOptionsRef = database.ref(`options/${customerGuid}`);
 		  					customerOptionsRef.once('value', snapshot => {
 		  						dispatch({
@@ -132,8 +133,11 @@ export const createUser = (email, password, admin = false) => {
 				auth.createUserWithEmailAndPassword(email, password)
 				.then(user => {
 					usersRef = database.ref('users/' + user.uid);
-					usersRef.update({email, admin});
+					return usersRef.update({email, admin, disabled: false});
 				})
+        .then( () => {
+          dispatch(listenToUsers());
+        })
 		    .catch(function(error) {
 				  var errorCode = error.code;
 				  var errorMessage = error.message;
@@ -168,9 +172,9 @@ export const createUser = (email, password, admin = false) => {
 
 export const checkForUsersExist = () => {
 	return dispatch => {
-		return auth.signInAnonymously().then(
+		return authCreateUsers.signInAnonymously().then(
 			(user) => {
-				const allUsersRef = database.ref('users');
+				const allUsersRef = databaseCreateUsers.ref('users');
 				allUsersRef.once('value').then(snapshot => {
 					if (snapshot.val() !== null) {
 						dispatch({
@@ -180,7 +184,7 @@ export const checkForUsersExist = () => {
 					dispatch({
 						type: 'AUTH_USERS_CHECK_COMPLETE'
 					});
-				});	
+				});
 			}
 		);
 	};
