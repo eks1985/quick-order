@@ -1,5 +1,5 @@
-import { database } from '../firebase/firebase-app';
-import { auth } from '../firebase/firebase-app';
+import { database, databaseCreateUsers } from '../firebase/firebase-app';
+import { auth, authCreateUsers } from '../firebase/firebase-app';
 import { listenToGoodsGroups } from './goods-groups-firebase';
 import { listenToGoods } from './goods-firebase';
 import { listenToPrices } from './prices-firebase';
@@ -122,12 +122,13 @@ export const logoutUser = () => {
 export const createUser = (email, password) => {
 	return dispatch => {
 		try {
-			auth.createUserWithEmailAndPassword(email, password)
+			authCreateUsers.createUserWithEmailAndPassword(email, password)
 			.then(user => {
 				// console.log(user);
 				// user.sendEmailVerification();
-				const usersRef = database.ref('users/' + user.uid);
+				const usersRef = databaseCreateUsers.ref('users/' + user.uid);
 				usersRef.update({email: user.email});
+				authCreateUsers.signOut();
 			})
 	    .catch(function(error) {
 			  var errorCode = error.code;
