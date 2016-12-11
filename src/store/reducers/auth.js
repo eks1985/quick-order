@@ -4,7 +4,8 @@ const initialState = {
 	status: 'AUTH_ANONYMOUS',
 	email: '',
 	error: '',
-	firstAccess: true
+	firstAccess: true,
+	usersCheckComplete: false,
 };
 
 //utils 
@@ -25,50 +26,17 @@ const translateError = (error) => {
 export default (state, action) => {
 	switch (action.type) {
 		case 'AUTH_OPEN':
-			return {
-				status: 'AUTH_AWAITING_RESPONSE',
-				username: 'guest',
-				uid: null,
-				email: '',
-				error: '', 
-				firstAccess: true
-			};
+			return { ...state, status: 'AUTH_AWAITING_RESPONSE', username: 'guest', uid: null, email: '', error: '' }; 
 		case 'AUTH_LOGIN':
-			return {
-				status: 'AUTH_LOGGED_IN',
-				username: action.username,
-				uid: action.uid,
-				email: action.email,
-				error: '',
-				firstAccess: true
-			};
+			return { ...state, status: 'AUTH_LOGGED_IN', username: action.username, uid: action.uid, email: action.email, error: '' };
 		case 'AUTH_LOGOUT':
-			return {
-				status: 'AUTH_ANONYMOUS',
-				username: 'guest',
-				uid: null,
-				email: '',
-				error: state.error,
-				firstAccess: true
-			};
+			return { ...state, status: 'AUTH_ANONYMOUS', username: 'guest', uid: null, email: '', error: state.error };
 		case 'AUTH_ERROR':
-			return {
-				status: 'AUTH_ERROR',
-				username: '',
-				uid: null,
-				email: '',
-				error: translateError(action.error),
-				firstAccess: true
-			};
+			return { ...state, status: 'AUTH_ERROR', username: '', uid: null, email: '', error: translateError(action.error) };
 		case 'AUTH_RESET_FIRST_ACCESS':
-			return {
-				status: 'AUTH_RESET_FIRST_ACCESS',
-				username: '',
-				uid: null,
-				email: '',
-				error: '',
-				firstAccess: false
-			};
+			return { ...state, firstAccess: false };
+		case 'AUTH_USERS_CHECK_COMPLETE':
+			return { ...state, usersCheckComplete: true };
 		default: return state || initialState;
 	}
 };

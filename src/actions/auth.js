@@ -1,3 +1,4 @@
+/* global localStorage */
 import { database, databaseCreateUsers } from '../firebase/firebase-app';
 import { auth, authCreateUsers } from '../firebase/firebase-app';
 import { listenToGoodsGroups } from './goods-groups-firebase';
@@ -9,9 +10,37 @@ import { setModal } from './../lib/modal/actions/modal';
 import { setCustomer } from './customer';
 import { setCurrentContent } from './current-content';
 
+export const openAuth = ( credentials = '') => {
+	return (dispatch) => {
+		try {
+			dispatch({ type: 'AUTH_OPEN' });
+			if (credentials) {
+				auth.signInWithEmailAndPassword(credentials.email, credentials.password)
+				.catch(function(error) {
+		    		dispatch({
+							type: 'AUTH_ERROR',
+							error: error.message
+						});
+						dispatch({ type: 'AUTH_LOGOUT' });
+				});
+			} else {
+    		dispatch({
+					type: 'AUTH_ERROR',
+					error: 'Не заданы данные пользователя'
+				});
+				dispatch({ type: 'AUTH_LOGOUT' });
+			}
+		} catch (e) {}
+	};
+};
+
 export const listenToAuth = () => {
 	return (dispatch, getState) => {
 		try {
+			dispatch(setModal({ content: 'login', fullScreen: true, center: true, showClose: false }));
+			if (localStorage.getItem('quickOrderDemo')) {
+				dispatch(openAuth({email: 'alfa1@alfa.com', password: '123456'}));
+			}
 			auth.onAuthStateChanged(authData => {
 				dispatch({type: 'RESET_ORDERS_HEADERS'});
 				dispatch({type: 'RESET_ORDERS_ITEMS'});
@@ -20,10 +49,6 @@ export const listenToAuth = () => {
 				dispatch(setCurrentContent('goods'));
 				dispatch(listenToOptions());
 				if (authData && !authData.isAnonymous) {
-					// if (authData.isAnonymous) {
-					// 	dispatch(setModal({ content: 'login', fullScreen: true, center: true, showClose: false }));
-					// 	return;
-					// }
 					dispatch(setModal({ content: ''}));
 					dispatch({
 						type: 'AUTH_LOGIN',
@@ -61,38 +86,14 @@ export const listenToAuth = () => {
 	  				});
 	    		}
 				} else {
-					// if (getState().firebaseConfig.apiKey && getState().firebaseConfig.databaseURL) { //if not set api key, don't open login screen
+					if (!localStorage.getItem('quickOrderDemo')) {
 						dispatch(setModal({ content: 'login', fullScreen: true, center: true, showClose: false }));
 						if (getState().auth.status !== 'AUTH_ANONYMOUS') {
 							dispatch({ type: 'AUTH_LOGOUT' });
 						}
-					// }
+					}
 				}
 			});
-		} catch (e) {}
-	};
-};
-
-export const openAuth = ( credentials = '') => {
-	return (dispatch) => {
-		try {
-			dispatch({ type: 'AUTH_OPEN' });
-			if (credentials) {
-				auth.signInWithEmailAndPassword(credentials.email, credentials.password)
-					.catch(function(error) {
-			    		dispatch({
-								type: 'AUTH_ERROR',
-								error: error.message
-							});
-							dispatch({ type: 'AUTH_LOGOUT' });
-					});
-			} else {
-	    		dispatch({
-						type: 'AUTH_ERROR',
-						error: 'Не заданы данные пользователя'
-					});
-					dispatch({ type: 'AUTH_LOGOUT' });
-			}
 		} catch (e) {}
 	};
 };
@@ -123,43 +124,62 @@ export const logoutUser = () => {
 	};
 };
 
-export const createUser = (email, password) => {
+export const createUser = (email, password, admin = false) => {
 	return dispatch => {
 		try {
-			authCreateUsers.createUserWithEmailAndPassword(email, password)
-			.then(user => {
-				// console.log(user);
-				// user.sendEmailVerification();
-				const usersRef = databaseCreateUsers.ref('users/' + user.uid);
-				usersRef.update({email: user.email});
-				authCreateUsers.signOut();
-			})
-	    .catch(function(error) {
-			  var errorCode = error.code;
-			  var errorMessage = error.message;
-			  if (errorCode === 'auth/weak-password') {
-			    alert('The password is too weak.');
-			  } else {
-			    alert(errorMessage);
-			  }
-			  console.log(error);
-			});
+			let usersRef;
+			if (admin) {
+				auth.createUserWithEmailAndPassword(email, password)
+				.then(user => {
+					usersRef = database.ref('users/' + user.uid);
+					usersRef.update({email, admin});
+				})
+		    .catch(function(error) {
+				  var errorCode = error.code;
+				  var errorMessage = error.message;
+				  if (errorCode === 'auth/weak-password') {
+				    alert('The password is too weak.');
+				  } else {
+				    alert(errorMessage);
+				  }
+				  console.log(error);
+				});
+			} else {
+				authCreateUsers.createUserWithEmailAndPassword(email, password)
+				.then(user => {
+					usersRef = databaseCreateUsers.ref('users/' + user.uid);
+					usersRef.update({email, admin});
+					authCreateUsers.signOut();
+				})
+		    .catch(function(error) {
+				  var errorCode = error.code;
+				  var errorMessage = error.message;
+				  if (errorCode === 'auth/weak-password') {
+				    alert('The password is too weak.');
+				  } else {
+				    alert(errorMessage);
+				  }
+				  console.log(error);
+				});
+			}
 		} catch (e) {}
 	};
 };
 
 export const checkForUsersExist = () => {
 	return dispatch => {
-		auth.signInAnonymously().then(
+		return auth.signInAnonymously().then(
 			(user) => {
 				const allUsersRef = database.ref('users');
 				allUsersRef.once('value').then(snapshot => {
-					console.log('snapshot users', snapshot.val());
 					if (snapshot.val() !== null) {
 						dispatch({
 							type: 'AUTH_RESET_FIRST_ACCESS'
 						});
 					}
+					dispatch({
+						type: 'AUTH_USERS_CHECK_COMPLETE'
+					});
 				});	
 			}
 		);

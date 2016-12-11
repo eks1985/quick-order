@@ -1,3 +1,5 @@
+/* global localStorage */
+/* global location */
 import React, { Component }  from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -67,12 +69,17 @@ const Config = ({
             	};
             	if (ok) {
                 localStorage.setItem('firebaseConfig', JSON.stringify(firebaseConfig));
+                localStorage.removeItem('quickOrderDemo');
                 location.reload();
             	}
             }
           }
         />
       </div>
+      <p style={{marginTop: '50px'}}>Где найти <span style={{fontWeight: 'bold'}}>apiKey</span> и  <span style={{fontWeight: 'bold'}}>databaseURL</span> своего приложения?</p>
+      <div style={{marginTop: '30px'}}>
+        <img alt='Поясняющая картинка' src='https://firebasestorage.googleapis.com/v0/b/quick-order-de84c.appspot.com/o/settings-fb.png?alt=media&token=858e1c69-97e7-4241-88a4-8b8e6422c1b1' />      
+      </div> 
       <p>Или</p>
       <RaisedButton
         label='Подключиться к демо'
@@ -83,14 +90,12 @@ const Config = ({
               databaseURL: "https://quick-order-de84c.firebaseio.com",
             };
             localStorage.setItem('firebaseConfig', JSON.stringify(firebaseConfig));
+            localStorage.setItem('quickOrderDemo', true);
             location.reload();
           }
         }
       />
-      <p style={{marginTop: '50px'}}>Где найти <span style={{fontWeight: 'bold'}}>apiKey</span> и  <span style={{fontWeight: 'bold'}}>databaseURL</span> своего приложения?</p>
-      <div style={{marginTop: '30px'}}>
-        <img alt='Поясняющая картинка' src='https://firebasestorage.googleapis.com/v0/b/quick-order-de84c.appspot.com/o/settings-fb.png?alt=media&token=858e1c69-97e7-4241-88a4-8b8e6422c1b1' />      
-      </div> 
+      
     </div>
   );
 };
