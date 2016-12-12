@@ -1,5 +1,7 @@
 Демо https://quick-order-de84c.firebaseapp.com/
 
+Развертывание (видео) https://github.com/eks1985/quick-order/tree/master/deploy/quick-order-deploy.mp4
+
 Цель данного приложения - собирать заказы клиентов через сайт
 
 Приложение в итоге будет интегрировано с 1с
