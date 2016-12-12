@@ -14,7 +14,7 @@ const Config = ({
 }) => {
   let apiKey, databaseURL;
   return (
-    <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+    <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'relative'}}>
       <div>
         <p>Введите <span style={{fontWeight: 'bold'}}>apiKey</span> и  <span style={{fontWeight: 'bold'}}>databaseURL</span> своего приложения firebase и нажмите на кнопку Подключиться</p>
       </div>
@@ -51,6 +51,7 @@ const Config = ({
         <RaisedButton
           label='Подключиться'
           labelStyle={{fontWeight: 'normal'}}
+          style={{border: '1px solid #ddd'}}
           onClick={
             () => {
               const apiKeyVal = apiKey.input.value.trim();
@@ -81,10 +82,11 @@ const Config = ({
       <div style={{marginTop: '30px'}}>
         <img alt='Поясняющая картинка' src='https://firebasestorage.googleapis.com/v0/b/quick-order-de84c.appspot.com/o/settings-fb.png?alt=media&token=858e1c69-97e7-4241-88a4-8b8e6422c1b1' />      
       </div> 
-      <p>Или</p>
       <RaisedButton
+        style={{position: 'absolute', top: '10px', right: '10px'}}
         label='Подключиться к демо'
-        labelStyle={{fontWeight: 'normal'}}
+        labelStyle={{fontWeight: 'normal', color: 'white'}}
+        backgroundColor='goldenrod'
         onClick={
           () => {
             const firebaseConfig = {
