@@ -50,6 +50,7 @@ const Config = ({
       <div>
         <RaisedButton
           label='Подключиться'
+          labelStyle={{fontWeight: 'normal'}}
           onClick={
             () => {
               const apiKeyVal = apiKey.input.value.trim();
@@ -83,6 +84,7 @@ const Config = ({
       <p>Или</p>
       <RaisedButton
         label='Подключиться к демо'
+        labelStyle={{fontWeight: 'normal'}}
         onClick={
           () => {
             const firebaseConfig = {

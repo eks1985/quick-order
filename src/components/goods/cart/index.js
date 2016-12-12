@@ -74,6 +74,7 @@ const Cart = ({
               <RaisedButton
                 icon={<IconRowing />}
                 label='Заказать'
+                labelStyle={{fontWeight: 'normal'}}
                 onClick={
                   () => {
                     setCurrentContent('checkout');
@@ -85,6 +86,7 @@ const Cart = ({
               <RaisedButton
                 icon={<IconRemoveCart />}
                 label='Очистить'
+                labelStyle={{fontWeight: 'normal'}}
                 onClick={
                   () => {
                     const yes = confirm("Уверены? Будут очищены все введеные значения количеств на страницах списка товаров");

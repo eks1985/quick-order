@@ -23,7 +23,7 @@ const Nav = ({
           label='Каталог'
           backgroundColor={currentContent === 'goods' ? '#aaa' : '#eee'}
           hoverColor={currentContent === 'goods' ? '#aaa' : '#eee'}
-          labelStyle={currentContent === 'goods' ? {color: 'white'} : {color: 'black'}}
+          labelStyle={currentContent === 'goods' ? {color: 'white', fontWeight: 'normal'} : {color: 'black', fontWeight: 'normal'}}
           onClick={
             () => {
               setCurrentContent('goods');
@@ -36,7 +36,7 @@ const Nav = ({
           label='Заказы'
           backgroundColor={currentContent === 'orders' ? '#aaa' : '#eee'}
           hoverColor={currentContent === 'orders' ? '#aaa' : '#eee'}
-          labelStyle={currentContent === 'orders' ? {color: 'white'} : {color: 'black'}}
+          labelStyle={currentContent === 'orders' ? {color: 'white', fontWeight: 'normal'} : {color: 'black', fontWeight: 'normal'}}
           onClick={
             () => {
               setCurrentContent('orders');
@@ -49,7 +49,7 @@ const Nav = ({
           label='Быстрый заказ'
           backgroundColor={currentContent === 'quick-list' ? '#aaa' : '#eee'}
           hoverColor={currentContent === 'quick-list' ? '#aaa' : '#eee'}
-          labelStyle={currentContent === 'quick-list' ? {color: 'white'} : {color: 'black'}}
+          labelStyle={currentContent === 'quick-list' ? {color: 'white', fontWeight: 'normal'} : {color: 'black', fontWeight: 'normal'}}
           onClick={
             () => {
               setCurrentContent('quick-list');
@@ -62,7 +62,7 @@ const Nav = ({
           label='Профиль'
           backgroundColor={currentContent === 'profile' ? '#aaa' : '#eee'}
           hoverColor={currentContent === 'profile' ? '#aaa' : '#eee'}
-          labelStyle={currentContent === 'profile' ? {color: 'white'} : {color: 'black'}}
+          labelStyle={currentContent === 'profile' ? {color: 'white', fontWeight: 'normal'} : {color: 'black', fontWeight: 'normal'}}
           onClick={
             () => {
               setCurrentContent('profile');
@@ -76,7 +76,7 @@ const Nav = ({
           label='Помощь'
           backgroundColor={currentContent === 'help' ? '#aaa' : '#eee'}
           hoverColor={currentContent === 'help' ? '#aaa' : '#eee'}
-          labelStyle={currentContent === 'help' ? {color: 'white'} : {color: 'black'}}
+          labelStyle={currentContent === 'help' ? {color: 'white', fontWeight: 'normal'} : {color: 'black', fontWeight: 'normal'}}
           onClick={
             () => {
               setCurrentContent('help');
@@ -90,7 +90,7 @@ const Nav = ({
           label='Управление'
           backgroundColor={currentContent === 'management' ? '#aaa' : '#eee'}
           hoverColor={currentContent === 'management' ? '#aaa' : '#eee'}
-          labelStyle={currentContent === 'management' ? {color: 'white'} : {color: 'black'}}
+          labelStyle={currentContent === 'management' ? {color: 'white', fontWeight: 'normal'} : {color: 'black', fontWeight: 'normal'}}
           onClick={
             () => {
               setCurrentContent('management');
@@ -104,7 +104,7 @@ const Nav = ({
             label='Настройки'
             backgroundColor={currentContent === 'settings' ? '#aaa' : '#eee'}
             hoverColor={currentContent === 'settings' ? '#aaa' : '#eee'}
-            labelStyle={currentContent === 'settings' ? {color: 'white'} : {color: 'black'}}
+            labelStyle={currentContent === 'settings' ? {color: 'white', fontWeight: 'normal'} : {color: 'black', fontWeight: 'normal'}}
             onClick={
               () => {
                 setCurrentContent('settings');
