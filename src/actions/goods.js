@@ -79,6 +79,7 @@ export const detectIsLastPage = () => {
 
 export const moveGoodsForward = () => {
   return (dispatch, getState) => {
+    // console.log(JSON.stringify(getState().goods.items));
     const isLastPage = getState().goods.isLastPage;
     if (!isLastPage) {
       dispatch({

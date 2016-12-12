@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import initialState from './initialData/goods';
+// import initialState from './initialData/goods';
 
 const searchText = (state = '', action) => {
   switch (action.type) {
@@ -29,12 +29,12 @@ const descriptions = (state = {}, action) => {
   }
 };
 
-const itemsInitial = (state, action) => {
+const itemsInitial = (state = {}, action) => {
   switch (action.type) {
     case 'RECEIVE_GOODS':
       return { ...state, ...action.payload };
     default:
-      return state || initialState;
+      return state;
   }
 };
 
@@ -47,14 +47,14 @@ const currentGuid = (state = '', action) => {
   }
 };
 
-const items = (state, action) => {
+const items = (state = {}, action) => {
   switch (action.type) {
     case 'RECEIVE_GOODS':
       return { ...state, ...action.payload };
     case 'SET_GOODS_LIST':
       return action.payload;
     default:
-      return state || initialState;
+      return state;
   }
 };
 

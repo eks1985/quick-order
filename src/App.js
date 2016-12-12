@@ -19,7 +19,6 @@ class App extends Component {
     dispatch(setQtyPagesGoods());
     dispatch(setQtyPagesOrders());
     document.addEventListener('keyup', this.handleKeyUp.bind(this), false);
-    // dispatch(loadFirebaseConfig());
   }
 
   handleKeyUp(e) {

@@ -49,7 +49,7 @@ export default ({
   };
   const getPriceJsx = (key) => {
     return (
-      <div key={key + 'price'} style={rowStyle.price}>{format1(prices[key], '')}</div>
+      <div key={key + 'price'} style={rowStyle.price}>{format1(prices[key] || 100, '')}</div>
     );
   };
   const getQtyJsx = (key) => {
