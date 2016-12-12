@@ -1,6 +1,6 @@
 Демо https://eks1985.github.io/quick-order/
 
-[Развертывание (видео)](https://firebasestorage.googleapis.com/v0/b/quick-order-de84c.appspot.com/o/media%2Fquick-order-deploy.mp4?alt=media&token=3d2d2f15-0b3c-4999-a214-e792f9060ebd)
+[Развертывание (видео)](https://firebasestorage.googleapis.com/v0/b/quick-order-de84c.appspot.com/o/quick-order-deploy.avi?alt=media&token=164d1b4a-ce40-463e-ab93-f660e950dca0)
 
 Цель данного приложения - собирать заказы клиентов через сайт
 
