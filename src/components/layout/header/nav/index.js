@@ -114,7 +114,7 @@ const Nav = ({
           </FlatButton>
         }
       </div>
-      <div style={{display: 'flex', flex: '0 1 50%', justifyContent: 'flex-end'}}>
+      <div style={{display: 'flex', flex: '0 1 auto', justifyContent: 'flex-end'}}>
         <Auth />
       </div>
     </div>

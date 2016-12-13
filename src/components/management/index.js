@@ -79,7 +79,7 @@ const Management = ({
                 <MenuItem
                   onTouchTap={
                     () => {
-                      alert('Пока не работает :)')
+                      alert('Пока не работает :)');
                     }
                   }
                 >
@@ -99,7 +99,7 @@ const Management = ({
         }
       </List>
     );
-  }
+  };
 
   return (
     <Paper style={{display: 'flex', flexDirection: 'column', padding: '20px', flex: '1', alignItems: 'flex-start'}}>
@@ -125,6 +125,7 @@ const Management = ({
           }
         />
         <FlatButton
+          style={{fontWeight: 'normal'}}
           label='Сгенерировать пароль'
           onClick={
             () => {
@@ -133,6 +134,7 @@ const Management = ({
           }
         />
         <RaisedButton
+          style={{fontWeight: 'normal'}}
           label='Создать пользователя'
           style={{border: '1px solid #ddd'}}
           onClick={
