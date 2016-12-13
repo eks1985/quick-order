@@ -36,7 +36,7 @@ const Management = ({
         {keys.map(key => <ListItem primaryText={usersAdmins[key].email} key={key} />)}
       </List>
     );
-  }
+  };
 
   const getNoAdminsJsx = () => {
     const keys = Object.keys(usersNoAdmins);
@@ -125,8 +125,8 @@ const Management = ({
           }
         />
         <FlatButton
-          style={{fontWeight: 'normal'}}
           label='Сгенерировать пароль'
+          labelStyle={{fontWeight: 'normal'}}
           onClick={
             () => {
               handleGeneratePwd(v4().slice(0,6));
@@ -134,9 +134,9 @@ const Management = ({
           }
         />
         <RaisedButton
-          style={{fontWeight: 'normal'}}
-          label='Создать пользователя'
           style={{border: '1px solid #ddd'}}
+          labelStyle={{fontWeight: 'normal'}}
+          label='Создать пользователя'
           onClick={
             () => {
               createUser(name.input.value.trim(), password.input.value.trim())}
@@ -168,7 +168,7 @@ class ManagementContainer extends Component {
   }
 
   render () {
-    return <Management { ...this.props } handleGeneratePwd={this.handleGeneratePwd} pwd={this.state.pwd} />
+    return <Management { ...this.props } handleGeneratePwd={this.handleGeneratePwd} pwd={this.state.pwd} />;
   }
 
 }

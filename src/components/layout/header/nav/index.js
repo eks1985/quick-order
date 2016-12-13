@@ -13,7 +13,8 @@ const Nav = ({
   setModal
 }) => {
   const style = {
-    display: 'flex'
+    display: 'flex',
+    justifyContent: 'space-between'
   };
   return (
     <div className='headerNav' style={style}>
