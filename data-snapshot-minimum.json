@@ -1,0 +1,77 @@
+{
+  "customers" : {
+    "74bdeb37-6457-46e9-a933-bcf7882efba7" : {
+      "address" : "г. Москва, ул. Пушкина, д. 150, оф. 356",
+      "description" : "Контрагент Омега",
+      "email" : "info@omega.com",
+      "guid" : "74bdeb37-6457-46e9-a933-bcf7882efba7",
+      "inn" : "5544466644",
+      "phone" : "+7917000000"
+    }
+  },
+  "goods" : {
+    "00688cd0-cda3-486d-9416-811fd998b881" : {
+      "code" : "Тв90e15",
+      "description" : "Творог полужирный",
+      "groupRef" : "b514d31c-dd4f-486e-b606-5cfa7592ea7b"
+    }
+  },
+  "goods-groups" : {
+    "b514d31c-dd4f-486e-b606-5cfa7592ea7b" : "Молочные продукты"
+  },
+  "options" : {
+    "common" : {
+      "catalogListSettings" : [ "code", "description", "price", "qty" ],
+      "manageGoodsOnStockQty" : false,
+      "managePositionIsActiveProp" : false,
+      "orderNoActivePositions" : false,
+      "positionIsActiveDefinition" : "positionData",
+      "showGoodsOnStockQty" : false,
+      "showNoActivePosition" : false
+    },
+    "74bdeb37-6457-46e9-a933-bcf7882efba7" : {
+      "catalogListSettings" : [ "code", "description", "price", "qty" ]
+    }
+  },
+  "orders" : {
+    "headers" : {
+      "74bdeb37-6457-46e9-a933-bcf7882efba7" : {
+        "0ba9dc53-5410-4914-9303-296250ce2af3" : {
+          "amount" : 500.00,
+          "date" : "2016-11-21T22:02:26",
+          "enterpriseNr" : "0ba9dc53",
+          "nr" : "0ba9dc53-5410-4914-9303-296250ce2af3"
+        }
+      }
+    },
+    "items" : {
+      "74bdeb37-6457-46e9-a933-bcf7882efba7" : {
+        "0ba9dc53-5410-4914-9303-296250ce2af3" : {
+          "84866411-224b-4fcc-887d-fd0e5322691f" : {
+            "amount" : 500.00,
+            "code" : "Ка27d",
+            "description" : "Капуста кольраби",
+            "price" : 50.00,
+            "qty" : 10
+          }
+        }
+      }
+    }
+  },
+  "prices" : {
+    "00688cd0-cda3-486d-9416-811fd998b881" : 923.08
+  },
+  "users" : {
+    "RVCmibtnIThc8PgCBfOZuW4mhtg1" : {
+      "admin" : true,
+      "disabled" : false,
+      "email" : "foo@bar.com"
+    },
+    "jbt2Zl80QrZb4fgK4uqIzsnK7yB2" : {
+      "admin" : false,
+      "email" : "bar@baz.com",
+      "disabled" : false,
+      "customerRef": "74bdeb37-6457-46e9-a933-bcf7882efba7"
+    }
+  }
+}
