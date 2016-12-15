@@ -1,0 +1,172 @@
+Var scriptCtrl;
+
+Procedure ScriptControlInit(scriptCtrl) 
+	
+ scriptCtrl =  CreateObject("MSScriptControl.ScriptControl");
+ scriptCtrl.Language="jscript";
+ code = "              
+  |                    
+  | function parseJSON(strJSON) {
+  |  var tmpFunc = (new Function('return('+strJSON+');'))();
+  |  return(tmpFunc);
+  | }
+  |
+  | // Get array element
+  | function aGet(Array, index) {
+  |  return(Array[index]);
+  | }
+  |
+  | // Get key of pair by index
+  | function oKey(Obj, index) {
+  |  var size = 0, key;
+  |  for (key in Obj) {
+  |   if (size == index) break;
+  |   if (Obj.hasOwnProperty(key)) size++;
+  |  }
+  |  return(key);
+  | }
+  |
+  | // Get value of pair by key
+  | function oValueByKey(Obj, key) {
+  |  return(Obj[key]);
+  | }
+  |
+  | // Get qty of pairs inside object 
+  | Object.size = function(obj) {
+  |  var size = 0, key;
+  |  for (key in obj) {
+  |   if (obj.hasOwnProperty(key)) size++;
+  |  }
+  |  return(size);
+  | }
+  |
+  | // Get size of object (qty of pairs inside it)
+  | function oSize(Obj) {
+  |  return(Object.size(Obj));
+  | }
+  |
+  | // Get object type (number, string, object, array)
+  | function eType(Element) {
+  |  if (Element instanceof Array) {
+  |    return(""array"");
+  |  } else if (Object.prototype.toString.call(Element) === '[object Array]') {
+  |    return(""array"");
+  |  } else {
+  |   return(typeof(Element));
+  |  }
+  | }
+  |";
+ scriptCtrl.AddCode(code);
+ 
+EndProcedure
+            
+//*******************************************
+Function jsonToList(obj)     
+	
+ If EmptyValue(scriptCtrl)=1 Then
+  ScriptControlInit(scriptCtrl);
+ EndIf;
+
+ //Message(scriptCtrl.run("oSize", obj));               //Object size (qty of key-value pairs)
+ //Message(scriptCtrl.run("oKey", obj, 1));             //Key of pair with number 1
+ //Message(scriptCtrl.run("oValueByKey", obj, "id"));   //Get value of object by kye
+ //Message(scriptCtrl.run("aGet", obj.products, 0).id); //Get elem of array with index 0
+ //Message(scriptCtrl.run("eType", obj.products));      //Get type of object, even if it is array
+
+ List = CreateObject("ValueList");            
+ ObjectType = scriptCtrl.run("eType", obj);
+ If ObjectType = "object" Then
+  For n=0 To scriptCtrl.run("oSize", obj)-1 Do                        
+   Key = scriptCtrl.run("oKey", obj, n);            
+   Value = scriptCtrl.run("oValueByKey", obj, Key);
+   ValType = scriptCtrl.run("eType", Value);
+   If Find("number, string", ValType) > 0 Then
+    List.AddValue(Value, Key);
+   ElsIf Find("object, array", ValType) > 0 Then
+    List.AddValue(jsonToList(Value), Key);
+   EndIf;
+  EndDo;                                  
+ ElsIf ObjectType = "array" Then
+  For n=0 To obj.length-1 Do
+   Value = scriptCtrl.run("aGet", obj, n);  
+   ValType = scriptCtrl.run("eType", Value);
+   If Find("number, string", ValType) > 0 Then
+    List.AddValue(Value, TrimAll(String(n)));
+   ElsIf Find("object, array", ValType) > 0 Then
+    List.AddValue(jsonToList(Value), TrimAll(String(n)));
+   EndIf;
+  EndDo;
+ EndIf;    
+ Return List; 
+ 
+EndFunction
+
+//******************************************
+Function parseJSON(Val Str) Export   
+	
+ If EmptyValue(scriptCtrl)=1 Then
+  ScriptControlInit(scriptCtrl);
+ EndIf;
+ Result = scriptCtrl.run("parseJSON", Str );                              
+ List = jsonToList(Result);
+ Return List; 
+ 
+EndFunction      
+
+Function Quotes(Str)
+	
+	Return StrReplace(Str, "/", Chr(34));	
+	
+EndFunction
+
+//*******************************************
+
+Procedure GetData()    
+	
+	Method   = "GET";                                           
+	Path     = "https://myapp-a377c.firebaseio.com/";            //here should be path to your firebase app
+	Resource = "users.json";                                     //here you should specify node name
+	Auth     = "?auth=AlQ8UeYF7p2xPWv4dhMurUvMEHUtEwtGEX******"; //here you should specofy your firebase auth token (Settings - Project Settings - Service Accounts - Database Secrets - Show )
+	Request  = Path + Resource + Auth;
+	WinHttp  = CreateObject("WinHttp.WinHttpRequest.5.1");
+	WinHttp.Option(2, "utf-8");  
+	//WinHttp.SetProxy(2,"SERVER:PORT");                         //if you are behind proxy put server name and port of proxy server
+	WinHttp.Open(Method, Request, 0);
+	WinHttp.SetRequestHeader("Accept-Language", "en"); 
+	WinHttp.SetRequestHeader("Accept-Charset", "utf-8");
+	WinHttp.SetRequestHeader("Content-Language", "en");
+	WinHttp.SetRequestHeader("Content-Charset", "utf-8");
+	WinHttp.SetRequestHeader("Content-Type", "application/json; charset=utf-8");
+	WinHttp.Send();
+	
+	Result = WinHttp.ResponseText();
+	Message("Result: " + Left(Result, 300));  
+	List = parseJSON(Result);
+	Message("Result length: " + String(List.GetListSize()));
+	WinHttp = "";  
+
+EndProcedure
+
+Procedure SendData()    
+	                       
+	Method    = "PATCH";
+	Path     = "https://myapp-a377c.firebaseio.com/";            //here should be path to your firebase app
+	Resource = "goods-groups.json";                              //here you should specify node name
+	Auth     = "?auth=AlQ8UeYF7p2xPWv4dhMurUvMEHUtEwtGEX******"; //here you should specofy your firebase auth token (Settings - Project Settings - Service Accounts - Database Secrets - Show )
+	Request  = Path + Resource + Auth;    
+	WinHttp  = CreateObject("WinHttp.WinHttpRequest.5.1");
+	WinHttp.Option(2, "utf-8");
+	//WinHttp.SetProxy(2,"SERVER:PORT");                         //if you are behind proxy put server name and port of proxy server
+	WinHttp.Open(Method, Request, 0);
+	WinHttp.SetRequestHeader("Accept-Language", "en"); 
+	WinHttp.SetRequestHeader("Accept-Charset", "utf-8");
+	WinHttp.SetRequestHeader("Content-Language", "en");
+	WinHttp.SetRequestHeader("Content-Charset", "utf-8");
+	WinHttp.SetRequestHeader("Content-Type", "application/json; charset=utf-8");
+	WinHttp.Send(Quotes("{/abcd/: /Tv/}"));
+	
+	Result = WinHttp.ResponseText();
+	Message(Left(Result, 300));  
+	WinHttp = "";
+	
+EndProcedure
