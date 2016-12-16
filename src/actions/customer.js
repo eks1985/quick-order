@@ -11,3 +11,11 @@ export const setCustomer = (guid, description, address, phone, email, inn) => {
     });
   };
 };
+
+export const receiveCustomers = (payload) => {
+  return {
+    type: 'RECEIVE_CUSTOMERS',
+    payload
+  };
+};
+

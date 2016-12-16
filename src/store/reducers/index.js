@@ -13,6 +13,7 @@ import quickList from './quick-list';
 import catalogQty from './catalog-qty';
 import options from './options';
 import users from './users';
+import customers from './customers';
 import firebaseConfig from './firebase-config';
 import modal from './../../lib/modal/reducers/modal';
 
@@ -31,7 +32,8 @@ const rootReducer = combineReducers({
 	prices,
 	quickList,
 	catalogQty,
-	users
+	users,
+	customers
 });
 
 export default rootReducer;

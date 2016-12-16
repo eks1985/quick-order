@@ -10,6 +10,7 @@ import { setModal } from './../lib/modal/actions/modal';
 import { setCustomer } from './customer';
 import { setCurrentContent } from './current-content';
 import { listenToUsers } from './users-firebase';
+import { receiveCustomers } from './customer';
 
 export const openAuth = ( credentials = '') => {
 	return (dispatch) => {
@@ -63,10 +64,11 @@ export const listenToAuth = () => {
 					dispatch(listenToPrices());
 	    		if (authData.email) {
 	    			//get customer guid
-	    			const email = authData.email.replace('.', '%2E');
-	  				let usersRef  = database.ref(`users/${email}`);
+	    			const userUID = authData.uid;
+	  				let usersRef  = database.ref(`users/${userUID}`);
 	  				usersRef.once('value', snapshot => {
-	  					let customerGuid = snapshot.val();
+	  					const userData = snapshot.val();
+	  					let customerGuid = userData.customerRef;
 	  					if (customerGuid) {
 	  						let customerRef = database.ref(`customers/${customerGuid}`);
 		  					customerRef.once('value', snapshot => {
@@ -84,7 +86,39 @@ export const listenToAuth = () => {
 		  						});
 		  					});
 	  					}
+	  					
+	  					//admin
+	  					if (userData.admin) {
+	  						const customersRef = database.ref('customers');
+	  						customersRef.on('value', snapshot => {
+	  							dispatch(receiveCustomers(snapshot.val()));	
+	  						});
+	  					}
 	  				});
+	  				
+	    			
+	    			// 	const email = authData.email.replace('.', '%2E');
+	  				// let usersRef  = database.ref(`users/${email}`);
+	  				// usersRef.once('value', snapshot => {
+	  				// 	let customerGuid = snapshot.val();
+	  				// 	if (customerGuid) {
+	  				// 		let customerRef = database.ref(`customers/${customerGuid}`);
+		  			// 		customerRef.once('value', snapshot => {
+		  			// 			const customerData = snapshot.val();
+		  			// 			const { guid, description, address, phone, email, inn } = customerData;
+		  			// 			dispatch(setCustomer(guid, description, address, phone, email, inn));
+		  			// 			dispatch(listenToOrdersHeaders());
+		  			// 			dispatch(listenToOrdersItems());
+		  			// 		});
+		  			// 		let customerOptionsRef = database.ref(`options/${customerGuid}`);
+		  			// 		customerOptionsRef.once('value', snapshot => {
+		  			// 			dispatch({
+		  			// 				type: 'RECEIVE_OPTIONS',
+		  			// 				payload: snapshot.val()
+		  			// 			});
+		  			// 		});
+	  				// 	}
+	  				// });
 	    		}
 				} else {
 					if (!localStorage.getItem('quickOrderDemo')) {
