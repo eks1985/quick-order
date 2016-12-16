@@ -7,8 +7,9 @@ import * as goodsActions from './../../../../actions/goods';
 import * as modalActions from './../../../../lib/modal/actions/modal';
 import * as catalogQtyActions from './../../../../actions/catalog-qty';
 import * as optionsActions from './../../../../actions/options';
-import Header from './header';
-import Items from './items';
+// import Header from './header';
+// import Items from './items';
+import Column from './column';
 import styles from './styles';
 
 class ListContainer extends Component {
@@ -68,8 +69,7 @@ class ListContainer extends Component {
     }; 
     return (
       <div style={styles.style}>
-        <Header {...props} />
-        <Items {...props} />
+        {props.catalogListSettings.map((key, i) => <Column {...props }  key={key} i={i} columnsQty={props.catalogListSettings.length} />)}
       </div>
     );
     

@@ -99,7 +99,7 @@ const Management = ({
               <ListItem
                 style={usersNoAdmins[key].disabled ? {color: grey400} : {}}
                 primaryText={usersNoAdmins[key].email}
-                secondaryText={customers[usersNoAdmins[key].customerRef].description}
+                secondaryText={ usersNoAdmins[key].customerRef ? customers[usersNoAdmins[key].customerRef].description: ''}
                 key={key}
                 rightIconButton={rightIconMenu} />
             );
