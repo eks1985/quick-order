@@ -7,10 +7,13 @@ import * as goodsActions from './../../../../actions/goods';
 import * as modalActions from './../../../../lib/modal/actions/modal';
 import * as catalogQtyActions from './../../../../actions/catalog-qty';
 import * as optionsActions from './../../../../actions/options';
-// import Header from './header';
-// import Items from './items';
+
+import IconButton from 'material-ui/IconButton';
+import IconSettings from 'material-ui/svg-icons/action/settings';
+import IconDone from 'material-ui/svg-icons/action/done';
+
 import Column from './column';
-import styles from './styles';
+import styles from './styles1';
 
 class ListContainer extends Component {
   
@@ -59,17 +62,45 @@ class ListContainer extends Component {
     this.setState({headerSettingsMode: false});
   }
   
+  getSettingsBtnJsx() {
+    const { headerSettingsIBStyle, headerSettingsIconStyle } = styles;
+    const { headerSettingsMode} = this.state;
+    return (
+      <div style={headerSettingsIBStyle}>
+        {!headerSettingsMode &&
+          <IconButton 
+            tabIndex={-1}
+            style={headerSettingsIconStyle}
+            onClick={this.setHeaderSettingsMode}
+          >
+            <IconSettings color='#ccc' />
+          </IconButton>
+        }
+        {headerSettingsMode &&
+          <IconButton 
+            tabIndex={-1}
+            style={headerSettingsIconStyle}
+            onClick={this.removeHeaderSettingsMode}
+          >
+            <IconDone />
+          </IconButton>
+        }
+      </div>
+    );
+  }
+  
   render() {
     const props = {
       ...this.props, 
       setFocused: this.setFocused, 
       headerSettingsMode: this.state.headerSettingsMode, 
-      setHeaderSettingsMode: this.setHeaderSettingsMode, 
-      removeHeaderSettingsMode: this.removeHeaderSettingsMode 
+      setHeaderSettingsMode: this.setHeaderSettingsMode.bind(this), 
+      removeHeaderSettingsMode: this.removeHeaderSettingsMode.bind(this) 
     }; 
     return (
       <div style={styles.style}>
-        {props.catalogListSettings.map((key, i) => <Column {...props }  key={key} i={i} columnsQty={props.catalogListSettings.length} />)}
+        {this.getSettingsBtnJsx()}
+        {props.catalogListSettings.map((key, i) => <Column {...props } key={`${key}column`}  columnKey={key} i={i} columnsQty={props.catalogListSettings.length} />)}
       </div>
     );
     

@@ -1,6 +1,7 @@
 export default {
   style: {
     display: 'flex',
+    position: 'relative'
   },
   arrowStyle: {
     button: {
