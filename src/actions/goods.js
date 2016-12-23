@@ -18,7 +18,6 @@ export const generateCodes = () => {
   };
 };
 
-
 const generateDescrGuids = (goods, descr) => {
   const goodsKeys = Object.keys(goods);
   return goodsKeys.reduce((res, key) => {
@@ -47,6 +46,29 @@ export const generateDescriptions = () => {
 };
 
 //Search index }
+
+// Order index
+
+export const generateOrderIndexCodes = () => {
+  return (dispatch, getState) => {
+    const items = getState().goods.itemsInitial;
+    const keys = Object.keys(items);
+    const index = keys.map( key => items[key].code );
+    // console.log('keys', keys);
+    // const index = keys.reduce(key => {
+    //   console.log(items[key]);
+    //   return items[key].code
+    // }, []);
+    dispatch({
+      type: 'RECEIVE_GOODS_ORDER_INDEX_CODES',
+      payload: index.sort()
+    });
+    dispatch({
+      type: 'RECEIVE_GOODS_ORDER_INDEX_CODES_REVERSE',
+      payload: [ ...index ].reverse()
+    });
+  };
+};
 
 export const setCurentGuid = (guid) => {
   return {
@@ -178,4 +200,3 @@ export const setSearchText = (payload) => {
 //     keys.sort();
 //   };
 // };
-

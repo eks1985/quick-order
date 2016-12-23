@@ -29,6 +29,24 @@ const descriptions = (state = {}, action) => {
   }
 };
 
+const orderIndexCodes  = (state = [], action) => {
+  switch (action.type) {
+    case 'RECEIVE_GOODS_ORDER_INDEX_CODES':
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+const orderIndexCodesReverse  = (state = [], action) => {
+  switch (action.type) {
+    case 'RECEIVE_GOODS_ORDER_INDEX_CODES_REVERSE':
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 const itemsInitial = (state = {}, action) => {
   switch (action.type) {
     case 'RECEIVE_GOODS':
@@ -108,5 +126,7 @@ export default combineReducers({
   isLastPage,
   codes,
   descriptions,
-  searchText
+  searchText,
+  orderIndexCodes,
+  orderIndexCodesReverse
 });

@@ -1,5 +1,5 @@
 import { database } from '../firebase/firebase-app';
-import { setQtyPagesGoods, generateCodes, generateDescriptions } from './goods';
+import { setQtyPagesGoods, generateCodes, generateDescriptions, generateOrderIndexCodes } from './goods';
 
 
 export const listenToGoods = () => {
@@ -15,6 +15,7 @@ export const listenToGoods = () => {
 				dispatch(setQtyPagesGoods());
 	    	dispatch(generateCodes());
 	    	dispatch(generateDescriptions());
+        dispatch(generateOrderIndexCodes());
 			}, (error) => {
 				dispatch({
 					type: 'RECEIVE_GOODS_ERROR',
@@ -24,4 +25,3 @@ export const listenToGoods = () => {
 		} catch (e) {}
 	};
 };
-

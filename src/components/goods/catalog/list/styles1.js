@@ -66,7 +66,7 @@ export default {
       flex: '1 1 120px'
     },
     qty: {
-      flex: '0 0 160px',
+      flex: '0 0 170px',
       justifyContent: 'center'
     },
     description: {
