@@ -1,10 +1,11 @@
 import React from 'react';
 import IconButton from 'material-ui/IconButton';
-import IconSettings from 'material-ui/svg-icons/action/settings';
 import IconArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
-import IconDone from 'material-ui/svg-icons/action/done';
 import IconArrowForward from 'material-ui/svg-icons/navigation/arrow-forward';
 import styles from './styles1';
+import { v4 } from 'node-uuid';
+import { ListItem } from 'material-ui/List';
+import { format1 } from './../../../../utils/format';
 
 export default ({
   columnKey,
@@ -18,23 +19,18 @@ export default ({
   catalogListSettings,
   headerSettingsMode,
   moveHeaderColumn,
-  setHeaderSettingsMode,
-  removeHeaderSettingsMode
+  addCatalogQty,
+  setCurentGuid,
+  setModal,
+  removeFromCart,
+  removeCatalogQty,
+  addToCart,
+  setFocused
 }) => {
-  
-  const getItemsJsx = () => {
-    return (
-      <div>{getItemJsx()}</div>
-    );
-  };
-  
-  const getItemJsx = () => {
-    return (
-      <div></div>
-    );
-  };
-  
-  const { headerStyle, arrowStyle, headerSettingsIBStyle, headerSettingsIconStyle } = styles;
+
+  const customColumn = ['code', 'description', 'price', 'qty'].indexOf(columnKey) > - 1;
+
+  const { arrowStyle,  incDecSmallQtyPane, qtyInputStyle, zebraStyle } = styles;
   const columnNames = {
     code: 'Код',
     description: 'Наименование',
@@ -42,13 +38,151 @@ export default ({
     qty: 'Количество',
     add: '',
   };
-  
+
+  const getCodeJsx = (key, i) => {
+    let style = {display: 'flex', height: '40px', alignItems: 'center', padding: '6px'};
+    style = i % 2 === 0 ? style : { ...style, ...zebraStyle };
+    return (
+      <div key={`${key}${columnKey}`} style={style}>
+        {items[key].code}
+      </div>
+    );
+  };
+  const getDescriptionJsx = (key, i) => {
+    let style = {display: 'flex', height: '40px', alignItems: 'center', padding: '3px'};
+    style = i % 2 === 0 ? style : { ...style, ...zebraStyle };
+    return (
+      <div key={`${key}${columnKey}`} tabIndex={-1} style={style}>
+        <a
+          tabIndex={-1}
+          href="#"
+          style={{textDecoration: 'none'}}
+          onClick={
+            () => {
+              setCurentGuid(key);
+              setModal({ content: 'goodsCard', fullScreen: true });
+            }
+          }
+        >
+          <ListItem
+            tabIndex={-1}
+            innerDivStyle={{padding: '10px'}}
+          >
+            {items[key].description}
+          </ListItem>
+        </a>
+      </div>
+    );
+  };
+  const getPriceJsx = (key, i) => {
+    let style = {display: 'flex', height: '40px', alignItems: 'center', padding: '3px', justifyContent: 'flex-end'};
+    style = i % 2 === 0 ? style : { ...style, ...zebraStyle };
+    return (
+      <div key={`${key}${columnKey}`} style={style}>
+        {format1(prices[key] || 100, '')}
+      </div>
+    );
+  };
+  const getQtyJsx = (key, i) => {
+    let style = {display: 'flex', height: '40px', alignItems: 'center', padding: '3px', justifyContent: 'center'};
+    style = i % 2 === 0 ? style : { ...style, ...zebraStyle };
+    return (
+      <div key={`${key}${columnKey}`} style={style}>
+        <div
+          style={incDecSmallQtyPane}
+          onClick={
+            () => {
+              if (catalogQty[key]) {
+                const v = catalogQty[key] - 1;
+                if (v === 0) {
+                  removeFromCart(key);
+                  removeCatalogQty(key);
+                } else {
+                  addCatalogQty(key, v);
+                  addToCart(key, v, prices[key]);
+                }
+              }
+            }
+          }
+        ></div>
+        <input
+          type='text'
+          id={i}
+          className='catalogQtyInput'
+          style={qtyInputStyle}
+          value={catalogQty[key] || ''}
+          onFocus={
+            () => {
+              setFocused(key);
+            }
+          }
+          onChange={
+            (e) => {
+              const val = parseInt(e.target.value, 10) ? parseInt(e.target.value, 10) : '';
+              addCatalogQty(key, val);
+              addToCart(key, val, prices[key]);
+              if (val === '') {
+                removeFromCart(key);
+                removeCatalogQty(key);
+              }
+            }
+          }
+        >
+        </input>
+        <div
+          style={incDecSmallQtyPane}
+          onClick={
+            () => {
+              const v = catalogQty[key] ? catalogQty[key] + 1 :  1;
+              addCatalogQty(key, v);
+              addToCart(key, v, prices[key]);
+            }
+          }
+        >
+        </div>
+      </div>
+    );
+  };
+
+  const getItemJsx = (key, i) => {
+    return (
+      <div key={v4()} style={{display: 'flex', height: '40px', alignItems: 'center', padding: '3px'}}>
+        {items[key][columnKey]}
+      </div>
+    );
+  };
+
+  const getCustomItemJsx = (key, i) => {
+    switch (columnKey) {
+      case 'code':
+        return getCodeJsx(key, i);
+      case 'description':
+        return getDescriptionJsx(key, i);
+      case 'price':
+        return getPriceJsx(key, i);
+      case 'qty':
+        return getQtyJsx(key, i);
+      default:
+        return <div></div>;
+    }
+  };
+
+  const getItemsJsx = () => {
+    return itemsIds.map( (key, i) => {
+      if (customColumn) {
+        return getCustomItemJsx(key, i);
+      } else {
+        return getItemJsx(key, i);
+      }
+    });
+  };
+
   const getHeaderColumnJsx = (columnName, i, length) => {
     return (
-      <div key={columnName} style={headerStyle[columnName]}>
-        {headerSettingsMode && i > 0 && 
-          <IconButton 
-            style={arrowStyle.button} 
+      <div key={columnName} style={{display: 'flex', alignItems: 'center'}} >
+        {headerSettingsMode && i > 0 &&
+          <IconButton
+            style={arrowStyle.button}
             iconStyle={arrowStyle.icon}
             onClick={
               ()=>{
@@ -60,9 +194,9 @@ export default ({
           </IconButton>
         }
         <div>{columnNames[columnName]}</div>
-        {headerSettingsMode && i + 1 < length && 
-          <IconButton 
-            style={arrowStyle.button} 
+        {headerSettingsMode && i + 1 < length &&
+          <IconButton
+            style={arrowStyle.button}
             iconStyle={arrowStyle.icon}
             onClick={
               ()=>{
@@ -74,23 +208,33 @@ export default ({
           </IconButton>
         }
       </div>
-    );  
+    );
   };
-  
-  
+
+
   const getHeaderJsx = () => {
     return (
-      <div style={headerStyle.container}>
+      <div style={{display: 'flex'}}>
         {getHeaderColumnJsx(columnKey, i, columnsQty)}
       </div>
     );
   };
-  
+
+  const prepareStyle = () => {
+    if (styles.columnStyle[columnKey]) {
+      return { ...styles.columnStyle.common, ...styles.columnStyle[columnKey] }
+    } else {
+      return styles.columnStyle.common;
+    }
+  }
+
   return (
-    <div>
-      {getHeaderJsx()}
-      {false && getItemsJsx()}
-    </div>  
+    <div style={prepareStyle()}>
+      <div style={{display: 'flex',height: '40px', background: '#eee', padding: '5px', justifyContent: 'center', marginBottom: '3px'}}>
+        {getHeaderJsx()}
+      </div>
+      {getItemsJsx()}
+    </div>
   );
-  
+
 };
