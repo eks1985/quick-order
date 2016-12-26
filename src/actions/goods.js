@@ -28,8 +28,8 @@ const generateDescrGuids = (goods, descr) => {
 export const generateDescriptions = () => {
   return (dispatch, getState) => {
     const goods = getState().goods.items;
-    const keys = Object.keys(goods);
-    const descrArr = keys.reduce((res, key) => {
+    const goodsKeys = Object.keys(goods);
+    const descrArr = goodsKeys.reduce((res, key) => {
       res.push(goods[key].description);
       return res;
     }, []);
@@ -47,18 +47,13 @@ export const generateDescriptions = () => {
 
 //Search index }
 
-// Order index
+//{Order index
 
 export const generateOrderIndexCodes = () => {
   return (dispatch, getState) => {
     const items = getState().goods.itemsInitial;
     const keys = Object.keys(items);
     const index = keys.map( key => items[key].code );
-    // console.log('keys', keys);
-    // const index = keys.reduce(key => {
-    //   console.log(items[key]);
-    //   return items[key].code
-    // }, []);
     dispatch({
       type: 'RECEIVE_GOODS_ORDER_INDEX_CODES',
       payload: index.sort()
@@ -69,6 +64,24 @@ export const generateOrderIndexCodes = () => {
     });
   };
 };
+
+export const generateOrderIndexDescriptions = () => {
+  return (dispatch, getState) => {
+    const items = getState().goods.itemsInitial;
+    const keys = Object.keys(items);
+    const index = keys.map( key => items[key].description );
+    dispatch({
+      type: 'RECEIVE_GOODS_ORDER_INDEX_DESCRIPTIONS',
+      payload: index.sort()
+    });
+    dispatch({
+      type: 'RECEIVE_GOODS_ORDER_INDEX_DESCRIPTIONS_REVERSE',
+      payload: [ ...index ].reverse()
+    });
+  };
+};
+
+//Order index}
 
 export const setCurentGuid = (guid) => {
   return {
@@ -101,7 +114,6 @@ export const detectIsLastPage = () => {
 
 export const moveGoodsForward = () => {
   return (dispatch, getState) => {
-    // console.log(JSON.stringify(getState().goods.items));
     const isLastPage = getState().goods.isLastPage;
     if (!isLastPage) {
       dispatch({
@@ -193,18 +205,20 @@ export const setSearchText = (payload) => {
   };
 };
 
-const buildListByCode = (codesIndex, code, items) => {
-  const keys = codesIndex[code.toLowerCase()];
+// Sort
+
+const buildListByProp = (index, prop, items) => {
+  const keys = index[prop.toLowerCase()];
   return keys.reduce((res, key) => {
     return { [key]: items[key] };
   }, {});
 };
 
-const buildListByOrderIndex = (orderIndex, items, codesIndex) => {
+const buildListByOrderIndex = (orderIndex, items, index, columnKey) => {
   const itemsKeys = Object.keys(items);
-  const itemsCodes = itemsKeys.reduce((res, key) => [ ...res, items[key].code ], []);
+  const itemsProps = itemsKeys.reduce((res, key) => [ ...res, items[key][columnKey] ], []);
   return orderIndex.reduce((res, key) => {
-    return itemsCodes.indexOf(key) > -1 ? { ...res, ...buildListByCode(codesIndex, key, items) } : res;
+    return itemsProps.indexOf(key) > -1 ? { ...res, ...buildListByProp(index, key, items) } : res;
   }, {});
 };
 
@@ -212,7 +226,7 @@ export const sortGoods = (columnKey) => {
   return (dispatch, getState) => {
     const directionCurrent = getState().goods.sortDirection;
     const items = getState().goods.items;
-    const codesIndex = getState().goods.codes;
+    const index = columnKey === 'code' ? getState().goods.codes : getState().goods.descriptions;
     let orderIndex;
     if (directionCurrent === '' || directionCurrent === 'reverse') {
       orderIndex = getState().goods[ columnKey + 'OrderIndex'];
@@ -227,7 +241,7 @@ export const sortGoods = (columnKey) => {
     }
     dispatch({
       type: 'SET_GOODS_LIST',
-      payload: buildListByOrderIndex(orderIndex, items, codesIndex) 
+      payload: buildListByOrderIndex(orderIndex, items, index, columnKey) 
     });
   };
 };

@@ -95,30 +95,6 @@ export const listenToAuth = () => {
 	  						});
 	  					}
 	  				});
-	  				
-	    			
-	    			// 	const email = authData.email.replace('.', '%2E');
-	  				// let usersRef  = database.ref(`users/${email}`);
-	  				// usersRef.once('value', snapshot => {
-	  				// 	let customerGuid = snapshot.val();
-	  				// 	if (customerGuid) {
-	  				// 		let customerRef = database.ref(`customers/${customerGuid}`);
-		  			// 		customerRef.once('value', snapshot => {
-		  			// 			const customerData = snapshot.val();
-		  			// 			const { guid, description, address, phone, email, inn } = customerData;
-		  			// 			dispatch(setCustomer(guid, description, address, phone, email, inn));
-		  			// 			dispatch(listenToOrdersHeaders());
-		  			// 			dispatch(listenToOrdersItems());
-		  			// 		});
-		  			// 		let customerOptionsRef = database.ref(`options/${customerGuid}`);
-		  			// 		customerOptionsRef.once('value', snapshot => {
-		  			// 			dispatch({
-		  			// 				type: 'RECEIVE_OPTIONS',
-		  			// 				payload: snapshot.val()
-		  			// 			});
-		  			// 		});
-	  				// 	}
-	  				// });
 	    		}
 				} else {
 					if (!localStorage.getItem('quickOrderDemo')) {

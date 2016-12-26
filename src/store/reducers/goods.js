@@ -47,6 +47,25 @@ const codeOrderIndexReverse  = (state = [], action) => {
   }
 };
 
+const descriptionOrderIndex  = (state = [], action) => {
+  switch (action.type) {
+    case 'RECEIVE_GOODS_ORDER_INDEX_DESCRIPTIONS':
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+const descriptionOrderIndexReverse  = (state = [], action) => {
+  switch (action.type) {
+    case 'RECEIVE_GOODS_ORDER_INDEX_DESCRIPTIONS_REVERSE':
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+
 const itemsInitial = (state = {}, action) => {
   switch (action.type) {
     case 'RECEIVE_GOODS':
@@ -142,5 +161,7 @@ export default combineReducers({
   searchText,
   codeOrderIndex,
   codeOrderIndexReverse,
+  descriptionOrderIndex,
+  descriptionOrderIndexReverse,
   sortDirection
 });
