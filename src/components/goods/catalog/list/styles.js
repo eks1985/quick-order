@@ -75,13 +75,14 @@ export default {
   },
   headerStyle: {
     container: {
-      display: 'flex',
-      // height: '40px',
-      // flex: '0 0 auto',
-      // background: '#eee',
-      position: 'relative',
       fontSize: '14px',
-      // paddingRight: '50px'
+      display: 'flex', 
+      height: '40px', 
+      background: '#eee', 
+      padding: '5px', 
+      justifyContent: 'center', 
+      marginBottom: '3px', 
+      // cursor: 'pointer'
     },
     code: {
       display: 'flex',

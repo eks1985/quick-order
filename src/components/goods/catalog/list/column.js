@@ -3,21 +3,21 @@ import IconButton from 'material-ui/IconButton';
 import IconArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import IconArrowForward from 'material-ui/svg-icons/navigation/arrow-forward';
 import styles from './styles';
-import { v4 } from 'node-uuid';
 import { ListItem } from 'material-ui/List';
 import { format1 } from './../../../../utils/format';
 
 export default ({
-  columnKey,
-  i,
+  columnKey, //name of column
+  i, //number of column 
   columnsQty,
   items,
   itemsIds,
   cartItems,
-  prices,
   catalogQty,
+  prices,
   catalogListSettings,
   headerSettingsMode,
+  //actions
   moveHeaderColumn,
   addCatalogQty,
   setCurentGuid,
@@ -31,7 +31,8 @@ export default ({
 
   const customColumn = ['code', 'description', 'price', 'qty'].indexOf(columnKey) > - 1;
 
-  const { arrowStyle,  incDecSmallQtyPane, qtyInputStyle, zebraStyle } = styles;
+  const { arrowStyle,  incDecSmallQtyPane, qtyInputStyle, zebraStyle, headerStyle } = styles;
+  
   const columnNames = {
     code: 'Код',
     description: 'Наименование',
@@ -144,15 +145,6 @@ export default ({
       </div>
     );
   };
-
-  const getItemJsx = (key, i) => {
-    return (
-      <div key={v4()} style={{display: 'flex', height: '40px', alignItems: 'center', padding: '3px'}}>
-        {items[key][columnKey]}
-      </div>
-    );
-  };
-
   const getCustomItemJsx = (key, i) => {
     switch (columnKey) {
       case 'code':
@@ -168,14 +160,16 @@ export default ({
     }
   };
 
+  const getItemJsx = (key, i) => {
+    return (
+      <div key={`${key}${columnKey}`} style={{display: 'flex', height: '40px', alignItems: 'center', padding: '3px'}}>
+        {items[key][columnKey]}
+      </div>
+    );
+  };
+
   const getItemsJsx = () => {
-    return itemsIds.map( (key, i) => {
-      if (customColumn) {
-        return getCustomItemJsx(key, i);
-      } else {
-        return getItemJsx(key, i);
-      }
-    });
+    return itemsIds.map( (key, i) => customColumn ?  getCustomItemJsx(key, i) : getItemJsx(key, i));
   };
 
   const getHeaderColumnJsx = (columnName, i, length) => {
@@ -194,15 +188,7 @@ export default ({
             <IconArrowBack />
           </IconButton>
         }
-        <div
-          onClick={
-            () => {
-              if (columnKey === 'code') {
-                // sortCatalogList();
-              }
-            }
-          }
-        >
+        <div>
           {columnNames[columnName]}
         </div>
         {headerSettingsMode && i + 1 < length &&
@@ -222,7 +208,6 @@ export default ({
     );
   };
 
-
   const getHeaderJsx = () => {
     return (
       <div style={{display: 'flex'}}>
@@ -241,10 +226,9 @@ export default ({
 
   return (
     <div style={prepareStyle()}>
-      <div style={{display: 'flex',height: '40px', background: '#eee', padding: '5px', justifyContent: 'center', marginBottom: '3px', cursor: 'pointer'}}
+      <div style={columnKey === 'code' || columnKey === 'description' ? { ...headerStyle.container, cursor: 'pointer' } : headerStyle.container }
         onClick={
           ()=>{
-            // console.log('clicked column', columnKey);
             sortGoods(columnKey);
           }
         }
