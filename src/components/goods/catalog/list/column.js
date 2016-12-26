@@ -25,7 +25,8 @@ export default ({
   removeFromCart,
   removeCatalogQty,
   addToCart,
-  setFocused
+  setFocused,
+  sortGoods
 }) => {
 
   const customColumn = ['code', 'description', 'price', 'qty'].indexOf(columnKey) > - 1;
@@ -193,7 +194,17 @@ export default ({
             <IconArrowBack />
           </IconButton>
         }
-        <div>{columnNames[columnName]}</div>
+        <div
+          onClick={
+            () => {
+              if (columnKey === 'code') {
+                // sortCatalogList();
+              }
+            }
+          }
+        >
+          {columnNames[columnName]}
+        </div>
         {headerSettingsMode && i + 1 < length &&
           <IconButton
             style={arrowStyle.button}
@@ -222,15 +233,22 @@ export default ({
 
   const prepareStyle = () => {
     if (styles.columnStyle[columnKey]) {
-      return { ...styles.columnStyle.common, ...styles.columnStyle[columnKey] }
+      return { ...styles.columnStyle.common, ...styles.columnStyle[columnKey] };
     } else {
       return styles.columnStyle.common;
     }
-  }
+  };
 
   return (
     <div style={prepareStyle()}>
-      <div style={{display: 'flex',height: '40px', background: '#eee', padding: '5px', justifyContent: 'center', marginBottom: '3px'}}>
+      <div style={{display: 'flex',height: '40px', background: '#eee', padding: '5px', justifyContent: 'center', marginBottom: '3px', cursor: 'pointer'}}
+        onClick={
+          ()=>{
+            // console.log('clicked column', columnKey);
+            sortGoods(columnKey);
+          }
+        }
+      >
         {getHeaderJsx()}
       </div>
       {getItemsJsx()}

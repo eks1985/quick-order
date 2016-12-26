@@ -29,7 +29,7 @@ const descriptions = (state = {}, action) => {
   }
 };
 
-const orderIndexCodes  = (state = [], action) => {
+const codeOrderIndex  = (state = [], action) => {
   switch (action.type) {
     case 'RECEIVE_GOODS_ORDER_INDEX_CODES':
       return action.payload;
@@ -38,7 +38,7 @@ const orderIndexCodes  = (state = [], action) => {
   }
 };
 
-const orderIndexCodesReverse  = (state = [], action) => {
+const codeOrderIndexReverse  = (state = [], action) => {
   switch (action.type) {
     case 'RECEIVE_GOODS_ORDER_INDEX_CODES_REVERSE':
       return action.payload;
@@ -107,6 +107,19 @@ const isLastPage = (state = false, action) => {
   }
 };
 
+// sort
+
+const sortDirection = (state = '', action) => {
+  switch (action.type) {
+    case 'SET_SORT_DIRECTION_FORWARD':
+      return 'forward';
+    case 'SET_SORT_DIRECTION_REVERSE':
+      return 'reverse';
+    default:
+      return state;
+  }
+};
+
 // Selectors
 
 export const getGoodsVisibleIds = (state) => { //state = goods.state
@@ -127,6 +140,7 @@ export default combineReducers({
   codes,
   descriptions,
   searchText,
-  orderIndexCodes,
-  orderIndexCodesReverse
+  codeOrderIndex,
+  codeOrderIndexReverse,
+  sortDirection
 });

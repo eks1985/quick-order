@@ -193,10 +193,41 @@ export const setSearchText = (payload) => {
   };
 };
 
-// export const sortGoods = (column) => {
-//   return (dispatch, getState) => {
-//     const current = getState().goods.items;
-//     const keys = Object.keys(current);
-//     keys.sort();
-//   };
-// };
+const buildListByCode = (codesIndex, code, items) => {
+  const keys = codesIndex[code.toLowerCase()];
+  return keys.reduce((res, key) => {
+    return { [key]: items[key] };
+  }, {});
+};
+
+const buildListByOrderIndex = (orderIndex, items, codesIndex) => {
+  const itemsKeys = Object.keys(items);
+  const itemsCodes = itemsKeys.reduce((res, key) => [ ...res, items[key].code ], []);
+  return orderIndex.reduce((res, key) => {
+    return itemsCodes.indexOf(key) > -1 ? { ...res, ...buildListByCode(codesIndex, key, items) } : res;
+  }, {});
+};
+
+export const sortGoods = (columnKey) => {
+  return (dispatch, getState) => {
+    const directionCurrent = getState().goods.sortDirection;
+    const items = getState().goods.items;
+    const codesIndex = getState().goods.codes;
+    let orderIndex;
+    if (directionCurrent === '' || directionCurrent === 'reverse') {
+      orderIndex = getState().goods[ columnKey + 'OrderIndex'];
+      dispatch({
+        type: 'SET_SORT_DIRECTION_FORWARD'
+      });
+    } else {
+      orderIndex = getState().goods[ columnKey + 'OrderIndexReverse'];
+      dispatch({
+        type: 'SET_SORT_DIRECTION_REVERSE'
+      });
+    }
+    dispatch({
+      type: 'SET_GOODS_LIST',
+      payload: buildListByOrderIndex(orderIndex, items, codesIndex) 
+    });
+  };
+};
