@@ -1,7 +1,7 @@
 export default {
   style: {
     display: 'flex',
-    flexDirection: 'column'
+    position: 'relative'
   },
   arrowStyle: {
     button: {
@@ -55,15 +55,33 @@ export default {
       padding: '3px'
     }
   },
+  columnStyle: {
+    common: {
+      display: 'flex',
+      flex: '0 1 120px',
+      position: 'relative',
+      flexDirection: 'column',
+    },
+    code: {
+      flex: '1 1 120px'
+    },
+    qty: {
+      flex: '0 0 170px',
+      justifyContent: 'center'
+    },
+    description: {
+      flex: '1 1 50%'
+    }
+  },
   headerStyle: {
     container: {
       display: 'flex',
-      height: '40px',
-      flex: '0 0 auto',
-      background: '#eee',
+      // height: '40px',
+      // flex: '0 0 auto',
+      // background: '#eee',
       position: 'relative',
       fontSize: '14px',
-      paddingRight: '50px'
+      // paddingRight: '50px'
     },
     code: {
       display: 'flex',
@@ -105,24 +123,25 @@ export default {
     },
   },
   headerSettingsIBStyle: {
-    position: 'absolute', 
-    top: '0px', 
+    position: 'absolute',
+    top: '0px',
     right: '5px'
   },
   headerSettingsIconStyle: {
-    height: '24px', 
-    width:'24px', 
+    height: '24px',
+    width:'24px',
     padding: '2px'
   },
   incDecSmallQtyPane: {
-    width: '12px', 
-    cursor: 'pointer', 
+    width: '12px',
+    height: '28px',
+    cursor: 'pointer',
     background: 'rgba(238, 238, 238, 0.5)'
   },
   qtyInputStyle: {
-    width: '50px', 
-    textAlign: 'right', 
-    padding: '3px', 
+    width: '50px',
+    textAlign: 'right',
+    padding: '3px',
     fontSize: '16px'
   }
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import Pagination from './pagination';
-import List from './list/index1';
+import List from './list/index';
 import Search from './search';
 import Paper from 'material-ui/Paper';
 

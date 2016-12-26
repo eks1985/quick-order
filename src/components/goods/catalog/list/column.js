@@ -2,7 +2,7 @@ import React from 'react';
 import IconButton from 'material-ui/IconButton';
 import IconArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import IconArrowForward from 'material-ui/svg-icons/navigation/arrow-forward';
-import styles from './styles1';
+import styles from './styles';
 import { v4 } from 'node-uuid';
 import { ListItem } from 'material-ui/List';
 import { format1 } from './../../../../utils/format';
