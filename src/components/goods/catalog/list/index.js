@@ -99,9 +99,11 @@ class ListContainer extends Component {
       setHeaderSettingsMode: this.setHeaderSettingsMode.bind(this),
       removeHeaderSettingsMode: this.removeHeaderSettingsMode.bind(this)
     };
+    const catalogListColumnsKeys = Object.keys(props.catalogListColumns);
     return (
       <div style={styles.style}>
         {props.catalogListSettings.map((key, i) => <Column {...props } key={`${key}column`}  columnKey={key} i={i} columnsQty={props.catalogListSettings.length} />)}
+        {catalogListColumnsKeys.map((key, i) => props.catalogListColumns[key][0] && <Column {...props } key={`${key}column`}  columnKey={key} i={i} columnsQty={catalogListColumnsKeys.length} />)}
         {this.getSettingsBtnJsx()}
       </div>
     );
@@ -116,7 +118,8 @@ export default connect(
     cartItems: state.cart.items,
     prices: state.prices ,
     catalogQty: state.catalogQty,
-    catalogListSettings: state.options.catalogListSettings
+    catalogListSettings: state.options.catalogListSettings,
+    catalogListColumns: state.options.catalogListColumns
   }),
   { ...cartActions, ...modalActions, ...goodsActions, ...catalogQtyActions, ...optionsActions }
 )(ListContainer);

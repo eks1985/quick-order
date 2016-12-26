@@ -38,6 +38,7 @@ export default ({
     description: 'Наименование',
     price: 'Цена',
     qty: 'Количество',
+    brand: 'Бренд',
     add: '',
   };
 
@@ -161,8 +162,10 @@ export default ({
   };
 
   const getItemJsx = (key, i) => {
+    let style = {display: 'flex', height: '40px', alignItems: 'center', padding: '3px', justifyContent: 'flex-start'};
+    style = i % 2 === 0 ? style : { ...style, ...zebraStyle };
     return (
-      <div key={`${key}${columnKey}`} style={{display: 'flex', height: '40px', alignItems: 'center', padding: '3px'}}>
+      <div key={`${key}${columnKey}`} style={style}>
         {items[key][columnKey]}
       </div>
     );

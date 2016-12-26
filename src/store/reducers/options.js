@@ -5,7 +5,8 @@ const initialState = {
   positionIsActiveDefinition: '',
   showGoodsOnStockQty: false,
   showNoActivePosition: false,
-  catalogListSettings: ['code', 'description', 'price', 'qty']
+  catalogListSettings: ['code', 'description', 'price', 'qty'],
+  catalogListColumns: {}
 };
 
 export default (state, action) => {

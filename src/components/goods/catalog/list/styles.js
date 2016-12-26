@@ -58,7 +58,7 @@ export default {
   columnStyle: {
     common: {
       display: 'flex',
-      flex: '0 1 120px',
+      flex: '1 1 auto',
       position: 'relative',
       flexDirection: 'column',
     },
@@ -66,8 +66,12 @@ export default {
       flex: '1 1 120px'
     },
     qty: {
-      flex: '0 0 170px',
+      flex: '0 0 100px',
       justifyContent: 'center'
+    },
+    price: {
+      flex: '0 0 100px',
+      justifyContent: 'flex-end'
     },
     description: {
       flex: '1 1 50%'
@@ -126,7 +130,7 @@ export default {
   headerSettingsIBStyle: {
     position: 'absolute',
     top: '0px',
-    right: '5px'
+    left: '0px'
   },
   headerSettingsIconStyle: {
     height: '24px',

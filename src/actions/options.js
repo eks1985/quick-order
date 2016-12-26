@@ -1,4 +1,4 @@
-import { setCustomerOptionFirebase } from './options-firebase';
+import { setCustomerOptionFirebase, setCommonOptionFirebase } from './options-firebase';
 
 export const setOption = (option, value) => {
   return dispatch => {
@@ -7,41 +7,18 @@ export const setOption = (option, value) => {
       option,
       value
     });
+    dispatch(setCommonOptionFirebase(option, value));
     if (option  === 'manageGoodsOnStockQty' && value === false) {
-      dispatch({
-        type: 'SET_OPTION',
-        option: 'showGoodsOnStockQty',
-        value: false
-      });
-      dispatch({
-        type: 'SET_OPTION',
-        option: 'positionIsActiveDefinition',
-        value: 'positionData'
-      });
+      dispatch(setCommonOptionFirebase('showGoodsOnStockQty', false));
+      dispatch(setCommonOptionFirebase('positionIsActiveDefinition', 'positionData'));
     } 
     if (option  === 'managePositionIsActiveProp' && value === false) {
-      dispatch({
-        type: 'SET_OPTION',
-        option: 'showNoActivePosition',
-        value: false
-      });
-      dispatch({
-        type: 'SET_OPTION',
-        option: 'orderNoActivePositions',
-        value: false
-      });
-      dispatch({
-        type: 'SET_OPTION',
-        option: 'positionIsActiveDefinition',
-        value: ''
-      });
+      dispatch(setCommonOptionFirebase('showNoActivePosition', false));
+      dispatch(setCommonOptionFirebase('orderNoActivePositions', false));
+      dispatch(setCommonOptionFirebase('positionIsActiveDefinition', ''));
     }
     if (option  === 'managePositionIsActiveProp' && value === true) {
-      dispatch({
-        type: 'SET_OPTION',
-        option: 'positionIsActiveDefinition',
-        value: 'positionData'
-      });
+      dispatch(setCommonOptionFirebase('positionIsActiveDefinition', 'positionData'));
     }
   };
 };
