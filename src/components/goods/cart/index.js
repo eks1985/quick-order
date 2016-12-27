@@ -29,22 +29,15 @@ const Cart = ({
   const hasItems = cart.totalItems > 0;
 
   const getCartStyledJsx = () => {
+    const style = { display: 'flex', height: '73px', alignItems: 'center', paddingLeft: '10px' };
+    
     return (
       <div style={{display: 'flex', flexDirection: 'column'}}>
-        {/* <div style={{display: 'flex', flexDirection: 'column', height: '73px'}}>
-          <Subheader style={{display: 'flex', alignItems: 'center', lineHeight: '40px'}}>
-            Корзина
-          </Subheader>
-          <div style={{display: 'flex', justifyContent: 'center'}}>
-            {`Позиций `}<span style={{paddingLeft: '3px', paddingRight: '3px', fontWeight: 'bold'}}>{totalItems}</span>{` на сумму: `}<span style={{paddingLeft: '3px', paddingRight: '3px', fontWeight: 'bold'}}>{format1(totalAmount, 'руб.')}</span>
-          </div>
-        </div> */}
-        
         <div 
-          style={{display: 'flex', height: '73px', alignItems: 'center', paddingLeft: '10px', cursor: 'pointer'}}
+          style={hasItems ? { ...style, cursor: 'pointer' } : style }
           onClick={
             () => {
-              setCurrentContent('checkout');
+              hasItems && setCurrentContent('checkout');
             }
           }
         >
@@ -101,44 +94,11 @@ const Cart = ({
         }
       </div>
 
-
     );
   };
 
-  // const getCartJsx = () => {
-  //   return (
-  //     <div style={{display: 'flex'}}>
-  //         <div style={{flex: '0 0 70%'}}>
-  //           <div>
-  //             {`Всего позиций: ${totalItems}`}
-  //           </div>
-  //           <div>
-  //             {`На сумму: ${totalAmount}`}
-  //           </div>
-  //         </div>
-  //         {hasItems &&
-  //           <div style={{flex: '0 0 30%'}}>
-  //             <button onClick={cleanCart}>
-  //               Очистить
-  //             </button>
-  //             <button
-  //               onClick={
-  //                 () => {
-  //                   setCurrentContent('checkout');
-  //                 }
-  //               }
-  //             >
-  //               Оформить
-  //             </button>
-  //           </div>
-  //         }
-  //     </div>
-  //   );
-  // }
-
   return (
     <div className='cart' style={style}>
-      {/* {getCartJsx()} */}
       {getCartStyledJsx()}
     </div>
   );

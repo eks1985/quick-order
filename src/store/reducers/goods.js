@@ -1,7 +1,5 @@
 import { combineReducers } from 'redux';
 
-// import initialState from './initialData/goods';
-
 const searchText = (state = '', action) => {
   switch (action.type) {
     case 'SET_SEARCH_TEXT':
@@ -138,6 +136,17 @@ const sortDirection = (state = '', action) => {
       return state;
   }
 };
+
+// Prop order index
+
+// const createPropIndexReducer = (propName) => {
+  
+// };
+
+// propName + 'Index'
+//   .sortIndex
+//   .index
+//   .sortDirection
 
 // Selectors
 

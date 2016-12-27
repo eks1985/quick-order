@@ -81,6 +81,22 @@ export const generateOrderIndexDescriptions = () => {
   };
 };
 
+export const generateOrderIndexProp = (propName) => {
+  return (dispatch, getState) => {
+    const items = getState().goods.itemsInitial;
+    const keys = Object.keys(items);
+    const index = keys.map( key => items[key][propName] );
+    dispatch({
+      type: 'RECEIVE_GOODS_ORDER_INDEX_' + propName.toUpperCase(),
+      payload: index.sort()
+    });
+    dispatch({
+      type: 'RECEIVE_GOODS_ORDER_INDEX_' + propName.toUpperCase() + '_REVERSE',
+      payload: [ ...index ].reverse()
+    });
+  };
+};
+
 //Order index}
 
 export const setCurentGuid = (guid) => {
@@ -152,6 +168,11 @@ const searchByDescription = (descriptions, keys, text) => {
   }, []);
 };
 
+// TODO 
+const searchByProps = (words, getState) => {
+  return {};
+};
+
 export const search = () => {
   return (dispatch, getState) => {
     const state = getState().goods;
@@ -171,12 +192,13 @@ export const search = () => {
       result = words.reduce( (res, word) => {
         return [ ...result, ...searchByDescription(descriptions, descriptionsKeys, word.trim()) ];
       }, result);
+      result = [ ...result, ...searchByProps(words, getState) ];
       result = result.reduce((res, elem) => {
         res[elem] = itemsInitial[elem];
         return res;
       }, {});
     }
-
+    
     const goodsGroupsFiltersIds = getState().goodsGroups.filtersIds;
     if (goodsGroupsFiltersIds.length > 0) {
       result = filterByGroupGuids(goodsGroupsFiltersIds, result);

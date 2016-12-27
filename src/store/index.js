@@ -1,5 +1,6 @@
 import { applyMiddleware, createStore } from 'redux';
-import rootReducer from './reducers';
+// import rootReducer from './reducers';
+import createReducer from './create-reducer';
 //middlewares
 import thunk from 'redux-thunk';
 // import createLogger from 'redux-logger';
@@ -14,6 +15,13 @@ const middlewares = [thunk];
 const initialState = {};
 
 const createStoreWithMiddleware = applyMiddleware(...middlewares)(createStore);
-const store = createStoreWithMiddleware(rootReducer, initialState,
+
+const store = createStoreWithMiddleware(createReducer(), initialState,
 window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+store.indexes = {};
 export default store;
+
+export function injectReducer(store, name, newReducer) {
+  store.indexes[name] = newReducer;
+  store.replaceReducer(createReducer(store.indexes));
+}

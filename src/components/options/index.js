@@ -7,6 +7,7 @@ import Subheader from 'material-ui/Subheader';
 import * as actionsOptions from './../../actions/options';
 import * as actionsOptionsFirebase from './../../actions/options-firebase';
 import * as firebaseConfigActions from './../../actions/firebase-config';
+import * as indexesActions  from './../../actions/indexes';
 import Checkbox from 'material-ui/Checkbox';
 import Visibility from 'material-ui/svg-icons/action/visibility';
 import VisibilityOff from 'material-ui/svg-icons/action/visibility';
@@ -14,6 +15,11 @@ import Search from 'material-ui/svg-icons/action/search';
 import SearchOff from 'material-ui/svg-icons/action/search';
 import Sort from 'material-ui/svg-icons/action/swap-vert';
 import SortOff from 'material-ui/svg-icons/action/swap-vert';
+import {Tabs, Tab} from 'material-ui/Tabs';
+
+import { injectReducer } from './../../store/';
+import createIndex from './../../store/create-index';
+import store from './../../store/';
 
 const Options = ({
   options,
@@ -21,7 +27,8 @@ const Options = ({
   //actions
   setOption,
   resetFirebaseConfig,
-  setCommonOptionCatalogListColumnsFirebase
+  setCommonOptionCatalogListColumnsFirebase,
+  buildIndex
 }) => {
   const rowStyle = {
     display: 'flex',
@@ -375,38 +382,81 @@ const Options = ({
   return (
     <Paper style={{display: 'flex', flexDirection: 'column', padding: '10px', flex: '1 0 auto'}}>
 
-      <div style={rowStyle}>
-        {manageGoodsOnStockQty()}
-      </div>
+      <Tabs>
+      
+        <Tab label="Структура данных" >
+        
+          <button 
+            onClick={
+              () => {
+                injectReducer(store, 'brand', createIndex('brand'));
+                buildIndex('brand');
+              }
+            }
+          >
+            Inject reducer
+          </button>
+        
+          <Subheader>
+            Товары
+          </Subheader>
+          
+          <div style={{marginTop: '10px'}}>
+            {getRequiredPropsJsx()}
+            {getItemsJsx()}
+          </div>
+          
+          <Subheader>
+            Категории
+          </Subheader>
+          
+          <Subheader>
+            Цены
+          </Subheader>
+          
+          <Subheader>
+            Контрагенты
+          </Subheader>
+          
+        </Tab>
+      
+        <Tab label="Бизнес логика" >
 
-      <div style={{ ...rowStyle, ...{marginLeft: '50px'} }}>
-        {showGoodsOnStockQty()}
-      </div>
+          <div style={{paddingTop: '20px'}}>
 
-      <div style={rowStyle}>
-        {managePositionIsActiveProp()}
-      </div>
+            <div style={rowStyle}>
+              {manageGoodsOnStockQty()}
+            </div>
       
-      <div style={{ ...rowStyle, ...{marginLeft: '50px'} }}>
-        {showNoActivePosition()}
-      </div>
+            <div style={{ ...rowStyle, ...{marginLeft: '50px'} }}>
+              {showGoodsOnStockQty()}
+            </div>
       
-      <div style={{ ...rowStyle, ...{marginLeft: '50px'} }}>
-        {orderNoActivePositions()}
-      </div>
-
-      <div style={{ ...rowStyle, ...{marginLeft: '50px'} }}>
-        {positionIsActiveDefinition()}
-      </div>
+            <div style={rowStyle}>
+              {managePositionIsActiveProp()}
+            </div>
+            
+            <div style={{ ...rowStyle, ...{marginLeft: '50px'} }}>
+              {showNoActivePosition()}
+            </div>
+            
+            <div style={{ ...rowStyle, ...{marginLeft: '50px'} }}>
+              {orderNoActivePositions()}
+            </div>
       
-      <Subheader>
-        Настройки списка товаров
-      </Subheader>
-      
-      <div style={{marginTop: '10px'}}>
-        {getRequiredPropsJsx()}
-        {getItemsJsx()}
-      </div>
+            <div style={{ ...rowStyle, ...{marginLeft: '50px'} }}>
+              {positionIsActiveDefinition()}
+            </div>
+          
+          </div>
+        
+        </Tab>  
+       
+        <Tab label="Интерфейс" >
+        
+        </Tab>
+        
+      </Tabs>
       
     </Paper>
   );
@@ -414,7 +464,7 @@ const Options = ({
 
 export default connect(
   state => ({ options: state.options, items: state.goods.itemsInitial }) ,
-  { ...actionsOptions, ...firebaseConfigActions, ...actionsOptionsFirebase }
+  { ...actionsOptions, ...firebaseConfigActions, ...actionsOptionsFirebase, ...indexesActions }
 )(Options);
 
 // управлять остатками
