@@ -1,12 +1,13 @@
 import React from 'react';
-import IconButton from 'material-ui/IconButton';
-import IconArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
+import IconButton       from 'material-ui/IconButton';
+import IconArrowBack    from 'material-ui/svg-icons/navigation/arrow-back';
 import IconArrowForward from 'material-ui/svg-icons/navigation/arrow-forward';
+import { ListItem }     from 'material-ui/List';
 import styles from './styles';
-import { ListItem } from 'material-ui/List';
 import { format1 } from './../../../../utils/format';
 
 export default ({
+  columnsKeys,
   columnKey, //name of column
   i, //number of column 
   columnsQty,
@@ -31,7 +32,7 @@ export default ({
 
   const customColumn = ['code', 'description', 'price', 'qty'].indexOf(columnKey) > - 1;
 
-  const { arrowStyle,  incDecSmallQtyPane, qtyInputStyle, zebraStyle, headerStyle } = styles;
+  const { arrowStyle,  incDecSmallQtyPane, qtyInputStyle, zebraStyle, headerStyle, rowStyle } = styles;
   
   const columnNames = {
     code: 'Код',
@@ -41,10 +42,11 @@ export default ({
     brand: 'Бренд',
     add: '',
   };
+  
+  const applyZebra = (style, i) => i % 2 === 0 ? style : { ...style, ...zebraStyle };
 
   const getCodeJsx = (key, i) => {
-    let style = {display: 'flex', height: '40px', alignItems: 'center', padding: '6px'};
-    style = i % 2 === 0 ? style : { ...style, ...zebraStyle };
+    let style = applyZebra(rowStyle.code, i);
     return (
       <div key={`${key}${columnKey}`} style={style}>
         {items[key].code}
@@ -52,8 +54,7 @@ export default ({
     );
   };
   const getDescriptionJsx = (key, i) => {
-    let style = {display: 'flex', height: '40px', alignItems: 'center', padding: '3px'};
-    style = i % 2 === 0 ? style : { ...style, ...zebraStyle };
+    let style = applyZebra(rowStyle.description, i);
     return (
       <div key={`${key}${columnKey}`} tabIndex={-1} style={style}>
         <a
@@ -78,8 +79,7 @@ export default ({
     );
   };
   const getPriceJsx = (key, i) => {
-    let style = {display: 'flex', height: '40px', alignItems: 'center', padding: '3px', justifyContent: 'flex-end'};
-    style = i % 2 === 0 ? style : { ...style, ...zebraStyle };
+    let style = applyZebra(rowStyle.price, i);
     return (
       <div key={`${key}${columnKey}`} style={style}>
         {format1(prices[key] || 100, '')}
@@ -87,8 +87,7 @@ export default ({
     );
   };
   const getQtyJsx = (key, i) => {
-    let style = {display: 'flex', height: '40px', alignItems: 'center', padding: '3px', justifyContent: 'center'};
-    style = i % 2 === 0 ? style : { ...style, ...zebraStyle };
+    let style = applyZebra(rowStyle.qty, i);
     return (
       <div key={`${key}${columnKey}`} style={style}>
         <div
@@ -162,8 +161,7 @@ export default ({
   };
 
   const getItemJsx = (key, i) => {
-    let style = {display: 'flex', height: '40px', alignItems: 'center', padding: '3px', justifyContent: 'flex-start'};
-    style = i % 2 === 0 ? style : { ...style, ...zebraStyle };
+    let style = applyZebra(rowStyle.common, i);
     return (
       <div key={`${key}${columnKey}`} style={style}>
         {items[key][columnKey]}
@@ -171,41 +169,37 @@ export default ({
     );
   };
 
-  const getItemsJsx = () => {
-    return itemsIds.map( (key, i) => customColumn ?  getCustomItemJsx(key, i) : getItemJsx(key, i));
+  const getItemsJsx = () => itemsIds.map( (key, i) => customColumn ?  getCustomItemJsx(key, i) : getItemJsx(key, i));
+  
+  // Header >
+  
+  const getArrowJsx = (columnName, direction) => {
+    return (
+      <IconButton
+          style={arrowStyle.button}
+          iconStyle={arrowStyle.icon}
+          onClick={
+            ()=>{
+              moveHeaderColumn(columnName, direction);
+            }
+          }
+        >
+        {direction === 'back' ? <IconArrowBack /> : <IconArrowForward />}
+      </IconButton>  
+    );
   };
 
   const getHeaderColumnJsx = (columnName, i, length) => {
     return (
       <div key={columnName} style={{display: 'flex', alignItems: 'center'}} >
         {headerSettingsMode && i > 0 &&
-          <IconButton
-            style={arrowStyle.button}
-            iconStyle={arrowStyle.icon}
-            onClick={
-              ()=>{
-                moveHeaderColumn(columnName, 'back');
-              }
-            }
-          >
-            <IconArrowBack />
-          </IconButton>
+          getArrowJsx(columnName, 'back')
         }
         <div>
           {columnNames[columnName]}
         </div>
         {headerSettingsMode && i + 1 < length &&
-          <IconButton
-            style={arrowStyle.button}
-            iconStyle={arrowStyle.icon}
-            onClick={
-              ()=>{
-                moveHeaderColumn(columnName, 'forward');
-              }
-            }
-          >
-            <IconArrowForward />
-          </IconButton>
+          getArrowJsx(columnName, 'forward')
         }
       </div>
     );
@@ -218,6 +212,8 @@ export default ({
       </div>
     );
   };
+  
+  // Header <
 
   const prepareStyle = () => {
     if (styles.columnStyle[columnKey]) {
@@ -232,7 +228,7 @@ export default ({
       <div style={columnKey === 'code' || columnKey === 'description' ? { ...headerStyle.container, cursor: 'pointer' } : headerStyle.container }
         onClick={
           ()=>{
-            sortGoods(columnKey);
+            (columnKey === 'code' || columnKey === 'description') && sortGoods(columnKey);
           }
         }
       >

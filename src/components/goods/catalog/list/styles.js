@@ -25,29 +25,38 @@ export default {
       flex: '0 0 auto',
       paddingRight: '50px'
     },
-    code: {
-      display: 'flex',
-      flex: '0 0 120px',
-      padding: '3px',
+    common: {
+      display: 'flex', 
+      height: '40px', 
+      alignItems: 'center', 
+      padding: '3px', 
       justifyContent: 'flex-start'
+    },
+    code: {
+      display: 'flex', 
+      height: '40px', 
+      alignItems: 'center', 
+      padding: '6px'
     },
     description: {
-      display: 'flex',
-      flex: '1 0 50%',
-      padding: '3px',
-      justifyContent: 'flex-start'
+      display: 'flex', 
+      height: '40px', 
+      alignItems: 'center', 
+      padding: '3px'
     },
     price: {
-      display: 'flex',
-      flex: '0 0 100px',
-      padding: '3px',
+      display: 'flex', 
+      height: '40px', 
+      alignItems: 'center', 
+      padding: '3px', 
       justifyContent: 'flex-end'
     },
     qty: {
-      display: 'flex',
-      flex: '0 0 100px',
-      padding: '3px',
-      justifyContent: 'center',
+      display: 'flex', 
+      height: '40px', 
+      alignItems: 'center', 
+      padding: '3px', 
+      justifyContent: 'center'
     },
     add: {
       display: 'flex',
