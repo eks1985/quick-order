@@ -6,6 +6,7 @@ import * as goodsActions from './../../../../actions/goods';
 import * as modalActions from './../../../../lib/modal/actions/modal';
 import * as catalogQtyActions from './../../../../actions/catalog-qty';
 import * as optionsActions from './../../../../actions/options';
+import { getColumns } from './../../../../store/reducers/options';
 
 import IconButton from 'material-ui/IconButton';
 import IconSettings from 'material-ui/svg-icons/action/settings';
@@ -99,11 +100,10 @@ class ListContainer extends Component {
       setHeaderSettingsMode: this.setHeaderSettingsMode.bind(this),
       removeHeaderSettingsMode: this.removeHeaderSettingsMode.bind(this)
     };
-    const catalogListColumnsKeys = Object.keys(props.catalogListColumns);
+    const { columnsKeys } = props; 
     return (
       <div style={styles.style}>
-        {props.catalogListSettings.map((key, i) => <Column {...props } key={`${key}column`}  columnKey={key} i={i} columnsQty={props.catalogListSettings.length} />)}
-        {catalogListColumnsKeys.map((key, i) => props.catalogListColumns[key][0] && <Column {...props } key={`${key}column`}  columnKey={key} i={i} columnsQty={catalogListColumnsKeys.length} />)}
+        {columnsKeys.map((key, i) => <Column {...props } key={`${key}column`}  columnKey={key} i={i} columnsQty={columnsKeys.length} />)}
         {this.getSettingsBtnJsx()}
       </div>
     );
@@ -119,7 +119,8 @@ export default connect(
     prices: state.prices ,
     catalogQty: state.catalogQty,
     catalogListSettings: state.options.catalogListSettings,
-    catalogListColumns: state.options.catalogListColumns
+    catalogListColumns: state.options.catalogListColumns,
+    columnsKeys: getColumns(state.options)
   }),
   { ...cartActions, ...modalActions, ...goodsActions, ...catalogQtyActions, ...optionsActions }
 )(ListContainer);

@@ -19,3 +19,15 @@ export default (state, action) => {
       return state || initialState;
   }
 };
+
+// Selectors
+
+export const getColumns = (state) => {
+  const { catalogListSettings, catalogListColumns } = state;
+  const result = [ ...catalogListSettings ];
+  const columnsKeys = Object.keys(catalogListColumns);
+  const addition = columnsKeys.reduce((res, key) => {
+    return result.indexOf(key) === -1 && catalogListColumns[key][0]  ? res.concat(key) : res; 
+  }, []);
+  return [ ...result, ...addition ];
+};
