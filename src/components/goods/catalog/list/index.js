@@ -122,7 +122,8 @@ export default connect(
     catalogQty: state.catalogQty,
     catalogListSettings: state.options.catalogListSettings,
     catalogListColumns: state.options.catalogListColumns,
-    columnsKeys: getColumns(state.options)
+    columnsKeys: getColumns(state.options),
+    sortDirection: state.sortDirection
   }),
   { ...cartActions, ...modalActions, ...goodsActions, ...catalogQtyActions, ...optionsActions }
 )(ListContainer);

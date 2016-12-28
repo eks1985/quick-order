@@ -15,6 +15,7 @@ import options from './reducers/options';
 import users from './reducers/users';
 import customers from './reducers/customers';
 import firebaseConfig from './reducers/firebase-config';
+import sortDirection from './reducers/sort-direction';
 import modal from './../lib/modal/reducers/modal';
 
 export default function createReducer(indexes) {
@@ -35,6 +36,7 @@ export default function createReducer(indexes) {
   	catalogQty,
   	users,
   	customers,
+  	sortDirection,
     ...indexes
   });
 }

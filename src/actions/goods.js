@@ -246,21 +246,24 @@ const buildListByOrderIndex = (orderIndex, items, index, columnKey) => {
 
 export const sortGoods = (columnKey) => {
   return (dispatch, getState) => {
-    const directionCurrent = getState().goods.sortDirection;
+    const directionAll = getState().sortDirection;
+    const directionColumn = directionAll[columnKey];
+    const directionColumnNew = directionColumn  === 'forward' ? 'reverse': 'forward';
     const items = getState().goods.items;
     const index = columnKey === 'code' ? getState().goods.codes : getState().goods.descriptions;
     let orderIndex;
-    if (directionCurrent === '' || directionCurrent === 'reverse') {
+    if (directionColumnNew === 'forward') {
       orderIndex = getState().goods[ columnKey + 'OrderIndex'];
-      dispatch({
-        type: 'SET_SORT_DIRECTION_FORWARD'
-      });
     } else {
       orderIndex = getState().goods[ columnKey + 'OrderIndexReverse'];
-      dispatch({
-        type: 'SET_SORT_DIRECTION_REVERSE'
-      });
     }
+    const directionAllKeys = Object.keys(directionAll);
+    const directionAllNew = directionAllKeys.reduce((res, key) => ({ ...res, [key]: ''}), {});
+    directionAllNew[columnKey] = directionColumnNew; 
+    dispatch({
+      type: 'RECEIVE_SORT_DIRECTION',
+      payload: directionAllNew
+    }); 
     dispatch({
       type: 'SET_GOODS_LIST',
       payload: buildListByOrderIndex(orderIndex, items, index, columnKey) 

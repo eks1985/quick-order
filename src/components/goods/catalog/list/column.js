@@ -2,6 +2,8 @@ import React from 'react';
 import IconButton       from 'material-ui/IconButton';
 import IconArrowBack    from 'material-ui/svg-icons/navigation/arrow-back';
 import IconArrowForward from 'material-ui/svg-icons/navigation/arrow-forward';
+import IconArrowDown    from 'material-ui/svg-icons/hardware/keyboard-arrow-down';
+import IconArrowUp      from 'material-ui/svg-icons/hardware/keyboard-arrow-up';
 import { ListItem }     from 'material-ui/List';
 import styles from './styles';
 import { format1 } from './../../../../utils/format';
@@ -18,6 +20,7 @@ export default ({
   prices,
   catalogListSettings,
   headerSettingsMode,
+  sortDirection,
   //actions
   moveHeaderColumn,
   addCatalogQty,
@@ -32,7 +35,7 @@ export default ({
 
   const customColumn = ['code', 'description', 'price', 'qty'].indexOf(columnKey) > - 1;
 
-  const { arrowStyle,  incDecSmallQtyPane, qtyInputStyle, zebraStyle, headerStyle, rowStyle } = styles;
+  const { arrowStyle, arrowSortStyle, incDecSmallQtyPane, qtyInputStyle, zebraStyle, headerStyle, rowStyle } = styles;
   
   const columnNames = {
     code: 'Код',
@@ -180,12 +183,39 @@ export default ({
           iconStyle={arrowStyle.icon}
           onClick={
             ()=>{
-              moveHeaderColumn(columnName, direction);
+              moveHeaderColumn(columnsKeys, columnName, direction);
             }
           }
         >
         {direction === 'back' ? <IconArrowBack /> : <IconArrowForward />}
       </IconButton>  
+    );
+  };
+  
+  const getSortArrowIconJsx = (direction) => {
+    return (
+      <IconButton
+        style={arrowSortStyle.button}
+        iconStyle={direction === '' ? { ...arrowSortStyle.icon, fill: '#aaa' } : arrowSortStyle.icon} 
+        onClick={
+          ()=>{
+            (columnKey === 'code' || columnKey === 'description') && sortGoods(columnKey);
+          }
+        }
+      >
+        { (direction === 'forward' || direction === '') && <IconArrowDown /> }
+        { direction === 'reverse' && <IconArrowUp /> }
+    </IconButton>
+    );
+  };
+
+  const getSortArrowJsx = () => {
+    return (
+      <div>
+        { sortDirection[columnKey] === '' && getSortArrowIconJsx('') }
+        { sortDirection[columnKey] && sortDirection[columnKey] === 'forward' && getSortArrowIconJsx('forward') }
+        { sortDirection[columnKey] && sortDirection[columnKey] === 'reverse' && getSortArrowIconJsx('reverse') }
+      </div>
     );
   };
 
@@ -195,8 +225,9 @@ export default ({
         {headerSettingsMode && i > 0 &&
           getArrowJsx(columnName, 'back')
         }
-        <div>
+        <div style={{display: 'flex', alignItems: 'center'}}>
           {columnNames[columnName]}
+          {getSortArrowJsx()}
         </div>
         {headerSettingsMode && i + 1 < length &&
           getArrowJsx(columnName, 'forward')
@@ -226,11 +257,6 @@ export default ({
   return (
     <div style={prepareStyle()}>
       <div style={columnKey === 'code' || columnKey === 'description' ? { ...headerStyle.container, cursor: 'pointer' } : headerStyle.container }
-        onClick={
-          ()=>{
-            (columnKey === 'code' || columnKey === 'description') && sortGoods(columnKey);
-          }
-        }
       >
         {getHeaderJsx()}
       </div>

@@ -14,6 +14,18 @@ export default {
       width: 16
     }
   },
+  arrowSortStyle: {
+    button: {
+      width: '24px',
+      height: '24px',
+      padding: '3px'
+    },
+    icon: {
+      height: 16,
+      width: 16,
+      // fill: '#aaa'
+    }
+  },
   zebraStyle: {
     background: 'rgba(238, 238, 238, 0.7)'
   },

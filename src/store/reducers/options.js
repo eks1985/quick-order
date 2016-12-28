@@ -23,11 +23,12 @@ export default (state, action) => {
 // Selectors
 
 export const getColumns = (state) => {
-  const { catalogListSettings, catalogListColumns } = state;
-  const result = [ ...catalogListSettings ];
+  const { catalogListColumns } = state;
+  const result = ['code', 'description', 'price', 'qty'];
   const columnsKeys = Object.keys(catalogListColumns);
   const addition = columnsKeys.reduce((res, key) => {
-    return result.indexOf(key) === -1 && catalogListColumns[key][0]  ? res.concat(key) : res; 
+    return result.indexOf(key) === -1 && catalogListColumns[key][0] === true  ? res.concat(key) : res; 
   }, []);
+  console.log('addition', addition);
   return [ ...result, ...addition ];
 };

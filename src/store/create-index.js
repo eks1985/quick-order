@@ -29,19 +29,9 @@ export default (propName) => {
     }              
   };
   
-  const sortDirection = (state = 'baz', action) => {
-    switch (action.type) {
-      case 'SET_SORT_DIRECTION_' + propName.toUpperCase():
-        return action.payload;
-      default: 
-        return state;
-    }             
-  };
-
   return combineReducers({
     index, 
     indexSort, 
-    sortDirection,
     indexSortReverse
   });
 

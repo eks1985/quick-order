@@ -39,9 +39,5 @@ export const buildIndex = (propName) => {
       payload: indexSortReverse
     });
     
-    dispatch({
-      type: 'SET_SORT_DIRECTION_' + propName.toUpperCase(),
-      payload: ''
-    });
   };
 };
