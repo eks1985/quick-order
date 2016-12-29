@@ -1,5 +1,4 @@
 import { applyMiddleware, createStore } from 'redux';
-// import rootReducer from './reducers';
 import createReducer from './create-reducer';
 //middlewares
 import thunk from 'redux-thunk';
@@ -22,6 +21,6 @@ store.indexes = {};
 export default store;
 
 export function injectReducer(store, name, newReducer) {
-  store.indexes[name] = newReducer;
+  store.indexes['__index__' + name] = newReducer;
   store.replaceReducer(createReducer(store.indexes));
 }

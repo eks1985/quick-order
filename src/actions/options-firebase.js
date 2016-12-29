@@ -10,6 +10,14 @@ export const listenToOptions = () => {
 					type: 'RECEIVE_OPTIONS',
 					payload: snapshot.val()
 				});
+				const catalogListColumns = snapshot.val().catalogListColumns;
+				const catalogListColumnsKeys = Object.keys(catalogListColumns);
+				const sortDirection  = {code: '', description: ''};
+				const result = catalogListColumnsKeys.reduce((res, key) => catalogListColumns[key][2] === true ? { ...res, [key]: ''} : res, sortDirection);
+				dispatch({
+					type: 'RECEIVE_SORT_DIRECTION',
+					payload: result
+				});
 			}, (error) => {
 				dispatch({
 					type: 'RECEIVE_OPTIONS_ERROR',

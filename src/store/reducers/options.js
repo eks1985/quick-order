@@ -29,6 +29,5 @@ export const getColumns = (state) => {
   const addition = columnsKeys.reduce((res, key) => {
     return result.indexOf(key) === -1 && catalogListColumns[key][0] === true  ? res.concat(key) : res; 
   }, []);
-  console.log('addition', addition);
   return [ ...result, ...addition ];
 };

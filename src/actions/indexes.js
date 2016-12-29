@@ -5,7 +5,8 @@ const generateGuids = (propName, items, keys, val) => {
 
 const generateIndexex = (propName, items, keys) => {
   const indexSort = keys.reduce((res, key) => {
-    if (items[key][propName]) {
+    const val = items[key][propName];
+    if (val && !res.includes(val)) {
       res.push(items[key][propName]);
     }
     return res;

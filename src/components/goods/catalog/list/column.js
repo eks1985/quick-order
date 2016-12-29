@@ -199,7 +199,7 @@ export default ({
         iconStyle={direction === '' ? { ...arrowSortStyle.icon, fill: '#aaa' } : arrowSortStyle.icon} 
         onClick={
           ()=>{
-            (columnKey === 'code' || columnKey === 'description') && sortGoods(columnKey);
+            sortGoods(columnKey);
           }
         }
       >

@@ -394,7 +394,18 @@ const Options = ({
               }
             }
           >
-            Inject reducer
+            Inject reducer brand
+          </button>
+          
+          <button 
+            onClick={
+              () => {
+                injectReducer(store, 'groupRef', createIndex('groupRef'));
+                buildIndex('groupRef');
+              }
+            }
+          >
+            Inject reducer category
           </button>
         
           <Subheader>
