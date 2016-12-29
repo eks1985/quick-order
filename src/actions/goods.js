@@ -1,15 +1,28 @@
 import { filterByGroupGuids } from './goods-groups';
+export { setQtyPagesGoods, detectIsLastPage,  moveGoodsForward, moveGoodsBack, goToGoodsPage } from './goods-navigation';
+import { setQtyPagesGoods, goToGoodsPage } from './goods-navigation';
 
-//{Search index
+// Search index >
+
+const generateCodesGuids = (goods, code) => {
+  const goodsKeys = Object.keys(goods);
+  return goodsKeys.reduce((res, key) => {
+    return goods[key].code === code ? res.concat(key) : res;
+  }, []);
+};
 
 export const generateCodes = () => {
   return (dispatch, getState) => {
     const goods = getState().goods.items;
     const goodsKeys = Object.keys(goods);
-    const codes = goodsKeys.reduce((result, key) => {
-      const code = goods[key].code;
-      result[code.toLowerCase()] = [key];
-      return result;
+    const codesArr = goodsKeys.reduce((res, key) => {
+      res.push(goods[key].code);
+      return res;
+    }, []);
+    const codes =  codesArr.reduce((res, code) => {
+      const guids = generateCodesGuids(goods, code);
+      res[code.toLowerCase()] = guids;
+      return res;
     }, {});
     dispatch({
       type: 'RECEIVE_CODES',
@@ -45,9 +58,9 @@ export const generateDescriptions = () => {
   };
 };
 
-//Search index }
+// Search index <
 
-//{Order index
+// Order index >
 
 export const generateOrderIndexCodes = () => {
   return (dispatch, getState) => {
@@ -97,7 +110,7 @@ export const generateOrderIndexProp = (propName) => {
   };
 };
 
-//Order index}
+// Order index <
 
 export const setCurentGuid = (guid) => {
   return {
@@ -106,104 +119,39 @@ export const setCurentGuid = (guid) => {
   };
 };
 
-export const setQtyPagesGoods = () => {
-  return (dispatch, getState) => {
-      const keysLength = Object.keys(getState().goods.items).length;
-      const qtyPages = keysLength % 10 === 0 ? keysLength / 10  : Math.floor(keysLength / 10) + 1;
-      dispatch({
-        type: 'SET_QTY_PAGES_GOODS',
-        qtyPages: qtyPages || 1
-      });
-  };
+// Search >
+
+const searchByPropWord = (word, indexKeys, index, res) => {
+  return indexKeys.reduce((res, key) => key.includes(word) ? [ ...res, ...index[key] ] : res, res);  
 };
 
-export const detectIsLastPage = () => {
-  return (dispatch, getState) => {
-      const { qtyPages, pageNumber } = getState().goods;
-      const payload = qtyPages === pageNumber;
-      dispatch({
-        type: 'SET_IS_LAST_PAGE_GOODS',
-        payload: payload
-      });
-  };
+const searchByPropText = (words, indexKeys, index,  res) => {
+  return words.reduce( (res, word) => [ ...res, ...searchByPropWord(word.trim(), indexKeys, index, res) ], res);
 };
 
-export const moveGoodsForward = () => {
-  return (dispatch, getState) => {
-    const isLastPage = getState().goods.isLastPage;
-    if (!isLastPage) {
-      dispatch({
-        type: 'INCREASE_PAGE_NUMBER_GOODS'
-      });
-      dispatch(detectIsLastPage());
-    }
-  };
-};
-
-export const moveGoodsBack = () => {
-  return (dispatch, getState) => {
-    const isFirstPage = getState().goods.pageNumber === 1;
-    if (!isFirstPage) {
-      dispatch({
-        type: 'DECREASE_PAGE_NUMBER_GOODS'
-      });
-      dispatch(detectIsLastPage());
-    }
-  };
-};
-
-export const goToGoodsPage = (pageNumber) => {
-  return (dispatch, getState) => {
-    dispatch({
-      type: 'SET_PAGE_NUMBER_GOODS',
-      pageNumber: pageNumber
-    });
-    dispatch(detectIsLastPage());
-  };
-};
-
-const searchByDescription = (descriptions, keys, text) => {
-  return keys.reduce((result, key) => {
-    return key.includes(text) ? [ ...result, ...descriptions[key] ] : result;
-  }, []);
-};
-
-// TODO 
-const searchByProps = (words, getState) => {
-  return {};
+const getItemsByIds = (ids, items) => {
+  return ids.reduce((res, key) => ({ ...res, [key]: items[key] }), {});
 };
 
 export const search = () => {
   return (dispatch, getState) => {
     const state = getState().goods;
     const { codes, descriptions, itemsInitial, searchText } = state;
-    const codesKeys = Object.keys(codes);
-    const descriptionsKeys = Object.keys(descriptions);
     let text = searchText.toLowerCase();
-    let result;
+    let result = {};
+    let resultKeys = [];
     if (text.trim() === '') {
       result = itemsInitial;
     } else {
-      //search by code
-      result  = codesKeys.reduce((result, key) => {
-        return key.includes(text) ? [ ...result, ...codes[key] ] : result;
-      }, []);
       const words = text.split(' ');
-      result = words.reduce( (res, word) => {
-        return [ ...result, ...searchByDescription(descriptions, descriptionsKeys, word.trim()) ];
-      }, result);
-      result = [ ...result, ...searchByProps(words, getState) ];
-      result = result.reduce((res, elem) => {
-        res[elem] = itemsInitial[elem];
-        return res;
-      }, {});
+      resultKeys = searchByPropText(words, Object.keys(codes), codes, resultKeys);
+      resultKeys = searchByPropText(words, Object.keys(descriptions), descriptions, resultKeys);
+      result = getItemsByIds(resultKeys, itemsInitial);
     }
-    
     const goodsGroupsFiltersIds = getState().goodsGroups.filtersIds;
     if (goodsGroupsFiltersIds.length > 0) {
       result = filterByGroupGuids(goodsGroupsFiltersIds, result);
     }
-
     dispatch({
       type: 'SET_GOODS_LIST',
       payload: result,
@@ -211,10 +159,6 @@ export const search = () => {
     dispatch(setQtyPagesGoods());
     dispatch(goToGoodsPage(1));
   };
-};
-
-export const resetPagination = () => {
-
 };
 
 export const setSearchText = (payload) => {
@@ -227,7 +171,9 @@ export const setSearchText = (payload) => {
   };
 };
 
-// Sort
+// Search <
+
+// Sort >
 
 const buildListByProp = (index, prop, items) => {
   const keys = index[prop.toLowerCase()];
@@ -278,3 +224,5 @@ export const sortGoods = (columnKey) => {
     });
   };
 };
+
+// Sort <
