@@ -32,6 +32,8 @@ export default ({
   setFocused,
   sortGoods
 }) => {
+  
+  const sortable = sortDirection[columnKey] !== undefined;
 
   const customColumn = ['code', 'description', 'price', 'qty'].indexOf(columnKey) > - 1;
 
@@ -199,7 +201,7 @@ export default ({
         iconStyle={direction === '' ? { ...arrowSortStyle.icon, fill: '#aaa' } : arrowSortStyle.icon} 
         onClick={
           ()=>{
-            sortGoods(columnKey);
+            sortable && sortGoods(columnKey);
           }
         }
       >
@@ -226,7 +228,15 @@ export default ({
           getArrowJsx(columnName, 'back')
         }
         <div style={{display: 'flex', alignItems: 'center'}}>
-          {columnNames[columnName]}
+          <div
+            onClick={
+              ()=>{
+                sortable && sortGoods(columnKey);
+              }
+            }
+          >
+            {columnNames[columnName]}
+          </div>
           {getSortArrowJsx()}
         </div>
         {headerSettingsMode && i + 1 < length &&
@@ -256,7 +266,7 @@ export default ({
 
   return (
     <div style={prepareStyle()}>
-      <div style={columnKey === 'code' || columnKey === 'description' ? { ...headerStyle.container, cursor: 'pointer' } : headerStyle.container }
+      <div style={sortable ? { ...headerStyle.container, cursor: 'pointer' } : headerStyle.container }
       >
         {getHeaderJsx()}
       </div>
