@@ -238,6 +238,11 @@ const buildListByProp = (index, prop, items) => {
 
 const buildListByOrderIndex = (orderIndex, items, index, columnKey) => {
   
+  console.log('orderIndex', orderIndex);
+  console.log('items', items);
+  console.log('index', index);
+  console.log('columnKey', columnKey);
+  
   const itemsKeys = Object.keys(items);
   const itemsProps = itemsKeys.reduce((res, key) => [ ...res, items[key][columnKey] ], []);
   return orderIndex.reduce((res, key) => {
@@ -251,7 +256,7 @@ export const sortGoods = (columnKey) => {
     const directionColumn = directionAll[columnKey];
     const directionColumnNew = directionColumn  === 'forward' ? 'reverse': 'forward';
     const items = getState().goods.items;
-    const index = (columnKey === 'code' || columnKey === 'description') ? getState().goods[columnKey] : getState()['__index__' + columnKey].index;
+    const index = (columnKey === 'code' || columnKey === 'description') ? getState().goods[columnKey + 's'] : getState()['__index__' + columnKey].index;
     let orderIndex;
     if (columnKey === 'code' || columnKey === 'description') {
       if (directionColumnNew === 'forward') {
