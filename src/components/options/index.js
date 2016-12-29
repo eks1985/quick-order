@@ -17,10 +17,6 @@ import Sort from 'material-ui/svg-icons/action/swap-vert';
 import SortOff from 'material-ui/svg-icons/action/swap-vert';
 import {Tabs, Tab} from 'material-ui/Tabs';
 
-import { injectReducer } from './../../store/';
-import createIndex from './../../store/create-index';
-import store from './../../store/';
-
 const Options = ({
   options,
   items,
@@ -385,28 +381,6 @@ const Options = ({
       <Tabs>
       
         <Tab label="Структура данных" >
-        
-          <button 
-            onClick={
-              () => {
-                injectReducer(store, 'brand', createIndex('brand'));
-                buildIndex('brand');
-              }
-            }
-          >
-            Inject reducer brand
-          </button>
-          
-          <button 
-            onClick={
-              () => {
-                injectReducer(store, 'groupRef', createIndex('groupRef'));
-                buildIndex('groupRef');
-              }
-            }
-          >
-            Inject reducer category
-          </button>
         
           <Subheader>
             Товары

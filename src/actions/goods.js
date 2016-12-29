@@ -6,9 +6,7 @@ import { setQtyPagesGoods, goToGoodsPage } from './goods-navigation';
 
 const generateCodesGuids = (goods, code) => {
   const goodsKeys = Object.keys(goods);
-  return goodsKeys.reduce((res, key) => {
-    return goods[key].code === code ? res.concat(key) : res;
-  }, []);
+  return goodsKeys.reduce((res, key) => goods[key].code === code ? res.concat(key) : res, []);
 };
 
 export const generateCodes = () => {
@@ -33,9 +31,7 @@ export const generateCodes = () => {
 
 const generateDescrGuids = (goods, descr) => {
   const goodsKeys = Object.keys(goods);
-  return goodsKeys.reduce((res, key) => {
-    return goods[key].description === descr ? res.concat(key) : res;
-  }, []);
+  return goodsKeys.reduce((res, key) => goods[key].description === descr ? res.concat(key) : res, []);
 };
 
 export const generateDescriptions = () => {
@@ -125,7 +121,8 @@ const searchByPropWord = (word, indexKeys, index, res) => {
   return indexKeys.reduce((res, key) => key.includes(word) ? [ ...res, ...index[key] ] : res, res);  
 };
 
-const searchByPropText = (words, indexKeys, index,  res) => {
+const searchByPropText = (words, index,  res) => {
+  const indexKeys = Object.keys(index);
   return words.reduce( (res, word) => [ ...res, ...searchByPropWord(word.trim(), indexKeys, index, res) ], res);
 };
 
@@ -136,7 +133,7 @@ const getItemsByIds = (ids, items) => {
 export const search = () => {
   return (dispatch, getState) => {
     const state = getState().goods;
-    const { codes, descriptions, itemsInitial, searchText } = state;
+    const { codes, descriptions, itemsInitial, searchText,  } = state;
     let text = searchText.toLowerCase();
     let result = {};
     let resultKeys = [];
@@ -144,8 +141,11 @@ export const search = () => {
       result = itemsInitial;
     } else {
       const words = text.split(' ');
-      resultKeys = searchByPropText(words, Object.keys(codes), codes, resultKeys);
-      resultKeys = searchByPropText(words, Object.keys(descriptions), descriptions, resultKeys);
+      resultKeys = searchByPropText(words, codes, resultKeys);
+      resultKeys = searchByPropText(words, descriptions, resultKeys);
+      const columns = getState().options.catalogListColumns;
+      const columnsKeys = Object.keys(columns).reduce((res, key) => columns[key][1] ? [ ...res, key ] : res , []);
+      resultKeys = columnsKeys.reduce((res, key) => [ ...res, ...searchByPropText(words, getState()['__index__' + key].index, []) ], resultKeys);
       result = getItemsByIds(resultKeys, itemsInitial);
     }
     const goodsGroupsFiltersIds = getState().goodsGroups.filtersIds;
