@@ -1,6 +1,6 @@
 
 const generateGuids = (propName, items, keys, val) => {
-  return keys.reduce((res, key) => items[key][propName] === val ? res.concat(key) : res, []);
+  return keys.reduce((res, key) => (items[key][propName] === val) || (items[key][propName] === undefined && val === '') ? res.concat(key) : res, []);
 };
 
 const generateIndexex = (propName, items, keys) => {
@@ -10,7 +10,7 @@ const generateIndexex = (propName, items, keys) => {
       res.push(items[key][propName]);
     }
     return res;
-  }, []);
+  }, ['']);
   const index =  indexSort.reduce((res, val) => {
     const guids = generateGuids(propName, items, keys, val);
     res[val.toLowerCase()] = guids;

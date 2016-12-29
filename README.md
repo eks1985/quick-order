@@ -4,6 +4,7 @@
 
 [Обсуждение] (http://www.forum.mista.ru/topic.php?id=786927)
 
+[Презентация] (http://slides.com/eks1985/deck/fullscreen)
 
 Цель данного приложения - собирать заказы клиентов через сайт
 
