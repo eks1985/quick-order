@@ -19,7 +19,7 @@ const Pagination = ({
   goToGoodsPage
 }) => {
   const iconStyle = {width: 24, height: 24};
-  const iconButtonStyle = {padding: '5px', width: 32};
+  const iconButtonStyle = {padding: '3px', width: '32px', height: '32px'};
   return (
     <div style={{display: 'flex', alignItems: 'center', paddingRight: '20px'}} tabIndex="-1">
       <IconButton

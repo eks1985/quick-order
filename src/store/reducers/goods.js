@@ -12,7 +12,8 @@ const searchText = (state = '', action) => {
 const codes = (state = {}, action) => {
   switch (action.type) {
     case 'RECEIVE_CODES':
-      return { ...state, ...action.payload };
+      // return { ...state, ...action.payload };
+      return action.payload;
     default:
       return state;
   }
@@ -136,17 +137,6 @@ const sortDirection = (state = '', action) => {
       return state;
   }
 };
-
-// Prop order index
-
-// const createPropIndexReducer = (propName) => {
-  
-// };
-
-// propName + 'Index'
-//   .sortIndex
-//   .index
-//   .sortDirection
 
 // Selectors
 

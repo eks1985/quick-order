@@ -18,7 +18,7 @@ export default {
     button: {
       width: '24px',
       height: '24px',
-      padding: '3px'
+      padding: '0px'
     },
     icon: {
       height: 16,

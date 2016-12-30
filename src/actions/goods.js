@@ -177,17 +177,13 @@ export const setSearchText = (payload) => {
 
 const buildListByProp = (index, prop, items) => {
   const keys = index[prop.toLowerCase()];
-  return keys.reduce((res, key) => {
-    return { ...res, [key]: items[key] };
-  }, {});
+  return keys.reduce((res, key) => items[key] ? { ...res, [key]: items[key] } : res, {});
 };
 
 const buildListByOrderIndex = (orderIndex, items, index, columnKey) => {
   const itemsKeys = Object.keys(items);
   const itemsProps = itemsKeys.reduce((res, key) => items[key][columnKey] ? [ ...res, items[key][columnKey] ] : res, ['']);
-  return orderIndex.reduce((res, key) => {
-    return itemsProps.indexOf(key) > -1 ? { ...res, ...buildListByProp(index, key, items) } : res;
-  }, {});
+  return orderIndex.reduce((res, key) => itemsProps.indexOf(key) > -1 ? { ...res, ...buildListByProp(index, key, items) } : res, {});
 };
 
 export const sortGoods = (columnKey) => {

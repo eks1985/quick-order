@@ -49,7 +49,7 @@ export default ({
   };
   
   const applyZebra = (style, i) => i % 2 === 0 ? style : { ...style, ...zebraStyle };
-
+  
   const getCodeJsx = (key, i) => {
     let style = applyZebra(rowStyle.code, i);
     return (
@@ -199,6 +199,7 @@ export default ({
       <IconButton
         style={arrowSortStyle.button}
         iconStyle={direction === '' ? { ...arrowSortStyle.icon, fill: '#aaa' } : arrowSortStyle.icon} 
+        id='sortIcon'
         onClick={
           ()=>{
             sortable && sortGoods(columnKey);
