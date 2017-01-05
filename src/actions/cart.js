@@ -180,5 +180,5 @@ export const addQuickListToCart = (clean) => {
       type: 'SET_CURRENT_CONTENT',
       contentName: 'checkout'
     });
-  }
-}
+  };
+};

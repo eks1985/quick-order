@@ -2,11 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as cartActions from './../../../actions/cart';
 import * as currentContentActions from './../../../actions/current-content';
-// import Subheader from 'material-ui/Subheader';
 import RaisedButton from 'material-ui/RaisedButton';
 import IconRemoveCart from 'material-ui/svg-icons/action/remove-shopping-cart';
 import IconRowing from 'material-ui/svg-icons/action/rowing';
-// import IconCart from 'material-ui/svg-icons/action/shopping-basket';
 import IconShoppingCart from 'material-ui/svg-icons/action/shopping-cart';
 import { format1 } from './../../../utils/format';
 
