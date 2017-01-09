@@ -1,4 +1,5 @@
 import { isNumeric } from './../utils/index';
+import { setCurrentContent } from './../actions/current-content';
 
 export const setTotalCartItems = () => {
   return (dispatch, getState) => {
@@ -109,6 +110,8 @@ export const cleanCart = () => {
     dispatch({
       type: 'RESET_CATALOG_QTY',
     });
+    dispatch(setCurrentContent('goods'));
+
   };
 };
 

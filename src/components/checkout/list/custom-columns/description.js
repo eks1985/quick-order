@@ -2,8 +2,8 @@ import React, { PropTypes } from 'react';
 import { ListItem }     from 'material-ui/List';
 
 const Component = ({
-  key, 
-  i,
+  keyProp,
+  rowIndex,
   items,
   columnKey,
   applyVertBorder,
@@ -12,18 +12,18 @@ const Component = ({
   setCurentGuid,
   setModal
 }) => {
-  
+
   const getJsx = () => {
-    let style = applyZebra(rowStyle.description, i);
+    let style = applyZebra(rowStyle.description, rowIndex);
     return (
-      <div key={`${key}${columnKey}`} tabIndex={-1} style={style}>
+      <div key={`${keyProp}${columnKey}`} tabIndex={-1} style={style}>
         <a
           tabIndex={-1}
           href="#"
           style={{textDecoration: 'none'}}
           onClick={
             () => {
-              setCurentGuid(key);
+              setCurentGuid(keyProp);
               setModal({ content: 'goodsCard', fullScreen: true });
             }
           }
@@ -32,20 +32,21 @@ const Component = ({
             tabIndex={-1}
             innerDivStyle={{padding: '10px'}}
           >
-            {items[key].description}
+            {items[keyProp].description}
           </ListItem>
         </a>
       </div>
     );
   };
-  
+
   return getJsx();
-  
+
 };
 
 Component.propTypes = {
+  rowIndex: PropTypes.number.isRequired,
   items: PropTypes.object.isRequired,
-  columnKey: PropTypes.number.isRequired,
+  columnKey: PropTypes.string.isRequired,
   applyVertBorder: PropTypes.func.isRequired,
   applyZebra: PropTypes.func.isRequired,
   rowStyle: PropTypes.object.isRequired,

@@ -4,6 +4,9 @@ import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import List from './list';
+import * as cartActions from './../../actions/cart';
+import * as checkoutActions from './../../actions/checkout';
+import Subheader from 'material-ui/Subheader';
 
 const Checkout = (props) => {
   const { totalItems, checkoutOrder, cleanCart, ...other } = props;
@@ -35,6 +38,9 @@ const Checkout = (props) => {
       }
       <div className='checkout'>
         <List {...other} />
+        <Subheader>
+          Комментарий
+        </Subheader>
         <TextField
           id='comment'
           multiLine={true}
@@ -48,5 +54,6 @@ const Checkout = (props) => {
 };
 
 export default connect(
-  state => ({ items: state.cart.items, totalItems: state.cart.totalItems, checkout: state.checkout })
+  state => ({ items: state.cart.items, totalItems: state.cart.totalItems, checkout: state.checkout }),
+  { ...cartActions, ...checkoutActions }
 )(Checkout);

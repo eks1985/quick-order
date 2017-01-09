@@ -1,23 +1,19 @@
 import React from 'react';
-// import IconButton       from 'material-ui/IconButton';
-// import IconArrowBack    from 'material-ui/svg-icons/navigation/arrow-back';
-// import IconArrowForward from 'material-ui/svg-icons/navigation/arrow-forward';
-// import IconArrowDown    from 'material-ui/svg-icons/hardware/keyboard-arrow-down';
-// import IconArrowUp      from 'material-ui/svg-icons/hardware/keyboard-arrow-up';
 import styles from './styles';
 import { format1 } from './../../../utils/format';
 
 import ColumnHeader from './column-header';
 import Code from './custom-columns/code';
-import Description from './custom-columns/code';
-import Price from './custom-columns/code';
-import Qty from './custom-columns/code';
+import Description from './custom-columns/description';
+import Price from './custom-columns/price';
+import Amount from './custom-columns/amount';
+import Qty from './custom-columns/qty';
 import Delete from './custom-columns/delete';
 
 // export default ({
 //   columnsKeys,
 //   columnKey, //name of column
-//   i, //number of column 
+//   i, //number of column
 //   items,
 //   catalogListSettings,
 //   headerSettingsMode,
@@ -34,31 +30,51 @@ import Delete from './custom-columns/delete';
 //   sortGoods
 // }) => {
 
+
 export default (props) => {
-  
-  const { columnKey, columnsKeys, columnsQty, items, i, moveHeaderColumn, headerSettingsMode } = props;
-  
+
+  const {
+    columnKey,
+    columnsKeys,
+    columnsQty,
+    items,
+    i,
+    headerSettingsMode,
+    catalogQty,
+    // actions
+    moveHeaderColumn,
+    addCatalogQty,
+    removeCatalogQty,
+    addToCart,
+    removeFromCart,
+    setCurentGuid,
+    setModal,
+    setFocused
+  } = props;
+
+  // console.log('render column', columnKey);
+
   const itemsIds = Object.keys(items);
-  
+
   const sortable = false;
 
-  const customColumn = ['code', 'description', 'price', 'qty'].indexOf(columnKey) > - 1;
+  const customColumn = ['code', 'description', 'price', 'qty', 'amount', 'delete'].indexOf(columnKey) > - 1;
 
   // Work with styles >
 
   const { zebraStyle, headerStyle, rowStyle } = styles;
-  
+
   const applyZebra = (style, i) => i % 2 === 0 ? style : { ...style, ...zebraStyle };
- 
+
   const applyVertBorder = (style) => {
     switch (i) {
       case 1:
         return { ...style, border: '1px solid #eee'};
-      default: 
+      default:
         return style;
     }
   };
-  
+
   const prepareStyle = () => {
     if (styles.columnStyle[columnKey]) {
       return { ...styles.columnStyle.common, ...styles.columnStyle[columnKey] };
@@ -66,35 +82,35 @@ export default (props) => {
       return styles.columnStyle.common;
     }
   };
-  
+
   // Work with styles <
-  
-  const getCustomItemJsx = (key, i) => {
-    const p = { key, i, items, columnKey, applyVertBorder, applyZebra };
-    const pCode = { ...p, rowStyle };
-    const pDescription = { ...p };
-    const pPrice = { ...p };
-    const pQty = { ...p};
+
+  const getCustomItemJsx = (key, rowIndex) => {
+    const p            = { rowStyle, keyProp: key, rowIndex, items, columnKey, applyVertBorder, applyZebra };
+    const pCode        = { ...p  };
+    const pDescription = { ...p, setCurentGuid, setModal };
+    const pPrice       = { ...p, format1 };
+    const pQty         = { ...p, catalogQty, styles, addCatalogQty, addToCart, removeCatalogQty, removeFromCart, setFocused };
+    const pDelete      = { ...p, removeFromCart };
     switch (columnKey) {
       case 'code':
-        return <div>Code is here</div>;
-        // return <Code {...pCode} /> ;
+        return <Code key={key+columnKey} {...pCode} /> ;
       case 'description':
-        return <div>Description is here</div>;
-        // return <Description {...pDescription} /> ;
+        return <Description key={key+columnKey} {...pDescription} /> ;
       case 'price':
-        return <div>Price is here</div>;
-        // return <Price {...pPrice} /> ;
+        return <Price key={key+columnKey} {...pPrice} /> ;
+      case 'amount':
+        return <Amount key={key+columnKey} {...pPrice} /> ;
       case 'qty':
-        return <div>Qty is here</div>;
-        // return <Qty {...pQty} /> ;
+        return <Qty key={key+columnKey} {...pQty} /> ;
+      case 'delete':
+        return <Delete key={key+columnKey} {...pDelete} /> ;
       default:
-         return <div>Delete is here</div>;
-        // return <Delete {...p} /> ;
+        return <div></div> ;
     }
   };
 
-  const getItemJsx = (key, i) => {
+  const getItemJsx = (key, rowIndex) => {
     let style = applyZebra(rowStyle.common, i);
     return (
       <div key={`${key}${columnKey}`} style={style}>
@@ -103,7 +119,7 @@ export default (props) => {
     );
   };
 
-  const getItemsJsx = () => itemsIds.map( (key, i) => customColumn ?  getCustomItemJsx(key, i) : getItemJsx(key, i));
+  const getItemsJsx = () => itemsIds.map( (key, rowIndex) => customColumn ?  getCustomItemJsx(key, rowIndex) : getItemJsx(key, rowIndex));
 
   const headerProps = { headerSettingsMode, columnsKeys, columnKey, columnsQty, i, moveHeaderColumn };
 
@@ -112,7 +128,7 @@ export default (props) => {
       <div style={sortable ? { ...headerStyle.container, cursor: 'pointer' } : headerStyle.container }>
         <ColumnHeader {...headerProps} />
       </div>
-      {/*{getItemsJsx()} */}
+      {getItemsJsx()}
     </div>
   );
 

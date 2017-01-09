@@ -8,20 +8,20 @@ import IconArrowDown    from 'material-ui/svg-icons/hardware/keyboard-arrow-down
 import IconArrowUp      from 'material-ui/svg-icons/hardware/keyboard-arrow-up';
 
 const Header = (props) => {
-  
+
   const { arrowStyle, arrowSortStyle }  = styles;
-  
+
   const { headerSettingsMode, columnsKeys, columnKey, columnsQty, i, moveHeaderColumn } = props;
-  
+
   const columnNames = {
     code: 'Код',
     description: 'Наименование',
     price: 'Цена',
     qty: 'Количество',
     brand: 'Бренд',
-    add: '',
+    amount: 'Сумма',
   };
-  
+
   const getArrowJsx = (direction) => {
     return (
       <IconButton
@@ -34,15 +34,15 @@ const Header = (props) => {
           }
         >
         {direction === 'back' ? <IconArrowBack /> : <IconArrowForward />}
-      </IconButton>  
+      </IconButton>
     );
   };
-  
+
   const getSortArrowIconJsx = (direction) => {
     return (
       <IconButton
         style={arrowSortStyle.button}
-        iconStyle={direction === '' ? { ...arrowSortStyle.icon, fill: '#aaa' } : arrowSortStyle.icon} 
+        iconStyle={direction === '' ? { ...arrowSortStyle.icon, fill: '#aaa' } : arrowSortStyle.icon}
         id='sortIcon'
         onClick={
           ()=>{
@@ -99,9 +99,9 @@ const Header = (props) => {
       </div>
     );
   };
-  
+
   return getHeaderJsx();
-  
+
 };
 
 Header.propTypes = {

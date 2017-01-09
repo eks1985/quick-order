@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import FlatButton from 'material-ui/FlatButton';
 
 const Component = ({
   keyProp,
@@ -10,23 +9,14 @@ const Component = ({
   applyZebra,
   rowStyle,
   format1,
-  prices,
-  removeFromCart
+  prices
 }) => {
 
   const getJsx = () => {
     let style = applyZebra(rowStyle.price, rowIndex);
     return (
       <div key={`${keyProp}${columnKey}`} style={style}>
-        <FlatButton
-          label='удалить'
-          onClick={
-            () => {
-              removeFromCart(keyProp);
-            }
-          }
-        >
-        </FlatButton>
+        {format1(items[keyProp].amount || 100, '')}
       </div>
     );
   };
@@ -40,6 +30,7 @@ Component.propTypes = {
   columnKey: PropTypes.string.isRequired,
   applyVertBorder: PropTypes.func.isRequired,
   applyZebra: PropTypes.func.isRequired,
+  format1: PropTypes.func.isRequired,
   rowStyle: PropTypes.object.isRequired
 };
 

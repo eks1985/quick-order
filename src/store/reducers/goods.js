@@ -83,7 +83,12 @@ const currentGuid = (state = '', action) => {
   }
 };
 
-const items = (state = {}, action) => {
+// const initial = {
+//   foo: {code: 'foo', groupRef: 'baz', description: 'Товар 1', brand: 'Веселый молочник'},
+//   bar: {code: 'bar', groupRef: 'baz', description: 'Товар 2', brand: 'Добрый пекарь'},
+// }
+// const items = (state = initial, action) => { //test
+const items = (state = {}, action) => { //production
   switch (action.type) {
     case 'RECEIVE_GOODS':
       return { ...state, ...action.payload };

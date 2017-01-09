@@ -38,42 +38,42 @@ export default {
       paddingRight: '50px'
     },
     common: {
-      display: 'flex', 
-      height: '40px', 
-      alignItems: 'center', 
-      padding: '3px', 
+      display: 'flex',
+      height: '40px',
+      alignItems: 'center',
+      padding: '5px',
       justifyContent: 'flex-start'
     },
     code: {
-      display: 'flex', 
-      height: '40px', 
-      alignItems: 'center', 
-      padding: '6px'
+      display: 'flex',
+      height: '40px',
+      alignItems: 'center',
+      padding: '5px'
     },
     description: {
-      display: 'flex', 
-      height: '40px', 
-      alignItems: 'center', 
-      padding: '3px'
+      display: 'flex',
+      height: '40px',
+      alignItems: 'center',
+      padding: '2px'
     },
     price: {
-      display: 'flex', 
-      height: '40px', 
-      alignItems: 'center', 
-      padding: '3px', 
+      display: 'flex',
+      height: '40px',
+      alignItems: 'center',
+      padding: '5px',
       justifyContent: 'flex-end'
     },
     qty: {
-      display: 'flex', 
-      height: '40px', 
-      alignItems: 'center', 
-      padding: '3px', 
+      display: 'flex',
+      height: '40px',
+      alignItems: 'center',
+      padding: '3px',
       justifyContent: 'center'
     },
     add: {
       display: 'flex',
       flex: '0 0 100px',
-      padding: '3px'
+      padding: '5px'
     }
   },
   columnStyle: {
@@ -101,12 +101,12 @@ export default {
   headerStyle: {
     container: {
       fontSize: '14px',
-      display: 'flex', 
-      height: '40px', 
-      background: '#eee', 
-      padding: '5px', 
-      justifyContent: 'center', 
-      marginBottom: '3px', 
+      display: 'flex',
+      height: '40px',
+      background: '#eee',
+      padding: '5px',
+      justifyContent: 'center',
+      marginBottom: '3px',
       // cursor: 'pointer'
     },
     code: {
@@ -169,5 +169,11 @@ export default {
     textAlign: 'right',
     padding: '3px',
     fontSize: '16px'
+  },
+  vertBorderLeft: {
+    borderLeft: '1px solid #eee'
+  },
+  vertBorderRight: {
+    borderRight: '1px solid #eee'
   }
 };

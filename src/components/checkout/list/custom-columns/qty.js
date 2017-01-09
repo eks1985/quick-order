@@ -1,40 +1,38 @@
 import React, { PropTypes } from 'react';
 
 const Component = ({
-  key, 
-  i,
+  keyProp,
+  rowIndex,
   items,
   columnKey,
-  applyVertBorder,
   applyZebra,
   styles,
   removeFromCart,
   removeCatalogQty,
-  addCatalogQty,
   addToCart,
-  prices,
+  addCatalogQty,
   catalogQty,
   setFocused
 }) => {
-    
+
     const { rowStyle, incDecSmallQtyPane, qtyInputStyle } = styles;
-  
+
     const getJsx = () => {
-      let style = applyZebra(rowStyle.qty, i);
+      let style = applyZebra(rowStyle.qty, rowIndex);
       return (
-        <div key={`${key}${columnKey}`} style={style}>
+        <div key={`${keyProp}${columnKey}`} style={style}>
           <div
             style={incDecSmallQtyPane}
             onClick={
               () => {
-                if (catalogQty[key]) {
-                  const v = catalogQty[key] - 1;
+                if (catalogQty[keyProp]) {
+                  const v = catalogQty[keyProp] - 1;
                   if (v === 0) {
-                    removeFromCart(key);
-                    removeCatalogQty(key);
+                    removeFromCart(keyProp);
+                    removeCatalogQty(keyProp);
                   } else {
-                    addCatalogQty(key, v);
-                    addToCart(key, v, prices[key]);
+                    addCatalogQty(keyProp, v);
+                    addToCart(keyProp, v, items[keyProp].price);
                   }
                 }
               }
@@ -42,23 +40,23 @@ const Component = ({
           ></div>
           <input
             type='text'
-            id={i}
+            id={rowIndex + 1000}
             className='catalogQtyInput'
             style={qtyInputStyle}
-            value={catalogQty[key] || ''}
+            value={catalogQty[keyProp] || ''}
             onFocus={
               () => {
-                setFocused(key);
+                setFocused(keyProp);
               }
             }
             onChange={
               (e) => {
                 const val = parseInt(e.target.value, 10) ? parseInt(e.target.value, 10) : '';
-                addCatalogQty(key, val);
-                addToCart(key, val, prices[key]);
+                addCatalogQty(keyProp, val);
+                addToCart(keyProp, val, items[keyProp].price);
                 if (val === '') {
-                  removeFromCart(key);
-                  removeCatalogQty(key);
+                  removeFromCart(keyProp);
+                  removeCatalogQty(keyProp);
                 }
               }
             }
@@ -68,9 +66,9 @@ const Component = ({
             style={incDecSmallQtyPane}
             onClick={
               () => {
-                const v = catalogQty[key] ? catalogQty[key] + 1 :  1;
-                addCatalogQty(key, v);
-                addToCart(key, v, prices[key]);
+                const v = catalogQty[keyProp] ? catalogQty[keyProp] + 1 :  1;
+                addCatalogQty(keyProp, v);
+                addToCart(keyProp, v, items[keyProp].price);
               }
             }
           >
@@ -78,15 +76,14 @@ const Component = ({
         </div>
       );
   };
-  
+
   return getJsx();
-  
+
 };
 
 Component.propTypes = {
   items: PropTypes.object.isRequired,
-  columnKey: PropTypes.number.isRequired,
-  applyVertBorder: PropTypes.func.isRequired,
+  columnKey: PropTypes.string.isRequired,
   applyZebra: PropTypes.func.isRequired
 };
 

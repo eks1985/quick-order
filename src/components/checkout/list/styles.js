@@ -38,36 +38,43 @@ export default {
       paddingRight: '50px'
     },
     common: {
-      display: 'flex', 
-      height: '40px', 
-      alignItems: 'center', 
-      padding: '3px', 
+      display: 'flex',
+      height: '40px',
+      alignItems: 'center',
+      padding: '3px',
       justifyContent: 'flex-start'
     },
     code: {
-      display: 'flex', 
-      height: '40px', 
-      alignItems: 'center', 
+      display: 'flex',
+      height: '40px',
+      alignItems: 'center',
       padding: '6px'
     },
     description: {
-      display: 'flex', 
-      height: '40px', 
-      alignItems: 'center', 
+      display: 'flex',
+      height: '40px',
+      alignItems: 'center',
       padding: '3px'
     },
     price: {
-      display: 'flex', 
-      height: '40px', 
-      alignItems: 'center', 
-      padding: '3px', 
+      display: 'flex',
+      height: '40px',
+      alignItems: 'center',
+      padding: '3px',
+      justifyContent: 'flex-end'
+    },
+    amount: {
+      display: 'flex',
+      height: '40px',
+      alignItems: 'center',
+      padding: '3px',
       justifyContent: 'flex-end'
     },
     qty: {
-      display: 'flex', 
-      height: '40px', 
-      alignItems: 'center', 
-      padding: '3px', 
+      display: 'flex',
+      height: '40px',
+      alignItems: 'center',
+      padding: '3px',
       justifyContent: 'center'
     },
     add: {
@@ -88,11 +95,15 @@ export default {
     },
     qty: {
       flex: '0 0 100px',
-      justifyContent: 'center'
+      // justifyContent: 'center'
     },
     price: {
       flex: '0 0 100px',
-      justifyContent: 'flex-end'
+      // justifyContent: 'flex-end'
+    },
+    amount: {
+      flex: '0 0 100px',
+      // justifyContent: 'flex-end'
     },
     description: {
       flex: '1 1 50%'
@@ -101,12 +112,12 @@ export default {
   headerStyle: {
     container: {
       fontSize: '14px',
-      display: 'flex', 
-      height: '40px', 
-      background: '#eee', 
-      padding: '5px', 
-      justifyContent: 'center', 
-      marginBottom: '3px', 
+      display: 'flex',
+      height: '40px',
+      background: '#eee',
+      padding: '5px',
+      justifyContent: 'center',
+      marginBottom: '3px',
       // cursor: 'pointer'
     },
     code: {
@@ -127,6 +138,14 @@ export default {
       fontSize: '14px'
     },
     price: {
+      display: 'flex',
+      flex: '0 0 100px',
+      padding: '3px',
+      justifyContent: 'center',
+      alignItems: 'center',
+      fontSize: '14px'
+    },
+    amount: {
       display: 'flex',
       flex: '0 0 100px',
       padding: '3px',

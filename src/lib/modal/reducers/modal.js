@@ -11,11 +11,16 @@ const style = {
   // alignItems: 'center',
   // justifyContent: 'center'
 };
-const initialState = {x: 0, y: 0, fullScreen: true, center: false, content: '', data: {}, style: style, showClose:  true };
+const initialState = {x: 0, y: 0, fullScreen: true, center: false, content: '', data: {}, style: style, showClose: true };
 export default (state , action) => {
   switch (action.type) {
     case 'SET_MODAL':
-      const newStyle = { ...state.style, ...action.style };
+      let newStyle = {};
+      if (Object.keys(action.style).length > 0) {
+        newStyle = { ...style, ...action.style };
+      } else {
+        newStyle = style;
+      }
       return {...state, ...action, style: newStyle};
     default:
       return state || initialState;

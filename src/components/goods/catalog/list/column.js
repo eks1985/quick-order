@@ -11,7 +11,7 @@ import { format1 } from './../../../../utils/format';
 export default ({
   columnsKeys,
   columnKey, //name of column
-  i, //number of column 
+  i, //number of column
   columnsQty,
   items,
   itemsIds,
@@ -19,8 +19,10 @@ export default ({
   catalogQty,
   prices,
   catalogListSettings,
+  catalogListColumns,
   headerSettingsMode,
   sortDirection,
+  currentId,
   //actions
   moveHeaderColumn,
   addCatalogQty,
@@ -32,13 +34,15 @@ export default ({
   setFocused,
   sortGoods
 }) => {
-  
+
+  const lastColumn = catalogListSettings.indexOf(columnKey) === columnsQty - 1;
+
   const sortable = sortDirection[columnKey] !== undefined;
 
   const customColumn = ['code', 'description', 'price', 'qty'].indexOf(columnKey) > - 1;
 
-  const { arrowStyle, arrowSortStyle, incDecSmallQtyPane, qtyInputStyle, zebraStyle, headerStyle, rowStyle } = styles;
-  
+  const { arrowStyle, arrowSortStyle, incDecSmallQtyPane, qtyInputStyle, zebraStyle, headerStyle, rowStyle, vertBorderLeft, vertBorderRight } = styles;
+
   const columnNames = {
     code: 'Код',
     description: 'Наименование',
@@ -47,29 +51,48 @@ export default ({
     brand: 'Бренд',
     add: '',
   };
-  
-  const applyZebra = (style, i) => i % 2 === 0 ? style : { ...style, ...zebraStyle };
-  const applyVertBorder = (style) => {
-    switch (i) {
-      case 1:
-        return { ...style, border: '1px solid #eee'};
-      default: 
-        return style;
-    }
-  };
-  
-  const getCodeJsx = (key, i) => {
-    let style = applyVertBorder(applyZebra(rowStyle.code, i));
+
+  const applyZebra = (style, rowIndex) => rowIndex % 2 === 0 ? { ...style, border: '1px solid transparent'} : { ...style, ...zebraStyle, border: '1px solid transparent' };
+
+  const applyCurrentRowBorder = (style, rowIndex) => {
+    // let extendedStyle = { ...style, borderTop: '1px solid gold', borderBottom: '1px solid gold' };
+    let extendedStyle = { ...style, background: 'rgba(255, 215, 0, 0.2)' };
+    // extendedStyle = firstColumn ? { ...extendedStyle, borderLeft: '1px solid gold'} : extendedStyle;
+    // extendedStyle = lastColumn ? { ...extendedStyle, borderRight: '1px solid gold'} : extendedStyle;
+    return currentId === rowIndex ? { ...style, ...extendedStyle }: style;
+  }
+
+  const getCodeJsx = (key, rowIndex) => {
+    let style = applyCurrentRowBorder(applyZebra(rowStyle.code, rowIndex), rowIndex);
     return (
-      <div key={`${key}${columnKey}`} style={style}>
+      <div
+        key={`${key}${columnKey}`}
+        style={style}
+        onClick={
+          () => {
+            setFocused(rowIndex);
+            document.getElementById(rowIndex).focus();
+          }
+        }
+      >
         {items[key].code}
       </div>
     );
   };
-  const getDescriptionJsx = (key, i) => {
-    let style = applyZebra(rowStyle.description, i);
+  const getDescriptionJsx = (key, rowIndex) => {
+    let style = applyCurrentRowBorder(applyZebra(rowStyle.description, rowIndex), rowIndex);
     return (
-      <div key={`${key}${columnKey}`} tabIndex={-1} style={style}>
+      <div
+        key={`${key}${columnKey}`}
+        tabIndex={-1}
+        style={style}
+        onClick={
+          () => {
+            setFocused(rowIndex);
+            document.getElementById(rowIndex).focus();
+          }
+        }
+      >
         <a
           tabIndex={-1}
           href="#"
@@ -77,7 +100,7 @@ export default ({
           onClick={
             () => {
               setCurentGuid(key);
-              setModal({ content: 'goodsCard', fullScreen: true });
+              setModal({ content: 'goodsCard', fullScreen: true, showClose: false });
             }
           }
         >
@@ -91,18 +114,35 @@ export default ({
       </div>
     );
   };
-  const getPriceJsx = (key, i) => {
-    let style = applyZebra(rowStyle.price, i);
+  const getPriceJsx = (key, rowIndex) => {
+    let style = applyCurrentRowBorder(applyZebra(rowStyle.price, rowIndex), rowIndex);
     return (
-      <div key={`${key}${columnKey}`} style={style}>
+      <div
+        key={`${key}${columnKey}`}
+        style={style}
+        onClick={
+          () => {
+            setFocused(rowIndex);
+            document.getElementById(rowIndex).focus();
+          }
+        }
+      >
         {format1(prices[key] || 100, '')}
       </div>
     );
   };
-  const getQtyJsx = (key, i) => {
-    let style = applyZebra(rowStyle.qty, i);
+  const getQtyJsx = (key, rowIndex) => {
+    let style = applyCurrentRowBorder(applyZebra(rowStyle.qty, rowIndex), rowIndex);
     return (
-      <div key={`${key}${columnKey}`} style={style}>
+      <div
+        key={`${key}${columnKey}`}
+        style={style}
+        onClick={
+          () => {
+            setFocused(rowIndex);
+          }
+        }
+      >
         <div
           style={incDecSmallQtyPane}
           onClick={
@@ -122,13 +162,13 @@ export default ({
         ></div>
         <input
           type='text'
-          id={i}
+          id={rowIndex}
           className='catalogQtyInput'
           style={qtyInputStyle}
           value={catalogQty[key] || ''}
           onFocus={
             () => {
-              setFocused(key);
+              setFocused(rowIndex);
             }
           }
           onChange={
@@ -158,34 +198,43 @@ export default ({
       </div>
     );
   };
-  const getCustomItemJsx = (key, i) => {
+  const getCustomItemJsx = (key, rowIndex) => {
     switch (columnKey) {
       case 'code':
-        return getCodeJsx(key, i);
+        return getCodeJsx(key, rowIndex);
       case 'description':
-        return getDescriptionJsx(key, i);
+        return getDescriptionJsx(key, rowIndex);
       case 'price':
-        return getPriceJsx(key, i);
+        return getPriceJsx(key, rowIndex);
       case 'qty':
-        return getQtyJsx(key, i);
+        return getQtyJsx(key, rowIndex);
       default:
         return <div></div>;
     }
   };
 
-  const getItemJsx = (key, i) => {
-    let style = applyZebra(rowStyle.common, i);
+  const getItemJsx = (key, rowIndex) => {
+    let style = applyCurrentRowBorder(applyZebra(rowStyle.common, rowIndex), rowIndex);
     return (
-      <div key={`${key}${columnKey}`} style={style}>
+      <div
+        key={`${key}${columnKey}`}
+        style={style}
+        onClick={
+          () => {
+            document.getElementById(rowIndex).focus();
+            setFocused(rowIndex);
+          }
+        }
+      >
         {items[key][columnKey]}
       </div>
     );
   };
 
-  const getItemsJsx = () => itemsIds.map( (key, i) => customColumn ?  getCustomItemJsx(key, i) : getItemJsx(key, i));
-  
+  const getItemsJsx = () => itemsIds.map( (key, rowIndex) => customColumn ?  getCustomItemJsx(key, rowIndex) : getItemJsx(key, rowIndex));
+
   // Header >
-  
+
   const getArrowJsx = (columnName, direction) => {
     return (
       <IconButton
@@ -198,25 +247,53 @@ export default ({
           }
         >
         {direction === 'back' ? <IconArrowBack /> : <IconArrowForward />}
-      </IconButton>  
+      </IconButton>
     );
   };
-  
+
   const getSortArrowIconJsx = (direction) => {
+    // return (
+    //   <IconButton
+    //     style={arrowSortStyle.button}
+    //     iconStyle={direction === '' ? { ...arrowSortStyle.icon, fill: '#aaa' } : arrowSortStyle.icon}
+    //     id='sortIcon'
+    //     onClick={
+    //       ()=>{
+    //         sortable && sortGoods(columnKey);
+    //       }
+    //     }
+    //   >
+    //     { (direction === 'forward' || direction === '') && <IconArrowDown /> }
+    //     { direction === 'reverse' && <IconArrowUp /> }
+    // </IconButton>
+    // );
+    const iconStyle = direction === '' ? { ...arrowSortStyle.icon, fill: '#aaa' } : arrowSortStyle.icon;
     return (
-      <IconButton
-        style={arrowSortStyle.button}
-        iconStyle={direction === '' ? { ...arrowSortStyle.icon, fill: '#aaa' } : arrowSortStyle.icon} 
-        id='sortIcon'
-        onClick={
-          ()=>{
-            sortable && sortGoods(columnKey);
+        // style={arrowSortStyle.button}
+        // iconStyle={direction === '' ? { ...arrowSortStyle.icon, fill: '#aaa' } : arrowSortStyle.icon}
+        // id='sortIcon'
+        // onClick={
+        //   ()=>{
+        //     sortable && sortGoods(columnKey);
+        //   }
+        // }
+        <div
+          onClick={
+            (e) => {
+              let data = {columnKey, sort: true, filter: false};
+              if (!customColumn) {
+                if (catalogListColumns[columnKey]) {
+                  data.sort = catalogListColumns[columnKey][2];
+                  data.filter = catalogListColumns[columnKey][1];
+                }
+              }
+              data && setModal({content: 'column-settings', x: e.pageX, y: e.pageY, style: {background: '#fff'}, data });
+            }
           }
-        }
-      >
-        { (direction === 'forward' || direction === '') && <IconArrowDown /> }
-        { direction === 'reverse' && <IconArrowUp /> }
-    </IconButton>
+        >
+          { (direction === 'forward' || direction === '') && <IconArrowDown style={iconStyle} /> }
+          { direction === 'reverse' && <IconArrowUp style={iconStyle} /> }
+        </div>
     );
   };
 
@@ -239,8 +316,19 @@ export default ({
         <div style={{display: 'flex', alignItems: 'center'}}>
           <div
             onClick={
-              ()=>{
-                sortable && sortGoods(columnKey);
+              (e)=>{
+                // sortable && sortGoods(columnKey);
+                let data = {columnKey, sort: true, filter: false};
+                if (columnKey === 'qty' || columnKey === 'price') {
+                  data = false;
+                }
+                if (!customColumn) {
+                  if (catalogListColumns[columnKey]) {
+                    data.sort = catalogListColumns[columnKey][2];
+                    data.filter = catalogListColumns[columnKey][1];
+                  }
+                }
+                data && setModal({content: 'column-settings', x: e.pageX, y: e.pageY, style: {background: '#fff'}, data });
               }
             }
           >
@@ -262,14 +350,15 @@ export default ({
       </div>
     );
   };
-  
+
   // Header <
 
   const prepareStyle = () => {
+    const extendRightBorder = lastColumn ? vertBorderRight : {};
     if (styles.columnStyle[columnKey]) {
-      return { ...styles.columnStyle.common, ...styles.columnStyle[columnKey] };
+      return { ...styles.columnStyle.common, ...styles.columnStyle[columnKey], ...vertBorderLeft, ...extendRightBorder };
     } else {
-      return styles.columnStyle.common;
+      return { ...styles.columnStyle.common, ...vertBorderLeft, ...extendRightBorder };
     }
   };
 

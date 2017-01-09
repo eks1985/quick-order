@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
 
 const Component = ({
-  key, 
-  i,
+  keyProp,
+  rowIndex,
   items,
   columnKey,
   applyVertBorder,
@@ -11,27 +11,27 @@ const Component = ({
   format1,
   prices
 }) => {
-  
+
   const getJsx = () => {
-    let style = applyZebra(rowStyle.price, i);
+    let style = applyZebra(rowStyle.price, rowIndex);
     return (
-      <div key={`${key}${columnKey}`} style={style}>
-        {format1(prices[key] || 100, '')}
+      <div key={`${keyProp}${columnKey}`} style={style}>
+        {format1(items[keyProp].price || 100, '')}
       </div>
     );
   };
-  
+
   return getJsx();
-  
+
 };
 
 Component.propTypes = {
   items: PropTypes.object.isRequired,
-  columnKey: PropTypes.number.isRequired,
+  columnKey: PropTypes.string.isRequired,
   applyVertBorder: PropTypes.func.isRequired,
   applyZebra: PropTypes.func.isRequired,
-  prices: PropTypes.object.isRequired,
-  format1: PropTypes.func.isRequired
+  format1: PropTypes.func.isRequired,
+  rowStyle: PropTypes.object.isRequired
 };
 
 export default Component;

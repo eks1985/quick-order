@@ -21,24 +21,69 @@ const generateIndexex = (propName, items, keys) => {
 
 export const buildIndex = (propName) => {
   return (dispatch, getState) => {
-    const items = getState().goods.itemsInitial; 
+    const items = getState().goods.itemsInitial;
     const keys = Object.keys(items);
-    const { index, indexSort } = generateIndexex(propName, items, keys); 
+    const { index, indexSort } = generateIndexex(propName, items, keys);
     const indexSortReverse = [ ...indexSort].reverse();
     dispatch({
       type: 'RECEIVE_INDEX_' + propName.toUpperCase(),
       payload: index
     });
-    
+
     dispatch({
       type: 'RECEIVE_INDEX_SORT_' + propName.toUpperCase(),
       payload: indexSort
     });
-    
+
     dispatch({
       type: 'RECEIVE_INDEX_SORT_REVERSE_' + propName.toUpperCase(),
       payload: indexSortReverse
     });
-    
+
   };
 };
+
+// Utils
+
+export const getIndexByColName = (state, columnName) => {
+  try {
+    switch (columnName) {
+      case 'code':
+        return state.goods.codeOrderIndex;
+      case 'description':
+        return state.goods.descriptionOrderIndex;
+      default:
+        return columnName ? state['__index__' + columnName].indexSort : undefined;
+    }
+  } catch (e) {
+    return undefined;
+  }
+};
+
+export const getFilterStatusByColName = (state, columnName ) => {
+  try {
+    return columnName ? state['__index__' + columnName].indexFilterStatus : undefined;
+  } catch (e) {
+    return undefined;
+  }
+};
+
+export const getFilterItemsByColName = (state, columnName ) => {
+  try {
+    return columnName ? state['__index__' + columnName].indexFilterItems : undefined;
+  } catch (e) {
+    return undefined;
+  }
+};
+
+export const filterByPropVal = (getState, propName, propValues, items) => {
+  if (!propValues) {
+    return items;
+  }
+  // if (propValues.length === 0) {
+  //   return items;
+  // }
+  return Object.keys(items).reduce((res, itemKey) => {
+    return propValues.includes(items[itemKey][propName]) || ( propValues.includes("") && (items[itemKey][propName] === undefined) ) ? { ...res, [itemKey]: items[itemKey] } : res
+  }, {});
+}

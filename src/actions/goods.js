@@ -1,6 +1,7 @@
 import { filterByGroupGuids } from './goods-groups';
 export { setQtyPagesGoods, detectIsLastPage,  moveGoodsForward, moveGoodsBack, goToGoodsPage } from './goods-navigation';
 import { setQtyPagesGoods, goToGoodsPage } from './goods-navigation';
+import { filterByPropVal } from './indexes';
 
 // Search index >
 
@@ -118,7 +119,7 @@ export const setCurentGuid = (guid) => {
 // Search >
 
 const searchByPropWord = (word, indexKeys, index, res) => {
-  return indexKeys.reduce((res, key) => key.includes(word) ? [ ...res, ...index[key] ] : res, res);  
+  return indexKeys.reduce((res, key) => key.includes(word) ? [ ...res, ...index[key] ] : res, res);
 };
 
 const searchByPropText = (words, index,  res) => {
@@ -132,6 +133,7 @@ const getItemsByIds = (ids, items) => {
 
 export const search = () => {
   return (dispatch, getState) => {
+    // search
     const state = getState().goods;
     const { codes, descriptions, itemsInitial, searchText,  } = state;
     let text = searchText.toLowerCase();
@@ -148,9 +150,16 @@ export const search = () => {
       resultKeys = columnsKeys.reduce((res, key) => [ ...res, ...searchByPropText(words, getState()['__index__' + key].index, []) ], resultKeys);
       result = getItemsByIds(resultKeys, itemsInitial);
     }
+    // filter by category
     const goodsGroupsFiltersIds = getState().goodsGroups.filtersIds;
     if (goodsGroupsFiltersIds.length > 0) {
       result = filterByGroupGuids(goodsGroupsFiltersIds, result);
+    }
+    // filter by props val
+    const filtersApplied = getState().filtersApplied;
+    const filtersAppliedKeys = Object.keys(filtersApplied);
+    if (filtersAppliedKeys.length > 0) {
+      result = filtersAppliedKeys.reduce((result, propName) => filterByPropVal(getState, propName, filtersApplied[propName], result) , result)
     }
     dispatch({
       type: 'SET_GOODS_LIST',
@@ -209,16 +218,39 @@ export const sortGoods = (columnKey) => {
     }
     const directionAllKeys = Object.keys(directionAll);
     const directionAllNew = directionAllKeys.reduce((res, key) => ({ ...res, [key]: ''}), {});
-    directionAllNew[columnKey] = directionColumnNew; 
+    directionAllNew[columnKey] = directionColumnNew;
     dispatch({
       type: 'RECEIVE_SORT_DIRECTION',
       payload: directionAllNew
-    }); 
+    });
     dispatch({
       type: 'SET_GOODS_LIST',
-      payload: buildListByOrderIndex(orderIndex, items, index, columnKey) 
+      payload: buildListByOrderIndex(orderIndex, items, index, columnKey)
     });
   };
 };
 
 // Sort <
+
+// Filter by prop >
+
+export const applyGoodsFilterByProp = (keys, propName) => {
+  return dispatch => {
+    dispatch({
+      type: 'APPLY_FILTER_BY_PROP',
+      keys,
+      propName
+    });
+  };
+};
+
+export const clearGoodsFilterByProp = propName => {
+  return dispatch => {
+    dispatch({
+      type: 'CLEAR_FILTER_BY_PROP',
+      propName
+    });
+  };
+};
+
+// Filter by prop >
