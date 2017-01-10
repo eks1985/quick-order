@@ -159,7 +159,7 @@ export const search = () => {
     const filtersApplied = getState().filtersApplied;
     const filtersAppliedKeys = Object.keys(filtersApplied);
     if (filtersAppliedKeys.length > 0) {
-      result = filtersAppliedKeys.reduce((result, propName) => filterByPropVal(getState, propName, filtersApplied[propName], result) , result)
+      result = filtersAppliedKeys.reduce((result, propName) => filterByPropVal(getState, propName, filtersApplied[propName], result) , result);
     }
     dispatch({
       type: 'SET_GOODS_LIST',
@@ -195,11 +195,11 @@ const buildListByOrderIndex = (orderIndex, items, index, columnKey) => {
   return orderIndex.reduce((res, key) => itemsProps.indexOf(key) > -1 ? { ...res, ...buildListByProp(index, key, items) } : res, {});
 };
 
-export const sortGoods = (columnKey) => {
+export const sortGoods = (columnKey, sortDirection = '') => {
   return (dispatch, getState) => {
     const directionAll = getState().sortDirection;
     const directionColumn = directionAll[columnKey];
-    const directionColumnNew = directionColumn  === 'forward' ? 'reverse': 'forward';
+    const directionColumnNew = sortDirection || (directionColumn  === 'forward' ? 'reverse': 'forward');
     const items = getState().goods.items;
     const index = (columnKey === 'code' || columnKey === 'description') ? getState().goods[columnKey + 's'] : getState()['__index__' + columnKey].index;
     let orderIndex;

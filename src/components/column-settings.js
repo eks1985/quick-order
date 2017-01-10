@@ -45,6 +45,8 @@ const ColumnSettings =  ({
     indexSort.reduce((res, key) => key.toLowerCase().includes(filterText.toLowerCase()) ? res.concat(key) : res , []);
 
   const { sort, filter, columnKey } = modal.data;
+  
+  // console.log('sort direction inside render', sortDirection);
 
   const getSortJsx = () => {
     return (
@@ -53,6 +55,7 @@ const ColumnSettings =  ({
           primaryText="Сортировка"
           leftIcon={<IconSort />}
           style={{height: '42px'}}
+          hoverColor='transparent'
           // rightToggle={
           //   <Toggle
           //     toggled={sortDirection !== ''}
@@ -194,9 +197,18 @@ class ColumnSettingsContainer extends Component {
 
   constructor (props) {
     super(props);
+    // console.log('sort direction fromconstructor', this.props.sortDirection);
     const filterItems = props.filterApplied === undefined ? [ ...props.indexSort ] : props.filterApplied;
     const filterStatus = props.indexSort.length === filterItems.length ? 'checked' : 'unchecked';
     this.state = { filterStatus, filterItems, sortDirection: this.props.sortDirection, filterText: '' };
+  }
+  
+  componentWillReceiveProps (nextProps) {
+    const props = nextProps;
+    const filterItems = props.filterApplied === undefined ? [ ...props.indexSort ] : props.filterApplied;
+    const filterStatus = props.indexSort.length === filterItems.length ? 'checked' : 'unchecked';
+    // console.log('sort direction from component will receive props', this.props.sortDirection);
+    this.setState({ filterStatus, filterItems, sortDirection: nextProps.sortDirection, filterText: '' });
   }
 
   setFilterText = filterText => {
@@ -211,7 +223,7 @@ class ColumnSettingsContainer extends Component {
   switchSortDirection = (sortDirection) => {
     this.setState({ sortDirection });
     this.props.setModal({});
-    this.props.sortGoods(this.props.columnKey);
+    this.props.sortGoods(this.props.columnKey, sortDirection);
   }
 
   toggleCheckedAll = () => {
@@ -252,8 +264,7 @@ class ColumnSettingsContainer extends Component {
 
   render() {
     const { filterStatus, filterItems, sortDirection, filterText } = this.state;
-    // console.log('filterStatus', filterStatus);
-    // console.log('filterItems', filterItems);
+    // console.log('sort direction from state', sortDirection);
     const { toggleCheckedAll, toggleCheckedAllAndClose, toggleChecked, toggleSortDirection, switchSortDirection, setFilterText } = this;
     const newProps = { ...this.props, filterStatus, filterItems, toggleCheckedAll, toggleCheckedAllAndClose, toggleChecked, sortDirection, toggleSortDirection, switchSortDirection, filterText, setFilterText };
     return <ColumnSettings {...newProps} />;
@@ -263,6 +274,9 @@ class ColumnSettingsContainer extends Component {
 
 const mapStateToProps = state => {
   const { columnKey } = state.modal.data;
+  // console.log('columnKey', columnKey);
+  // console.log('sortDirection all', state.sortDirection);
+  // console.log('sortDirection', state.sortDirection[columnKey]);
   return {
     columnKey,
     modal: state.modal,

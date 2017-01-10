@@ -100,7 +100,7 @@ export default ({
           onClick={
             () => {
               setCurentGuid(key);
-              setModal({ content: 'goodsCard', fullScreen: true, showClose: false });
+              setModal({ content: 'goodsCard', fullScreen: true, showClose: true });
             }
           }
         >
@@ -287,7 +287,7 @@ export default ({
                   data.filter = catalogListColumns[columnKey][1];
                 }
               }
-              data && setModal({content: 'column-settings', x: e.pageX, y: e.pageY, style: {background: '#fff'}, data });
+              data && setModal({}) && setModal({content: 'column-settings', x: e.pageX, y: e.pageY, style: {background: '#fff'}, data });
             }
           }
         >
@@ -328,7 +328,7 @@ export default ({
                     data.filter = catalogListColumns[columnKey][1];
                   }
                 }
-                data && setModal({content: 'column-settings', x: e.pageX, y: e.pageY, style: {background: '#fff'}, data });
+                data && setModal({}) && setModal({content: 'column-settings', x: e.pageX, y: e.pageY, style: {background: '#fff'}, data });
               }
             }
           >
