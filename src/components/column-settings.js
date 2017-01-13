@@ -7,7 +7,7 @@ import { getIndexByColName } from './../actions/indexes';
 import { List, ListItem } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import Checkbox from 'material-ui/Checkbox';
-import Toggle from 'material-ui/Toggle';
+// import Toggle from 'material-ui/Toggle';
 import IconSort from 'material-ui/svg-icons/av//sort-by-alpha';
 import IconFilter from 'material-ui/svg-icons/content/filter-list';
 import IconClose from 'material-ui/svg-icons/navigation/close';
@@ -45,8 +45,6 @@ const ColumnSettings =  ({
     indexSort.reduce((res, key) => key.toLowerCase().includes(filterText.toLowerCase()) ? res.concat(key) : res , []);
 
   const { sort, filter, columnKey } = modal.data;
-  
-  // console.log('sort direction inside render', sortDirection);
 
   const getSortJsx = () => {
     return (
@@ -56,12 +54,6 @@ const ColumnSettings =  ({
           leftIcon={<IconSort />}
           style={{height: '42px'}}
           hoverColor='transparent'
-          // rightToggle={
-          //   <Toggle
-          //     toggled={sortDirection !== ''}
-          //     onToggle={toggleSortDirection}
-          //   />
-          // }
         />
         <ListItem
           primaryText='Сортировать A - Я'
@@ -94,23 +86,18 @@ const ColumnSettings =  ({
         <ListItem
           primaryText="Фильтр"
           leftIcon={<IconFilter />}
-          rightToggle={
-            <Toggle
-              toggled={filterStatus !== 'checked'}
-              onToggle={
-                () => {
-                  if (filterStatus !== 'checked') {
-                    toggleCheckedAllAndClose();
-                    // toggleCheckedAll(true);
-                    // clearGoodsFilterByProp(columnKey);
-                    // applyGoodsFilterByProp(filterItems, columnKey);
-                    // search();
-                    // setModal();
-                  }
-                }
-              }
-            />
-          }
+          // rightToggle={
+          //    <Toggle
+          //      toggled={filterStatus !== 'checked'}
+          //      onToggle={
+          //        () => {
+          //          if (filterStatus !== 'checked') {
+          //            toggleCheckedAllAndClose();
+          //          }
+          //        }
+          //      }
+          //    />
+          // }
         />
         <TextField
           placeholder='поиск' id='columnFilterSearch'
@@ -157,18 +144,37 @@ const ColumnSettings =  ({
             })
           }
         </div>
-        <FlatButton
-          label='Применить'
-          style={{marginTop: '12px'}}
-          labelStyle={{fontWeight: 'normal'}}
-          onClick={
-            () => {
-              applyGoodsFilterByProp(filterItems, columnKey);
-              search();
-              setModal();
+
+        <div style={{display: 'flex', justifyContent: 'space-around'}}>
+          <FlatButton
+            label='Применить'
+            style={{marginTop: '12px'}}
+            labelStyle={{fontWeight: 'normal'}}
+            onClick={
+              () => {
+                applyGoodsFilterByProp(filterItems, columnKey);
+                search();
+                setModal();
+              }
             }
+          />
+          {
+            filterStatus !== 'checked' &&
+            <FlatButton
+            label='Отменить'
+            style={{marginTop: '12px'}}
+            labelStyle={{fontWeight: 'normal'}}
+            onClick={
+              () => {
+                if (filterStatus !== 'checked') {
+                  toggleCheckedAllAndClose();
+                }
+              }
+            }
+            />
           }
-        />
+        </div>
+
       </List>
     );
   };
@@ -202,7 +208,7 @@ class ColumnSettingsContainer extends Component {
     const filterStatus = props.indexSort.length === filterItems.length ? 'checked' : 'unchecked';
     this.state = { filterStatus, filterItems, sortDirection: this.props.sortDirection, filterText: '' };
   }
-  
+
   componentWillReceiveProps (nextProps) {
     const props = nextProps;
     const filterItems = props.filterApplied === undefined ? [ ...props.indexSort ] : props.filterApplied;

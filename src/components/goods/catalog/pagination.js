@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as goodsActions from './../../../actions/goods';
+import * as currentActions from './../../../actions/current';
 import TextField from 'material-ui/TextField';
 import IconButton from 'material-ui/IconButton';
 import IconFirstPage from 'material-ui/svg-icons/navigation/first-page';
@@ -16,26 +17,44 @@ const Pagination = ({
   //actions
   moveGoodsForward,
   moveGoodsBack,
-  goToGoodsPage
+  goToGoodsPage,
+  setFocused
 }) => {
   const iconStyle = {width: 24, height: 24};
   const iconButtonStyle = {padding: '3px', width: '32px', height: '32px'};
   return (
     <div style={{display: 'flex', alignItems: 'center', paddingRight: '20px'}} tabIndex="-1">
       <IconButton
+        className='pagination'
         tabIndex={-1}
         iconStyle={iconStyle}
         style={iconButtonStyle}
         onClick={
           () => {
+            setFocused(0);
             goToGoodsPage(1);
+            // document.getElementById(0).focus();
           }
         }
       >
         <IconFirstPage />
       </IconButton>
-      <IconButton tabIndex={-1} onClick={moveGoodsBack} disabled={pageNumber === 1} iconStyle={iconStyle} style={iconButtonStyle}><IconBack /></IconButton>
+      <IconButton
+        tabIndex={-1}
+        disabled={pageNumber === 1}
+        iconStyle={iconStyle}
+        style={iconButtonStyle}
+        onClick={
+          () => {
+            setFocused(0);
+            moveGoodsBack();
+          }
+        }
+      >
+        <IconBack />
+      </IconButton>
       <TextField
+        className='pagination'
         tabIndex="-1"
         id='page'
         value={pageNumber}
@@ -44,18 +63,36 @@ const Pagination = ({
         onChange={
           (e) => {
             const page = parseInt(e.target.value, 10) ? parseInt(e.target.value, 10) : 1;
+            setFocused(0);
             goToGoodsPage(page);
+            // document.getElementById(0).focus();
           }
         }
       ></TextField>
-      <IconButton  tabIndex={-1} onClick={moveGoodsForward} disabled={isLastPage} iconStyle={iconStyle} style={iconButtonStyle}><IconForward /></IconButton>
       <IconButton
+        tabIndex={-1}
+        disabled={isLastPage}
+        iconStyle={iconStyle}
+        style={iconButtonStyle}
+        onClick={
+          () => {
+            setFocused(0);
+            moveGoodsForward();
+          }
+        }
+      >
+        <IconForward />
+      </IconButton>
+      <IconButton
+        className='pagination'
         tabIndex={-1}
         iconStyle={iconStyle}
         style={iconButtonStyle}
         onClick={
           () => {
+            setFocused(0);
             goToGoodsPage(qtyPages);
+            // document.getElementById(0).focus();
           }
         }
       >
@@ -69,5 +106,5 @@ const Pagination = ({
 
 export default connect(
   state => ({qtyPages: state.goods.qtyPages, pageNumber: state.goods.pageNumber, isLastPage: state.goods.isLastPage}),
-  goodsActions
+  { ...goodsActions, ...currentActions }
 )(Pagination);

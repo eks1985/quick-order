@@ -70,7 +70,13 @@ class App extends Component {
       className = e.target.className;
     } catch (e) {}
     className = typeof className === 'string' ? className : '';
-    className !== 'catalogQtyInput' && !className.includes('row-cell') && dispatch({ type: 'RESET_FOCUSED' });
+    // console.log('e.srcElement', e);
+    className !== 'catalogQtyInput' &&
+    !className.includes('row-cell') &&
+    !className.includes('pagination') &&
+    e.srcElement.tagName !== 'path' &&
+    e.srcElement.tagName !== 'svg' &&
+    dispatch({ type: 'RESET_FOCUSED' });
   }
 
   render() {

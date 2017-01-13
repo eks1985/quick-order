@@ -34,6 +34,10 @@ class ListContainer extends Component {
     this.setState({headerSettingsMode: false});
   }
 
+  componentDidUpdate = () => {
+    this.props.current === 0 && document.getElementById(0).focus();
+  }
+
   getSettingsBtnJsx() {
     const { headerSettingsIBStyle, headerSettingsIconStyle } = styles;
     const { headerSettingsMode} = this.state;

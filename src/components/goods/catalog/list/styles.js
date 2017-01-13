@@ -171,9 +171,9 @@ export default {
     fontSize: '16px'
   },
   vertBorderLeft: {
-    borderLeft: '1px solid #eee'
+    borderLeft: '2px solid #eee'
   },
   vertBorderRight: {
-    borderRight: '1px solid #eee'
+    borderRight: '2px solid #eee'
   }
 };
