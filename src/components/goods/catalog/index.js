@@ -9,7 +9,6 @@ export default () => {
     display: 'flex',
     flex: '1 0 auto',
     flexDirection: 'column',
-    // border: '1px solid gray',
     padding: '10px'
   };
   return (

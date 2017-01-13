@@ -31,8 +31,8 @@ export default ({
   removeFromCart,
   removeCatalogQty,
   addToCart,
-  setFocused,
-  sortGoods
+  sortGoods,
+  setFocused
 }) => {
 
   const lastColumn = catalogListSettings.indexOf(columnKey) === columnsQty - 1;
@@ -55,10 +55,7 @@ export default ({
   const applyZebra = (style, rowIndex) => rowIndex % 2 === 0 ? { ...style, border: '1px solid transparent'} : { ...style, ...zebraStyle, border: '1px solid transparent' };
 
   const applyCurrentRowBorder = (style, rowIndex) => {
-    // let extendedStyle = { ...style, borderTop: '1px solid gold', borderBottom: '1px solid gold' };
     let extendedStyle = { ...style, background: 'rgba(255, 215, 0, 0.2)' };
-    // extendedStyle = firstColumn ? { ...extendedStyle, borderLeft: '1px solid gold'} : extendedStyle;
-    // extendedStyle = lastColumn ? { ...extendedStyle, borderRight: '1px solid gold'} : extendedStyle;
     return currentId === rowIndex ? { ...style, ...extendedStyle }: style;
   }
 
@@ -66,11 +63,12 @@ export default ({
     let style = applyCurrentRowBorder(applyZebra(rowStyle.code, rowIndex), rowIndex);
     return (
       <div
+        className='row-cell'
         key={`${key}${columnKey}`}
         style={style}
         onClick={
           () => {
-            setFocused(rowIndex);
+            // setFocused(rowIndex);
             document.getElementById(rowIndex).focus();
           }
         }
@@ -83,12 +81,13 @@ export default ({
     let style = applyCurrentRowBorder(applyZebra(rowStyle.description, rowIndex), rowIndex);
     return (
       <div
+        className='row-cell'
         key={`${key}${columnKey}`}
         tabIndex={-1}
         style={style}
         onClick={
           () => {
-            setFocused(rowIndex);
+            // setFocused(rowIndex);
             document.getElementById(rowIndex).focus();
           }
         }
@@ -118,11 +117,12 @@ export default ({
     let style = applyCurrentRowBorder(applyZebra(rowStyle.price, rowIndex), rowIndex);
     return (
       <div
+        className='row-cell'
         key={`${key}${columnKey}`}
         style={style}
         onClick={
           () => {
-            setFocused(rowIndex);
+            // setFocused(rowIndex);
             document.getElementById(rowIndex).focus();
           }
         }
@@ -135,11 +135,13 @@ export default ({
     let style = applyCurrentRowBorder(applyZebra(rowStyle.qty, rowIndex), rowIndex);
     return (
       <div
+        className='row-cell'
         key={`${key}${columnKey}`}
         style={style}
         onClick={
           () => {
-            setFocused(rowIndex);
+            // setFocused(rowIndex);
+            document.getElementById(rowIndex).focus();
           }
         }
       >
@@ -217,6 +219,7 @@ export default ({
     let style = applyCurrentRowBorder(applyZebra(rowStyle.common, rowIndex), rowIndex);
     return (
       <div
+        className='row-cell and more'
         key={`${key}${columnKey}`}
         style={style}
         onClick={
@@ -252,31 +255,8 @@ export default ({
   };
 
   const getSortArrowIconJsx = (direction) => {
-    // return (
-    //   <IconButton
-    //     style={arrowSortStyle.button}
-    //     iconStyle={direction === '' ? { ...arrowSortStyle.icon, fill: '#aaa' } : arrowSortStyle.icon}
-    //     id='sortIcon'
-    //     onClick={
-    //       ()=>{
-    //         sortable && sortGoods(columnKey);
-    //       }
-    //     }
-    //   >
-    //     { (direction === 'forward' || direction === '') && <IconArrowDown /> }
-    //     { direction === 'reverse' && <IconArrowUp /> }
-    // </IconButton>
-    // );
     const iconStyle = direction === '' ? { ...arrowSortStyle.icon, fill: '#aaa' } : arrowSortStyle.icon;
     return (
-        // style={arrowSortStyle.button}
-        // iconStyle={direction === '' ? { ...arrowSortStyle.icon, fill: '#aaa' } : arrowSortStyle.icon}
-        // id='sortIcon'
-        // onClick={
-        //   ()=>{
-        //     sortable && sortGoods(columnKey);
-        //   }
-        // }
         <div
           onClick={
             (e) => {
@@ -317,7 +297,6 @@ export default ({
           <div
             onClick={
               (e)=>{
-                // sortable && sortGoods(columnKey);
                 let data = {columnKey, sort: true, filter: false};
                 if (columnKey === 'qty' || columnKey === 'price') {
                   data = false;

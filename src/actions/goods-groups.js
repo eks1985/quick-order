@@ -48,7 +48,7 @@ const filterByGroupGuid = (groupGuid, items) => {
       return result;
     }
   }, {});
-}; 
+};
 
 export const filterByGroupGuids = (groupGuids, items) => {
   if (groupGuids.length === 0) {

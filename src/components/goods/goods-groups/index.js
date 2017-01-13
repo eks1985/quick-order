@@ -18,7 +18,8 @@ const GoodsGroups =  ({
   filterGoodsGroupsByText,
   addFilter,
   removeFilter,
-  resetFilters
+  resetFilters,
+  current
 }) => {
   const style = {
     flex: '1 0 auto',
@@ -100,6 +101,11 @@ const GoodsGroups =  ({
             () => {
               resetFilters();
               search();
+              // try {
+              //   console.log('current');
+              //   document.getElementById(current).focus();
+              // } catch (e) {
+              // }
             }
           }
         />
@@ -110,6 +116,6 @@ const GoodsGroups =  ({
 };
 
 export default connect(
-  state => ({ items: state.goodsGroups.items, filters: getFiltersByIds(state.goodsGroups.itemsInitial, state.goodsGroups.filtersIds) }),
+  state => ({ items: state.goodsGroups.items, filters: getFiltersByIds(state.goodsGroups.itemsInitial, state.goodsGroups.filtersIds), current: state.current }),
   { ...goodsGroupsActions, ...goodsActions }
 )(GoodsGroups);

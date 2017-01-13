@@ -28,6 +28,10 @@ export const moveGoodsForward = () => {
         type: 'INCREASE_PAGE_NUMBER_GOODS'
       });
       dispatch(detectIsLastPage());
+      dispatch({
+        type: 'SET_FOCUSED',
+        payload: ''
+      });
     }
   };
 };
@@ -40,6 +44,10 @@ export const moveGoodsBack = () => {
         type: 'DECREASE_PAGE_NUMBER_GOODS'
       });
       dispatch(detectIsLastPage());
+      dispatch({
+        type: 'SET_FOCUSED',
+        payload: ''
+      });
     }
   };
 };
@@ -51,5 +59,9 @@ export const goToGoodsPage = (pageNumber) => {
       pageNumber: pageNumber
     });
     dispatch(detectIsLastPage());
+    dispatch({
+      type: 'SET_FOCUSED',
+      payload: ''
+    });
   };
 };

@@ -7,8 +7,7 @@ import ModalContent from './components/modal-content';
 import { setQtyPagesGoods, setSearchText } from './actions/goods';
 import { setQtyPagesOrders } from './actions/orders';
 import { setCurrentContent } from './actions/current-content';
-import { search } from './actions/goods';
-// import { loadFirebaseConfig } from './actions/firebase-config';
+import { search, moveGoodsBack, moveGoodsForward } from './actions/goods';
 // eslint-disable-next-line
 import rtep from './rtep';
 
@@ -18,20 +17,60 @@ class App extends Component {
     const { dispatch } = this.props;
     dispatch(setQtyPagesGoods());
     dispatch(setQtyPagesOrders());
-    document.addEventListener('keyup', this.handleKeyUp.bind(this), false);
+    document.addEventListener('keyup', this.handleKeyUp, false);
+    document.addEventListener('click', this.handleClick, false);
   }
 
-  handleKeyUp(e) {
+  componentWillUnmount() {
+    document.removeEventListener('keyup', this.handleKeyUp, false);
+    document.removeEventListener('click', this.handleClick, false);
+  }
+
+  handleKeyUp = (e) => {
+    const { dispatch } = this.props;
     if (e.key === '/' || e.which === 111) {
       document.querySelector('#search').focus();
-    // } else if ( (e.key === 'Enter' || e.keyIdentifier === "Enter") && document.activeElement.id === 'search') {
-    //   this.props.dispatch(search(document.querySelector('#search').value));
     }
     if (e.which === 13 && document.activeElement.id === 'search') {
       const text = document.querySelector('#search').value;
-      this.props.dispatch(search(text));
-      this.props.dispatch(setSearchText(text));
+      dispatch(search(text));
+      dispatch(setSearchText(text));
     }
+
+    if(e.which === 13 && document.activeElement.className === "catalogQtyInput") {
+      let id = parseInt(document.activeElement.id, 10);
+      let newId = id < 9 ? id + 1 : 0;
+      document.getElementById(newId).focus();
+    }
+    if (e.which === 40 && document.activeElement.className === "catalogQtyInput") {
+      let id = parseInt(document.activeElement.id, 10);
+      let newId = id < 9 ? id + 1 : 0;
+      document.getElementById(newId).focus();
+    }
+    if (e.which === 38 && document.activeElement.className === "catalogQtyInput") {
+      let id = parseInt(document.activeElement.id, 10);
+      let newId = id > 0 ? id - 1 : 9;
+      document.getElementById(newId).focus();
+    }
+    if (e.which === 34) {
+      dispatch(moveGoodsForward());
+      document.getElementById(0).focus();
+    }
+    if (e.which === 33) {
+      dispatch(moveGoodsBack());
+      document.getElementById(0).focus();
+    }
+
+  }
+
+  handleClick = e => {
+    const { dispatch } = this.props;
+    let className = '';
+    try {
+      className = e.target.className;
+    } catch (e) {}
+    className = typeof className === 'string' ? className : '';
+    className !== 'catalogQtyInput' && !className.includes('row-cell') && dispatch({ type: 'RESET_FOCUSED' });
   }
 
   render() {
@@ -51,7 +90,7 @@ class App extends Component {
           }
         >
           <ModalContent />
-        </Modal> 
+        </Modal>
       </div>
     );
   }

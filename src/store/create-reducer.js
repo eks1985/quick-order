@@ -17,6 +17,7 @@ import customers from './reducers/customers';
 import firebaseConfig from './reducers/firebase-config';
 import sortDirection from './reducers/sort-direction';
 import filtersApplied from './reducers/filters-applied';
+import current from './reducers/current';
 import modal from './../lib/modal/reducers/modal';
 
 export default function createReducer(indexes) {
@@ -39,6 +40,7 @@ export default function createReducer(indexes) {
   	customers,
   	sortDirection,
     filtersApplied,
+    current,
     ...indexes
   });
 }

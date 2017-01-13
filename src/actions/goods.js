@@ -167,6 +167,10 @@ export const search = () => {
     });
     dispatch(setQtyPagesGoods());
     dispatch(goToGoodsPage(1));
+    dispatch({
+      type: 'SET_FOCUSED',
+      payload: ''
+    });
   };
 };
 
