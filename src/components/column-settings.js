@@ -48,16 +48,17 @@ const ColumnSettings =  ({
 
   const getSortJsx = () => {
     return (
-      <List style={{marginTop: '5px'}}>
+      <List style={{marginTop: '0px'}}>
         <ListItem
           primaryText="Сортировка"
           leftIcon={<IconSort />}
-          style={{height: '42px'}}
+          style={{height: '42px', fontSize: '16px'}}
           hoverColor='transparent'
         />
         <ListItem
           primaryText='Сортировать A - Я'
-          style={sortDirection === 'forward' ? {fontWeight: 'bold'} : {}}
+          innerDivStyle={{padding: '5px 10px 5px 10px'}}
+          style={sortDirection === 'forward' ? {fontWeight: 'bold', fontSize: '13px'} : {fontSize: '13px'}}
           onClick={
             () => {
               switchSortDirection('forward');
@@ -67,7 +68,8 @@ const ColumnSettings =  ({
         </ListItem>
         <ListItem
           primaryText='Сортировать Я - А'
-          style={sortDirection === 'reverse' ? {marginBottom: '10px', fontWeight: 'bold'} : {marginBottom: '10px'}}
+          innerDivStyle={{padding: '5px 10px 5px 10px'}}
+          style={sortDirection === 'reverse' ? {marginBottom: '10px', fontWeight: 'bold', fontSize: '13px'} : {marginBottom: '0px', fontSize: '13px'}}
           onClick={
             () => {
               switchSortDirection('reverse');
@@ -84,25 +86,15 @@ const ColumnSettings =  ({
       <List className='filter-list'>
         <Divider />
         <ListItem
+          style={{height: '42px', fontSize: '16px'}}
+          hoverColor='transparent'
           primaryText="Фильтр"
           leftIcon={<IconFilter />}
-          // rightToggle={
-          //    <Toggle
-          //      toggled={filterStatus !== 'checked'}
-          //      onToggle={
-          //        () => {
-          //          if (filterStatus !== 'checked') {
-          //            toggleCheckedAllAndClose();
-          //          }
-          //        }
-          //      }
-          //    />
-          // }
         />
         <TextField
           placeholder='поиск' id='columnFilterSearch'
-          style={{width: '100%', height: '32px'}}
-          underlineShow={false} inputStyle={{border: '1px solid #ddd', padding: '5px', height: '32px'}}
+          style={{width: '100%', height: '30px', marginBottom: '6px', fontSize: '13px'}}
+          underlineShow={false} inputStyle={{border: '1px solid #ddd', padding: '5px', height: '30px'}}
           value={filterText}
           onChange={
             (e) => {
@@ -115,12 +107,13 @@ const ColumnSettings =  ({
             primaryText="Все"
             leftCheckbox={
               <Checkbox
+                style={{top: '6px'}}
                 checkedIcon={filterStatus ? <CheckboxChecked /> : <IconImage /> }
                 uncheckedIcon={filterStatus ? <CheckboxOutline /> : <IconImage />}
                 checked={filterStatus === 'checked'}
                 onCheck={toggleCheckedAll}
             />}
-            style={{height: '32px', fontWeight: 'bold'}}
+            style={{height: '28px', fontSize: '13px', paddingTop: '10px', fontWeight: 'bold'}}
           />
           {
             filterKeys.map(key => {
@@ -128,9 +121,11 @@ const ColumnSettings =  ({
                 <ListItem
                   key={key}
                   primaryText={key}
-                  style={{height: '32px'}}
+                  // innerDivStyle={{paddingTop: '5px'}}
+                  style={{height: '28px', fontSize: '13px', paddingTop: '10px'}}
                   leftCheckbox={
                     <Checkbox
+                      style={{top: '6px'}}
                       checked={filterItems.includes(key)}
                       onCheck={
                         () => {
@@ -161,16 +156,16 @@ const ColumnSettings =  ({
           {
             filterStatus !== 'checked' &&
             <FlatButton
-            label='Отменить'
-            style={{marginTop: '12px'}}
-            labelStyle={{fontWeight: 'normal'}}
-            onClick={
-              () => {
-                if (filterStatus !== 'checked') {
-                  toggleCheckedAllAndClose();
+              label='Отменить'
+              style={{marginTop: '12px'}}
+              labelStyle={{fontWeight: 'normal'}}
+              onClick={
+                () => {
+                  if (filterStatus !== 'checked') {
+                    toggleCheckedAllAndClose();
+                  }
                 }
               }
-            }
             />
           }
         </div>

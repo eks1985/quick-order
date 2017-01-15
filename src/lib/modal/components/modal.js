@@ -2,6 +2,7 @@ import React from 'react';
 import * as modalActions from '../actions/modal';
 import { connect } from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
+import Paper from 'material-ui/Paper';
 
 let Modal = ({
   children,
@@ -19,14 +20,14 @@ let Modal = ({
     style.bottom = "0px";
   }
   if (center) {
-    style = { ...style, ...{display: 'flex', alignItems: 'center', justifyContent: 'center' } };  
+    style = { ...style, ...{display: 'flex', alignItems: 'center', justifyContent: 'center' } };
   }
   if (!content) {
     return null;
   }
 
   return (
-    <div style={style}>
+    <Paper style={style} zDepth={2}>
       {modal.showClose &&
         <div style={{padding: '10px'}}>
           <RaisedButton
@@ -46,7 +47,7 @@ let Modal = ({
       <div>
         {children}
       </div>
-    </div>
+    </Paper>
   );
 };
 

@@ -92,6 +92,10 @@ export default ({
           }
         }
       >
+        {/* <img
+          src='https://firebasestorage.googleapis.com/v0/b/quick-order-de84c.appspot.com/o/smetana-veselyj-molochnik-20-otzyvy-1387475181.jpg?alt=media&token=7e98faae-4688-45ac-8402-2229ae618db7'
+          alt='1' style={{height: '36px', width: 'auto', marginLeft: '-2px', marginRight: '2px'}}
+        /> */}
         <a
           tabIndex={-1}
           href="#"
