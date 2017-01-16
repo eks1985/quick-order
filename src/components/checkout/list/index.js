@@ -26,34 +26,6 @@ class ListContainer extends Component {
     this.removeHeaderSettingsMode= this.removeHeaderSettingsMode.bind(this);
   }
 
-  // componentDidMount() {
-  //   document.addEventListener('keyup', this.handleKeyUp.bind(this), false);
-  // }
-  //
-  // handleKeyUp(e) {
-  //   if(e.which === 13 && document.activeElement.className === "catalogQtyInput") {
-  //     let id = parseInt(document.activeElement.id, 10);
-  //     let newId = id < 9 ? id + 1 : 0;
-  //     document.getElementById(newId).focus();
-  //   }
-  //   if (e.which === 40 && document.activeElement.className === "catalogQtyInput") {
-  //     let id = parseInt(document.activeElement.id, 10);
-  //     let newId = id < 9 ? id + 1 : 0;
-  //     document.getElementById(newId).focus();
-  //   }
-  //   if (e.which === 38 && document.activeElement.className === "catalogQtyInput") {
-  //     let id = parseInt(document.activeElement.id, 10);
-  //     let newId = id > 0 ? id - 1 : 9;
-  //     document.getElementById(newId).focus();
-  //   }
-  //   if (e.which === 34) {
-  //     this.props.moveGoodsForward();
-  //   }
-  //   if (e.which === 33) {
-  //     this.props.moveGoodsBack();
-  //   }
-  // }
-
   setFocused(key) {
     this.setState({current: key});
   }

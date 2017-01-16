@@ -1,25 +1,25 @@
 export const addCatalogQty = (guid, qty) => {
   return {
     type: 'ADD_CATALOG_QTY',
-    guid, 
+    guid,
     qty
-  };  
-};  
+  };
+};
 
-export const removeCatalogQty = (guid) => {
+export const removeCatalogQty = guid => {
   return {
     type: 'REMOVE_CATALOG_QTY',
-    guid 
-  };  
-};  
+    guid
+  };
+};
 
 export const resetCatalogQty = () => {
   return {
     type: 'RESET_CATALOG_QTY',
-  };  
-};  
+  };
+};
 
-export const increaseCatalogQty = (guid) => {
+export const increaseCatalogQty = guid => {
   return (dispatch, getState) => {
     const current = getState().catalogQty[guid];
     if (current) {
@@ -32,7 +32,7 @@ export const increaseCatalogQty = (guid) => {
   };
 };
 
-export const decreaseCatalogQty = (guid) => {
+export const decreaseCatalogQty = guid => {
   return (dispatch, getState) => {
     const current = getState().catalogQty[guid];
     if (current) {

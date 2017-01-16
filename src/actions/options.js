@@ -11,7 +11,7 @@ export const setOption = (option, value) => {
     if (option  === 'manageGoodsOnStockQty' && value === false) {
       dispatch(setCommonOptionFirebase('showGoodsOnStockQty', false));
       dispatch(setCommonOptionFirebase('positionIsActiveDefinition', 'positionData'));
-    } 
+    }
     if (option  === 'managePositionIsActiveProp' && value === false) {
       dispatch(setCommonOptionFirebase('showNoActivePosition', false));
       dispatch(setCommonOptionFirebase('orderNoActivePositions', false));
@@ -20,13 +20,19 @@ export const setOption = (option, value) => {
     if (option  === 'managePositionIsActiveProp' && value === true) {
       dispatch(setCommonOptionFirebase('positionIsActiveDefinition', 'positionData'));
     }
+    if (option  === 'managePrices') {
+      dispatch(setCommonOptionFirebase('managePrices', value));
+    }
+    if (option  === 'showPictures') {
+      dispatch(setCommonOptionFirebase('showPictures', value));
+    }
   };
 };
 
 export const moveHeaderColumn = (columsKeys, name, direction) => {
   return (dispatch, getState) => {
     const pos = columsKeys.indexOf(name);
-    const newOpt =  direction === 'forward' 
+    const newOpt =  direction === 'forward'
       ? [ ...columsKeys.slice(0, pos), columsKeys[pos + 1], columsKeys[pos], ...columsKeys.slice(pos + 2) ]
       : [ ...columsKeys.slice(0, pos - 1), columsKeys[pos], columsKeys[pos - 1], ...columsKeys.slice(pos + 1) ];
     dispatch({

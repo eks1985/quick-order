@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Goods from './../../goods';
 import Orders from './../../orders';
-import Checkout from './../../checkout/index1';
+import Checkout from './../../checkout/index';
 import Options from './../../options';
 import QuickList from './../../quick-list';
 import Management from './../../management';

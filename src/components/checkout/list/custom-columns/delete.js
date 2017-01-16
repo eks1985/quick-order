@@ -11,7 +11,8 @@ const Component = ({
   rowStyle,
   format1,
   prices,
-  removeFromCart
+  removeFromCart,
+  removeCatalogQty
 }) => {
 
   const getJsx = () => {
@@ -23,6 +24,7 @@ const Component = ({
           onClick={
             () => {
               removeFromCart(keyProp);
+              removeCatalogQty(keyProp)
             }
           }
         >

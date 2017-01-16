@@ -91,7 +91,7 @@ export default (props) => {
     const pDescription = { ...p, setCurentGuid, setModal };
     const pPrice       = { ...p, format1 };
     const pQty         = { ...p, catalogQty, styles, addCatalogQty, addToCart, removeCatalogQty, removeFromCart, setFocused };
-    const pDelete      = { ...p, removeFromCart };
+    const pDelete      = { ...p, removeFromCart, removeCatalogQty };
     switch (columnKey) {
       case 'code':
         return <Code key={key+columnKey} {...pCode} /> ;

@@ -5,9 +5,11 @@ const initialState = {
   positionIsActiveDefinition: '',
   showGoodsOnStockQty: false,
   showNoActivePosition: false,
+  managePrices: 'common', //common, byCustomers, dontUse
   catalogListSettings: ['code', 'description', 'price', 'qty'], //production
   // catalogListSettings: ['code', 'description', 'price', 'qty', 'brand'], //test
-  catalogListColumns: {} //production
+  catalogListColumns: {}, //production,
+  showPictures: 'no' //no, row, side, dialog
   // catalogListColumns: {brand: [true,true,true] } //test
 };
 
