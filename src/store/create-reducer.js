@@ -18,6 +18,7 @@ import firebaseConfig from './reducers/firebase-config';
 import sortDirection from './reducers/sort-direction';
 import filtersApplied from './reducers/filters-applied';
 import current from './reducers/current';
+import preventCleanGoodsRow from './reducers/prevent-clean-goods-row';
 import modal from './../lib/modal/reducers/modal';
 
 export default function createReducer(indexes) {
@@ -41,6 +42,7 @@ export default function createReducer(indexes) {
   	sortDirection,
     filtersApplied,
     current,
+    preventCleanGoodsRow,
     ...indexes
   });
 }

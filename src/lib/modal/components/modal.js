@@ -31,15 +31,16 @@ let Modal = ({
       {modal.showClose &&
         <div style={{padding: '10px'}}>
           <RaisedButton
-          label='Закрыть'
-          onClick={
-            () => {
-              if (handlerClose) {
-                handlerClose();
+            className='modal-close'
+            label='Закрыть'
+            onClick={
+              () => {
+                if (handlerClose) {
+                  handlerClose();
+                }
+                setModal({dataSource: ''});
               }
-              setModal({dataSource: ''});
             }
-          }
           >
           </RaisedButton>
         </div>

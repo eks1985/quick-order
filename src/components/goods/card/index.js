@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { pictData } from './../../../utils/init-pict';
+import {List, ListItem} from 'material-ui/List';
+import Paper from 'material-ui/Paper';
 
 const Card = ({
   goods,
@@ -10,49 +12,44 @@ const Card = ({
   const { currentGuid, items } = goods;
   const style = {
     display: 'flex',
-    // flexDirection: 'column'
-  }
-  const propTytleStyle = {
-    fontStyle: 'italic',
-    background: '#ccc'
   }
   return (
     <div style={style}>
-      <div className='goodsProps' style={{display: 'flex', flexDirection: 'column' , flex: '0 0 50%'}}>
-          <div style={propTytleStyle}>
-            Код
-          </div>
-          <div>
-            <p>
-              {items[currentGuid].code}
-            </p>
-          </div>
-          <div style={propTytleStyle}>
-            Наименование
-          </div>
-          <div>
-            <p>
-              {items[currentGuid].description}
-            </p>
-          </div>
-          <div style={propTytleStyle}>
-            Цена
-          </div>
-          <div>
-            <p>
-              {prices[currentGuid]}
-            </p>
-          </div>
-          <div style={propTytleStyle}>
-            Категория
-          </div>
-          <div>
-            <p>
-              {goodsGroups[items[currentGuid].group_guid]}
-            </p>
-          </div>
+      <Paper className='goodsProps' style={{display: 'flex', flexDirection: 'column' , flex: '0 0 50%'}}>
 
-      </div>
+          <List>
+            <ListItem
+              primaryText={items[currentGuid].code}
+              secondaryText='Код'
+            >
+            </ListItem>
+          </List>
+
+          <List>
+            <ListItem
+              primaryText={items[currentGuid].description}
+              secondaryText='Наименование'
+            >
+            </ListItem>
+          </List>
+
+          <List>
+            <ListItem
+              primaryText={prices[currentGuid]}
+              secondaryText='Цена'
+            >
+            </ListItem>
+          </List>
+
+          <List>
+            <ListItem
+              primaryText={goodsGroups.items[items[currentGuid].groupRef]}
+              secondaryText='Категория'
+            >
+            </ListItem>
+          </List>
+      </Paper>
+
       <div className='picture' style={{flexDirection: 'column', flex: '0 1 50%'}}>
           <img style={{width: '100%', padding: '10px'}} src={pictData().base64data} alt=''></img>
       </div>

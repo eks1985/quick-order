@@ -24,7 +24,8 @@ const GoodsGroups =  ({
   const style = {
     flex: '1 0 auto',
     padding: '10px',
-    height: '60vh',
+    // height: '60vh',
+    height: '30vh',
     overflowY: 'scroll',
     paddingTop: '3px'
   };

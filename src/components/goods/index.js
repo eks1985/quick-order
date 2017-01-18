@@ -1,9 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Catalog from './catalog';
 import Cart from './cart';
 import GoodsGroups from './goods-groups';
 import Paper from 'material-ui/Paper';
-export default () => {
+import img1 from './../../image.jpg';
+import * as modalActions from './../../lib/modal/actions/modal';
+
+const Goods = props => {
+  const { setModal, dispatch } = props;
   const style = {
     display: 'flex',
     flex: '1 0 auto',
@@ -26,8 +31,35 @@ export default () => {
         <Paper rounded={false} zDepth={2}>
           <Cart />
         </Paper>
+        <Paper
+          rounded={false}
+          zDepth={2}
+          className='side-picture'
+          style={{
+            height: '200px',
+            backgroundImage: `url(${img1})`,
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            cursor: 'pointer'
+          }}
+          onClick={
+            () => {
+              dispatch({
+                type: 'SET_PREVENT_CLEAN_GOODS_ROW',
+                payload: true
+              }) ;
+              dispatch(setModal({ content: 'goodsCard', fullScreen: true, showClose: true, style: { background: '#fff' } }));
+            }
+          }
+        >
+        </Paper>
         <GoodsGroups />
       </div>
     </div>
   );
 };
+
+export default connect(
+  null,
+  dispatch => ({ ...modalActions, dispatch })
+)(Goods);

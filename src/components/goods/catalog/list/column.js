@@ -7,6 +7,7 @@ import IconArrowUp      from 'material-ui/svg-icons/hardware/keyboard-arrow-up';
 import { ListItem }     from 'material-ui/List';
 import styles from './styles';
 import { format1 } from './../../../../utils/format';
+import img1 from './../../../../image.jpg';
 
 export default ({
   columnsKeys,
@@ -92,10 +93,17 @@ export default ({
           }
         }
       >
-        {/* <img
-          src='https://firebasestorage.googleapis.com/v0/b/quick-order-de84c.appspot.com/o/smetana-veselyj-molochnik-20-otzyvy-1387475181.jpg?alt=media&token=7e98faae-4688-45ac-8402-2229ae618db7'
-          alt='1' style={{height: '36px', width: 'auto', marginLeft: '-2px', marginRight: '2px'}}
-        /> */}
+        <div
+          style={{
+            height: '38px',
+            width: '38px',
+            marginLeft: '-3px',
+            backgroundImage: `url(${img1})`,
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat'
+          }}
+        />
         <a
           tabIndex={-1}
           href="#"
@@ -103,13 +111,15 @@ export default ({
           onClick={
             () => {
               setCurentGuid(key);
-              setModal({ content: 'goodsCard', fullScreen: true, showClose: true });
+              setModal({ content: 'goodsCard', fullScreen: true, showClose: true, style: { background: '#fff' } });
             }
           }
         >
           <ListItem
+            style={{marginLeft: '3px'}}
             tabIndex={-1}
-            innerDivStyle={{padding: '10px'}}
+            innerDivStyle={{padding: '6px'}}
+            hoverColor='#ddd'
           >
             {items[key].description}
           </ListItem>
@@ -174,6 +184,7 @@ export default ({
           value={catalogQty[key] || ''}
           onFocus={
             () => {
+              setCurentGuid(key);
               setFocused(rowIndex);
             }
           }

@@ -4,12 +4,14 @@ import { connect } from 'react-redux';
 import * as actionsOptions from './../../../actions/options';
 import * as modalActions from './../../../lib/modal/actions/modal';
 
-import Subheader from 'material-ui/Subheader';
-import Toggle from 'material-ui/Toggle';
-import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
-import IconButton from 'material-ui/IconButton';
-import IconOk from 'material-ui/svg-icons/action/done';
-import IconError from 'material-ui/svg-icons/alert/error-outline';
+import ManageGoodsOnStockQty from './option/manage-goods-on-stock-qty';
+import ShowGoodsOnStockQty from './option/show-goods-on-stock-qty';
+import ManagePositionIsActiveProp from './option/manage-position-is-active-prop';
+import ShowNoActivePositions from './option/show-no-active-positions';
+import OrderNoActivePositions from './option/order-no-active-positions';
+import PositionIsActiveDefinition from './option/position-is-active-definition';
+import ManagePrices from './option/manage-prices';
+import ShowPictures from './option/show-pictures';
 
 const OptionsLogic = props => {
 
@@ -23,8 +25,6 @@ const OptionsLogic = props => {
   } = props;
 
   const itemsKeysLength = Object.keys(items).length;
-
-  const dataValidation = itemsKeysLength > 0;
 
   const rowStyle = {
     display: 'flex',
@@ -61,319 +61,8 @@ const OptionsLogic = props => {
     },
   };
 
-  const manageGoodsOnStockQty = () => {
-    let manageGoodsOnStockQty;
-    return (
-      <div style={{flex: '1'}}>
-        <Subheader>
-          Складские остатки
-        </Subheader>
-        <Toggle
-          defaultToggled={options.manageGoodsOnStockQty}
-          label="Учитывать складские остатки"
-          labelPosition="right"
-          style={toggleStyles.toggle}
-          ref={
-            (node) => {
-              manageGoodsOnStockQty = node;
-            }
-          }
-          onToggle={
-            () => {
-              setOption("manageGoodsOnStockQty", !manageGoodsOnStockQty.state.switched);
-            }
-          }
-        />
-      </div>
-    );
-  };
-
-  const showGoodsOnStockQty = () => {
-    let showGoodsOnStockQty;
-    return (
-      <div style={{flex: '1'}}>
-        <Toggle
-          disabled={!options.manageGoodsOnStockQty}
-          defaultToggled={options.showGoodsOnStockQty}
-          label="Показывать остатки в каталоге"
-          labelPosition="right"
-          style={toggleStyles.toggle}
-          ref={
-            (node) => {
-              showGoodsOnStockQty = node;
-            }
-          }
-          onToggle={
-            () => {
-              setOption("showGoodsOnStockQty", !showGoodsOnStockQty.state.switched);
-            }
-          }
-        />
-      </div>
-    );
-  };
-
-  const managePositionIsActiveProp = () => {
-    let managePositionIsActiveProp;
-    return (
-      <div style={{flex: '1'}}>
-        <Subheader>
-          Управление активностью позиций
-        </Subheader>
-        <Toggle
-          defaultToggled={options.managePositionIsActiveProp}
-          label="Разделять номенклатурные позиции на активные и нет"
-          labelPosition="right"
-          style={toggleStyles.toggle}
-          ref={
-            (node) => {
-              managePositionIsActiveProp = node;
-            }
-          }
-          onToggle={
-            () => {
-              setOption("managePositionIsActiveProp", !managePositionIsActiveProp.state.switched);
-            }
-          }
-        />
-      </div>
-    );
-  };
-
-  const showNoActivePosition = () => {
-    let showNoActivePosition;
-    return (
-      <div style={{flex: '1'}}>
-        <Toggle
-          disabled={!options.managePositionIsActiveProp}
-          defaultToggled={options.showNoActivePosition}
-          label="Показывать Не активные позиции"
-          labelPosition="right"
-          style={toggleStyles.toggle}
-          ref={
-            (node) => {
-              showNoActivePosition = node;
-            }
-          }
-          onToggle={
-            () => {
-              setOption("showNoActivePosition", !showNoActivePosition.state.switched);
-            }
-          }
-        />
-      </div>
-    );
-  };
-
-  const orderNoActivePositions = () => {
-    let orderNoActivePositions;
-    return (
-      <div style={{flex: '1'}}>
-        <Toggle
-          disabled={!options.managePositionIsActiveProp}
-          defaultToggled={options.orderNoActivePositions}
-          label="Разрешать заказывать Не активные позиции"
-          labelPosition="right"
-          style={toggleStyles.toggle}
-          ref={
-            (node) => {
-              orderNoActivePositions = node;
-            }
-          }
-          onToggle={
-            () => {
-              setOption("orderNoActivePositions", !orderNoActivePositions.state.switched);
-            }
-          }
-        />
-      </div>
-    );
-  };
-
-  const positionIsActiveDefinition = () => {
-    return (
-      <div style={{flex: '1', marginBottom: '20px'}}>
-        <Subheader>
-          Определение активных/не активных позиций
-        </Subheader>
-        <RadioButtonGroup
-          name="positionIsActiveDefinition"
-          defaultSelected={options.positionIsActiveDefinition}
-          valueSelected={options.positionIsActiveDefinition}
-          selected={options.positionIsActiveDefinition}
-          onChange={
-            (e, value)=>{
-              setOption("positionIsActiveDefinition", value);
-            }
-          }
-        >
-          <RadioButton
-            disabled={!options.managePositionIsActiveProp}
-            value='positionData'
-            label='Непосредственно из данных от 1с'
-            style={radioStyles.radioButton}
-          />
-          <RadioButton
-            disabled={!options.manageGoodsOnStockQty || !options.managePositionIsActiveProp}
-            value='stock'
-            label={<span><span>Позиция активна если остаток на складе > 0 </span><span style={{color: 'goldenrod', marginLeft: '3px'}}>(опция доступна при Учитывать складские остатки = Да)</span></span>}
-            style={radioStyles.radioButton}
-          />
-        </RadioButtonGroup>
-      </div>
-    );
-  };
-
-  const showPictures = () => {
-    return (
-      <div style={{flex: '1', marginBottom: '20px'}}>
-        <Subheader>
-          Отображать картинки
-        </Subheader>
-        <RadioButtonGroup
-          name="showPictures"
-          valueSelected={options.showPictures}
-          onChange={
-            (e, value)=>{
-              setOption("showPictures", value);
-            }
-          }
-        >
-          <RadioButton
-            value='no'
-            label='Нет'
-            style={radioStyles.radioButton}
-          />
-          <RadioButton
-            value='row'
-            label='В строке'
-            style={radioStyles.radioButton}
-          />
-          <RadioButton
-            value='side'
-            label='На боковой панели'
-            style={radioStyles.radioButton}
-          />
-          <RadioButton
-            value='dialog'
-            label='В окне'
-            style={radioStyles.radioButton}
-          />
-        </RadioButtonGroup>
-      </div>
-    );
-  }
-
-  const managePrices = () => {
-
-    let priceKeys = Object.keys(prices);
-    let priceObj = priceKeys.length > 0 ? prices[priceKeys[0]] : undefined;
-    console.log('priceObj', priceObj);
-    const Validation = () => {
-      switch (options.managePrices) {
-        case 'dontUse':
-          return (
-            <IconButton
-              iconStyle={{fill: 'green'}}
-            >
-              <IconOk />
-            </IconButton>
-          );
-        case 'common':
-          if (typeof priceObj === 'number') {
-            return (
-              <IconButton
-                iconStyle={{fill: 'green'}}
-                onClick={
-                  () => {
-                    setModal({ content: 'prices-validation', center: true, showClose: true, x: '50%', y: '50%', style: {flexDirection: 'column'} });
-                  }
-                }
-              >
-                <IconError />
-              </IconButton>
-            );
-          } else {
-            return (
-              <IconButton
-                iconStyle={{fill: 'red'}}
-              >
-                <IconError />
-              </IconButton>
-            );
-          }
-        case 'byCustomers':
-            if (priceObj === undefined) {
-              return (
-                <IconButton
-                  iconStyle={{fill: 'red'}}
-                >
-                  <IconError />
-                </IconButton>
-              );
-            } else {
-
-              if (typeof priceObj !== 'object') {
-                return (
-                  <IconButton
-                    iconStyle={{fill: 'red'}}
-                  >
-                    <IconError />
-                  </IconButton>
-                );
-              } else {
-                return (
-                  <IconButton
-                    iconStyle={{fill: 'green'}}
-                  >
-                    <IconOk />
-                  </IconButton>
-                );
-              }
-            }
-        default:
-          return null;
-      }
-    }
-
-    return (
-      <div style={{flex: '1', marginBottom: '20px'}}>
-        <div style={{display: 'flex'}}>
-          <Subheader style={{width: 'initial'}}>
-            <div>
-              Ведение цен
-            </div>
-          </Subheader>
-          {dataValidation && <Validation />}
-        </div>
-        <RadioButtonGroup
-          name="positionIsActiveDefinition"
-          valueSelected={options.managePrices}
-          onChange={
-            (e, value)=>{
-              setOption("managePrices", value);
-            }
-          }
-        >
-          <RadioButton
-            value='common'
-            label='Общие цены для всех клиентов'
-            style={radioStyles.radioButton}
-          />
-          <RadioButton
-            value='byCustomers'
-            label='Свои цены для каждого клиента'
-            style={radioStyles.radioButton}
-          />
-          <RadioButton
-            value='dontUse'
-            label='Не использовать'
-            style={radioStyles.radioButton}
-          />
-        </RadioButtonGroup>
-      </div>
-    );
-  };
+  const passProps = { options, toggleStyles, radioStyles, setOption };
+  const passManagePrices = { items, prices, options, setModal, setOption, radioStyles };
 
   return (
 
@@ -392,35 +81,35 @@ const OptionsLogic = props => {
       </div>
 
       <div style={rowStyle}>
-        {manageGoodsOnStockQty()}
+        <ManageGoodsOnStockQty {...passProps} />
       </div>
 
       <div style={{ ...rowStyle, ...{marginLeft: '50px'} }}>
-        {showGoodsOnStockQty()}
+        <ShowGoodsOnStockQty {...passProps} />
       </div>
 
       <div style={rowStyle}>
-        {managePositionIsActiveProp()}
+        <ManagePositionIsActiveProp {...passProps} />
       </div>
 
       <div style={{ ...rowStyle, ...{marginLeft: '50px'} }}>
-        {showNoActivePosition()}
+        <ShowNoActivePositions {...passProps} />
       </div>
 
       <div style={{ ...rowStyle, ...{marginLeft: '50px'} }}>
-        {orderNoActivePositions()}
+        <OrderNoActivePositions {...passProps} />
       </div>
 
       <div style={{ ...rowStyle, ...{marginLeft: '50px'} }}>
-        {positionIsActiveDefinition()}
+        <PositionIsActiveDefinition {...passProps} />
       </div>
 
       <div style={rowStyle}>
-        {managePrices()}
+        <ManagePrices {...passManagePrices}/>
       </div>
 
       <div style={rowStyle}>
-        {showPictures()}
+        <ShowPictures {...passProps} />
       </div>
 
     </div>

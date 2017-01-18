@@ -64,19 +64,23 @@ class App extends Component {
   }
 
   handleClick = e => {
+    const { current } = this.props;
     const { dispatch } = this.props;
     let className = '';
     try {
       className = e.target.className;
     } catch (e) {}
     className = typeof className === 'string' ? className : '';
-    // console.log('e.srcElement', e);
     className !== 'catalogQtyInput' &&
     !className.includes('row-cell') &&
     !className.includes('pagination') &&
+    !className.includes('side-picture') &&
+    !className.includes('modal-close') &&
     e.srcElement.tagName !== 'path' &&
     e.srcElement.tagName !== 'svg' &&
     dispatch({ type: 'RESET_FOCUSED' });
+    current !== '' && document.getElementById(current).focus();
+    current !== '' && dispatch({ type: 'SET_FOCUSED', payload: current});
   }
 
   render() {
@@ -102,6 +106,8 @@ class App extends Component {
   }
 }
 
-App = connect()(App);
+App = connect(
+  state => ({ current: state.current })
+)(App);
 
 export default App;
