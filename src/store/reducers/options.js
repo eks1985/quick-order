@@ -9,7 +9,7 @@ const initialState = {
   catalogListSettings: ['code', 'description', 'price', 'qty'], //production
   // catalogListSettings: ['code', 'description', 'price', 'qty', 'brand'], //test
   catalogListColumns: {}, //production,
-  showPictures: 'no' //no, row, side, dialog
+  showPictures: {row: false, side: false, dialog: false} 
   // catalogListColumns: {brand: [true,true,true] } //test
 };
 

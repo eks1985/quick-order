@@ -7,7 +7,8 @@ import Paper from 'material-ui/Paper';
 const Card = ({
   goods,
   goodsGroups,
-  prices
+  prices,
+  options
 }) => {
   const { currentGuid, items } = goods;
   const style = {
@@ -50,13 +51,15 @@ const Card = ({
           </List>
       </Paper>
 
-      <div className='picture' style={{flexDirection: 'column', flex: '0 1 50%'}}>
-          <img style={{width: '100%', padding: '10px'}} src={pictData().base64data} alt=''></img>
-      </div>
+      {options.showPictures.dialog &&
+        <div className='picture' style={{flexDirection: 'column', flex: '0 1 50%'}}>
+            <img style={{width: '100%', padding: '10px'}} src={pictData().base64data} alt=''></img>
+        </div>
+      }
     </div>
   );
 };
 
 export default connect(
-  state => ({goods: state.goods, goodsGroups: state.goodsGroups, prices: state.prices})
+  state => ({goods: state.goods, goodsGroups: state.goodsGroups, prices: state.prices, options: state.options})
 )(Card);

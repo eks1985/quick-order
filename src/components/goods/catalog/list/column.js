@@ -24,6 +24,7 @@ export default ({
   headerSettingsMode,
   sortDirection,
   currentId,
+  options,
   //actions
   moveHeaderColumn,
   addCatalogQty,
@@ -93,17 +94,19 @@ export default ({
           }
         }
       >
-        <div
-          style={{
-            height: '38px',
-            width: '38px',
-            marginLeft: '-3px',
-            backgroundImage: `url(${img1})`,
-            backgroundPosition: 'center',
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat'
-          }}
-        />
+        {options.showPictures.row &&
+          <div
+            style={{
+              height: '38px',
+              width: '38px',
+              marginLeft: '-3px',
+              backgroundImage: `url(${img1})`,
+              backgroundPosition: 'center',
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat'
+            }}
+          />
+        }
         <a
           tabIndex={-1}
           href="#"

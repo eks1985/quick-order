@@ -8,7 +8,7 @@ import img1 from './../../image.jpg';
 import * as modalActions from './../../lib/modal/actions/modal';
 
 const Goods = props => {
-  const { setModal, dispatch } = props;
+  const { setModal, dispatch, options } = props;
   const style = {
     display: 'flex',
     flex: '1 0 auto',
@@ -31,28 +31,30 @@ const Goods = props => {
         <Paper rounded={false} zDepth={2}>
           <Cart />
         </Paper>
-        <Paper
-          rounded={false}
-          zDepth={2}
-          className='side-picture'
-          style={{
-            height: '200px',
-            backgroundImage: `url(${img1})`,
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-            cursor: 'pointer'
-          }}
-          onClick={
-            () => {
-              dispatch({
-                type: 'SET_PREVENT_CLEAN_GOODS_ROW',
-                payload: true
-              }) ;
-              dispatch(setModal({ content: 'goodsCard', fullScreen: true, showClose: true, style: { background: '#fff' } }));
+        {options.showPictures.side  &&
+          <Paper
+            rounded={false}
+            zDepth={2}
+            className='side-picture'
+            style={{
+              height: '200px',
+              backgroundImage: `url(${img1})`,
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              cursor: 'pointer'
+            }}
+            onClick={
+              () => {
+                dispatch({
+                  type: 'SET_PREVENT_CLEAN_GOODS_ROW',
+                  payload: true
+                }) ;
+                dispatch(setModal({ content: 'goodsCard', fullScreen: true, showClose: true, style: { background: '#fff' } }));
+              }
             }
-          }
-        >
-        </Paper>
+          >
+          </Paper>
+        }
         <GoodsGroups />
       </div>
     </div>
@@ -60,6 +62,6 @@ const Goods = props => {
 };
 
 export default connect(
-  null,
+  state => ({ options: state.options }),
   dispatch => ({ ...modalActions, dispatch })
 )(Goods);

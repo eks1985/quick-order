@@ -6,7 +6,7 @@ import {Tabs, Tab} from 'material-ui/Tabs';
 import BusinessLogic from './tabs/business-logic';
 import Data          from './tabs/data';
 import Ui            from './tabs/ui';
-import IntialConfig  from './tabs/initial-config';
+// import IntialConfig  from './tabs/initial-config';
 
 const Options = props => {
 
@@ -22,9 +22,9 @@ const Options = props => {
         <Tab label="Интерфейс" >
           <Ui />
         </Tab>
-        <Tab label="Первоначальная настройка" >
+        {/* <Tab label="Первоначальная настройка" >
           <IntialConfig />
-        </Tab>
+        </Tab> */}
       </Tabs>
     </Paper>
   );

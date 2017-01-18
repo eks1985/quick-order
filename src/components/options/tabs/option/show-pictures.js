@@ -1,60 +1,42 @@
 import React from 'react';
 
-import img1 from './../../../../image.jpg';
-
 import Subheader from 'material-ui/Subheader';
-import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
+import Checkbox from 'material-ui/Checkbox';
 
 export default props  => {
-  const { options, radioStyles, setOption } = props;
+  const { options, setOption } = props;
   return (
     <div style={{flex: '1', marginBottom: '20px'}}>
       <Subheader>
         Отображать картинки
       </Subheader>
-      <RadioButtonGroup
-        name="showPictures"
-        valueSelected={options.showPictures}
-        onChange={
-          (e, value)=>{
-            setOption("showPictures", value);
+      <Checkbox
+        label='В строке'
+        checked={options.showPictures.row}
+        onCheck={
+          (e, isInputChecked) => {
+            setOption('showPictures', { ...options.showPictures, row: isInputChecked });
           }
         }
-      >
-        <RadioButton
-          value='no'
-          label='Нет'
-          style={radioStyles.radioButton}
-        />
-        <RadioButton
-          value='row'
-          label='В строке'
-          style={radioStyles.radioButton}
-        />
-        <RadioButton
-          value='side'
-          label='На боковой панели'
-          style={radioStyles.radioButton}
-        />
-        <RadioButton
-          value='dialog'
-          label='В отдельном окне'
-          style={radioStyles.radioButton}
-        />
-      </RadioButtonGroup>
-
-      <div
-        style={{
-          height: '200px',
-          width: '200px',
-          backgroundImage: `url(${img1})`,
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          border: '1px solid #ddd'
-        }}
-      ></div>
-
-
+      />
+      <Checkbox
+        label='На боковой панели'
+        checked={options.showPictures.side}
+        onCheck={
+          (e, isInputChecked) => {
+            setOption('showPictures', { ...options.showPictures, side: isInputChecked });
+          }
+        }
+      />
+      <Checkbox
+        label='В карточке товара'
+        checked={options.showPictures.dialog}
+        onCheck={
+          (e, isInputChecked) => {
+            setOption('showPictures', { ...options.showPictures, dialog: isInputChecked });
+          }
+        }
+      />
     </div>
   );
 }
