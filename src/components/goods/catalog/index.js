@@ -9,8 +9,8 @@ import img1 from './../../../image.jpg';
 import {List, ListItem} from 'material-ui/List';
 
 const CatalogIndex = props => {
-  const { options, dispatch, goods, goodsGroups, prices } = props;
-  const { items, currentGuid } = goods;
+  const { options, dispatch, goods, goodsGroups, prices, current } = props;
+  const { itemsInitial: items, currentGuid } = goods;
   const { pictureHeight } = props.ui;
   const style = {
     display: 'flex',
@@ -25,7 +25,7 @@ const CatalogIndex = props => {
         <Pagination />
       </div>
       <GoodsList />
-      {options.showPictures.side  && currentGuid &&
+      {options.showPictures.side  && currentGuid && current !== '' &&
         <div style={{display: 'flex'}}>
           <Paper
             rounded={false}
@@ -84,5 +84,5 @@ const CatalogIndex = props => {
 
 
 export default connect (
-  state => ({ options: state.options, goods: state.goods, goodsGroups: state.goodsGroups, prices: state.prices, ui: state.ui })
+  state => ({ options: state.options, goods: state.goods, goodsGroups: state.goodsGroups, prices: state.prices, ui: state.ui, current: state.current })
 )(CatalogIndex);
