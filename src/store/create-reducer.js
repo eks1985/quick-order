@@ -19,6 +19,7 @@ import sortDirection from './reducers/sort-direction';
 import filtersApplied from './reducers/filters-applied';
 import current from './reducers/current';
 import preventCleanGoodsRow from './reducers/prevent-clean-goods-row';
+import ui from './reducers/ui';
 import modal from './../lib/modal/reducers/modal';
 
 export default function createReducer(indexes) {
@@ -43,6 +44,7 @@ export default function createReducer(indexes) {
     filtersApplied,
     current,
     preventCleanGoodsRow,
+    ui,
     ...indexes
   });
 }

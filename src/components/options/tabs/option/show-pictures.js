@@ -20,7 +20,7 @@ export default props  => {
         }
       />
       <Checkbox
-        label='На боковой панели'
+        label='Под таблицей товаров'
         checked={options.showPictures.side}
         onCheck={
           (e, isInputChecked) => {

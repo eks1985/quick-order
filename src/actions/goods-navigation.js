@@ -1,7 +1,9 @@
 export const setQtyPagesGoods = () => {
   return (dispatch, getState) => {
       const keysLength = Object.keys(getState().goods.items).length;
-      const qtyPages = keysLength % 10 === 0 ? keysLength / 10  : Math.floor(keysLength / 10) + 1;
+      const rowsPerPage = getState().goods.rowsPerPage || 10;
+      const qtyPages = keysLength % rowsPerPage === 0 ? keysLength / rowsPerPage  : Math.floor(keysLength / rowsPerPage) + 1;
+      // const qtyPages = keysLength % 10 === 0 ? keysLength / 10  : Math.floor(keysLength / 10) + 1;
       dispatch({
         type: 'SET_QTY_PAGES_GOODS',
         qtyPages: qtyPages || 1
@@ -28,10 +30,6 @@ export const moveGoodsForward = () => {
         type: 'INCREASE_PAGE_NUMBER_GOODS'
       });
       dispatch(detectIsLastPage());
-      // dispatch({
-      //   type: 'SET_FOCUSED',
-      //   payload: ''
-      // });
     }
   };
 };
@@ -44,24 +42,16 @@ export const moveGoodsBack = () => {
         type: 'DECREASE_PAGE_NUMBER_GOODS'
       });
       dispatch(detectIsLastPage());
-      // dispatch({
-      //   type: 'SET_FOCUSED',
-      //   payload: ''
-      // });
     }
   };
 };
 
-export const goToGoodsPage = (pageNumber) => {
+export const goToGoodsPage = pageNumber => {
   return (dispatch, getState) => {
     dispatch({
       type: 'SET_PAGE_NUMBER_GOODS',
       pageNumber: pageNumber
     });
     dispatch(detectIsLastPage());
-    // dispatch({
-    //   type: 'SET_FOCUSED',
-    //   payload: ''
-    // });
   };
 };

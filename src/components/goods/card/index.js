@@ -17,7 +17,6 @@ const Card = ({
   return (
     <div style={style}>
       <Paper className='goodsProps' style={{display: 'flex', flexDirection: 'column' , flex: '0 0 50%'}}>
-
           <List>
             <ListItem
               primaryText={items[currentGuid].code}

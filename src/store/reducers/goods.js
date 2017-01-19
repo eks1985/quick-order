@@ -12,7 +12,6 @@ const searchText = (state = '', action) => {
 const codes = (state = {}, action) => {
   switch (action.type) {
     case 'RECEIVE_CODES':
-      // return { ...state, ...action.payload };
       return action.payload;
     default:
       return state;
@@ -83,11 +82,6 @@ const currentGuid = (state = '', action) => {
   }
 };
 
-// const initial = {
-//   foo: {code: 'foo', groupRef: 'baz', description: 'Товар 1', brand: 'Веселый молочник'},
-//   bar: {code: 'bar', groupRef: 'baz', description: 'Товар 2', brand: 'Добрый пекарь'},
-// }
-// const items = (state = initial, action) => { //test
 const items = (state = {}, action) => { //production
   switch (action.type) {
     case 'RECEIVE_GOODS':
@@ -130,13 +124,22 @@ const isLastPage = (state = false, action) => {
   }
 };
 
+const rowsPerPage = (state = 10, action) => {
+  switch (action.type) {
+    case 'SET_GOODS_ROWS_PER_PAGE':
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
 // sort
 
 const sortDirection = (state = '', action) => {
   switch (action.type) {
     case 'SET_SORT_DIRECTION_FORWARD':
       return 'forward';
-    case 'SET_SORT_DIRECTION_REVERSE':
+    case 'SET_SORT_DIRECTION_REVERSE':;
       return 'reverse';
     default:
       return state;
@@ -148,8 +151,10 @@ const sortDirection = (state = '', action) => {
 export const getGoodsVisibleIds = (state) => { //state = goods.state
   const pageNumber = state.pageNumber;
   const keys = Object.keys(state.items);
+  const rowsPerPage = state.rowsPerPage || 10;
   return  keys.reduce((result, key, i) => {
-    return i >= (pageNumber-1)*10 && i < pageNumber*10 ? result.concat(key) : result;
+    return i >= (pageNumber-1)*rowsPerPage && i < pageNumber*rowsPerPage ? result.concat(key) : result;
+    // return i >= (pageNumber-1)*10 && i < pageNumber*10 ? result.concat(key) : result;
   }, []);
 };
 
@@ -160,6 +165,7 @@ export default combineReducers({
   pageNumber,
   qtyPages,
   isLastPage,
+  rowsPerPage,
   codes,
   descriptions,
   searchText,

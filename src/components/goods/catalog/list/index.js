@@ -76,7 +76,7 @@ class ListContainer extends Component {
     };
     const { columnsKeys } = props;
     return (
-      <div style={styles.style}>
+      <div style={styles.style} className='catalogListContainer'>
         {columnsKeys.map((key, i) => <Column {...props } key={`${key}column`}  columnKey={key} i={i} />)}
         {this.getSettingsBtnJsx()}
       </div>
