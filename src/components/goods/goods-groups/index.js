@@ -19,7 +19,8 @@ const GoodsGroups =  ({
   addFilter,
   removeFilter,
   resetFilters,
-  current
+  current,
+  categoryLineSeparator
 }) => {
   const style = {
     flex: '1 0 auto',
@@ -30,13 +31,25 @@ const GoodsGroups =  ({
     paddingTop: '3px'
   };
 
+  let clearFilterStyle = {
+    fontSize: '13px',
+    fontWeight: 'bold',
+    marginTop: '4px'
+  }
+  clearFilterStyle = categoryLineSeparator ? { ...clearFilterStyle, borderBottom: '1px solid #eee' } : clearFilterStyle;
+
+  let categoryItemStyle = {
+    fontSize: '13px'
+  }
+  categoryItemStyle = categoryLineSeparator ? { ...categoryItemStyle, borderBottom: '1px solid #eee' } : categoryItemStyle;
+
   const getItemsStyledJsx = () => {
     const keys = Object.keys(items);
     return keys.map( key => {
         return (
           <ListItem
             innerDivStyle={{padding: '5px 10px 5px 10px'}}
-            style={{fontSize: '13px'}}
+            style={categoryItemStyle}
             key={key}
             primaryText={items[key]}
             onClick={
@@ -95,18 +108,16 @@ const GoodsGroups =  ({
         </div>
         <ListItem
           innerDivStyle={{padding: '5px 10px 5px 10px'}}
-          style={{fontSize: '13px', fontWeight: 'bold', marginTop: '4px'}}
+          // style={{fontSize: '13px',
+          // fontWeight: 'bold',
+          // marginTop: '4px'}}
+          style={clearFilterStyle}
           key={9999}
           primaryText='Все категории'
           onClick={
             () => {
               resetFilters();
               search();
-              // try {
-              //   console.log('current');
-              //   document.getElementById(current).focus();
-              // } catch (e) {
-              // }
             }
           }
         />
@@ -117,6 +128,13 @@ const GoodsGroups =  ({
 };
 
 export default connect(
-  state => ({ items: state.goodsGroups.items, filters: getFiltersByIds(state.goodsGroups.itemsInitial, state.goodsGroups.filtersIds), current: state.current }),
+  state => {
+    const items = state.goodsGroups.items;
+    const filters = getFiltersByIds(state.goodsGroups.itemsInitial, state.goodsGroups.filtersIds);
+    const current = state.current;
+    const categoryLineSeparator = state.options.categoryLineSeparator;
+    return { items, filters, current, categoryLineSeparator };
+  },
+  // state => ({ items: state.goodsGroups.items, filters: getFiltersByIds(state.goodsGroups.itemsInitial, state.goodsGroups.filtersIds), current: state.current, categoryLineSeparator: state.options.categoryLineSeparator }),
   { ...goodsGroupsActions, ...goodsActions }
 )(GoodsGroups);

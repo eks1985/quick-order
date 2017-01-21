@@ -26,6 +26,9 @@ export const setOption = (option, value) => {
     if (option  === 'showPictures') {
       dispatch(setCommonOptionFirebase('showPictures', value));
     }
+    if (option  === 'categoryLineSeparator') {
+      dispatch(setCommonOptionFirebase('categoryLineSeparator', value));
+    }
   };
 };
 

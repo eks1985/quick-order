@@ -7,10 +7,9 @@ const initialState = {
   showNoActivePosition: false,
   managePrices: 'common', //common, byCustomers, dontUse
   catalogListSettings: ['code', 'description', 'price', 'qty'], //production
-  // catalogListSettings: ['code', 'description', 'price', 'qty', 'brand'], //test
   catalogListColumns: {}, //production,
-  showPictures: {row: false, side: false, dialog: false} 
-  // catalogListColumns: {brand: [true,true,true] } //test
+  showPictures: {row: false, side: false, dialog: false},
+  categoryLineSeparator: false
 };
 
 export default (state, action) => {

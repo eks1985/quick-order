@@ -25,7 +25,7 @@ export const setUi = bodyHeight => {
   return (dispatch, getState) => {
     dispatch({
       type: 'SET_UI_ELEMENTS_SIZE',
-      payload: { bodyHeight: bodyHeight, pictureHeight: parseInt(bodyHeight/4, 10) }
+      payload: { bodyHeight: bodyHeight, pictureHeight: parseInt(bodyHeight/4, 10)  }
     });
     dispatch(setRowsPerPage());
   };

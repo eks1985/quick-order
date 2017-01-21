@@ -54,7 +54,12 @@ export default ({
     add: '',
   };
 
-  const applyZebra = (style, rowIndex) => rowIndex % 2 === 0 ? { ...style, border: '1px solid transparent'} : { ...style, ...zebraStyle, border: '1px solid transparent' };
+  const applyZebra = (style, rowIndex) => {
+    let extStyle = style;
+    extStyle = rowIndex % 2 === 0 ? extStyle : { ...extStyle, ...zebraStyle };
+    extStyle = rowIndex === itemsIds.length - 1 ? { ...extStyle, borderBottom: '2px solid #eee' } : extStyle;
+    return extStyle;
+  }
 
   const applyCurrentRowBorder = (style, rowIndex) => {
     let extendedStyle = { ...style, background: 'rgba(255, 215, 0, 0.2)' };

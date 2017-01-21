@@ -1,0 +1,4 @@
+- introduce redux-saga to manage actions
+- introduce jss for styling
+- add tests!!!
+- flow?
