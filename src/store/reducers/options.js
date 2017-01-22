@@ -9,7 +9,8 @@ const initialState = {
   catalogListSettings: ['code', 'description', 'price', 'qty'], //production
   catalogListColumns: {}, //production,
   showPictures: {row: false, side: false, dialog: false},
-  categoryLineSeparator: false
+  categoryLineSeparator: false,
+  pictureSource: 'url' //ukr, firebase
 };
 
 export default (state, action) => {

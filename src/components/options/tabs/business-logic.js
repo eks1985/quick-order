@@ -13,6 +13,7 @@ import PositionIsActiveDefinition from './option/position-is-active-definition';
 import ManagePrices from './option/manage-prices';
 import ShowPictures from './option/show-pictures';
 import CategoryLineSeparator from './option/categoryLineSeparator';
+import PictureSource from './option/picture-source';
 
 const OptionsLogic = props => {
 
@@ -115,6 +116,10 @@ const OptionsLogic = props => {
 
       <div style={rowStyle}>
         <CategoryLineSeparator {...passProps} />
+      </div>
+
+      <div style={rowStyle}>
+        <PictureSource {...passProps} />
       </div>
 
     </div>
