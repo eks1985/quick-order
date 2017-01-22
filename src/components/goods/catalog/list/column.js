@@ -116,7 +116,7 @@ export default ({
           tabIndex={-1}
           href="#"
           style={{textDecoration: 'none'}}
-          onClick={
+          onDoubleClick={
             () => {
               setCurentGuid(key);
               setModal({ content: 'goodsCard', fullScreen: true, showClose: true, style: { background: '#fff' } });

@@ -17,6 +17,7 @@ import FlatButton from 'material-ui/FlatButton';
 import IconImage from 'material-ui/svg-icons/image/adjust';
 import CheckboxOutline from 'material-ui/svg-icons/toggle/check-box-outline-blank';
 import CheckboxChecked from 'material-ui/svg-icons/toggle/check-box';
+import './column-settings.css';
 // import { sortGoods }
 
 const ColumnSettings =  ({

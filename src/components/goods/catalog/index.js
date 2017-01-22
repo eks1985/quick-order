@@ -40,7 +40,6 @@ const arr = [ img1, img2, img3, img4, img5, img6, img7, img8, img9, img10 ];
 
 const CatalogIndex = props => {
   const { options, dispatch, goods, goodsGroups, prices, current, cart } = props;
-  console.log('cart', cart);
   const { itemsInitial: items, currentGuid } = goods;
   const { items: cartItems } = cart;
   const { pictureHeight } = props.ui;
@@ -51,7 +50,7 @@ const CatalogIndex = props => {
     padding: '10px'
   };
   let pictContainerStyle = {display: 'flex', padding: '8px', marginTop: '6px'};
-  pictContainerStyle = cartItems[currentGuid] ? { ...pictContainerStyle, border: '1px solid goldenrod'} : pictContainerStyle
+  pictContainerStyle = cartItems[currentGuid] ? { ...pictContainerStyle, border: '2px solid goldenrod'} : pictContainerStyle
   const url1 = arr[parseInt(Math.random()* 10, 10) ];
   return (
     <Paper className='catalog' style={style} zDepth={2}>
@@ -75,7 +74,7 @@ const CatalogIndex = props => {
               backgroundRepeat: 'no-repeat',
               cursor: 'pointer'
             }}
-            onClick={
+            onDoubleClick={
               () => {
                 dispatch({
                   type: 'SET_PREVENT_CLEAN_GOODS_ROW',
@@ -113,9 +112,7 @@ const CatalogIndex = props => {
             />
             { cartItems[currentGuid] &&
               <ListItem
-                // primaryText='7ед x 345.67руб = 2843.08руб'
                 primaryText={`${cartItems[currentGuid].qty} ед. х ${cartItems[currentGuid].price} руб. = ${cartItems[currentGuid].amount} руб.`}
-                // secondaryText='В корзине'
                 innerDivStyle={{padding: '3px'}}
                 style={{fontSize: '14px', fontWeight: 'bold'}}
               />
