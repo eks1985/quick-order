@@ -4,10 +4,11 @@ import IconArrowBack    from 'material-ui/svg-icons/navigation/arrow-back';
 import IconArrowForward from 'material-ui/svg-icons/navigation/arrow-forward';
 import IconArrowDown    from 'material-ui/svg-icons/hardware/keyboard-arrow-down';
 import IconArrowUp      from 'material-ui/svg-icons/hardware/keyboard-arrow-up';
-import { ListItem }     from 'material-ui/List';
+// import { ListItem }     from 'material-ui/List';
 import styles from './styles';
 import { format1 } from './../../../../utils/format';
 import img1 from './../../../../image.jpg';
+import './columns.css';
 
 export default ({
   columnsKeys,
@@ -115,7 +116,7 @@ export default ({
         <a
           tabIndex={-1}
           href="#"
-          style={{textDecoration: 'none'}}
+          style={{textDecoration: 'none', color: 'rgba(0, 0, 0, 0.870588)'}}
           onDoubleClick={
             () => {
               setCurentGuid(key);
@@ -123,14 +124,18 @@ export default ({
             }
           }
         >
-          <ListItem
+          {/* <ListItem
             style={{marginLeft: '3px'}}
             tabIndex={-1}
             innerDivStyle={{padding: '6px'}}
             hoverColor='#ddd'
+            rippleColor='transparent'
           >
             {items[key].description}
-          </ListItem>
+          </ListItem> */}
+          <div style={{padding: '5px'}} className='goodsDescr'>
+            {items[key].description}
+          </div>
         </a>
       </div>
     );
