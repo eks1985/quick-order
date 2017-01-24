@@ -46,6 +46,6 @@ export default combineReducers({
 
 // Selectors
 
-export const getFiltersByIds = (items, ids) => {
+export const getGoodsGroupsByIds = (items, ids) => {
   return ids.reduce((res, key) => ({ ...res, [key]: items[key] }), {});
 };

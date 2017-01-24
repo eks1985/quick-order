@@ -1,7 +1,8 @@
 export default {
   style: {
     display: 'flex',
-    position: 'relative'
+    position: 'relative',
+    flex: '1 0 auto'
   },
   arrowStyle: {
     button: {

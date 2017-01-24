@@ -1,5 +1,33 @@
 import { isNumeric } from './../utils/index';
 import { setCurrentContent } from './../actions/current-content';
+import { setQtyPagesGoodsCheckout, detectIsLastPageCheckout } from './goods-checkout-navigation';
+
+export const filterCartItems = () => {
+  return (dispatch, getState) => {
+    const state = getState();
+    const { filterText, filterGoodsGroups } = state.cart;
+    console.log('filterText', filterText);
+    console.log('filterGoodsGroups', filterGoodsGroups);
+    dispatch({
+      type: 'RECEIVE_CART_ITEMS_FILTETED',
+      payload: state.cart.items
+    })
+  }
+}
+
+const setGoodsGroupsIds = () => {
+  return (dispatch, getState) => {
+    const { items: cartItems } = getState().cart;
+    const { itemsInitial: goodsItems } = getState().goods;
+    const payload = Object.keys(cartItems).reduce((res, key) => {
+      return res.includes(goodsItems[key].groupRef) ? res : [ ...res, goodsItems[key].groupRef ];
+    }, []);
+    dispatch({
+      type: 'SET_GOODS_GROUPS_IDS_CHECKOUT',
+      payload
+    })
+  }
+}
 
 export const setTotalCartItems = () => {
   return (dispatch, getState) => {
@@ -42,6 +70,10 @@ export const addToCart = (guid, qty, price) => {
     });
     dispatch(setTotalCartItems());
     dispatch(setTotalCartAmount());
+    dispatch(setGoodsGroupsIds());
+    dispatch(setQtyPagesGoodsCheckout());
+    dispatch(detectIsLastPageCheckout());
+    dispatch(filterCartItems());
   };
 };
 
@@ -53,10 +85,14 @@ export const removeFromCart = (guid) => {
     });
     dispatch(setTotalCartItems());
     dispatch(setTotalCartAmount());
+    dispatch(setGoodsGroupsIds());
+    dispatch(setQtyPagesGoodsCheckout());
+    dispatch(detectIsLastPageCheckout());
+    dispatch(filterCartItems());
   };
 };
 
-export const increaseCart = (guid) => {
+export const increaseCart = guid => {
   return (dispatch, getState) => {
     const current = getState().cart.items[guid];
     if (current) {
@@ -72,11 +108,12 @@ export const increaseCart = (guid) => {
       });
       dispatch(setTotalCartItems());
       dispatch(setTotalCartAmount());
+      dispatch(filterCartItems());
     }
   };
 };
 
-export const decreaseCart = (guid) => {
+export const decreaseCart = guid => {
   return (dispatch, getState) => {
     const current = getState().cart.items[guid];
     if (current) {
@@ -97,6 +134,7 @@ export const decreaseCart = (guid) => {
         dispatch(removeFromCart(guid));
       }
     }
+    dispatch(filterCartItems());
   };
 };
 
@@ -111,7 +149,10 @@ export const cleanCart = () => {
       type: 'RESET_CATALOG_QTY',
     });
     dispatch(setCurrentContent('goods'));
-
+    dispatch(setGoodsGroupsIds());
+    dispatch(setQtyPagesGoodsCheckout());
+    dispatch(filterCartItems());
+    dispatch(detectIsLastPageCheckout());
   };
 };
 
@@ -185,3 +226,27 @@ export const addQuickListToCart = (clean) => {
     });
   };
 };
+
+
+export const setFilterTextCart = payload => {
+  return dispatch => {
+    dispatch({
+      type: 'SET_FILTER_TEXT_CART',
+      payload
+    })
+  }
+}
+
+export const addFilterGoodsGroupsCart = guid => ({
+  type: 'ADD_GOODS_GROUPS_FILTER_CART',
+  guid
+});
+
+export const removeFilterGoodsGroupsCart = guid => ({
+  type: 'REMOVE_GOODS_GROUPS_FILTER_CART',
+  guid
+});
+
+export const resetFiltersGoodsGroupsCart = () => ({
+  type: 'RESET_GOODS_GROUPS_FILTERS_CART'
+});

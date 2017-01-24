@@ -1,5 +1,6 @@
 import { filterByGroupGuids } from './goods-groups';
 export { setQtyPagesGoods, detectIsLastPage,  moveGoodsForward, moveGoodsBack, goToGoodsPage, setRowsPerPage } from './goods-navigation';
+export { setQtyPagesGoodsCheckout, detectIsLastPageCheckout,  moveGoodsForwardCheckout, moveGoodsBackCheckout, goToGoodsPageCheckout } from './goods-checkout-navigation';
 import { setQtyPagesGoods, goToGoodsPage } from './goods-navigation';
 import { filterByPropVal } from './indexes';
 

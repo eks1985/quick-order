@@ -9,6 +9,7 @@ import ModalContent from './components/modal-content';
 import { setQtyPagesGoods, setSearchText } from './actions/goods';
 import { setQtyPagesOrders } from './actions/orders';
 import { setCurrentContent } from './actions/current-content';
+import { setFilterTextCart } from './actions/cart';
 import { search, moveGoodsBack, moveGoodsForward } from './actions/goods';
 import { setUi } from './actions/ui';
 // eslint-disable-next-line
@@ -39,6 +40,10 @@ class App extends Component {
       const text = document.querySelector('#search').value;
       dispatch(search(text));
       dispatch(setSearchText(text));
+    }
+    if (e.which === 13 && document.activeElement.id === 'searchCart') {
+      const text = document.querySelector('#searchCart').value;
+      dispatch(setFilterTextCart(text));
     }
 
     if(e.which === 13 && document.activeElement.className === "catalogQtyInput") {

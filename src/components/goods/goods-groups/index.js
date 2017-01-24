@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as goodsGroupsActions from './../../../actions/goods-groups';
 import * as goodsActions from './../../../actions/goods';
-import { getFiltersByIds } from './../../../store/reducers/goods-groups';
+import { getGoodsGroupsByIds } from './../../../store/reducers/goods-groups';
 import Paper from 'material-ui/Paper';
 import { List, ListItem } from 'material-ui/List';
 import TextField from 'material-ui/TextField';
@@ -130,11 +130,10 @@ const GoodsGroups =  ({
 export default connect(
   state => {
     const items = state.goodsGroups.items;
-    const filters = getFiltersByIds(state.goodsGroups.itemsInitial, state.goodsGroups.filtersIds);
+    const filters = getGoodsGroupsByIds(state.goodsGroups.itemsInitial, state.goodsGroups.filtersIds);
     const current = state.current;
     const categoryLineSeparator = state.options.categoryLineSeparator;
     return { items, filters, current, categoryLineSeparator };
   },
-  // state => ({ items: state.goodsGroups.items, filters: getFiltersByIds(state.goodsGroups.itemsInitial, state.goodsGroups.filtersIds), current: state.current, categoryLineSeparator: state.options.categoryLineSeparator }),
   { ...goodsGroupsActions, ...goodsActions }
 )(GoodsGroups);

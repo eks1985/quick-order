@@ -23,6 +23,16 @@ const items = (state, action) => {
   }
 };
 
+const itemsFiltered = (state = {}, action) => {
+  switch(action.type){
+    case 'RECEIVE_CART_ITEMS_FILTETED':
+      console.log('action.payload', action.payload);
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
 const totalItems = (state = 0, action) => {
   switch (action.type) {
     case 'SET_TOTAL_CART_ITEMS':
@@ -41,8 +51,55 @@ const totalAmount = (state = 0, action) => {
   }
 };
 
+const goodsGroupsIds = (state = [], action) => {
+  switch (action.type) {
+    case 'SET_GOODS_GROUPS_IDS_CHECKOUT':
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+const filterText = (state = '', action) => {
+  switch (action.type) {
+    case 'SET_FILTER_TEXT_CART':
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+const filtersGoodsGroupsCartIds = (state = [], action) => {
+  switch (action.type) {
+    case 'ADD_GOODS_GROUPS_FILTER_CART':
+      return [ ...state, action.guid];
+    case 'REMOVE_GOODS_GROUPS_FILTER_CART':
+      const ind = state.indexOf(action.guid);
+      return [ ...state.slice(0, ind), ...state.slice(ind + 1)];
+    case 'RESET_GOODS_GROUPS_FILTERS_CART':
+      return [];
+    default:
+      return state;
+  }
+};
+
+// Selectors
+
+export const getGoodsVisibleIdsCheckout = (state) => {
+  const pageNumber = state.goods.pageNumberCheckout;
+  const keys = Object.keys(state.cart.itemsFiltered);
+  const rowsPerPage = state.goods.rowsPerPage || 10;
+  return  keys.reduce((result, key, i) => {
+    return i >= (pageNumber-1)*rowsPerPage && i < pageNumber*rowsPerPage ? result.concat(key) : result;
+  }, []);
+};
+
 export default combineReducers({
   items,
+  itemsFiltered,
   totalItems,
-  totalAmount
+  totalAmount,
+  goodsGroupsIds,
+  filterText,
+  filtersGoodsGroupsCartIds
 });

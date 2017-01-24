@@ -16,6 +16,8 @@ import IconDone               from 'material-ui/svg-icons/action/done';
 import Column                 from './column';
 import styles                 from './styles';
 
+import { getGoodsVisibleIdsCheckout } from './../../../store/reducers/cart';
+
 class ListContainer extends Component {
 
   constructor() {
@@ -80,7 +82,7 @@ class ListContainer extends Component {
     return (
       <div style={styles.style}>
         {this.props.columnsKeys.map((key, i) => <Column {...props } key={`${key}column`}  columnKey={key} columnsKeys={this.props.columnsKeys} i={i} />)}
-        {this.getSettingsBtnJsx()}
+        {false && this.getSettingsBtnJsx()}
       </div>
     );
 
@@ -89,7 +91,8 @@ class ListContainer extends Component {
 
 export default connect(
   state => ({
-    items: state.cart.items,
+    items: state.cart.itemsFiltered,
+    visibleItemsIds: getGoodsVisibleIdsCheckout(state),
     totalItems: state.cart.totalItems,
     checkout: state.checkout,
     prices: state.prices,

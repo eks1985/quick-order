@@ -34,6 +34,19 @@ const Nav = ({
         </FlatButton>
         <FlatButton
           rippleColor='#eee'
+          label='Корзина'
+          backgroundColor={currentContent === 'checkout' ? '#aaa' : '#eee'}
+          hoverColor={currentContent === 'checkout' ? '#aaa' : '#eee'}
+          labelStyle={currentContent === 'checkout' ? {color: 'white', fontWeight: 'normal'} : {color: 'black', fontWeight: 'normal'}}
+          onClick={
+            () => {
+              setCurrentContent('checkout');
+            }
+          }
+        >
+        </FlatButton>
+        <FlatButton
+          rippleColor='#eee'
           label='Заказы'
           backgroundColor={currentContent === 'orders' ? '#aaa' : '#eee'}
           hoverColor={currentContent === 'orders' ? '#aaa' : '#eee'}

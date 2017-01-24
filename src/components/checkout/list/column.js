@@ -10,27 +10,6 @@ import Amount from './custom-columns/amount';
 import Qty from './custom-columns/qty';
 import Delete from './custom-columns/delete';
 
-// export default ({
-//   columnsKeys,
-//   columnKey, //name of column
-//   i, //number of column
-//   items,
-//   catalogListSettings,
-//   headerSettingsMode,
-//   sortDirection,
-//   //actions
-//   moveHeaderColumn,
-//   addCatalogQty,
-//   setCurentGuid,
-//   setModal,
-//   removeFromCart,
-//   removeCatalogQty,
-//   addToCart,
-//   setFocused,
-//   sortGoods
-// }) => {
-
-
 export default (props) => {
 
   const {
@@ -38,6 +17,7 @@ export default (props) => {
     columnsKeys,
     columnsQty,
     items,
+    visibleItemsIds,
     i,
     headerSettingsMode,
     catalogQty,
@@ -52,9 +32,8 @@ export default (props) => {
     setFocused
   } = props;
 
-  // console.log('render column', columnKey);
-
-  const itemsIds = Object.keys(items);
+  // const itemsIds = Object.keys(items);
+  const itemsIds = visibleItemsIds;
 
   const sortable = false;
 

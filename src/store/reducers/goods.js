@@ -82,6 +82,15 @@ const currentGuid = (state = '', action) => {
   }
 };
 
+const currentGuidCheckout = (state = '', action) => {
+  switch (action.type) {
+    case 'SET_CURRENT_GOODS_CHECKOUT_GUID':
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 const items = (state = {}, action) => { //production
   switch (action.type) {
     case 'RECEIVE_GOODS':
@@ -106,6 +115,20 @@ const pageNumber = (state = 1, action) => {
   }
 };
 
+const pageNumberCheckout = (state = 1, action) => {
+  switch (action.type) {
+    case 'INCREASE_PAGE_NUMBER_GOODS_CHECKOUT':
+      return state +=1;
+    case 'DECREASE_PAGE_NUMBER_GOODS_CHECKOUT':
+        return state -=1;
+    case 'SET_PAGE_NUMBER_GOODS_CHECKOUT':
+        return action.pageNumber;
+    default:
+     return state;
+  }
+};
+
+
 const qtyPages = (state = 0, action) => {
   switch (action.type) {
     case 'SET_QTY_PAGES_GOODS':
@@ -115,9 +138,27 @@ const qtyPages = (state = 0, action) => {
   }
 };
 
+const qtyPagesCheckout = (state = 0, action) => {
+  switch (action.type) {
+    case 'SET_QTY_PAGES_GOODS_CHECKOUT':
+      return action.qtyPages;
+    default:
+     return state;
+  }
+};
+
 const isLastPage = (state = false, action) => {
   switch (action.type) {
     case 'SET_IS_LAST_PAGE_GOODS':
+      return action.payload;
+    default:
+     return state;
+  }
+};
+
+const isLastPageCheckout = (state = false, action) => {
+  switch (action.type) {
+    case 'SET_IS_LAST_PAGE_GOODS_CHECKOUT':
       return action.payload;
     default:
      return state;
@@ -146,6 +187,17 @@ const sortDirection = (state = '', action) => {
   }
 };
 
+const sortDirectionCheckout = (state = '', action) => {
+  switch (action.type) {
+    case 'SET_SORT_DIRECTION_FORWARD':
+      return 'forward';
+    case 'SET_SORT_DIRECTION_REVERSE':;
+      return 'reverse';
+    default:
+      return state;
+  }
+};
+
 // Selectors
 
 export const getGoodsVisibleIds = (state) => { //state = goods.state
@@ -154,17 +206,20 @@ export const getGoodsVisibleIds = (state) => { //state = goods.state
   const rowsPerPage = state.rowsPerPage || 10;
   return  keys.reduce((result, key, i) => {
     return i >= (pageNumber-1)*rowsPerPage && i < pageNumber*rowsPerPage ? result.concat(key) : result;
-    // return i >= (pageNumber-1)*10 && i < pageNumber*10 ? result.concat(key) : result;
   }, []);
 };
 
 export default combineReducers({
   currentGuid,
+  currentGuidCheckout,
   itemsInitial,
   items,
   pageNumber,
+  pageNumberCheckout,
   qtyPages,
+  qtyPagesCheckout,
   isLastPage,
+  isLastPageCheckout,
   rowsPerPage,
   codes,
   descriptions,
@@ -173,5 +228,6 @@ export default combineReducers({
   codeOrderIndexReverse,
   descriptionOrderIndex,
   descriptionOrderIndexReverse,
-  sortDirection
+  sortDirection,
+  sortDirectionCheckout
 });
