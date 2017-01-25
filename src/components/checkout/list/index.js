@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-// import { getColumns }         from './../../../../store/reducers/options';
 import * as cartActions       from './../../../actions/cart';
 import * as goodsActions      from './../../../actions/goods';
 import * as modalActions      from './../../../lib/modal/actions/modal';
@@ -68,7 +67,6 @@ class ListContainer extends Component {
   }
 
   render() {
-    // const columnsKeys = ['code', 'description', 'price', 'qty', 'delete'];
     const props = {
       ...this.props,
       setFocused: this.setFocused,
@@ -78,11 +76,10 @@ class ListContainer extends Component {
       currentId: this.state.current,
       columnsQty: this.props.columnsKeys.length
     };
-    // const { columnsKeys } = props;
     return (
       <div style={styles.style}>
         {this.props.columnsKeys.map((key, i) => <Column {...props } key={`${key}column`}  columnKey={key} columnsKeys={this.props.columnsKeys} i={i} />)}
-        {false && this.getSettingsBtnJsx()}
+        {this.getSettingsBtnJsx()}
       </div>
     );
 
@@ -97,10 +94,8 @@ export default connect(
     checkout: state.checkout,
     prices: state.prices,
     catalogQty: state.catalogQty,
-    columnsKeys: ['code', 'description', 'price', 'qty', 'amount', 'delete'],
+    columnsKeys: state.options.catalogListSettingsCheckout,
     sortDirection: state.sortDirection
   }),
   { ...cartActions, ...modalActions, ...goodsActions, ...catalogQtyActions, ...optionsActions, ...checkoutActions }
 )(ListContainer);
-
-// export default ListContainer;

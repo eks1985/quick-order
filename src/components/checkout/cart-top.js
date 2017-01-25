@@ -4,6 +4,8 @@ import * as cartActions from './../../actions/cart';
 import * as checkoutActions from './../../actions/checkout';
 import IconShoppingCart from 'material-ui/svg-icons/action/shopping-cart';
 import { format1 } from './../../utils/format';
+import RaisedButton from 'material-ui/RaisedButton';
+import IconRemoveCart from 'material-ui/svg-icons/action/remove-shopping-cart';
 
 const Cart = ({
   cart,
@@ -53,6 +55,13 @@ const Cart = ({
               Корзина пуста
             </div>
           }
+          <RaisedButton
+            style={{marginLeft: '6px'}}
+            icon={<IconRemoveCart />}
+            label='Очистить'
+            labelStyle={{fontWeight: 'normal'}}
+            onClick={checkoutOrder}
+          />
         </div>
 
       </div>

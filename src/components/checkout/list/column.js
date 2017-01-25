@@ -22,7 +22,7 @@ export default (props) => {
     headerSettingsMode,
     catalogQty,
     // actions
-    moveHeaderColumn,
+    moveHeaderColumnCheckout,
     addCatalogQty,
     removeCatalogQty,
     addToCart,
@@ -32,7 +32,6 @@ export default (props) => {
     setFocused
   } = props;
 
-  // const itemsIds = Object.keys(items);
   const itemsIds = visibleItemsIds;
 
   const sortable = false;
@@ -100,7 +99,7 @@ export default (props) => {
 
   const getItemsJsx = () => itemsIds.map( (key, rowIndex) => customColumn ?  getCustomItemJsx(key, rowIndex) : getItemJsx(key, rowIndex));
 
-  const headerProps = { headerSettingsMode, columnsKeys, columnKey, columnsQty, i, moveHeaderColumn };
+  const headerProps = { headerSettingsMode, columnsKeys, columnKey, columnsQty, i, moveHeaderColumnCheckout };
 
   return (
     <div style={prepareStyle()}>

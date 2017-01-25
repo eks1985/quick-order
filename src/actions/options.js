@@ -46,3 +46,18 @@ export const moveHeaderColumn = (columsKeys, name, direction) => {
     dispatch(setCustomerOptionFirebase('catalogListSettings', newOpt));
   };
 };
+
+export const moveHeaderColumnCheckout = (columsKeys, name, direction) => {
+  return (dispatch, getState) => {
+    const pos = columsKeys.indexOf(name);
+    const newOpt =  direction === 'forward'
+      ? [ ...columsKeys.slice(0, pos), columsKeys[pos + 1], columsKeys[pos], ...columsKeys.slice(pos + 2) ]
+      : [ ...columsKeys.slice(0, pos - 1), columsKeys[pos], columsKeys[pos - 1], ...columsKeys.slice(pos + 1) ];
+    dispatch({
+      type: 'SET_OPTION',
+      option: 'catalogListSettingsCheckout',
+      value: newOpt
+    });
+    dispatch(setCustomerOptionFirebase('catalogListSettingsCheckout', newOpt));
+  };
+};

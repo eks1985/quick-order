@@ -7,6 +7,7 @@ const initialState = {
   showNoActivePosition: false,
   managePrices: 'common', //common, byCustomers, dontUse
   catalogListSettings: ['code', 'description', 'price', 'qty'], //production
+  catalogListSettingsCart: ['code', 'description', 'price', 'qty', 'amount', 'delete'], 
   catalogListColumns: {}, //production,
   showPictures: {row: false, side: false, dialog: false},
   categoryLineSeparator: false,

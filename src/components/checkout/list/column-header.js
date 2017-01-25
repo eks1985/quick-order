@@ -11,7 +11,7 @@ const Header = (props) => {
 
   const { arrowStyle, arrowSortStyle }  = styles;
 
-  const { headerSettingsMode, columnsKeys, columnKey, columnsQty, i, moveHeaderColumn } = props;
+  const { headerSettingsMode, columnsKeys, columnKey, columnsQty, i, moveHeaderColumnCheckout } = props;
 
   const columnNames = {
     code: 'Код',
@@ -29,7 +29,7 @@ const Header = (props) => {
           iconStyle={arrowStyle.icon}
           onClick={
             ()=>{
-              moveHeaderColumn(columnsKeys, columnKey, direction);
+              moveHeaderColumnCheckout(columnsKeys, columnKey, direction);
             }
           }
         >
@@ -110,7 +110,7 @@ Header.propTypes = {
   columnKey: PropTypes.string.isRequired,
   columnsQty: PropTypes.number.isRequired,
   i: PropTypes.number.isRequired,
-  moveHeaderColumn: PropTypes.func.isRequired
+  moveHeaderColumnCheckout: PropTypes.func.isRequired
 };
 
 export default Header;

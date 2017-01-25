@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import * as cartActions from './../../actions/cart';
 import * as checkoutActions from './../../actions/checkout';
 import RaisedButton from 'material-ui/RaisedButton';
-import IconRemoveCart from 'material-ui/svg-icons/action/remove-shopping-cart';
-import IconRowing from 'material-ui/svg-icons/action/rowing';
+// import IconRemoveCart from 'material-ui/svg-icons/action/remove-shopping-cart';
+import IconSend from 'material-ui/svg-icons/content/send';
 // import { format1 } from './../../utils/format';
-import Subheader from 'material-ui/Subheader';
+// import Subheader from 'material-ui/Subheader';
 import TextField from 'material-ui/TextField';
 
 const Cart = ({
@@ -35,16 +35,17 @@ const Cart = ({
       <div style={{display: 'flex', flexDirection: 'column'}}>
         {hasItems &&
           <div style={{display: 'flex', flex: '1 0 100%', justifyContent: 'center', marginTop: '10px'}}>
-            <div style={{marginRight: '3px'}}>
+            <div style={{marginRight: '3px', marginBottom: '5px', display: 'flex'}}>
               <RaisedButton
-                icon={<IconRowing />}
+                style={{flex: '1'}}
+                icon={<IconSend />}
                 label='Отправить'
-                labelStyle={{fontWeight: 'normal'}}
+                labelStyle={{fontWeight: 'normal', flex: '1'}}
                 onClick={checkoutOrder}
               />
             </div>
             <div style={{marginLeft: '3px'}}>
-              <RaisedButton
+              {/* <RaisedButton
                 icon={<IconRemoveCart />}
                 label='Очистить'
                 labelStyle={{fontWeight: 'normal'}}
@@ -56,16 +57,17 @@ const Cart = ({
                     }
                   }
                 }
-              />
+              /> */}
             </div>
 
           </div>
         }
 
-        <Subheader>
+        {/* <Subheader>
           Комментарий
-        </Subheader>
+        </Subheader> */}
         <TextField
+          placeholder='Комментарий'
           id='comment'
           multiLine={true}
           rows={5}

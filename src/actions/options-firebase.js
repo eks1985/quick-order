@@ -1,6 +1,25 @@
 import { database } from '../firebase/firebase-app';
 import { setRowsPerPage } from './ui';
 
+export const listenToCustomerOptions = () => {
+  return (dispatch, getState) => {
+    try {
+      const customerGuid = getState().customer.guid;
+      if (customerGuid) {
+        let customerOptionsRef = database.ref(`options/${customerGuid}`);
+        customerOptionsRef.once('value', snapshot => {
+          dispatch({
+            type: 'RECEIVE_OPTIONS',
+            payload: snapshot.val()
+          });
+        });
+      }
+    } catch (e) {
+
+    }
+  }
+}
+
 export const listenToOptions = () => {
 	return (dispatch) => {
 		try {
@@ -20,6 +39,7 @@ export const listenToOptions = () => {
 					type: 'RECEIVE_SORT_DIRECTION',
 					payload: result
 				});
+        dispatch(listenToCustomerOptions());
 			}, (error) => {
 				dispatch({
 					type: 'RECEIVE_OPTIONS_ERROR',

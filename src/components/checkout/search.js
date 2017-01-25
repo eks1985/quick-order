@@ -12,8 +12,6 @@ let Search = ({
   setFilterTextCart,
   filterCartItems
 }) => {
-  console.log("filterCartItems", filterCartItems);
-  console.log('setFilterTextCart', setFilterTextCart);
   let input;
   const iconButtonStyle = {
     padding: '0px',
