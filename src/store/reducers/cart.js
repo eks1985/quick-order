@@ -3,10 +3,10 @@ import { combineReducers } from 'redux';
 
 const initialState = {}; //guid. qty, price
 const items = (state, action) => {
-  const { guid, qty, price, code, description, amount } = action;
+  const { guid, qty, price, code, description, amount, groupRef } = action;
   switch(action.type) {
     case 'ADD_TO_CART':
-      return { ...state, [guid]: {qty, price, code, description, amount}};
+      return { ...state, [guid]: {qty, price, code, description, amount, groupRef}};
     case 'REMOVE_FROM_CART':
       const stateCopy = { ...state };
       delete stateCopy[guid];
@@ -26,7 +26,6 @@ const items = (state, action) => {
 const itemsFiltered = (state = {}, action) => {
   switch(action.type){
     case 'RECEIVE_CART_ITEMS_FILTETED':
-      console.log('action.payload', action.payload);
       return action.payload;
     default:
       return state;

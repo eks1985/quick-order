@@ -11,6 +11,7 @@ import { setQtyPagesOrders } from './actions/orders';
 import { setCurrentContent } from './actions/current-content';
 import { setFilterTextCart } from './actions/cart';
 import { search, moveGoodsBack, moveGoodsForward } from './actions/goods';
+import { filterCartItems } from './actions/cart';
 import { setUi } from './actions/ui';
 // eslint-disable-next-line
 import rtep from './rtep';
@@ -44,6 +45,7 @@ class App extends Component {
     if (e.which === 13 && document.activeElement.id === 'searchCart') {
       const text = document.querySelector('#searchCart').value;
       dispatch(setFilterTextCart(text));
+      dispatch(filterCartItems());
     }
 
     if(e.which === 13 && document.activeElement.className === "catalogQtyInput") {

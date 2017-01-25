@@ -123,12 +123,12 @@ const searchByPropWord = (word, indexKeys, index, res) => {
   return indexKeys.reduce((res, key) => key.includes(word) ? [ ...res, ...index[key] ] : res, res);
 };
 
-const searchByPropText = (words, index,  res) => {
+export const searchByPropText = (words, index,  res) => {
   const indexKeys = Object.keys(index);
   return words.reduce( (res, word) => [ ...res, ...searchByPropWord(word.trim(), indexKeys, index, res) ], res);
 };
 
-const getItemsByIds = (ids, items) => {
+export const getItemsByIds = (ids, items) => {
   return ids.reduce((res, key) => ({ ...res, [key]: items[key] }), {});
 };
 

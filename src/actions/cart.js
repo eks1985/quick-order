@@ -1,17 +1,53 @@
 import { isNumeric } from './../utils/index';
 import { setCurrentContent } from './../actions/current-content';
-import { setQtyPagesGoodsCheckout, detectIsLastPageCheckout } from './goods-checkout-navigation';
+import { setQtyPagesGoodsCheckout, goToGoodsPageCheckout, detectIsLastPageCheckout } from './goods-checkout-navigation';
+import { filterByGroupGuids } from './../actions/goods-groups';
+import { searchByPropText, getItemsByIds } from './goods';
+
+console.log('searchByPropText', searchByPropText);
 
 export const filterCartItems = () => {
   return (dispatch, getState) => {
     const state = getState();
-    const { filterText, filterGoodsGroups } = state.cart;
-    console.log('filterText', filterText);
-    console.log('filterGoodsGroups', filterGoodsGroups);
+    const { filtersGoodsGroupsCartIds, items } = state.cart;
+    let { filterText } = state.cart;
+    const { codes, descriptions } = state.goods;
+    filterText = filterText.toLowerCase();
+    let result = items;
+    let resultKeys = [];
+    if (filterText.trim() === '') {
+      result = items;
+    } else {
+      const words = filterText.split(' ');
+      resultKeys = searchByPropText(words, codes, resultKeys);
+      resultKeys = searchByPropText(words, descriptions, resultKeys);
+      const itemsKeys = Object.keys(items);
+      const resultCartKeys = resultKeys.reduce((res, key) => {
+        return itemsKeys.includes(key) ? res.concat(key) : res;
+      } ,[]);
+      // const columns = getState().options.catalogListColumns;
+      // const columnsKeys = Object.keys(columns).reduce((res, key) => columns[key][1] ? [ ...res, key ] : res , []);
+      // resultKeys = columnsKeys.reduce((res, key) => [ ...res, ...searchByPropText(words, getState()['__index__' + key].index, []) ], resultKeys);
+      result = getItemsByIds(resultCartKeys, items);
+    }
+    // filter by category
+    if (filtersGoodsGroupsCartIds.length > 0) {
+      result = filterByGroupGuids(filtersGoodsGroupsCartIds, items);
+    }
+    // // filter by props val
+    // const filtersApplied = getState().filtersApplied;
+    // const filtersAppliedKeys = Object.keys(filtersApplied);
+    // if (filtersAppliedKeys.length > 0) {
+    //   result = filtersAppliedKeys.reduce((result, propName) => filterByPropVal(getState, propName, filtersApplied[propName], result) , result);
+    // }
+
+
     dispatch({
       type: 'RECEIVE_CART_ITEMS_FILTETED',
-      payload: state.cart.items
+      payload: result
     })
+    dispatch(setQtyPagesGoodsCheckout());
+    dispatch(goToGoodsPageCheckout(1));
   }
 }
 
@@ -58,7 +94,7 @@ export const setTotalCartAmount = () => {
 export const addToCart = (guid, qty, price) => {
   return (dispatch, getState) => {
     const goodsItemsInitial = getState().goods.itemsInitial;
-    const { code, description } = goodsItemsInitial[guid];
+    const { code, description, groupRef } = goodsItemsInitial[guid];
     dispatch({
       type: 'ADD_TO_CART',
       guid,
@@ -66,7 +102,8 @@ export const addToCart = (guid, qty, price) => {
       price,
       code,
       description,
-      amount: qty*price
+      amount: qty*price,
+      groupRef
     });
     dispatch(setTotalCartItems());
     dispatch(setTotalCartAmount());

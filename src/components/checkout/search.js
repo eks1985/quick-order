@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { setFilterTextCart } from './../../actions/cart';
+import { setFilterTextCart, filterCartItems } from './../../actions/cart';
 import TextField from 'material-ui/TextField';
 import IconButton from 'material-ui/IconButton';
 import IconSearch from 'material-ui/svg-icons/action/search';
@@ -9,8 +9,11 @@ import IconClear from 'material-ui/svg-icons/content/clear';
 let Search = ({
   search,
   //action
-  setFilterTextCart
+  setFilterTextCart,
+  filterCartItems
 }) => {
+  console.log("filterCartItems", filterCartItems);
+  console.log('setFilterTextCart', setFilterTextCart);
   let input;
   const iconButtonStyle = {
     padding: '0px',
@@ -39,6 +42,7 @@ let Search = ({
         onClick={
           () => {
             setFilterTextCart(input.input.value);
+            filterCartItems();
           }
         }
       >
@@ -51,6 +55,7 @@ let Search = ({
         onClick={
           () => {
             setFilterTextCart('');
+            filterCartItems();
             input.input.value = '';
         }
       }>
@@ -68,5 +73,5 @@ class SearchContainer extends Component {
 
 export default connect(
   null,
-  { setFilterTextCart }
+  { setFilterTextCart, filterCartItems }
 )(SearchContainer);

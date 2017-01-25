@@ -47,7 +47,8 @@ const CatalogIndex = props => {
     display: 'flex',
     flex: '1 0 auto',
     flexDirection: 'column',
-    padding: '10px'
+    padding: '10px',
+    paddingTop: '0px'
   };
   let pictContainerStyle = {display: 'flex', padding: '8px', marginTop: '6px'};
   pictContainerStyle = cartItems[currentGuid] ? { ...pictContainerStyle, border: '2px solid goldenrod'} : pictContainerStyle

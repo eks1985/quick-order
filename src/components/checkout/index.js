@@ -8,7 +8,10 @@ import * as cartActions from './../../actions/cart';
 import * as checkoutActions from './../../actions/checkout';
 // import Subheader from 'material-ui/Subheader';
 
-import Cart from './cart/index';
+import CartTop from './cart-top';
+import CartRight from './cart-right';
+
+// import Cart from './cart/index';
 import GoodsGroups from './goods-groups/index';
 
 import Pagination from './pagination';
@@ -32,6 +35,7 @@ const Checkout = props => {
     display: 'flex',
     flex: '1 0 75%',
     padding: '10px',
+    paddingTop: '0px',
     flexDirection: 'column'
   };
   const cartCategoriesStyle = {
@@ -75,16 +79,17 @@ const Checkout = props => {
     // </Paper>
 
     <div className='checkout' style={style}>
-      <div style={catalogStyle}>
+      <Paper style={catalogStyle} zDepth={2}>
         <div style={{display: 'flex', justifyContent: 'space-between', height: '65px'}}>
           <Search />
+          <CartTop />
           <Pagination />
         </div>
         <List {...props} />
-      </div>
+      </Paper>
       <div style={cartCategoriesStyle}>
         <Paper rounded={false} zDepth={2}>
-          <Cart />
+          <CartRight />
         </Paper>
         <GoodsGroups />
       </div>
