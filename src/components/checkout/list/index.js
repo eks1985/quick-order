@@ -22,12 +22,12 @@ class ListContainer extends Component {
   constructor() {
     super();
     this.state = {current: '', headerSettingsMode: false};
-    this.setFocused = this.setFocused.bind(this);
+    this.setFocusedCheckout = this.setFocusedCheckout.bind(this);
     this.setHeaderSettingsMode = this.setHeaderSettingsMode.bind(this);
     this.removeHeaderSettingsMode= this.removeHeaderSettingsMode.bind(this);
   }
 
-  setFocused(key) {
+  setFocusedCheckout(key) {
     this.setState({current: key});
   }
 
@@ -69,7 +69,7 @@ class ListContainer extends Component {
   render() {
     const props = {
       ...this.props,
-      setFocused: this.setFocused,
+      // setFocusedCheckout: this.setFocusedCheckout,
       headerSettingsMode: this.state.headerSettingsMode,
       setHeaderSettingsMode: this.setHeaderSettingsMode.bind(this),
       removeHeaderSettingsMode: this.removeHeaderSettingsMode.bind(this),
@@ -95,7 +95,8 @@ export default connect(
     prices: state.prices,
     catalogQty: state.catalogQty,
     columnsKeys: state.options.catalogListSettingsCheckout,
-    sortDirection: state.sortDirection
+    sortDirection: state.sortDirection,
+    currentCheckout: state.currentCheckout
   }),
   { ...cartActions, ...modalActions, ...goodsActions, ...catalogQtyActions, ...optionsActions, ...checkoutActions }
 )(ListContainer);

@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 
-const Component = ({
+const Qty = ({
+  currentCheckout,
   keyProp,
   rowIndex,
   items,
@@ -12,15 +13,29 @@ const Component = ({
   addToCart,
   addCatalogQty,
   catalogQty,
-  setFocused
+  setFocusedCheckout,
+  setCurentGuidCheckout
 }) => {
 
     const { rowStyle, incDecSmallQtyPane, qtyInputStyle } = styles;
 
+    const applyCurrentRowBorder = (style) => {
+      let extendedStyle = { ...style, background: 'rgba(255, 215, 0, 0.2)' };
+      return currentCheckout === rowIndex ? { ...style, ...extendedStyle }: style;
+    }
+
     const getJsx = () => {
-      let style = applyZebra(rowStyle.qty, rowIndex);
+      let style = applyCurrentRowBorder(applyZebra(rowStyle.qty, rowIndex));
       return (
-        <div key={`${keyProp}${columnKey}`} style={style}>
+        <div
+          key={`${keyProp}${columnKey}`}
+          style={style}
+          onClick={
+            () => {
+              document.getElementById(rowIndex).focus();
+            }
+          }
+        >
           <div
             style={incDecSmallQtyPane}
             onClick={
@@ -40,13 +55,15 @@ const Component = ({
           ></div>
           <input
             type='text'
-            id={rowIndex + 1000}
+            id={rowIndex}
+            // id={rowIndex}
             className='catalogQtyInput'
             style={qtyInputStyle}
             value={catalogQty[keyProp] || ''}
             onFocus={
               () => {
-                setFocused(keyProp);
+                setFocusedCheckout(rowIndex);
+                setCurentGuidCheckout(keyProp);
               }
             }
             onChange={
@@ -81,10 +98,10 @@ const Component = ({
 
 };
 
-Component.propTypes = {
+Qty.propTypes = {
   items: PropTypes.object.isRequired,
   columnKey: PropTypes.string.isRequired,
   applyZebra: PropTypes.func.isRequired
 };
 
-export default Component;
+export default Qty;

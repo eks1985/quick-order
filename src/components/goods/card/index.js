@@ -8,9 +8,10 @@ const Card = ({
   goods,
   goodsGroups,
   prices,
-  options
+  options,
+  currentGuid
 }) => {
-  const { currentGuid, items } = goods;
+  const { items } = goods;
   const style = {
     display: 'flex',
   }
@@ -60,5 +61,10 @@ const Card = ({
 };
 
 export default connect(
-  state => ({goods: state.goods, goodsGroups: state.goodsGroups, prices: state.prices, options: state.options})
+  state => {
+    const { goods, goodsGroups, prices, options, modal, cart } = state;
+    const currentGuid = modal.data.sourcr === 'catalog' ? goods.currentGuid : cart.currentGuid;
+    return  { goods, goodsGroups, prices, options, modal, cart, currentGuid };
+  }
+  // state => ({goods: state.goods, goodsGroups: state.goodsGroups, prices: state.prices, options: state.options})
 )(Card);

@@ -120,7 +120,7 @@ export default ({
           onDoubleClick={
             () => {
               setCurentGuid(key);
-              setModal({ content: 'goodsCard', fullScreen: true, showClose: true, style: { background: '#fff' } });
+              setModal({ content: 'goodsCard', fullScreen: true, showClose: true, style: { background: '#fff' }, data: { source: 'catalog'} });
             }
           }
         >

@@ -24,7 +24,7 @@ import {List, ListItem} from 'material-ui/List';
 // import img14 from './../../../images/15263695669_1a3b3ea2f7_z.jpg';
 // import img15 from './../../../images/15590414733_2bd4428b49_o.jpg';
 
-const img1 = 'https://raw.githubusercontent.com/crazy-loop/quick-order/master/src/images/stackCover.jpg';
+const img1 = 'https://firebasestorage.googleapis.com/v0/b/quick-order-de84c.appspot.com/o/images-goods%2F5873149343_3a15fc199e_z.jpg?alt=media&token=f97c6eb6-3902-4acf-9886-c70bf85ad8bf';
 const img2 = 'https://firebasestorage.googleapis.com/v0/b/quick-order-de84c.appspot.com/o/images-goods%2F13957648459_dc3aee8b8c_z.jpg?alt=media&token=84fc3f08-95c0-4422-bdf7-e6300ec7e41e';
 const img3 = 'https://firebasestorage.googleapis.com/v0/b/quick-order-de84c.appspot.com/o/images-goods%2F14690349697_22e243679e_z.jpg?alt=media&token=38f2c24f-0b34-4035-8e26-9a410731850a';
 const img4 = 'https://firebasestorage.googleapis.com/v0/b/quick-order-de84c.appspot.com/o/images-goods%2F15263695669_1a3b3ea2f7_z.jpg?alt=media&token=7d525240-2133-40e5-9b49-e3c2765aa789';

@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 
 const Component = ({
+  currentCheckout,
   keyProp,
   rowIndex,
   items,
@@ -12,10 +13,23 @@ const Component = ({
   prices
 }) => {
 
+  const applyCurrentRowBorder = (style) => {
+    let extendedStyle = { ...style, background: 'rgba(255, 215, 0, 0.2)' };
+    return currentCheckout === rowIndex ? { ...style, ...extendedStyle }: style;
+  }
+
   const getJsx = () => {
-    let style = applyZebra(rowStyle.price, rowIndex);
+    let style = applyCurrentRowBorder(applyZebra(rowStyle.price, rowIndex));
     return (
-      <div key={`${keyProp}${columnKey}`} style={style}>
+      <div
+        key={`${keyProp}${columnKey}`}
+        style={style}
+        onClick={
+          () => {
+            document.getElementById(rowIndex).focus();
+          }
+        }
+      >
         {format1(items[keyProp].price || 100, '')}
       </div>
     );

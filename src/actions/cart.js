@@ -4,8 +4,6 @@ import { setQtyPagesGoodsCheckout, goToGoodsPageCheckout, detectIsLastPageChecko
 import { filterByGroupGuids } from './../actions/goods-groups';
 import { searchByPropText, getItemsByIds } from './goods';
 
-console.log('searchByPropText', searchByPropText);
-
 export const filterCartItems = () => {
   return (dispatch, getState) => {
     const state = getState();
@@ -64,6 +62,14 @@ const setGoodsGroupsIds = () => {
     })
   }
 }
+
+export const setCurentGuidCheckout = guid => {
+  return {
+    type: 'SET_CURRENT_GOODS_GUID_CHECKOUT',
+    payload: guid
+  };
+};
+
 
 export const setTotalCartItems = () => {
   return (dispatch, getState) => {

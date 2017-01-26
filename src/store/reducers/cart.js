@@ -82,6 +82,15 @@ const filtersGoodsGroupsCartIds = (state = [], action) => {
   }
 };
 
+const currentGuid = (state = '', action) => {
+  switch (action.type) {
+    case 'SET_CURRENT_GOODS_GUID_CHECKOUT':
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 // Selectors
 
 export const getGoodsVisibleIdsCheckout = (state) => {
@@ -100,5 +109,6 @@ export default combineReducers({
   totalAmount,
   goodsGroupsIds,
   filterText,
-  filtersGoodsGroupsCartIds
+  filtersGoodsGroupsCartIds,
+  currentGuid
 });

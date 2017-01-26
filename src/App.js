@@ -50,19 +50,18 @@ class App extends Component {
 
     if(e.which === 13 && document.activeElement.className === "catalogQtyInput") {
       let id = parseInt(document.activeElement.id, 10);
-      // let newId = id < 9 ? id + 1 : 0;
       let newId = id < rowsPerPage - 1 ? id + 1 : 0;
       document.getElementById(newId).focus();
     }
+    // down
     if (e.which === 40 && document.activeElement.className === "catalogQtyInput") {
       let id = parseInt(document.activeElement.id, 10);
-      // let newId = id < 9 ? id + 1 : 0;
       let newId = id < rowsPerPage - 1 ? id + 1 : 0;
       document.getElementById(newId).focus();
     }
+    // up
     if (e.which === 38 && document.activeElement.className === "catalogQtyInput") {
       let id = parseInt(document.activeElement.id, 10);
-      // let newId = id > 0 ? id - 1 : 9;
       let newId = id > 0 ? id - 1 : rowsPerPage - 1;
       document.getElementById(newId).focus();
     }
@@ -78,22 +77,26 @@ class App extends Component {
   }
 
   handleClick = e => {
-    const { current, dispatch } = this.props;
+    const { current, dispatch, currentContent } = this.props;
     let className = '';
     try {
       className = e.target.className;
     } catch (e) {}
-    className = typeof className === 'string' ? className : '';
-    className !== 'catalogQtyInput' &&
-    !className.includes('row-cell') &&
-    !className.includes('pagination') &&
-    !className.includes('side-picture') &&
-    !className.includes('modal-close') &&
-    e.srcElement.tagName !== 'path' &&
-    e.srcElement.tagName !== 'svg' &&
-    dispatch({ type: 'RESET_FOCUSED' });
-    current !== '' && document.getElementById(current).focus();
-    current !== '' && dispatch({ type: 'SET_FOCUSED', payload: current});
+    if (currentContent === 'goods') {
+      className = typeof className === 'string' ? className : '';
+      className !== 'catalogQtyInput' &&
+      !className.includes('row-cell') &&
+      !className.includes('pagination') &&
+      !className.includes('side-picture') &&
+      !className.includes('modal-close') &&
+      e.srcElement.tagName !== 'path' &&
+      e.srcElement.tagName !== 'svg' &&
+      dispatch({ type: 'RESET_FOCUSED' });
+      current !== '' && document.getElementById(current).focus();
+      current !== '' && dispatch({ type: 'SET_FOCUSED', payload: current});
+    } else if (currentContent === 'checkout') {
+
+    }
   }
 
   render() {
@@ -120,7 +123,7 @@ class App extends Component {
 }
 
 App = connect(
-  state => ({ current: state.current, rowsPerPage: state.goods.rowsPerPage })
+  state => ({ current: state.current, rowsPerPage: state.goods.rowsPerPage, currentContent: state.currentContent })
 )(App);
 
 export default App;

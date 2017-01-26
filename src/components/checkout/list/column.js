@@ -21,15 +21,16 @@ export default (props) => {
     i,
     headerSettingsMode,
     catalogQty,
+    currentCheckout,
     // actions
     moveHeaderColumnCheckout,
     addCatalogQty,
     removeCatalogQty,
     addToCart,
     removeFromCart,
-    setCurentGuid,
+    setCurentGuidCheckout,
     setModal,
-    setFocused
+    setFocusedCheckout
   } = props;
 
   const itemsIds = visibleItemsIds;
@@ -64,11 +65,11 @@ export default (props) => {
   // Work with styles <
 
   const getCustomItemJsx = (key, rowIndex) => {
-    const p            = { rowStyle, keyProp: key, rowIndex, items, columnKey, applyVertBorder, applyZebra };
+    const p            = { rowStyle, keyProp: key, rowIndex, items, columnKey, applyVertBorder, applyZebra, setCurentGuidCheckout, currentCheckout };
     const pCode        = { ...p  };
-    const pDescription = { ...p, setCurentGuid, setModal };
+    const pDescription = { ...p, setModal };
     const pPrice       = { ...p, format1 };
-    const pQty         = { ...p, catalogQty, styles, addCatalogQty, addToCart, removeCatalogQty, removeFromCart, setFocused };
+    const pQty         = { ...p, catalogQty, styles, addCatalogQty, addToCart, removeCatalogQty, removeFromCart, setFocusedCheckout };
     const pDelete      = { ...p, removeFromCart, removeCatalogQty };
     switch (columnKey) {
       case 'code':
