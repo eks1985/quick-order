@@ -76,7 +76,6 @@ export default ({
         style={style}
         onClick={
           () => {
-            // setFocused(rowIndex);
             document.getElementById(rowIndex).focus();
           }
         }
@@ -95,7 +94,6 @@ export default ({
         style={style}
         onClick={
           () => {
-            // setFocused(rowIndex);
             document.getElementById(rowIndex).focus();
           }
         }
@@ -124,15 +122,6 @@ export default ({
             }
           }
         >
-          {/* <ListItem
-            style={{marginLeft: '3px'}}
-            tabIndex={-1}
-            innerDivStyle={{padding: '6px'}}
-            hoverColor='#ddd'
-            rippleColor='transparent'
-          >
-            {items[key].description}
-          </ListItem> */}
           <div style={{padding: '5px'}} className='goodsDescr'>
             {items[key].description}
           </div>
@@ -149,7 +138,6 @@ export default ({
         style={style}
         onClick={
           () => {
-            // setFocused(rowIndex);
             document.getElementById(rowIndex).focus();
           }
         }
@@ -167,7 +155,6 @@ export default ({
         style={style}
         onClick={
           () => {
-            // setFocused(rowIndex);
             document.getElementById(rowIndex).focus();
           }
         }

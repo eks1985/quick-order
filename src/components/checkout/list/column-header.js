@@ -11,7 +11,11 @@ const Header = (props) => {
 
   const { arrowStyle, arrowSortStyle }  = styles;
 
-  const { headerSettingsMode, columnsKeys, columnKey, columnsQty, i, moveHeaderColumnCheckout } = props;
+  const { headerSettingsMode, columnsKeys, columnKey, columnsQty, i, moveHeaderColumnCheckout, sortDirection, setModal } = props;
+
+  const sortable = sortDirection[columnKey] !== undefined;
+
+  // const customColumn = ['code', 'description', 'price', 'qty', 'amount', 'delete'].indexOf(columnKey) > - 1;
 
   const columnNames = {
     code: 'Код',
@@ -39,25 +43,50 @@ const Header = (props) => {
   };
 
   const getSortArrowIconJsx = (direction) => {
+    // return (
+    //   <IconButton
+    //     style={arrowSortStyle.button}
+    //     iconStyle={direction === '' ? { ...arrowSortStyle.icon, fill: '#aaa' } : arrowSortStyle.icon}
+    //     id='sortIcon'
+    //     onClick={
+    //       ()=>{
+    //         // sortable && sortGoods(columnKey);
+    //       }
+    //     }
+    //   >
+    //     { (direction === 'forward' || direction === '') && <IconArrowDown /> }
+    //     { direction === 'reverse' && <IconArrowUp /> }
+    // </IconButton>
+    // );
+
+    const iconStyle = direction === '' ? { ...arrowSortStyle.icon, fill: '#aaa' } : arrowSortStyle.icon;
     return (
-      <IconButton
-        style={arrowSortStyle.button}
-        iconStyle={direction === '' ? { ...arrowSortStyle.icon, fill: '#aaa' } : arrowSortStyle.icon}
-        id='sortIcon'
-        onClick={
-          ()=>{
-            // sortable && sortGoods(columnKey);
+        <div
+          onClick={
+            (e)=>{
+              let data = {columnKey, sort: true, filter: false};
+              if (columnKey === 'qty' || columnKey === 'price' || columnKey === 'amount' || columnKey === 'delete') {
+                data = false;
+              }
+              // if (!customColumn) {
+              //   if (catalogListColumns[columnKey]) {
+              //     data.sort = catalogListColumns[columnKey][2];
+              //     data.filter = catalogListColumns[columnKey][1];
+              //   }
+              // }
+              data && setModal({}) && setModal({content: 'column-settings-checkout', x: e.pageX, y: e.pageY, style: {background: '#fff'}, data });
+            }
           }
-        }
-      >
-        { (direction === 'forward' || direction === '') && <IconArrowDown /> }
-        { direction === 'reverse' && <IconArrowUp /> }
-    </IconButton>
+        >
+          { (direction === 'forward' || direction === '') && <IconArrowDown style={iconStyle} /> }
+          { direction === 'reverse' && <IconArrowUp style={iconStyle} /> }
+        </div>
     );
+
   };
 
   const getSortArrowJsx = () => {
-    const sortDirection = { code: false, description: false, price: false, qty: false, delete: false};
+    // const sortDirection = { code: false, description: false, price: false, qty: false, delete: false};
     return (
       <div>
         { sortDirection[columnKey] === '' && getSortArrowIconJsx('') }
@@ -76,8 +105,18 @@ const Header = (props) => {
         <div style={{display: 'flex', alignItems: 'center'}}>
           <div
             onClick={
-              ()=>{
-                // sortable && sortGoods(columnKey);
+              (e)=>{
+                let data = {columnKey, sort: true, filter: false};
+                if (columnKey === 'qty' || columnKey === 'price' || columnKey === 'amount' || columnKey === 'delete') {
+                  data = false;
+                }
+                // if (!customColumn) {
+                //   if (catalogListColumns[columnKey]) {
+                //     data.sort = catalogListColumns[columnKey][2];
+                //     data.filter = catalogListColumns[columnKey][1];
+                //   }
+                // }
+                data && setModal({}) && setModal({content: 'column-settings-checkout', x: e.pageX, y: e.pageY, style: {background: '#fff'}, data });
               }
             }
           >
@@ -94,7 +133,7 @@ const Header = (props) => {
 
   const getHeaderJsx = () => {
     return (
-      <div style={{display: 'flex'}}>
+      <div style={sortable ? {display: 'flex', cursor: 'pointer'} :  {display: 'flex'}}>
         {getHeaderColumnJsx()}
       </div>
     );

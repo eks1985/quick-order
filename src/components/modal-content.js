@@ -5,6 +5,7 @@ import Profile from './profile';
 import GoodsCard from './goods/card';
 import Login from './log-in';
 import ColumnSettings from './column-settings';
+import ColumnSettingsCheckout from './column-settings-checkout';
 import FirebaseConfig from './firebase-config';
 import PricesValidation from './options/validations/prices';
 
@@ -19,6 +20,7 @@ const ModalContent = ({
       {modal.content === 'login' && <Login />}
       {modal.content === 'firebase-config' && <FirebaseConfig />}
       {modal.content === 'column-settings' && <ColumnSettings />}
+      {modal.content === 'column-settings-checkout' && <ColumnSettingsCheckout />}
       {modal.content === 'prices-validation' && <PricesValidation />}
     </div>
   );

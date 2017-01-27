@@ -17,12 +17,9 @@ const OptionsData = props => {
   const {
     options,
     items,
-    // goodsGroups, 
     //actions
     setCommonOptionCatalogListColumnsFirebase,
   } = props;
-
-  // const goodsGroupsLength = Object.keys(goodsGroups);
 
   const getItemJsx = (item) => {
     const itemKeys = Object.keys(item);
@@ -108,7 +105,7 @@ const OptionsData = props => {
     }
     return (
     <div key={propKey} style={{display: 'flex'}}>
-        <div style={{display: 'flex', justifyContent: 'center', backgroundColor: '#eee'}}>
+        <div style={{display: 'flex', justifyContent: 'center'}}>
           <Checkbox
             style={{width: '60px', padding: '6px', border: '1px solid #eee', textAlign: 'center'}}
             checkedIcon={<Visibility />}
@@ -122,7 +119,7 @@ const OptionsData = props => {
             }
           />
         </div>
-        <div style={{display: 'flex', justifyContent: 'center', backgroundColor: '#eee'}}>
+        <div style={{display: 'flex', justifyContent: 'center'}}>
           <Checkbox
             style={{width: '60px', padding: '6px', border: '1px solid #eee', textAlign: 'center'}}
             checkedIcon={<Search />}
@@ -136,7 +133,7 @@ const OptionsData = props => {
             }
           />
         </div>
-        <div style={{display: 'flex', justifyContent: 'center', backgroundColor: '#eee'}}>
+        <div style={{display: 'flex', justifyContent: 'center'}}>
           <Checkbox
             style={{width: '60px', padding: '6px', border: '1px solid #eee', textAlign: 'center'}}
             checkedIcon={<Sort />}
@@ -150,9 +147,65 @@ const OptionsData = props => {
             }
           />
         </div>
-        <div style={{width: '150px', padding: '6px', border: '1px solid #eee', backgroundColor: '#eee'}}>{propKey}</div>
-        <div style={{width: '350px', padding: '6px', border: '1px solid #eee', overflow: 'hidden', height: '38px', backgroundColor: '#eee'}}>{item[propKey]}</div>
-        <div style={{width: '250px', padding: '6px', border: '1px solid #eee', overflow: 'hidden', height: '38px', backgroundColor: '#eee'}}>{item[propKey] ? 'Ок' : 'Отсутствуют необходимые данные'}</div>
+        <div style={{width: '150px', padding: '6px', border: '1px solid #eee'}}>{propKey}</div>
+        <div style={{width: '350px', padding: '6px', border: '1px solid #eee', overflow: 'hidden', height: '38px'}}>{item[propKey]}</div>
+        <div style={{width: '250px', padding: '6px', border: '1px solid #eee', overflow: 'hidden', height: '38px'}}>{item[propKey] ? 'Ок' : 'Отсутствуют необходимые данные'}</div>
+      </div>
+    );
+  };
+
+  const getCartStandartPropJsx = propKey => {
+    let visible, search, sort;
+    visible = true;
+    search = false;
+    sort = false;
+    return (
+    <div key={propKey} style={{display: 'flex'}}>
+        <div style={{display: 'flex', justifyContent: 'center'}}>
+          <Checkbox
+            style={{width: '60px', padding: '6px', border: '1px solid #eee', textAlign: 'center'}}
+            checkedIcon={<Visibility />}
+            uncheckedIcon={<VisibilityOff />}
+            checked={visible}
+            onCheck={
+              (e) => {
+                alert('Запрещено менять настройки стандартных колонок');
+                e.preventDefault();
+              }
+            }
+          />
+        </div>
+        <div style={{display: 'flex', justifyContent: 'center'}}>
+          <Checkbox
+            style={{width: '60px', padding: '6px', border: '1px solid #eee', textAlign: 'center'}}
+            checkedIcon={<Search />}
+            uncheckedIcon={<SearchOff />}
+            checked={search}
+            onCheck={
+              (e) => {
+                alert('Запрещено менять настройки стандартных колонок');
+                e.preventDefault();
+              }
+            }
+          />
+        </div>
+        <div style={{display: 'flex', justifyContent: 'center'}}>
+          <Checkbox
+            style={{width: '60px', padding: '6px', border: '1px solid #eee', textAlign: 'center'}}
+            checkedIcon={<Sort />}
+            uncheckedIcon={<SortOff />}
+            checked={sort}
+            onCheck={
+              (e) => {
+                alert('Запрещено менять настройки стандартных колонок');
+                e.preventDefault();
+              }
+            }
+          />
+        </div>
+        <div style={{width: '150px', padding: '6px', border: '1px solid #eee'}}>{propKey}</div>
+        <div style={{width: '350px', padding: '6px', border: '1px solid #eee', overflow: 'hidden', height: '38px'}}></div>
+        <div style={{width: '250px', padding: '6px', border: '1px solid #eee', overflow: 'hidden', height: '38px'}}></div>
       </div>
     );
   };
@@ -182,6 +235,25 @@ const OptionsData = props => {
     );
   };
 
+  const getRequiredPropsCartJsx = () => {
+    const requiredProps = ['price', 'amount', 'delete'];
+    const itemsKeys = Object.keys(items);
+    return itemsKeys.length > 0 && (
+      <div
+        style={{display: 'flex', flexDirection: 'column'}}
+        className='requredProps'
+      >
+        {
+          requiredProps.map(
+            key => {
+              return getCartStandartPropJsx(key);
+            }
+          )
+        }
+      </div>
+    );
+  };
+
   const getCategoryJsx = () => {
 
   }
@@ -196,6 +268,17 @@ const OptionsData = props => {
 
       <div style={{marginTop: '10px'}}>
         {getRequiredPropsJsx()}
+        <Subheader>
+          Доп колонки каталога
+        </Subheader>
+        {getItemsJsx()}
+      </div>
+
+      <div style={{marginTop: '10px'}}>
+        <Subheader>
+          Доп колонки корзины
+        </Subheader>
+        {getRequiredPropsCartJsx()}
         {getItemsJsx()}
       </div>
 

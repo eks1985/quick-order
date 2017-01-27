@@ -16,7 +16,9 @@ import users from './reducers/users';
 import customers from './reducers/customers';
 import firebaseConfig from './reducers/firebase-config';
 import sortDirection from './reducers/sort-direction';
+import sortDirectionCheckout from './reducers/sort-direction-checkout';
 import filtersApplied from './reducers/filters-applied';
+import filtersAppliedCheckout from './reducers/filters-applied-checkout';
 import current from './reducers/current';
 import currentCheckout from './reducers/current-checkout';
 import preventCleanGoodsRow from './reducers/prevent-clean-goods-row';
@@ -42,7 +44,9 @@ export default function createReducer(indexes) {
   	users,
   	customers,
   	sortDirection,
+    sortDirectionCheckout,
     filtersApplied,
+    filtersAppliedCheckout,
     current,
     currentCheckout,
     preventCleanGoodsRow,

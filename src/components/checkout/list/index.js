@@ -95,7 +95,7 @@ export default connect(
     prices: state.prices,
     catalogQty: state.catalogQty,
     columnsKeys: state.options.catalogListSettingsCheckout,
-    sortDirection: state.sortDirection,
+    sortDirection: state.sortDirectionCheckout,
     currentCheckout: state.currentCheckout
   }),
   { ...cartActions, ...modalActions, ...goodsActions, ...catalogQtyActions, ...optionsActions, ...checkoutActions }

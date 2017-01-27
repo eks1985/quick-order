@@ -2,12 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as modalActions from './../lib/modal/actions/modal';
 import * as goodsActions from './../actions/goods';
-// import { getIndexByColName, getFilterStatusByColName, getFilterItemsByColName } from './../actions/indexes';
 import { getIndexByColName } from './../actions/indexes';
 import { List, ListItem } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import Checkbox from 'material-ui/Checkbox';
-// import Toggle from 'material-ui/Toggle';
 import IconSort from 'material-ui/svg-icons/av//sort-by-alpha';
 import IconFilter from 'material-ui/svg-icons/content/filter-list';
 import IconClose from 'material-ui/svg-icons/navigation/close';
@@ -18,7 +16,6 @@ import IconImage from 'material-ui/svg-icons/image/adjust';
 import CheckboxOutline from 'material-ui/svg-icons/toggle/check-box-outline-blank';
 import CheckboxChecked from 'material-ui/svg-icons/toggle/check-box';
 import './column-settings.css';
-// import { sortGoods }
 
 const ColumnSettings =  ({
   modal,
@@ -122,7 +119,6 @@ const ColumnSettings =  ({
                 <ListItem
                   key={key}
                   primaryText={key}
-                  // innerDivStyle={{paddingTop: '5px'}}
                   style={{height: '28px', fontSize: '13px', paddingTop: '10px'}}
                   leftCheckbox={
                     <Checkbox
@@ -199,7 +195,6 @@ class ColumnSettingsContainer extends Component {
 
   constructor (props) {
     super(props);
-    // console.log('sort direction fromconstructor', this.props.sortDirection);
     const filterItems = props.filterApplied === undefined ? [ ...props.indexSort ] : props.filterApplied;
     const filterStatus = props.indexSort.length === filterItems.length ? 'checked' : 'unchecked';
     this.state = { filterStatus, filterItems, sortDirection: this.props.sortDirection, filterText: '' };
@@ -209,7 +204,6 @@ class ColumnSettingsContainer extends Component {
     const props = nextProps;
     const filterItems = props.filterApplied === undefined ? [ ...props.indexSort ] : props.filterApplied;
     const filterStatus = props.indexSort.length === filterItems.length ? 'checked' : 'unchecked';
-    // console.log('sort direction from component will receive props', this.props.sortDirection);
     this.setState({ filterStatus, filterItems, sortDirection: nextProps.sortDirection, filterText: '' });
   }
 
@@ -217,10 +211,7 @@ class ColumnSettingsContainer extends Component {
     this.setState({ filterText });
   }
 
-  toggleSortDirection = () => {
-    // const sortDirection = this.state.sortDirection !== '' ? '' : this.state.sortDirection;
-    // this.setState({ sortDirection });
-  }
+  toggleSortDirection = () => {}
 
   switchSortDirection = (sortDirection) => {
     this.setState({ sortDirection });
@@ -266,7 +257,6 @@ class ColumnSettingsContainer extends Component {
 
   render() {
     const { filterStatus, filterItems, sortDirection, filterText } = this.state;
-    // console.log('sort direction from state', sortDirection);
     const { toggleCheckedAll, toggleCheckedAllAndClose, toggleChecked, toggleSortDirection, switchSortDirection, setFilterText } = this;
     const newProps = { ...this.props, filterStatus, filterItems, toggleCheckedAll, toggleCheckedAllAndClose, toggleChecked, sortDirection, toggleSortDirection, switchSortDirection, filterText, setFilterText };
     return <ColumnSettings {...newProps} />;
@@ -276,9 +266,6 @@ class ColumnSettingsContainer extends Component {
 
 const mapStateToProps = state => {
   const { columnKey } = state.modal.data;
-  // console.log('columnKey', columnKey);
-  // console.log('sortDirection all', state.sortDirection);
-  // console.log('sortDirection', state.sortDirection[columnKey]);
   return {
     columnKey,
     modal: state.modal,

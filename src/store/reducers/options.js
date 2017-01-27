@@ -7,7 +7,7 @@ const initialState = {
   showNoActivePosition: false,
   managePrices: 'common', //common, byCustomers, dontUse
   catalogListSettings: ['code', 'description', 'price', 'qty'], //production
-  catalogListSettingsCart: ['code', 'description', 'price', 'qty', 'amount', 'delete'], 
+  catalogListSettingsCheckout: ['code', 'description', 'price', 'qty', 'amount', 'delete'],
   catalogListColumns: {}, //production,
   showPictures: {row: false, side: false, dialog: false},
   categoryLineSeparator: false,
@@ -27,10 +27,44 @@ export default (state, action) => {
 
 // Selectors
 
-export const getColumns = (state) => {
+// export const getColumns = state => {
+//   const { catalogListColumns, catalogListSettings } = state;
+//   console.log('catalogListColumns', catalogListColumns);
+//   console.log('catalogListSettings', catalogListSettings);
+//   const columnsKeys = Object.keys(catalogListColumns);
+//   return columnsKeys.reduce((res, key) => {
+//     return res.indexOf(key) === -1 && catalogListColumns[key][0] === true  ? res.concat(key) : res;
+//   }, catalogListSettings);
+// };
+
+export const getColumns = state => {
   const { catalogListColumns, catalogListSettings } = state;
   const columnsKeys = Object.keys(catalogListColumns);
-  return columnsKeys.reduce((res, key) => {
-    return res.indexOf(key) === -1 && catalogListColumns[key][0] === true  ? res.concat(key) : res;
-  }, catalogListSettings);
+  return catalogListSettings.reduce((res, key) => {
+    if (!columnsKeys.includes(key)) {
+      return res.concat(key);
+    } else {
+      if  (catalogListColumns[key][0] === true) {
+        return res.concat(key);
+      } else {
+        return res;
+      }
+    }
+  }, []);
+};
+
+export const getColumnsCheckout = state => {
+  const { catalogListColumnsCheckout, catalogListSettingsCheckout } = state;
+  const columnsKeys = Object.keys(catalogListColumnsCheckout);
+  return catalogListSettingsCheckout.reduce((res, key) => {
+    if (!columnsKeys.includes(key)) {
+      return res.concat(key);
+    } else {
+      if  (catalogListColumnsCheckout[key][0] === true) {
+        return res.concat(key);
+      } else {
+        return res;
+      }
+    }
+  }, []);
 };

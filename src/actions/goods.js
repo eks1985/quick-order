@@ -235,6 +235,41 @@ export const sortGoods = (columnKey, sortDirection = '') => {
   };
 };
 
+export const sortGoodsCheckout = (columnKey, sortDirection = '') => {
+  return (dispatch, getState) => {
+    const directionAll = getState().sortDirectionCheckout;
+    const directionColumn = directionAll[columnKey];
+    const directionColumnNew = sortDirection || (directionColumn  === 'forward' ? 'reverse': 'forward');
+    const items = getState().cart.itemsFiltered;
+    const index = (columnKey === 'code' || columnKey === 'description') ? getState().goods[columnKey + 's'] : getState()['__index__' + columnKey].index;
+    let orderIndex;
+    if (columnKey === 'code' || columnKey === 'description') {
+      if (directionColumnNew === 'forward') {
+        orderIndex = getState().goods[ columnKey + 'OrderIndex'];
+      } else {
+        orderIndex = getState().goods[ columnKey + 'OrderIndexReverse'];
+      }
+    } else {
+      if (directionColumnNew === 'forward') {
+        orderIndex = getState()['__index__' + columnKey].indexSort;
+      } else {
+        orderIndex = getState()['__index__' + columnKey].indexSortReverse;
+      }
+    }
+    const directionAllKeys = Object.keys(directionAll);
+    const directionAllNew = directionAllKeys.reduce((res, key) => ({ ...res, [key]: ''}), {});
+    directionAllNew[columnKey] = directionColumnNew;
+    dispatch({
+      type: 'RECEIVE_SORT_DIRECTION_CHECKOUT',
+      payload: directionAllNew
+    });
+    dispatch({
+      type: 'RECEIVE_CART_ITEMS_FILTETED',
+      payload: buildListByOrderIndex(orderIndex, items, index, columnKey)
+    });
+  };
+};
+
 // Sort <
 
 // Filter by prop >
