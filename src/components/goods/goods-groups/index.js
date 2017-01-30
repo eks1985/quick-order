@@ -108,9 +108,6 @@ const GoodsGroups =  ({
         </div>
         <ListItem
           innerDivStyle={{padding: '5px 10px 5px 10px'}}
-          // style={{fontSize: '13px',
-          // fontWeight: 'bold',
-          // marginTop: '4px'}}
           style={clearFilterStyle}
           key={9999}
           primaryText='Все категории'

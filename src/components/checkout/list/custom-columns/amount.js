@@ -24,6 +24,7 @@ const Component = ({
       <div
         key={`${keyProp}${columnKey}`}
         style={style}
+        className='row-cell'
         onClick={
           () => {
             document.getElementById(rowIndex).focus();

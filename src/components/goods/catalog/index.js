@@ -50,7 +50,7 @@ const CatalogIndex = props => {
     padding: '10px',
     paddingTop: '0px'
   };
-  let pictContainerStyle = {display: 'flex', padding: '8px', marginTop: '6px'};
+  let pictContainerStyle = {display: 'flex', padding: '8px', marginTop: '6px', border: '2px solid #eee'};
   pictContainerStyle = cartItems[currentGuid] ? { ...pictContainerStyle, border: '2px solid goldenrod'} : pictContainerStyle
   const url1 = arr[parseInt(Math.random()* 10, 10) ];
   return (
@@ -81,7 +81,8 @@ const CatalogIndex = props => {
                   type: 'SET_PREVENT_CLEAN_GOODS_ROW',
                   payload: true
                 }) ;
-                dispatch(setModal({ content: 'goodsCard', fullScreen: true, showClose: true, style: { background: '#fff' } }));
+                // dispatch(setModal({ content: 'goodsCard', fullScreen: true, showClose: true, style: { background: '#fff' } }));
+                dispatch(setModal({ content: 'goodsCard', fullScreen: true, showClose: false, style: { background: '#fff' }, data: { source: 'catalog'} }));
               }
             }
           >

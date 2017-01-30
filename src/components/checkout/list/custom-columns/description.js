@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { ListItem }     from 'material-ui/List';
+// import { ListItem }     from 'material-ui/List';
 
 const Component = ({
   currentCheckout,
@@ -26,6 +26,7 @@ const Component = ({
         key={`${keyProp}${columnKey}`}
         tabIndex={-1}
         style={style}
+        className='row-cell'
         onClick={
           () => {
             document.getElementById(rowIndex).focus();
@@ -35,20 +36,21 @@ const Component = ({
         <a
           tabIndex={-1}
           href="#"
-          style={{textDecoration: 'none'}}
-          onClick={
+          style={{textDecoration: 'none', color: 'rgba(0, 0, 0, 0.870588)'}}
+          onDoubleClick={
             () => {
               setCurentGuidCheckout(keyProp);
-              setModal({ content: 'goodsCard', fullScreen: true, showClose: true, style: { background: '#fff' }, data: { source: 'cart'} });
+              //setModal({ content: 'goodsCard', fullScreen: true, showClose: true, style: { background: '#fff' }, data: { source: 'cart'} });
+              setModal({ content: 'goodsCard', fullScreen: true, showClose: false, style: { background: '#fff' }, data: { source: 'cart'} });
             }
           }
         >
-          <ListItem
-            tabIndex={-1}
-            innerDivStyle={{padding: '10px'}}
+          <div
+            style={{padding: '5px'}}
+            className='goodsDescr'
           >
             {items[keyProp].description}
-          </ListItem>
+          </div>
         </a>
       </div>
     );

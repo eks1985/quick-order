@@ -46,6 +46,9 @@ export const filterCartItems = () => {
     })
     dispatch(setQtyPagesGoodsCheckout());
     dispatch(goToGoodsPageCheckout(1));
+    dispatch({
+      type: 'RESET_FOCUSED_CHECKOUT'
+    });
   }
 }
 
@@ -132,6 +135,9 @@ export const removeFromCart = (guid) => {
     dispatch(setQtyPagesGoodsCheckout());
     dispatch(detectIsLastPageCheckout());
     dispatch(filterCartItems());
+    dispatch({
+      type: 'RESET_FOCUSED_CHECKOUT'
+    });
   };
 };
 
@@ -196,6 +202,9 @@ export const cleanCart = () => {
     dispatch(setQtyPagesGoodsCheckout());
     dispatch(filterCartItems());
     dispatch(detectIsLastPageCheckout());
+    dispatch({
+      type: 'RESET_GOODS_GROUPS_FILTERS_CART'
+    });
   };
 };
 

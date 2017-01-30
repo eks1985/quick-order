@@ -21,6 +21,7 @@ const Component = ({
     return (
       <div
         key={`${keyProp}${columnKey}`}
+        className='row-cell'
         style={style}
         onClick={
           () => {

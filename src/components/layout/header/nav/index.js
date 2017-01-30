@@ -8,6 +8,7 @@ import Auth from './../../../auth';
 const Nav = ({
   auth,
   currentContent,
+  cartTotalItems,
   //actions
   setCurrentContent,
   setModal
@@ -32,19 +33,21 @@ const Nav = ({
           }
         >
         </FlatButton>
-        <FlatButton
-          rippleColor='#eee'
-          label='Корзина'
-          backgroundColor={currentContent === 'checkout' ? '#aaa' : '#eee'}
-          hoverColor={currentContent === 'checkout' ? '#aaa' : '#eee'}
-          labelStyle={currentContent === 'checkout' ? {color: 'white', fontWeight: 'normal'} : {color: 'black', fontWeight: 'normal'}}
-          onClick={
-            () => {
-              setCurrentContent('checkout');
+        {cartTotalItems > 0 &&
+          <FlatButton
+            rippleColor='#eee'
+            label='Корзина'
+            backgroundColor={currentContent === 'checkout' ? '#aaa' : '#eee'}
+            hoverColor={currentContent === 'checkout' ? '#aaa' : '#eee'}
+            labelStyle={currentContent === 'checkout' ? {color: 'white', fontWeight: 'normal'} : {color: 'black', fontWeight: 'normal'}}
+            onClick={
+              () => {
+                setCurrentContent('checkout');
+              }
             }
-          }
-        >
-        </FlatButton>
+          >
+          </FlatButton>
+        }
         <FlatButton
           rippleColor='#eee'
           label='Заказы'
@@ -136,6 +139,6 @@ const Nav = ({
 };
 
 export default connect(
-  state => ({ currentContent: state.currentContent, auth:  state.auth }),
+  state => ({ currentContent: state.currentContent, auth:  state.auth, cartTotalItems: state.cart.totalItems }),
   { ...currentContentActions, ...modalActions }
 )(Nav);

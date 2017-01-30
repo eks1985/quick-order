@@ -3,7 +3,7 @@ export default (state = '', action) => {
     case 'SET_FOCUSED_CHECKOUT':
       return action.payload;
     case 'RESET_FOCUSED_CHECKOUT':
-        return '';
+      return '';
     default:
       return state;
   }

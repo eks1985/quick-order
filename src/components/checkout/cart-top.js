@@ -19,14 +19,15 @@ const Cart = ({
   const style = {
     display: 'flex',
     flexDirection: 'column',
-    padding: '8px',
-    paddingTop: '3px',
-    paddingBottom: '18px',
+    justifyContent: 'center'
+    // padding: '8px',
+    // paddingTop: '3px',
+    // paddingBottom: '18px',
   };
   const hasItems = cart.totalItems > 0;
 
   const getCartStyledJsx = () => {
-    const style = { display: 'flex', height: '73px', alignItems: 'center', paddingLeft: '10px' };
+    const style = { display: 'flex', alignItems: 'center', justifyContent: 'center', paddingLeft: '10px' };
 
     return (
       <div style={{display: 'flex', flexDirection: 'row'}}>

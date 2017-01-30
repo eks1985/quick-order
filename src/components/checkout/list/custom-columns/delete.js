@@ -24,7 +24,11 @@ const Component = ({
   const getJsx = () => {
     let style = applyCurrentRowBorder(applyZebra(rowStyle.price, rowIndex));
     return (
-      <div key={`${keyProp}${columnKey}`} style={style}>
+      <div
+        key={`${keyProp}${columnKey}`}
+        style={style}
+        className='row-cell'
+      >
         <FlatButton
           label='удалить'
           onClick={

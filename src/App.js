@@ -76,8 +76,10 @@ class App extends Component {
 
   }
 
+  //возвращает фокус назад на поле ввода
   handleClick = e => {
-    const { current, dispatch, currentContent } = this.props;
+    // console.log('node name', e.target.nodeName);
+    const { current, currentCheckout, dispatch, currentContent } = this.props;
     let className = '';
     try {
       className = e.target.className;
@@ -92,10 +94,24 @@ class App extends Component {
       e.srcElement.tagName !== 'path' &&
       e.srcElement.tagName !== 'svg' &&
       dispatch({ type: 'RESET_FOCUSED' });
-      current !== '' && document.getElementById(current).focus();
-      current !== '' && dispatch({ type: 'SET_FOCUSED', payload: current});
+      try {
+        current !== '' && e.target.nodeName !== 'INPUT' && document.getElementById(current).focus();
+      } catch (e) {}
+      current !== '' && e.target.nodeName !== 'INPUT' && dispatch({ type: 'SET_FOCUSED', payload: current});
     } else if (currentContent === 'checkout') {
-
+      className = typeof className === 'string' ? className : '';
+      className !== 'catalogQtyInput' &&
+      !className.includes('row-cell') &&
+      !className.includes('pagination') &&
+      !className.includes('side-picture') &&
+      !className.includes('modal-close') &&
+      e.srcElement.tagName !== 'path' &&
+      e.srcElement.tagName !== 'svg' &&
+      dispatch({ type: 'RESET_FOCUSED_CHECKOUT' });
+      try {
+        currentCheckout !== '' && e.target.nodeName !== 'INPUT' && e.target.nodeName !== 'TEXTAREA' && document.getElementById(currentCheckout).focus();
+      } catch (e) {}
+      currentCheckout !== '' && e.target.nodeName !== 'INPUT' && e.target.nodeName !== 'TEXTAREA' && dispatch({ type: 'SET_FOCUSED_CHECKOUT', payload: currentCheckout});
     }
   }
 
@@ -123,7 +139,7 @@ class App extends Component {
 }
 
 App = connect(
-  state => ({ current: state.current, rowsPerPage: state.goods.rowsPerPage, currentContent: state.currentContent })
+  state => ({ current: state.current, currentCheckout: state.currentCheckout, rowsPerPage: state.goods.rowsPerPage, currentContent: state.currentContent })
 )(App);
 
 export default App;

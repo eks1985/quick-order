@@ -6,7 +6,7 @@ import ListCheckout from './list';
 import * as cartActions from './../../actions/cart';
 import * as checkoutActions from './../../actions/checkout';
 import * as currentCheckoutActions from './../../actions/current-checkout';
-import { setModal } from './../../lib/modal/actions/modal';
+import * as modalActions  from './../../lib/modal/actions/modal';
 
 import CartTop from './cart-top';
 import CartRight from './cart-right';
@@ -28,9 +28,9 @@ const img10 = 'https://firebasestorage.googleapis.com/v0/b/quick-order-de84c.app
 const arr = [ img1, img2, img3, img4, img5, img6, img7, img8, img9, img10 ];
 
 const Checkout = props => {
-  const { options, currentGuidCheckout, currentCheckout, cartItems, dispatch, items, prices, goodsGroups } = props;
+  const { options, currentGuidCheckout, currentCheckout, cartItems, items, prices, goodsGroups, setModal } = props;
 
-  let pictContainerStyle = {display: 'flex', padding: '8px', marginTop: '6px'};
+  let pictContainerStyle = {display: 'flex', padding: '8px', marginTop: '6px', border: '2px solid #eee'};
   pictContainerStyle = cartItems[currentGuidCheckout] ? { ...pictContainerStyle, border: '2px solid goldenrod'} : pictContainerStyle
   const url1 = arr[parseInt(Math.random()* 10, 10) ];
   const { pictureHeight } = props.ui;
@@ -78,11 +78,7 @@ const Checkout = props => {
               }}
               onDoubleClick={
                 () => {
-                  dispatch({
-                    type: 'SET_PREVENT_CLEAN_GOODS_ROW',
-                    payload: true
-                  }) ;
-                  dispatch(setModal({ content: 'goodsCard', fullScreen: true, showClose: true, style: { background: '#fff' } }));
+                  setModal({ content: 'goodsCard', fullScreen: true, showClose: false, style: { background: '#fff' }, data: { source: 'cart'} });
                 }
               }
             >
@@ -142,5 +138,5 @@ export default connect(
     const totalItems = state.cart.totalItems;
     return { items, cartItems, totalItems, checkout, options, goods, goodsGroups, prices, ui, current, cart, currentCheckout, currentGuidCheckout };
   },
-  { ...cartActions, ...checkoutActions, ...currentCheckoutActions }
+  { ...cartActions, ...checkoutActions, ...currentCheckoutActions, ...modalActions }
 )(Checkout);
