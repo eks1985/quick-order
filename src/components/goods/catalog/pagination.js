@@ -63,9 +63,12 @@ const Pagination = ({
         style={{width: '26px', fontSize: '14px'}}
         inputStyle={{ textAlign: 'center'}}
         onClick={
-          () => {
+          (e) => {
             setModal({
-              modalContent: 'nav'
+              content: 'page-number-navigation',
+              x: e.pageX - 80,
+              y: e.pageY - 30,
+              style: { background: '#fff'}
             })
           }
         }

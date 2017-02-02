@@ -14,7 +14,8 @@ const Qty = ({
   addCatalogQty,
   catalogQty,
   setFocusedCheckout,
-  setCurentGuidCheckout
+  setCurentGuidCheckout,
+  setModal
 }) => {
 
     const { rowStyle, incDecSmallQtyPane, qtyInputStyle } = styles;
@@ -26,6 +27,7 @@ const Qty = ({
 
     const getJsx = () => {
       let style = applyCurrentRowBorder(applyZebra(rowStyle.qty, rowIndex));
+      let x, y;
       return (
         <div
           key={`${keyProp}${columnKey}`}
@@ -57,10 +59,16 @@ const Qty = ({
           <input
             type='text'
             id={rowIndex}
-            // id={rowIndex}
             className='catalogQtyInput'
             style={qtyInputStyle}
             value={catalogQty[keyProp] || ''}
+            onClick={
+              e => {
+                // console.log('e.x', e.pageX);
+                x = e.pageX - 30;
+                y = e.pageY - 25;
+              }
+            }
             onFocus={
               () => {
                 setFocusedCheckout(rowIndex);
@@ -70,11 +78,23 @@ const Qty = ({
             onChange={
               (e) => {
                 const val = parseInt(e.target.value, 10) ? parseInt(e.target.value, 10) : '';
-                addCatalogQty(keyProp, val);
-                addToCart(keyProp, val, items[keyProp].price);
+                if (val !== '') {
+                  addCatalogQty(keyProp, val);
+                  addToCart(keyProp, val, items[keyProp].price);
+                }
                 if (val === '') {
-                  removeFromCart(keyProp);
-                  removeCatalogQty(keyProp);
+                  setModal({
+                    content: 'cart-row-qty-edit',
+                    showClose: false,
+                    style: { background: '#fff'},
+                    x,
+                    y,
+                    data: {
+                      keyProp
+                    }
+                  })
+                  // removeFromCart(keyProp);
+                  // removeCatalogQty(keyProp);
                 }
               }
             }

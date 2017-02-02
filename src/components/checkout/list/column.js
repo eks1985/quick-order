@@ -77,7 +77,7 @@ const CheckoutListColumn = props => {
     const pCode        = { ...p  };
     const pDescription = { ...p, setModal };
     const pPrice       = { ...p, format1 };
-    const pQty         = { ...p, catalogQty, styles, addCatalogQty, addToCart, removeCatalogQty, removeFromCart, setFocusedCheckout };
+    const pQty         = { ...p, catalogQty, styles, addCatalogQty, addToCart, removeCatalogQty, removeFromCart, setFocusedCheckout, setModal };
     const pDelete      = { ...p, removeFromCart, removeCatalogQty };
     switch (columnKey) {
       case 'code':
