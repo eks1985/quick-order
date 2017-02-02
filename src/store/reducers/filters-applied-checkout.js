@@ -1,12 +1,11 @@
 export default (state = {}, action) => {
   switch (action.type) {
-    case 'APPLY_FILTER_BY_PROP':
+    case 'APPLY_FILTER_BY_PROP_CHECKOUT':
       const { propName, keys } = action;
       return { ...state, [propName]: keys };
-    case 'CLEAR_FILTER_BY_PROP':
+    case 'CLEAR_FILTER_BY_PROP_CHECKOUT':
       const { propName: propNameToReset } = action;
       const stateCopy = { ...state };
-      // delete stateCopy[propNameToReset];
       stateCopy[propNameToReset] = [];
       return stateCopy;
     default:

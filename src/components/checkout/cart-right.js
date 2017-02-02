@@ -39,7 +39,7 @@ const Cart = ({
             </div>
           </div>
         }
-        <div style={{width: '100%', borderTop: '1px solid goldenrod', opacity: '0.6'}}></div>
+        <div style={{width: '100%', borderTop: '2px solid #eee', opacity: '0.8'}}></div>
         <TextField
           placeholder='Комментарий к заказу'
           id='comment'
@@ -49,7 +49,7 @@ const Cart = ({
           // style={{width: '90%', background: 'rgba(238, 238, 238, 0.7)', padding: '10px'}}
           style={{width: '90%', padding: '10px'}}
         />
-        <div style={{width: '100%', borderTop: '1px solid goldenrod', marginBottom: '20px', opacity: '0.6'}}></div>
+        <div style={{width: '100%',  marginBottom: '20px', opacity: '0.6'}}></div>
       </div>
     );
   };

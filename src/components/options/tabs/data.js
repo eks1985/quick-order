@@ -19,6 +19,7 @@ const OptionsData = props => {
     items,
     //actions
     setCommonOptionCatalogListColumnsFirebase,
+    setCommonOptionCatalogListColumnsCartFirebase
   } = props;
 
   const getItemJsx = (item) => {
@@ -74,6 +75,71 @@ const OptionsData = props => {
               onCheck={
                 (e, isInputChecked) => {
                   setCommonOptionCatalogListColumnsFirebase(key, 2, isInputChecked);
+                }
+              }
+            />
+          </div>
+          <div style={{width: '150px', padding: '6px', border: '1px solid #eee'}}>{key}</div>
+          <div style={{width: '350px', padding: '6px', border: '1px solid #eee', overflow: 'hidden', height: '38px'}}>{item[key]}</div>
+          <div style={{width: '250px', padding: '6px', border: '1px solid #eee', overflow: 'hidden', height: '38px'}}>Ок</div>
+        </div>
+      );
+    });
+  };
+
+  const getItemCartJsx = (item) => {
+    const itemKeys = Object.keys(item);
+    let i;
+    i = itemKeys.indexOf('code');
+    if (i > -1) {
+      itemKeys.splice(i, 1);
+    }
+    i = itemKeys.indexOf('description');
+    if (i > -1) {
+      itemKeys.splice(i, 1);
+    }
+    i = itemKeys.indexOf('groupRef');
+    if (i > -1) {
+      itemKeys.splice(i, 1);
+    }
+    return itemKeys.map(key => {
+      return (
+        <div key={key} style={{display: 'flex'}}>
+          <div style={{display: 'flex', justifyContent: 'center'}}>
+            <Checkbox
+              style={{width: '60px', padding: '6px', border: '1px solid #eee', textAlign: 'center'}}
+              checkedIcon={<Visibility />}
+              uncheckedIcon={<VisibilityOff />}
+              checked={options.catalogListColumnsCheckout[key] ? options.catalogListColumnsCheckout[key][0] : false }
+              onCheck={
+                (e, isInputChecked) => {
+                  setCommonOptionCatalogListColumnsCartFirebase(key, 0, isInputChecked);
+                }
+              }
+            />
+          </div>
+          <div style={{display: 'flex', justifyContent: 'center'}}>
+            <Checkbox
+              style={{width: '60px', padding: '6px', border: '1px solid #eee', textAlign: 'center'}}
+              checkedIcon={<Search />}
+              uncheckedIcon={<SearchOff />}
+              checked={options.catalogListColumnsCheckout[key] ? options.catalogListColumnsCheckout[key][1] : false }
+              onCheck={
+                (e, isInputChecked) => {
+                  setCommonOptionCatalogListColumnsCartFirebase(key, 1, isInputChecked);
+                }
+              }
+            />
+          </div>
+          <div style={{display: 'flex', justifyContent: 'center'}}>
+            <Checkbox
+              style={{width: '60px', padding: '6px', border: '1px solid #eee', textAlign: 'center'}}
+              checkedIcon={<Sort />}
+              uncheckedIcon={<SortOff />}
+              checked={options.catalogListColumnsCheckout[key] ? options.catalogListColumnsCheckout[key][2] : false }
+              onCheck={
+                (e, isInputChecked) => {
+                  setCommonOptionCatalogListColumnsCartFirebase(key, 2, isInputChecked);
                 }
               }
             />
@@ -216,6 +282,12 @@ const OptionsData = props => {
       <div style={{display: 'flex', flexDirection: 'column'}}>{getItemJsx(items[itemsKeys[0]])}</div>;
   };
 
+  const getItemsCartJsx = () => {
+    const itemsKeys = Object.keys(items);
+    return itemsKeys.length > 0 &&
+      <div style={{display: 'flex', flexDirection: 'column'}}>{getItemCartJsx(items[itemsKeys[0]])}</div>;
+  };
+
   const getRequiredPropsJsx = () => {
     const requiredProps = ['code', 'description', 'groupRef'];
     const itemsKeys = Object.keys(items);
@@ -279,7 +351,7 @@ const OptionsData = props => {
           Доп колонки корзины
         </Subheader>
         {getRequiredPropsCartJsx()}
-        {getItemsJsx()}
+        {getItemsCartJsx()}
       </div>
 
       <Subheader>

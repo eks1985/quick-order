@@ -235,12 +235,19 @@ export const sortGoods = (columnKey, sortDirection = '') => {
   };
 };
 
+const buildListByOrderIndexCheckout = (orderIndex, items, index, columnKey, goodsItems) => {
+  const itemsKeys = Object.keys(items);
+  const itemsProps = itemsKeys.reduce((res, key) => goodsItems[key][columnKey] ? [ ...res, goodsItems[key][columnKey] ] : res, ['']);
+  return orderIndex.reduce((res, key) => itemsProps.indexOf(key) > -1 ? { ...res, ...buildListByProp(index, key, items) } : res, {});
+};
+
 export const sortGoodsCheckout = (columnKey, sortDirection = '') => {
   return (dispatch, getState) => {
     const directionAll = getState().sortDirectionCheckout;
     const directionColumn = directionAll[columnKey];
     const directionColumnNew = sortDirection || (directionColumn  === 'forward' ? 'reverse': 'forward');
     const items = getState().cart.itemsFiltered;
+    const goodsItems = getState().goods.itemsInitial;
     const index = (columnKey === 'code' || columnKey === 'description') ? getState().goods[columnKey + 's'] : getState()['__index__' + columnKey].index;
     let orderIndex;
     if (columnKey === 'code' || columnKey === 'description') {
@@ -265,7 +272,7 @@ export const sortGoodsCheckout = (columnKey, sortDirection = '') => {
     });
     dispatch({
       type: 'RECEIVE_CART_ITEMS_FILTETED',
-      payload: buildListByOrderIndex(orderIndex, items, index, columnKey)
+      payload: buildListByOrderIndexCheckout(orderIndex, items, index, columnKey, goodsItems)
     });
   };
 };
@@ -288,6 +295,25 @@ export const clearGoodsFilterByProp = propName => {
   return dispatch => {
     dispatch({
       type: 'CLEAR_FILTER_BY_PROP',
+      propName
+    });
+  };
+};
+
+export const applyGoodsFilterByPropCheckout = (keys, propName) => {
+  return dispatch => {
+    dispatch({
+      type: 'APPLY_FILTER_BY_PROP_CHECKOUT',
+      keys,
+      propName
+    });
+  };
+};
+
+export const clearGoodsFilterByPropCheckout = propName => {
+  return dispatch => {
+    dispatch({
+      type: 'CLEAR_FILTER_BY_PROP_CHECKOUT',
       propName
     });
   };

@@ -80,10 +80,16 @@ export const filterByPropVal = (getState, propName, propValues, items) => {
   if (!propValues) {
     return items;
   }
-  // if (propValues.length === 0) {
-  //   return items;
-  // }
   return Object.keys(items).reduce((res, itemKey) => {
     return propValues.includes(items[itemKey][propName]) || ( propValues.includes("") && (items[itemKey][propName] === undefined) ) ? { ...res, [itemKey]: items[itemKey] } : res
+  }, {});
+}
+
+export const filterByPropValCheckout = (goodsItems, propName, propValues, cartItems) => {
+  if (!propValues) {
+    return cartItems;
+  }
+  return Object.keys(cartItems).reduce((res, itemKey) => {
+    return propValues.includes(goodsItems[itemKey][propName]) || ( propValues.includes("") && (goodsItems[itemKey][propName] === undefined) ) ? { ...res, [itemKey]: goodsItems[itemKey] } : res
   }, {});
 }

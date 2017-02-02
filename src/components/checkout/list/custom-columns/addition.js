@@ -29,7 +29,7 @@ const Component = ({
           }
         }
       >
-        {items[keyProp].code}
+        {items[keyProp][columnKey]}
       </div>
     );
   };

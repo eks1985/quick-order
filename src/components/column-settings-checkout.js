@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as modalActions from './../lib/modal/actions/modal';
 import * as goodsActions from './../actions/goods';
+import * as cartActions from './../actions/cart';
 import { getIndexByColName } from './../actions/indexes';
 import { List, ListItem } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
@@ -16,11 +17,13 @@ import IconImage from 'material-ui/svg-icons/image/adjust';
 import CheckboxOutline from 'material-ui/svg-icons/toggle/check-box-outline-blank';
 import CheckboxChecked from 'material-ui/svg-icons/toggle/check-box';
 import './column-settings.css';
+import { getPropsValListByIds } from './../store/reducers/goods';
 
 const ColumnSettings =  ({
   modal,
   indexSort,
   filterStatus,
+  valList,
   filterItems,
   sortDirection,
   filterText,
@@ -32,14 +35,14 @@ const ColumnSettings =  ({
   toggleChecked,
   switchSortDirection,
   sortGoodsCheckout,
-  applyGoodsFilterByProp,
-  clearGoodsFilterByProp,
+  applyGoodsFilterByPropCheckout,
+  clearGoodsFilterByPropCheckout,
   toggleCheckedAllAndClose,
-  search
+  filterCartItems
 }) => {
 
-  const filterKeys = filterText === '' ? indexSort :
-    indexSort.reduce((res, key) => key.toLowerCase().includes(filterText.toLowerCase()) ? res.concat(key) : res , []);
+  const filterKeys = filterText === '' ? valList :
+    valList.reduce((res, key) => key.toLowerCase().includes(filterText.toLowerCase()) ? res.concat(key) : res , []);
 
   const { sort, filter, columnKey } = modal.data;
 
@@ -143,8 +146,8 @@ const ColumnSettings =  ({
             labelStyle={{fontWeight: 'normal'}}
             onClick={
               () => {
-                applyGoodsFilterByProp(filterItems, columnKey);
-                search();
+                applyGoodsFilterByPropCheckout(filterItems, columnKey);
+                filterCartItems();
                 setModal();
               }
             }
@@ -194,16 +197,18 @@ class ColumnSettingsContainer extends Component {
 
   constructor (props) {
     super(props);
-    const filterItems = props.filterApplied === undefined ? [ ...props.indexSort ] : props.filterApplied;
-    const filterStatus = props.indexSort.length === filterItems.length ? 'checked' : 'unchecked';
-    this.state = { filterStatus, filterItems, sortDirection: this.props.sortDirection, filterText: '' };
+    const valList = getPropsValListByIds(props.items, props.cartItemsIds, props.columnKey);
+    const filterItems = props.filterApplied === undefined ? valList : props.filterApplied;
+    const filterStatus = valList.length === filterItems.length ? 'checked' : 'unchecked';
+    this.state = { filterStatus, filterItems, valList, sortDirection: this.props.sortDirection, filterText: '' };
   }
 
   componentWillReceiveProps (nextProps) {
     const props = nextProps;
-    const filterItems = props.filterApplied === undefined ? [ ...props.indexSort ] : props.filterApplied;
-    const filterStatus = props.indexSort.length === filterItems.length ? 'checked' : 'unchecked';
-    this.setState({ filterStatus, filterItems, sortDirection: nextProps.sortDirection, filterText: '' });
+    const valList = getPropsValListByIds(props.items, props.cartItemsIds, props.columnKey);
+    const filterItems = props.filterApplied === undefined ? valList : props.filterApplied;
+    const filterStatus = valList.length === filterItems.length ? 'checked' : 'unchecked';
+    this.state = { filterStatus, filterItems, valList, sortDirection: this.props.sortDirection, filterText: '' };
   }
 
   setFilterText = filterText => {
@@ -218,17 +223,17 @@ class ColumnSettingsContainer extends Component {
 
   toggleCheckedAll = () => {
     const filterStatus = this.state.filterStatus === 'checked' ? 'unchecked' : 'checked';
-    const filterItems = filterStatus === 'checked' ? [ ...this.props.indexSort ] : [];
+    const filterItems = filterStatus === 'checked' ? [ ...this.state.valList ] : [];
     this.setState({ filterStatus, filterItems });
   }
 
   toggleCheckedAllAndClose = () => {
     const filterStatus = this.state.filterStatus === 'checked' ? 'unchecked' : 'checked';
-    const filterItems = filterStatus === 'checked' ? [ ...this.props.indexSort ] : [];
+    const filterItems = filterStatus === 'checked' ? [ ...this.state.valList ] : [];
     this.setState({ filterStatus, filterItems },
       () => {
-        this.props.applyGoodsFilterByProp(this.state.filterItems, this.props.columnKey);
-        this.props.search();
+        this.props.applyGoodsFilterByPropCheckout(this.state.filterItems, this.props.columnKey);
+        this.props.filterCartItems();
         this.props.setModal();
       }
     );
@@ -253,9 +258,9 @@ class ColumnSettingsContainer extends Component {
   }
 
   render() {
-    const { filterStatus, filterItems, sortDirection, filterText } = this.state;
+    const { filterStatus, filterItems, sortDirection, filterText, valList } = this.state;
     const { toggleCheckedAll, toggleCheckedAllAndClose, toggleChecked, switchSortDirection, setFilterText } = this;
-    const newProps = { ...this.props, filterStatus, filterItems, toggleCheckedAll, toggleCheckedAllAndClose, toggleChecked, sortDirection, switchSortDirection, filterText, setFilterText };
+    const newProps = { ...this.props, valList, filterStatus, filterItems, toggleCheckedAll, toggleCheckedAllAndClose, toggleChecked, sortDirection, switchSortDirection, filterText, setFilterText };
     return <ColumnSettings {...newProps} />;
   }
 
@@ -269,10 +274,12 @@ const mapStateToProps = state => {
     sortDirection: state.sortDirectionCheckout[columnKey],
     filterApplied: state.filtersAppliedCheckout[columnKey],
     indexSort: getIndexByColName(state, columnKey),
+    items: state.goods.itemsInitial,
+    cartItemsIds: Object.keys(state.cart.items)
   };
 };
 
 export default connect(
   mapStateToProps,
-  { ...modalActions, ...goodsActions }
+  { ...modalActions, ...goodsActions, ...cartActions }
 )(ColumnSettingsContainer);

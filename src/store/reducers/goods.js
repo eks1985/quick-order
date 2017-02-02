@@ -209,6 +209,12 @@ export const getGoodsVisibleIds = (state) => { //state = goods.state
   }, []);
 };
 
+export const getPropsValListByIds = (items, ids, propName) => {
+  return ids.reduce((res, key) => {
+    return res.concat(items[key][propName]);
+  }, [])
+}
+
 export default combineReducers({
   currentGuid,
   currentGuidCheckout,

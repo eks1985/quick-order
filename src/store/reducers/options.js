@@ -9,6 +9,7 @@ const initialState = {
   catalogListSettings: ['code', 'description', 'price', 'qty'], //production
   catalogListSettingsCheckout: ['code', 'description', 'price', 'qty', 'amount', 'delete'],
   catalogListColumns: {}, //production,
+  catalogListColumnsCheckout: {}, //production,
   showPictures: {row: false, side: false, dialog: false},
   categoryLineSeparator: false,
   pictureSource: 'url' //ukr, firebase
@@ -56,7 +57,7 @@ export const getColumns = state => {
 export const getColumnsCheckout = state => {
   const { catalogListColumnsCheckout, catalogListSettingsCheckout } = state;
   const columnsKeys = Object.keys(catalogListColumnsCheckout);
-  return catalogListSettingsCheckout.reduce((res, key) => {
+  const columns = catalogListSettingsCheckout.reduce((res, key) => {
     if (!columnsKeys.includes(key)) {
       return res.concat(key);
     } else {
@@ -67,4 +68,7 @@ export const getColumnsCheckout = state => {
       }
     }
   }, []);
+  return columnsKeys.reduce((res, key) => {
+    return catalogListColumnsCheckout[key][0] === true && !columns.includes(key) ? columns.concat(key) : res;
+  }, columns);
 };

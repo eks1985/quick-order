@@ -7,15 +7,15 @@ import IconArrowForward from 'material-ui/svg-icons/navigation/arrow-forward';
 import IconArrowDown    from 'material-ui/svg-icons/hardware/keyboard-arrow-down';
 import IconArrowUp      from 'material-ui/svg-icons/hardware/keyboard-arrow-up';
 
-const Header = (props) => {
+const HeaderCheckout = (props) => {
 
   const { arrowStyle, arrowSortStyle }  = styles;
 
-  const { headerSettingsMode, columnsKeys, columnKey, columnsQty, i, moveHeaderColumnCheckout, sortDirection, setModal } = props;
+  const { headerSettingsMode, columnsKeys, columnKey, columnsQty, i, moveHeaderColumnCheckout, sortDirection, setModal, catalogListColumns } = props;
 
   const sortable = sortDirection[columnKey] !== undefined;
 
-  // const customColumn = ['code', 'description', 'price', 'qty', 'amount', 'delete'].indexOf(columnKey) > - 1;
+  const defaultColumn = ['code', 'description', 'price', 'qty', 'amount', 'delete'].includes(columnKey);
 
   const columnNames = {
     code: 'Код',
@@ -43,22 +43,6 @@ const Header = (props) => {
   };
 
   const getSortArrowIconJsx = (direction) => {
-    // return (
-    //   <IconButton
-    //     style={arrowSortStyle.button}
-    //     iconStyle={direction === '' ? { ...arrowSortStyle.icon, fill: '#aaa' } : arrowSortStyle.icon}
-    //     id='sortIcon'
-    //     onClick={
-    //       ()=>{
-    //         // sortable && sortGoods(columnKey);
-    //       }
-    //     }
-    //   >
-    //     { (direction === 'forward' || direction === '') && <IconArrowDown /> }
-    //     { direction === 'reverse' && <IconArrowUp /> }
-    // </IconButton>
-    // );
-
     const iconStyle = direction === '' ? { ...arrowSortStyle.icon, fill: '#aaa' } : arrowSortStyle.icon;
     return (
         <div
@@ -68,13 +52,13 @@ const Header = (props) => {
               if (columnKey === 'qty' || columnKey === 'price' || columnKey === 'amount' || columnKey === 'delete') {
                 data = false;
               }
-              // if (!customColumn) {
-              //   if (catalogListColumns[columnKey]) {
-              //     data.sort = catalogListColumns[columnKey][2];
-              //     data.filter = catalogListColumns[columnKey][1];
-              //   }
-              // }
-              data && setModal({}) && setModal({content: 'column-settings-checkout', x: e.pageX, y: e.pageY, style: {background: '#fff'}, data });
+              if (!defaultColumn) {
+                if (catalogListColumns[columnKey]) {
+                  data.sort = catalogListColumns[columnKey][2];
+                  data.filter = catalogListColumns[columnKey][1];
+                }
+              }
+              (data.sort || data.filter) && setModal({}) && setModal({content: 'column-settings-checkout', x: e.pageX, y: e.pageY, style: {background: '#fff'}, data });
             }
           }
         >
@@ -86,7 +70,6 @@ const Header = (props) => {
   };
 
   const getSortArrowJsx = () => {
-    // const sortDirection = { code: false, description: false, price: false, qty: false, delete: false};
     return (
       <div>
         { sortDirection[columnKey] === '' && getSortArrowIconJsx('') }
@@ -110,13 +93,13 @@ const Header = (props) => {
                 if (columnKey === 'qty' || columnKey === 'price' || columnKey === 'amount' || columnKey === 'delete') {
                   data = false;
                 }
-                // if (!customColumn) {
-                //   if (catalogListColumns[columnKey]) {
-                //     data.sort = catalogListColumns[columnKey][2];
-                //     data.filter = catalogListColumns[columnKey][1];
-                //   }
-                // }
-                data && setModal({}) && setModal({content: 'column-settings-checkout', x: e.pageX, y: e.pageY, style: {background: '#fff'}, data });
+                if (!defaultColumn) {
+                  if (catalogListColumns[columnKey]) {
+                    data.sort = catalogListColumns[columnKey][2];
+                    data.filter = catalogListColumns[columnKey][1];
+                  }
+                }
+                (data.sort || data.filter) && setModal({}) && setModal({content: 'column-settings-checkout', x: e.pageX, y: e.pageY, style: {background: '#fff'}, data });
               }
             }
           >
@@ -143,7 +126,7 @@ const Header = (props) => {
 
 };
 
-Header.propTypes = {
+HeaderCheckout.propTypes = {
   headerSettingsMode: PropTypes.bool.isRequired,
   columnsKeys: PropTypes.array.isRequired,
   columnKey: PropTypes.string.isRequired,
@@ -152,4 +135,4 @@ Header.propTypes = {
   moveHeaderColumnCheckout: PropTypes.func.isRequired
 };
 
-export default Header;
+export default HeaderCheckout;

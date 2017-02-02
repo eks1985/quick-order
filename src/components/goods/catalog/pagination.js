@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as goodsActions from './../../../actions/goods';
 import * as currentActions from './../../../actions/current';
+import * as modalActions from './../../../lib/modal/actions/modal';
 import TextField from 'material-ui/TextField';
 import IconButton from 'material-ui/IconButton';
 import IconFirstPage from 'material-ui/svg-icons/navigation/first-page';
@@ -15,6 +16,7 @@ const Pagination = ({
   pageNumber,
   isLastPage,
   //actions
+  setModal,
   moveGoodsForward,
   moveGoodsBack,
   goToGoodsPage,
@@ -60,6 +62,13 @@ const Pagination = ({
         value={pageNumber}
         style={{width: '26px', fontSize: '14px'}}
         inputStyle={{ textAlign: 'center'}}
+        onClick={
+          () => {
+            setModal({
+              modalContent: 'nav'
+            })
+          }
+        }
         onChange={
           (e) => {
             const page = parseInt(e.target.value, 10) ? parseInt(e.target.value, 10) : 1;
@@ -106,5 +115,5 @@ const Pagination = ({
 
 export default connect(
   state => ({qtyPages: state.goods.qtyPages, pageNumber: state.goods.pageNumber, isLastPage: state.goods.isLastPage}),
-  { ...goodsActions, ...currentActions }
+  { ...goodsActions, ...currentActions, ...modalActions }
 )(Pagination);

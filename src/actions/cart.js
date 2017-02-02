@@ -3,6 +3,7 @@ import { setCurrentContent } from './../actions/current-content';
 import { setQtyPagesGoodsCheckout, goToGoodsPageCheckout, detectIsLastPageCheckout } from './goods-checkout-navigation';
 import { filterByGroupGuids } from './../actions/goods-groups';
 import { searchByPropText, getItemsByIds } from './goods';
+import { filterByPropValCheckout } from './indexes';
 
 export const filterCartItems = () => {
   return (dispatch, getState) => {
@@ -32,13 +33,12 @@ export const filterCartItems = () => {
     if (filtersGoodsGroupsCartIds.length > 0) {
       result = filterByGroupGuids(filtersGoodsGroupsCartIds, items);
     }
-    // // filter by props val
-    // const filtersApplied = getState().filtersApplied;
-    // const filtersAppliedKeys = Object.keys(filtersApplied);
-    // if (filtersAppliedKeys.length > 0) {
-    //   result = filtersAppliedKeys.reduce((result, propName) => filterByPropVal(getState, propName, filtersApplied[propName], result) , result);
-    // }
-
+    // filter by props val
+    const filtersApplied = getState().filtersAppliedCheckout;
+    const filtersAppliedKeys = Object.keys(filtersApplied);
+    if (filtersAppliedKeys.length > 0) {
+      result = filtersAppliedKeys.reduce((result, propName) => filterByPropValCheckout(getState().goods.itemsInitial, propName, filtersApplied[propName], result) , result);
+    }
 
     dispatch({
       type: 'RECEIVE_CART_ITEMS_FILTETED',

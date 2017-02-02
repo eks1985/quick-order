@@ -8,6 +8,7 @@ import ColumnSettings from './column-settings';
 import ColumnSettingsCheckout from './column-settings-checkout';
 import FirebaseConfig from './firebase-config';
 import PricesValidation from './options/validations/prices';
+import PageNumberNavigation from './page-number-navigation';
 
 const ModalContent = ({
   modal
@@ -22,6 +23,7 @@ const ModalContent = ({
       {modal.content === 'column-settings' && <ColumnSettings />}
       {modal.content === 'column-settings-checkout' && <ColumnSettingsCheckout />}
       {modal.content === 'prices-validation' && <PricesValidation />}
+      {modal.content === 'page-number-navigation' && <PageNumberNavigation />}
     </div>
   );
 };

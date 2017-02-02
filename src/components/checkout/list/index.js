@@ -8,6 +8,8 @@ import * as catalogQtyActions from './../../../actions/catalog-qty';
 import * as optionsActions    from './../../../actions/options';
 import * as checkoutActions   from './../../../actions/checkout';
 
+import { getColumnsCheckout } from './../../../store/reducers/options';
+
 import IconButton             from 'material-ui/IconButton';
 import IconSettings           from 'material-ui/svg-icons/action/settings';
 import IconDone               from 'material-ui/svg-icons/action/done';
@@ -15,7 +17,7 @@ import IconDone               from 'material-ui/svg-icons/action/done';
 import Column                 from './column';
 import styles                 from './styles';
 
-import { getGoodsVisibleIdsCheckout } from './../../../store/reducers/cart';
+import { getGoodsVisibleIdsCheckout, getGoodsItemsByCartGoodsIds } from './../../../store/reducers/cart';
 
 class ListContainer extends Component {
 
@@ -69,7 +71,6 @@ class ListContainer extends Component {
   render() {
     const props = {
       ...this.props,
-      // setFocusedCheckout: this.setFocusedCheckout,
       headerSettingsMode: this.state.headerSettingsMode,
       setHeaderSettingsMode: this.setHeaderSettingsMode.bind(this),
       removeHeaderSettingsMode: this.removeHeaderSettingsMode.bind(this),
@@ -87,16 +88,22 @@ class ListContainer extends Component {
 }
 
 export default connect(
-  state => ({
-    items: state.cart.itemsFiltered,
-    visibleItemsIds: getGoodsVisibleIdsCheckout(state),
-    totalItems: state.cart.totalItems,
-    checkout: state.checkout,
-    prices: state.prices,
-    catalogQty: state.catalogQty,
-    columnsKeys: state.options.catalogListSettingsCheckout,
-    sortDirection: state.sortDirectionCheckout,
-    currentCheckout: state.currentCheckout
-  }),
+  state => {
+    const visibleItemsIds = getGoodsVisibleIdsCheckout(state);
+    return {
+      items: state.cart.itemsFiltered,
+      visibleItemsIds,
+      goodsItems: getGoodsItemsByCartGoodsIds(state.goods.itemsInitial, visibleItemsIds),
+      totalItems: state.cart.totalItems,
+      checkout: state.checkout,
+      prices: state.prices,
+      catalogQty: state.catalogQty,
+      // columnsKeys: state.options.catalogListSettingsCheckout,
+      columnsKeys: getColumnsCheckout(state.options),
+      sortDirection: state.sortDirectionCheckout,
+      currentCheckout: state.currentCheckout,
+      catalogListColumns: state.options.catalogListColumnsCheckout
+    }
+  },
   { ...cartActions, ...modalActions, ...goodsActions, ...catalogQtyActions, ...optionsActions, ...checkoutActions }
 )(ListContainer);

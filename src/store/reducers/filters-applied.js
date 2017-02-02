@@ -6,7 +6,6 @@ export default (state = {}, action) => {
     case 'CLEAR_FILTER_BY_PROP':
       const { propName: propNameToReset } = action;
       const stateCopy = { ...state };
-      // delete stateCopy[propNameToReset];
       stateCopy[propNameToReset] = [];
       return stateCopy;
     default:

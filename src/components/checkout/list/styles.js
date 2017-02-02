@@ -2,7 +2,7 @@ export default {
   style: {
     display: 'flex',
     position: 'relative',
-    flex: '1 0 auto'
+    // flex: '1 0 auto'
   },
   arrowStyle: {
     button: {

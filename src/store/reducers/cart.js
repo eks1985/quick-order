@@ -93,7 +93,7 @@ const currentGuid = (state = '', action) => {
 
 // Selectors
 
-export const getGoodsVisibleIdsCheckout = (state) => {
+export const getGoodsVisibleIdsCheckout = state => {
   const pageNumber = state.goods.pageNumberCheckout;
   const keys = Object.keys(state.cart.itemsFiltered);
   const rowsPerPage = state.goods.rowsPerPage || 10;
@@ -101,6 +101,12 @@ export const getGoodsVisibleIdsCheckout = (state) => {
     return i >= (pageNumber-1)*rowsPerPage && i < pageNumber*rowsPerPage ? result.concat(key) : result;
   }, []);
 };
+
+export const getGoodsItemsByCartGoodsIds = (items, ids) => {
+  return ids.reduce((res, id) => {
+    return { ...res, [id]: items[id] };
+  }, {});
+}
 
 export default combineReducers({
   items,

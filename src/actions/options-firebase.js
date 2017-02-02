@@ -68,6 +68,15 @@ export const setCommonOptionCatalogListColumnsFirebase = (option, index, value) 
 	};
 };
 
+export const setCommonOptionCatalogListColumnsCartFirebase = (option, index, value) => {
+	return (dispatch, getState) => {
+		try {
+		 	const commonOptionsRef = database.ref('options/common/catalogListColumnsCheckout/' + option);
+		 	commonOptionsRef.update({[index]: value});
+		} catch (e) {}
+	};
+};
+
 export const setCustomerOptionFirebase = (option, value) => {
 	return (dispatch, getState) => {
 		try {

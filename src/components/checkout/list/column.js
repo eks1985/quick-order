@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import styles from './styles';
 import { format1 } from './../../../utils/format';
 
@@ -10,19 +10,21 @@ import Amount from './custom-columns/amount';
 import Qty from './custom-columns/qty';
 import Delete from './custom-columns/delete';
 
-export default (props) => {
+const CheckoutListColumn = props => {
 
   const {
     columnKey,
     columnsKeys,
     columnsQty,
     items,
+    goodsItems,
     visibleItemsIds,
     i,
     headerSettingsMode,
     catalogQty,
     currentCheckout,
     sortDirection,
+    catalogListColumns,
     // actions
     moveHeaderColumnCheckout,
     addCatalogQty,
@@ -56,17 +58,22 @@ export default (props) => {
   };
 
   const prepareStyle = () => {
+    let style;
     if (styles.columnStyle[columnKey]) {
-      return { ...styles.columnStyle.common, ...styles.columnStyle[columnKey] };
+      style = { ...styles.columnStyle.common, ...styles.columnStyle[columnKey], borderLeft: '2px solid #eee', borderBottom: '2px solid #eee' };
     } else {
-      return styles.columnStyle.common;
+      style = { ...styles.columnStyle.common, borderLeft: '2px solid #eee',  borderBottom: '2px solid #eee' };
     }
+    if (i === columnsQty - 1) {
+      style = { ...style, borderRight: '2px solid #eee'};
+    }
+    return style;
   };
 
   // Work with styles <
 
   const getCustomItemJsx = (key, rowIndex) => {
-    const p            = { rowStyle, keyProp: key, rowIndex, items, columnKey, applyVertBorder, applyZebra, setCurentGuidCheckout, currentCheckout };
+    const p            = { rowStyle, keyProp: key, rowIndex, items, goodsItems, columnKey, applyVertBorder, applyZebra, setCurentGuidCheckout, currentCheckout };
     const pCode        = { ...p  };
     const pDescription = { ...p, setModal };
     const pPrice       = { ...p, format1 };
@@ -91,17 +98,17 @@ export default (props) => {
   };
 
   const getItemJsx = (key, rowIndex) => {
-    let style = applyZebra(rowStyle.common, i);
+    let style = applyZebra(rowStyle.common, rowIndex);
     return (
       <div key={`${key}${columnKey}`} style={style}>
-        {items[key][columnKey]}
+        {goodsItems[key][columnKey]}
       </div>
     );
   };
 
   const getItemsJsx = () => itemsIds.map( (key, rowIndex) => customColumn ?  getCustomItemJsx(key, rowIndex) : getItemJsx(key, rowIndex));
 
-  const headerProps = { headerSettingsMode, columnsKeys, columnKey, columnsQty, i, moveHeaderColumnCheckout, sortDirection, setModal };
+  const headerProps = { headerSettingsMode, columnsKeys, columnKey, columnsQty, i, moveHeaderColumnCheckout, sortDirection, catalogListColumns, setModal };
 
   return (
     <div style={prepareStyle()}>
@@ -113,3 +120,9 @@ export default (props) => {
   );
 
 };
+
+CheckoutListColumn.propTypes = {
+  catalogListColumns: PropTypes.object
+}
+
+export default CheckoutListColumn;
