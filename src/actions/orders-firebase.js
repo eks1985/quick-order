@@ -9,7 +9,7 @@ const receiveHeaders = (dispatch, data) => {
       payload: data
     });
     resolve();
-  });  
+  });
 };
 
 export const listenToOrdersHeaders = () => {
@@ -19,12 +19,12 @@ export const listenToOrdersHeaders = () => {
       if (customerGuid) {
         const ordersRef = database.ref('orders/headers/' + customerGuid);
         ordersRef.off();
-        return ordersRef.once('value', snapshot => {
+        return ordersRef.on('value', snapshot => {
           receiveHeaders(dispatch, snapshot.val()).then(
             () => {
               dispatch(setQtyPagesOrders());
               // Promise.resolve();
-            }  
+            }
           );
         }, (error) => {
           dispatch({
@@ -48,7 +48,7 @@ export const listenToOrdersItems= () => {
       if (customerGuid) {
         const goodsGroupsRef = database.ref('orders/items/' + customerGuid);
         goodsGroupsRef.off();
-        return goodsGroupsRef.once('value', snapshot => {
+        return goodsGroupsRef.on('value', snapshot => {
           dispatch({
             type: 'RECEIVE_ORDERS_ITEMS',
             payload: snapshot.val()
@@ -67,3 +67,8 @@ export const listenToOrdersItems= () => {
 	  } catch (e) {}
 	};
 };
+
+export const deleteOrderFirebase = (id, customerGuid) => {
+  const goodsGroupsRef = database.ref('orders/headers/' + customerGuid + '/' + id);
+  goodsGroupsRef.update({deleted: true})
+}

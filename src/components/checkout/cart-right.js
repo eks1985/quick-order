@@ -4,14 +4,18 @@ import * as cartActions from './../../actions/cart';
 import * as checkoutActions from './../../actions/checkout';
 import RaisedButton from 'material-ui/RaisedButton';
 import IconSend from 'material-ui/svg-icons/content/send';
+import IconDraft from 'material-ui/svg-icons/content/drafts';
 import TextField from 'material-ui/TextField';
 
 const Cart = ({
   cart,
+  options,
   //actions
   cleanCart,
   checkoutOrder,
-  setCurrentContent
+  setCurrentContent,
+  setCommentCheckout,
+  setRefCheckout
 }) => {
   const style = {
     display: 'flex',
@@ -39,6 +43,23 @@ const Cart = ({
             </div>
           </div>
         }
+        {hasItems && options.allowDraftOrders &&
+          <div style={{display: 'flex', flex: '1 0 100%', justifyContent: 'center', marginTop: '0px'}}>
+            <div style={{marginRight: '3px', marginBottom: '15px', display: 'flex'}}>
+              <RaisedButton
+                style={{flex: '1'}}
+                icon={<IconDraft />}
+                label='Сохранить черновик'
+                labelStyle={{fontWeight: 'normal', flex: '1'}}
+                onClick={
+                  () => {
+                    checkoutOrder(true);
+                  }
+                }
+              />
+            </div>
+          </div>
+        }
         <div style={{width: '100%', borderTop: '2px solid #eee', opacity: '0.8'}}></div>
         <TextField
           placeholder='Комментарий к заказу'
@@ -47,9 +68,27 @@ const Cart = ({
           rows={5}
           underlineShow={false}
           // style={{width: '90%', background: 'rgba(238, 238, 238, 0.7)', padding: '10px'}}
-          style={{width: '90%', padding: '10px'}}
+          style={{width: '95%', padding: '10px'}}
+          onChange={
+            e => {
+              // console.log(e.target.value);
+              setCommentCheckout(e.target.value.trim())
+            }
+          }
         />
-        <div style={{width: '100%',  marginBottom: '20px', opacity: '0.6'}}></div>
+        <TextField
+          placeholder='Номер закака'
+          id='orderRef'
+          underlineShow={false}
+          style={{width: '95%', padding: '10px', paddingBottom: '0px'}}
+          onChange={
+            e => {
+              // console.log(e.target.value);
+              setRefCheckout(e.target.value.trim())
+            }
+          }
+        />
+        <div style={{width: '100%',  marginBottom: '10px', opacity: '0.6'}}></div>
       </div>
     );
   };
@@ -62,6 +101,6 @@ const Cart = ({
 };
 
 export default connect(
-  state => ({cart: state.cart}),
+  state => ({ cart: state.cart, options: state.options }),
   { ...cartActions, ...checkoutActions }
 )(Cart);

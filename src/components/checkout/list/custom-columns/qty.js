@@ -1,6 +1,7 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes, Component } from 'react';
 
 const Qty = ({
+  x,y,
   currentCheckout,
   keyProp,
   rowIndex,
@@ -15,7 +16,8 @@ const Qty = ({
   catalogQty,
   setFocusedCheckout,
   setCurentGuidCheckout,
-  setModal
+  setModal,
+  setCoord
 }) => {
 
     const { rowStyle, incDecSmallQtyPane, qtyInputStyle } = styles;
@@ -27,7 +29,6 @@ const Qty = ({
 
     const getJsx = () => {
       let style = applyCurrentRowBorder(applyZebra(rowStyle.qty, rowIndex));
-      let x, y;
       return (
         <div
           key={`${keyProp}${columnKey}`}
@@ -46,8 +47,16 @@ const Qty = ({
                 if (catalogQty[keyProp]) {
                   const v = catalogQty[keyProp] - 1;
                   if (v === 0) {
-                    removeFromCart(keyProp);
-                    removeCatalogQty(keyProp);
+                    setModal({
+                      content: 'cart-row-qty-edit',
+                      showClose: false,
+                      style: { background: '#fff'},
+                      x,
+                      y,
+                      data: {
+                        keyProp
+                      }
+                    })
                   } else {
                     addCatalogQty(keyProp, v);
                     addToCart(keyProp, v, items[keyProp].price);
@@ -62,11 +71,11 @@ const Qty = ({
             className='catalogQtyInput'
             style={qtyInputStyle}
             value={catalogQty[keyProp] || ''}
-            onClick={
+            onMouseEnter={
               e => {
-                // console.log('e.x', e.pageX);
                 x = e.pageX - 30;
                 y = e.pageY - 25;
+                setCoord(x, y);
               }
             }
             onFocus={
@@ -93,8 +102,6 @@ const Qty = ({
                       keyProp
                     }
                   })
-                  // removeFromCart(keyProp);
-                  // removeCatalogQty(keyProp);
                 }
               }
             }
@@ -119,10 +126,27 @@ const Qty = ({
 
 };
 
+class QtyContainer extends Component {
+
+  constructor() {
+    super();
+    this.state = { x: 0, y: 0};
+  }
+
+  setCoord = (x, y) => {
+    this.setState({x, y});
+  }
+
+  render() {
+    return <Qty {...this.props} setCoord={this.setCoord} x={this.state.x} y={this.state.y} />
+  }
+}
+
+
 Qty.propTypes = {
   items: PropTypes.object.isRequired,
   columnKey: PropTypes.string.isRequired,
   applyZebra: PropTypes.func.isRequired
 };
 
-export default Qty;
+export default QtyContainer;

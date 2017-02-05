@@ -29,6 +29,12 @@ export const setOption = (option, value) => {
     if (option  === 'categoryLineSeparator') {
       dispatch(setCommonOptionFirebase('categoryLineSeparator', value));
     }
+    if (option  === 'allowDraftOrders') {
+      dispatch(setCommonOptionFirebase('allowDraftOrders', value));
+    }
+    if (option  === 'allowDeleteOrders') {
+      dispatch(setCommonOptionFirebase('allowDeleteOrders', value));
+    }
   };
 };
 

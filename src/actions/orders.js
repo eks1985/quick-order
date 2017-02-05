@@ -1,3 +1,5 @@
+import { deleteOrderFirebase } from './orders-firebase';
+
 export const setQtyPagesOrders = () => {
   return (dispatch, getState) => {
       const keysLength = Object.keys(getState().orders.headers).length;
@@ -47,3 +49,12 @@ export const goToOrdersPage = (pageNumber) => {
     dispatch(detectIsLastPage());
   };
 };
+
+export const deleteOrder = id => {
+  return (dispatch, getState) => {
+    dispatch({
+      type: 'FIREBASE_DELETE_ORDER'
+    })
+    dispatch(deleteOrderFirebase(id, getState().customer.guid));
+  }
+}

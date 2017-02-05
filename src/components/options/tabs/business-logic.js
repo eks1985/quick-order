@@ -14,6 +14,8 @@ import ManagePrices from './option/manage-prices';
 import ShowPictures from './option/show-pictures';
 import CategoryLineSeparator from './option/categoryLineSeparator';
 import PictureSource from './option/picture-source';
+import AllowDraftOrders from './option/allow-draft-orders';
+import AllowDeleteOrders from './option/allow-delete-orders';
 
 const OptionsLogic = props => {
 
@@ -120,6 +122,14 @@ const OptionsLogic = props => {
 
       <div style={rowStyle}>
         <PictureSource {...passProps} />
+      </div>
+
+      <div style={rowStyle}>
+        <AllowDraftOrders {...passProps} />
+      </div>
+
+      <div style={rowStyle}>
+        <AllowDeleteOrders {...passProps} />
       </div>
 
     </div>

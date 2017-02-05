@@ -12,7 +12,9 @@ const initialState = {
   catalogListColumnsCheckout: {}, //production,
   showPictures: {row: false, side: false, dialog: false},
   categoryLineSeparator: false,
-  pictureSource: 'url' //ukr, firebase
+  pictureSource: 'url', //ukr, firebase,
+  allowDraftOrders: false,
+  allowDeleteOrders: false
 };
 
 export default (state, action) => {

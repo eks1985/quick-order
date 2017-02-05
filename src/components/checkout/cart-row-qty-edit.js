@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { setModal } from './../../lib/modal/actions/modal';
 import FlatButton from 'material-ui/RaisedButton';
@@ -34,12 +34,10 @@ const CartRowQtyEdit = props => {
               setModal();
             }
             if (parseInt(val, 10) === val) {
-              console.log('val', val);
               addCatalogQty(keyProp, val);
               addToCart(keyProp, val, prices[keyProp]);
               setModal();
             } else {
-              // console.log('not valid');
             }
           }
         }
@@ -49,19 +47,20 @@ const CartRowQtyEdit = props => {
   );
 }
 
-// class CartRowQtyEditContainer extends Component {
-//   constructor() {
-//     super();
-//     this.state = '';
-//   }
-//
-//   handleQtyChange(val) {
-//     console.log(123);
-//   }
-//
-// }
+class CartRowQtyEditContainer extends Component {
+
+  componentDidMount() {
+    // console.log('mounted');
+    document.getElementById('editQtyRowCheckout').focus();
+  }
+
+  render() {
+    return <CartRowQtyEdit {...this.props} />
+  }
+
+}
 
 export default connect(
   state => ({ modal: state.modal, prices: state.prices }),
   { setModal, removeFromCart, removeCatalogQty , addToCart, addCatalogQty }
-)(CartRowQtyEdit);
+)(CartRowQtyEditContainer);

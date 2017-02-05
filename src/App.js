@@ -13,6 +13,10 @@ import { setFilterTextCart } from './actions/cart';
 import { search, moveGoodsBack, moveGoodsForward } from './actions/goods';
 import { filterCartItems } from './actions/cart';
 import { setUi } from './actions/ui';
+import { removeFromCart, addToCart } from './actions/cart';
+import { removeCatalogQty, addCatalogQty } from './actions/catalog-qty';
+import { setModal } from './lib/modal/actions/modal';
+
 // eslint-disable-next-line
 import rtep from './rtep';
 
@@ -41,6 +45,23 @@ class App extends Component {
       const text = document.querySelector('#search').value;
       dispatch(search(text));
       dispatch(setSearchText(text));
+    }
+    if (e.which === 13 && document.activeElement.id === 'editQtyRowCheckout') {
+      //Press Enter while inside edit cart row qty modal dialog
+      const rawVal = document.getElementById('editQtyRowCheckout').value;
+      const guid = this.props.modal.data.keyProp;
+      const val = parseInt(rawVal, 10) || rawVal;
+      if (val === '' || val === 0) {
+        dispatch(removeFromCart(guid));
+        dispatch(removeCatalogQty(guid));
+        dispatch(setModal());
+      }
+      if (parseInt(val, 10) === val) {
+        dispatch(addCatalogQty(guid, val));
+        dispatch(addToCart(guid, val, this.props.prices[guid]));
+        dispatch(setModal());
+      } else {
+      }
     }
     if (e.which === 13 && document.activeElement.id === 'searchCart') {
       const text = document.querySelector('#searchCart').value;
@@ -78,7 +99,6 @@ class App extends Component {
 
   //возвращает фокус назад на поле ввода
   handleClick = e => {
-    // console.log('node name', e.target.nodeName);
     const { current, currentCheckout, dispatch, currentContent } = this.props;
     let className = '';
     try {
@@ -139,7 +159,14 @@ class App extends Component {
 }
 
 App = connect(
-  state => ({ current: state.current, currentCheckout: state.currentCheckout, rowsPerPage: state.goods.rowsPerPage, currentContent: state.currentContent })
+  state => ({
+    current: state.current,
+    currentCheckout: state.currentCheckout,
+    rowsPerPage: state.goods.rowsPerPage,
+    currentContent: state.currentContent,
+    modal: state.modal,
+    prices: state.prices
+  })
 )(App);
 
 export default App;
