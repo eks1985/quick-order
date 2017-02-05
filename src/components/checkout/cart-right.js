@@ -77,7 +77,7 @@ const Cart = ({
           }
         />
         <TextField
-          placeholder='Номер закака'
+          placeholder='Номер заказа'
           id='orderRef'
           underlineShow={false}
           style={{width: '95%', padding: '10px', paddingBottom: '0px'}}
