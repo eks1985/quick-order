@@ -14,7 +14,8 @@ const initialState = {
   categoryLineSeparator: false,
   pictureSource: 'url', //ukr, firebase,
   allowDraftOrders: false,
-  allowDeleteOrders: false
+  allowDeleteOrders: false,
+  permanentDeleteOrders: false,
 };
 
 export default (state, action) => {

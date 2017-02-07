@@ -1,4 +1,6 @@
 import { deleteOrderFirebase } from './orders-firebase';
+import { addToCart } from './cart';
+import { addCatalogQty } from './catalog-qty';
 
 export const setQtyPagesOrders = () => {
   return (dispatch, getState) => {
@@ -55,6 +57,35 @@ export const deleteOrder = id => {
     dispatch({
       type: 'FIREBASE_DELETE_ORDER'
     })
-    dispatch(deleteOrderFirebase(id, getState().customer.guid));
+    dispatch(deleteOrderFirebase(id, getState().customer.guid, getState().options.permanentDeleteOrders));
+  }
+}
+
+export const restoreOrder = id => {
+  return (dispatch, getState) => {
+    const state = getState();
+    const items = state.orders.items[id];
+    const prices = state.prices;
+    const itemsKeys = Object.keys(items);
+    itemsKeys.forEach(key => {
+      dispatch(addToCart(key, items[key].qty, prices[key]));
+      dispatch(addCatalogQty(key, items[key].qty));
+    });
+    dispatch({
+      type: 'SET_CURRENT_CONTENT',
+      contentName: 'checkout'
+    })
+    dispatch({
+      type: 'SET_ID_CHECKOUT',
+      id
+    })
+    dispatch({
+      type: 'SET_COMMENT_CHECKOUT',
+      comment: state.orders.headers[id].comment
+    })
+    dispatch({
+      type: 'SET_REF_CHECKOUT',
+      ref: state.orders.headers[id].ref
+    })
   }
 }

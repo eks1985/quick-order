@@ -35,6 +35,9 @@ export const setOption = (option, value) => {
     if (option  === 'allowDeleteOrders') {
       dispatch(setCommonOptionFirebase('allowDeleteOrders', value));
     }
+    if (option  === 'permanentDeleteOrders') {
+      dispatch(setCommonOptionFirebase('permanentDeleteOrders', value));
+    }
   };
 };
 

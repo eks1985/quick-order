@@ -16,6 +16,7 @@ import CategoryLineSeparator from './option/categoryLineSeparator';
 import PictureSource from './option/picture-source';
 import AllowDraftOrders from './option/allow-draft-orders';
 import AllowDeleteOrders from './option/allow-delete-orders';
+import PermanentDeleteOrders from './option/permanent-delete-orders';
 
 const OptionsLogic = props => {
 
@@ -130,6 +131,10 @@ const OptionsLogic = props => {
 
       <div style={rowStyle}>
         <AllowDeleteOrders {...passProps} />
+      </div>
+
+      <div style={rowStyle}>
+        <PermanentDeleteOrders {...passProps} />
       </div>
 
     </div>

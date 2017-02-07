@@ -15,6 +15,7 @@ export const checkoutOrder = (draft = false) => {
     const status = draft === true ? 'draft' : 'new';
     const comment = getState().checkout.comment;
     const ref = getState().checkout.ref;
+    const checkoutOrderNr = getState().checkout.id;
     dispatch(cleanCart());
     dispatch({type: 'RESET_CHECKOUT'});
     dispatch({type: 'RESET_CATALOG_QTY'});
@@ -22,7 +23,7 @@ export const checkoutOrder = (draft = false) => {
     //update firebase orders data
     const customerGuid = getState().customer.guid;
     if (customerGuid) {
-      const newOrderNr = database.ref(`orders/headers/${customerGuid}`).push().key;
+      const newOrderNr = checkoutOrderNr || database.ref(`orders/headers/${customerGuid}`).push().key;
       const ordersHeadersRef = database.ref(`orders/headers/${customerGuid}/${newOrderNr}`);
       ordersHeadersRef.update({ amount, date, enterpriseNr, nr: newOrderNr, status, comment, ref })
       .then(

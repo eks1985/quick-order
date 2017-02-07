@@ -3,7 +3,8 @@ import { combineReducers } from 'redux';
 const headers = (state = {}, action) => {
   switch (action.type) {
     case 'RECEIVE_ORDERS_HEADERS':
-      return { ...state, ...action.payload };
+      // return { ...state, ...action.payload };
+      return action.payload;
     case 'RESET_ORDERS_HEADERS':
       return {};
     case 'CHECKOUT':

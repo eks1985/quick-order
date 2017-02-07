@@ -68,7 +68,16 @@ export const listenToOrdersItems= () => {
 	};
 };
 
-export const deleteOrderFirebase = (id, customerGuid) => {
-  const goodsGroupsRef = database.ref('orders/headers/' + customerGuid + '/' + id);
-  goodsGroupsRef.update({deleted: true})
+export const deleteOrderFirebase = (id, customerGuid, permanent) => {
+  return dispatch => {
+    dispatch({
+      type: 'DELETE_ORDER_FIREBASE'
+    })
+    const goodsGroupsRef = database.ref('orders/headers/' + customerGuid + '/' + id);
+    if (permanent) {
+      goodsGroupsRef.remove();
+    } else {
+      goodsGroupsRef.update({deleted: true});
+    }
+  }
 }

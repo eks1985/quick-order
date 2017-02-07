@@ -6,9 +6,7 @@ export default () => {
   const style = {
     display: 'flex',
     flexDirection: 'column',
-    flex: '1 0 auto',
-    // border: '1px solid gray',
-    // padding: '10px'
+    flex: '1 0 auto'
   };
   return (
     <div className='orders' style={style}>
