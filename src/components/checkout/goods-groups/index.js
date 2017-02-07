@@ -15,6 +15,7 @@ import './style.css';
 const GoodsGroups =  ({
   items,
   filters,
+  goodsGroupsSelected,
   // actions
   // filterGoodsGroupsByText,
   filterCartItems,
@@ -46,21 +47,22 @@ const GoodsGroups =  ({
   const getItemsStyledJsx = () => {
     const keys = Object.keys(items);
     return keys.map( key => {
-        return (
-          <ListItem
-            innerDivStyle={{padding: '5px 10px 5px 10px'}}
-            style={categoryItemStyle}
-            key={key}
-            primaryText={items[key]}
-            onClick={
-              () => {
-                addFilterGoodsGroupsCart(key);
-                filterCartItems();
-              }
+      const qtySelected = goodsGroupsSelected[key] ? '[' + goodsGroupsSelected[key] + '] ' : '';
+      return (
+        <ListItem
+          innerDivStyle={{padding: '5px 10px 5px 10px'}}
+          style={categoryItemStyle}
+          key={key}
+          primaryText={qtySelected + items[key]}
+          onClick={
+            () => {
+              addFilterGoodsGroupsCart(key);
+              filterCartItems();
             }
-          />
-        );
-    });
+          }
+        />
+      );
+  });
   };
 
   const getFilterJsx = (filterKey, filterDescr) => {
@@ -129,7 +131,8 @@ export default connect(
     const items = getGoodsGroupsByIds(state.goodsGroups.itemsInitial, state.cart.goodsGroupsIds);
     const filters = getGoodsGroupsByIds(state.goodsGroups.itemsInitial, state.cart.filtersGoodsGroupsCartIds);
     const categoryLineSeparator = state.options.categoryLineSeparator;
-    return { items, filters, categoryLineSeparator };
+    const goodsGroupsSelected = state.goodsGroupsSelected;
+    return { items, filters, categoryLineSeparator, goodsGroupsSelected };
   },
   { filterCartItems, addFilterGoodsGroupsCart, removeFilterGoodsGroupsCart, resetFiltersGoodsGroupsCart }
 )(GoodsGroups);

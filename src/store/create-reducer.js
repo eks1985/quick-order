@@ -23,6 +23,7 @@ import current from './reducers/current';
 import currentCheckout from './reducers/current-checkout';
 import preventCleanGoodsRow from './reducers/prevent-clean-goods-row';
 import ui from './reducers/ui';
+import goodsGroupsSelected from './reducers/goods-groups-selected';
 import modal from './../lib/modal/reducers/modal';
 
 export default function createReducer(indexes) {
@@ -51,6 +52,7 @@ export default function createReducer(indexes) {
     currentCheckout,
     preventCleanGoodsRow,
     ui,
+    goodsGroupsSelected,
     ...indexes
   });
 }

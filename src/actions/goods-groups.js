@@ -36,6 +36,24 @@ export const resetFilters = () => ({
   type: 'RESET_GOODS_GROUPS_FILTERS'
 });
 
+export const setGoodsGroupsSelected = () => {
+  return (dispatch, getState) => {
+    const cartItems = getState().cart.items;
+    const payload = Object.keys(cartItems).reduce((res, productKey) => {
+      const currentGroupRef = cartItems[productKey].groupRef;
+      if (res[currentGroupRef]) {
+        return { ...res, [currentGroupRef]: res[currentGroupRef] + 1};
+      } else {
+        return { ...res, [currentGroupRef]: 1}
+      }
+    }, {});
+    dispatch({
+      type: 'SET_GOODS_GROUPS_SELECTED',
+      payload
+    })
+  }
+}
+
 // Utils
 
 const filterByGroupGuid = (groupGuid, items) => {

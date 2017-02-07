@@ -1,7 +1,7 @@
 import { isNumeric } from './../utils/index';
 import { setCurrentContent } from './../actions/current-content';
 import { setQtyPagesGoodsCheckout, goToGoodsPageCheckout, detectIsLastPageCheckout } from './goods-checkout-navigation';
-import { filterByGroupGuids } from './../actions/goods-groups';
+import { filterByGroupGuids, setGoodsGroupsSelected } from './../actions/goods-groups';
 import { searchByPropText, getItemsByIds } from './goods';
 import { filterByPropValCheckout } from './indexes';
 
@@ -120,6 +120,7 @@ export const addToCart = (guid, qty, price) => {
     dispatch(setQtyPagesGoodsCheckout());
     dispatch(detectIsLastPageCheckout());
     dispatch(filterCartItems());
+    dispatch(setGoodsGroupsSelected());
   };
 };
 
@@ -135,6 +136,7 @@ export const removeFromCart = (guid) => {
     dispatch(setQtyPagesGoodsCheckout());
     dispatch(detectIsLastPageCheckout());
     dispatch(filterCartItems());
+    dispatch(setGoodsGroupsSelected());
     dispatch({
       type: 'RESET_FOCUSED_CHECKOUT'
     });
@@ -208,6 +210,7 @@ export const cleanCart = () => {
     dispatch(setQtyPagesGoodsCheckout());
     dispatch(filterCartItems());
     dispatch(detectIsLastPageCheckout());
+    dispatch(setGoodsGroupsSelected());
     dispatch({
       type: 'RESET_GOODS_GROUPS_FILTERS_CART'
     });
