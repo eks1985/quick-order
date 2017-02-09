@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { format1 } from './../../utils/format';
 import { getOrdersVisibleIds } from './../../store/reducers/orders';
@@ -6,15 +6,19 @@ import Paper from 'material-ui/Paper';
 import { deleteOrder, restoreOrder } from './../../actions/orders';
 import IconRestore from 'material-ui/svg-icons/content/reply';
 import IconDelete from 'material-ui/svg-icons/action/delete-forever';
+import IconDown from 'material-ui/svg-icons/hardware/keyboard-arrow-down';
+import IconUp from 'material-ui/svg-icons/hardware/keyboard-arrow-up';
 
-const List = ({
+const OrdersList = ({
   orders,
   headersIds,
   allowDeleteOrders,
   cartIsEmpty,
+  ordersState,
   // actions
   deleteOrder,
-  restoreOrder
+  restoreOrder,
+  toggleOrder
 }) => {
   const style = {
     display: 'flex',
@@ -75,6 +79,10 @@ const List = ({
   };
 
   const getOrderHeaderJsx = key => {
+
+    const rows = items[key] || {};
+    const rowsQty = Object.keys(rows).length;
+
     const headerStyle = {
       display: 'flex',
       height: '40px',
@@ -95,6 +103,11 @@ const List = ({
           display: 'flex',
           color: 'rgba(0,0,0,0.70)'
         },
+        rows: {
+          flex: '0 0 130px',
+          display: 'flex',
+          color: 'rgba(0,0,0,0.70)'
+        },
         amount: {
           flex: '1 0 250px',
           display: 'flex',
@@ -105,13 +118,23 @@ const List = ({
           display: 'flex'
         },
         status: {
-          flex: '0 0 200px',
+          flex: '0 0 160px',
+          display: 'flex',
+          justifyContent: 'flex-end'
+        },
+        expand: {
+          flex: '0 0 60px',
           display: 'flex',
           justifyContent: 'flex-end'
         }
       },
       field: {
         number: {
+          fontWeight: 'bold',
+          marginLeft: '5px',
+          cursor: 'pointer'
+        },
+        rows: {
           fontWeight: 'bold',
           marginLeft: '5px'
         },
@@ -122,8 +145,12 @@ const List = ({
         comment: {
           marginLeft: '5px'
         },
-        status: {
+        expand: {
           marginLeft: '5px',
+          cursor: 'pointer'
+        },
+        status: {
+          marginRight: '5px',
           flex: '1',
           justifyContent: 'center',
           padding: '5px',
@@ -164,32 +191,24 @@ const List = ({
       dataTime = new Date(date).toString().slice(17,21);
     } catch (e) {};
     return (
-      <div  className='orderHeader' style={headerStyle}>
-        <div style={columnsStyle.container.number}>
-          <div>{`Номер:`}</div>
-          <div style={columnsStyle.field.number}>{`${nr}`}</div>
-        </div>
-        <div style={columnsStyle.container.date}>
-          <div>{`Дата:`}</div>
-          <div style={{fontWeight: 'bold', marginLeft: '5px'}}>
-            {`${dataDate} ${dataTime}`}
-          </div>
-        </div>
-        <div style={columnsStyle.container.amount}>
-          <div>
-            {`Сумма:`}
-          </div>
-          <div style={columnsStyle.field.amount}>
-            {`${format1(amount, "руб.")}`}
-          </div>
-        </div>
-        <div style={columnsStyle.container.comment}>
-          <div style={columnsStyle.field.comment}>
-            {`${com}`}
-          </div>
-        </div>
+      <div
+        className='orderHeader'
+        style={headerStyle}
+        onClick={
+          () => {
+            toggleOrder(key);
+          }
+        }
+      >
         <div style={columnsStyle.container.status}>
-          <div style={columnsStyle.field.status}>
+          <div
+            style={columnsStyle.field.status}
+            onClick={
+              e => {
+                e.stopPropagation();
+              }
+            }
+          >
             {`${statusRu}`}
             {status === 'draft' &&
               <IconRestore
@@ -223,6 +242,102 @@ const List = ({
             }
           </div>
         </div>
+        <div
+          style={columnsStyle.container.number}
+          onClick={
+            e => {
+              e.stopPropagation();
+            }
+          }
+        >
+          <div>{`Номер:`}</div>
+          <div style={columnsStyle.field.number}
+            onClick={
+              () => {
+                toggleOrder(key);
+              }
+            }
+          >{`${nr}`}</div>
+        </div>
+        <div
+          style={columnsStyle.container.date}
+          onClick={
+            e => {
+              e.stopPropagation();
+            }
+          }
+        >
+          <div>{`Дата:`}</div>
+          <div style={{fontWeight: 'bold', marginLeft: '5px'}}>
+            {`${dataDate} ${dataTime}`}
+          </div>
+        </div>
+        <div
+          style={columnsStyle.container.rows}
+          onClick={
+            e => {
+              e.stopPropagation();
+            }
+          }
+        >
+          <div>
+            {`Позиций:`}
+          </div>
+          <div style={columnsStyle.field.amount}>
+            {rowsQty}
+          </div>
+        </div>
+        <div
+          style={columnsStyle.container.amount}
+          onClick={
+            e => {
+              e.stopPropagation();
+            }
+          }
+        >
+          <div>
+            {`Сумма:`}
+          </div>
+          <div style={columnsStyle.field.amount}>
+            {`${format1(amount, "руб.")}`}
+          </div>
+        </div>
+        <div
+          style={columnsStyle.container.comment}
+          onClick={
+            e => {
+              e.stopPropagation();
+            }
+          }
+        >
+          <div style={columnsStyle.field.comment}>
+            {`${com}`}
+          </div>
+        </div>
+        <div style={columnsStyle.container.expand}>
+          <div style={columnsStyle.field.expand}>
+            {
+              ordersState[key]
+              ?
+              <IconUp
+                onClick={
+                  () => {
+                    toggleOrder(key);
+                  }
+                }
+              />
+              :
+              <IconDown
+                onClick={
+                  () => {
+                    toggleOrder(key);
+                  }
+                }
+              />
+            }
+          </div>
+        </div>
+
       </div>
     );
   }
@@ -230,14 +345,15 @@ const List = ({
   const getOrdersJsx = () => {
     return (
       headersIds.map(key => {
-
         return (
           <div key={key} className='orderContainer'>
             {getOrderHeaderJsx(key)}
-            <div className='orderItems'>
-              {getOrderItemsHeader()}
-              {getOrderItemsJsx(key)}
-            </div>
+            {ordersState[key] &&
+              <div className='orderItems'>
+                {getOrderItemsHeader()}
+                {getOrderItemsJsx(key)}
+              </div>
+            }
           </div>
         );
       })
@@ -253,6 +369,27 @@ const List = ({
   );
 };
 
+class OrdersListContainer extends Component {
+  constructor() {
+    super();
+    this.state = { ordersState: {}};
+  }
+  componentDidMount(){
+    const ordersState = this.props.headersIds.reduce((res, id) => {
+      return { ...res, [id]: false };
+    }, {});
+    this.setState({ ordersState });
+  }
+  toggleOrder = id => {
+    const currentState = this.state.ordersState;
+    const ordersState = { ...currentState, [id]: currentState[id] ? false : true };
+    this.setState({ ordersState})
+  }
+  render(){
+    return <OrdersList {...this.props} ordersState={this.state.ordersState}  toggleOrder={this.toggleOrder} />
+  }
+}
+
 export default connect(
   state => {
     return {
@@ -263,4 +400,4 @@ export default connect(
     }
   },
   { deleteOrder, restoreOrder }
-)(List);
+)(OrdersListContainer);

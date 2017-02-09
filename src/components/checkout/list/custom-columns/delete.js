@@ -31,6 +31,7 @@ const Component = ({
       >
         <FlatButton
           label='удалить'
+          labelStyle={{fontWeight: 'normal'}}
           onClick={
             () => {
               removeFromCart(keyProp);

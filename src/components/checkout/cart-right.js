@@ -67,7 +67,7 @@ const Cart = ({
           placeholder='Номер заказа'
           id='orderRef'
           underlineShow={false}
-          style={{width: '95%', padding: '10px', paddingBottom: '0px'}}
+          style={{width: '95%', padding: '10px', paddingBottom: '0px', paddingTop: '0px'}}
           onChange={
             e => {
               setRefCheckout(e.target.value.trim())
@@ -82,7 +82,7 @@ const Cart = ({
           multiLine={true}
           rows={5}
           underlineShow={false}
-          style={{width: '95%', padding: '10px'}}
+          style={{width: '95%', padding: '10px', paddingTop: '0px'}}
           onChange={
             e => {
               setCommentCheckout(e.target.value.trim())

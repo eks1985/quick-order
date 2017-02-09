@@ -10,6 +10,9 @@ import Chip from 'material-ui/Chip';
 // import throttle from 'lodash/throttle';
 import './style.css';
 
+import IconButton from 'material-ui/IconButton';
+import IconClear from 'material-ui/svg-icons/content/clear';
+
 const GoodsGroups =  ({
   items,
   filters,
@@ -23,6 +26,7 @@ const GoodsGroups =  ({
   current,
   categoryLineSeparator
 }) => {
+  let searchRef;
   const style = {
     flex: '1 0 auto',
     padding: '10px',
@@ -47,7 +51,7 @@ const GoodsGroups =  ({
   const getItemsStyledJsx = () => {
     const keys = Object.keys(items);
     return keys.map( key => {
-        const qtySelected = goodsGroupsSelected[key] ? '[' + goodsGroupsSelected[key] + '] ' : ''; 
+        const qtySelected = goodsGroupsSelected[key] ? '( ' + goodsGroupsSelected[key] + ' ) ' : '';
         return (
           <ListItem
             innerDivStyle={{padding: '5px 10px 5px 10px'}}
@@ -56,6 +60,13 @@ const GoodsGroups =  ({
             primaryText={qtySelected + items[key]}
             onClick={
               () => {
+                addFilter(key);
+                search();
+              }
+            }
+            onDoubleClick={
+              () => {
+                resetFilters();
                 addFilter(key);
                 search();
               }
@@ -92,18 +103,36 @@ const GoodsGroups =  ({
     <Paper className='goodsCategories' style={style} rounded={false} zDepth={2}>
       <List>
         <div style={{paddingLeft: '10px'}}>
-          <TextField
-            placeholder='фильтр категорий'
-            className='search'
-            id='searchGoodsGroups'
-            // autoFocus
-            type="text"
-            onChange={
-              (e) => {
-                filterGoodsGroupsByText(e.target.value);
+          <div style={{display: 'flex', alignItems: 'center'}}>
+            <TextField
+              placeholder='фильтр категорий'
+              className='search'
+              id='searchGoodsGroups'
+              // autoFocus
+              type="text"
+              ref={
+                node => {
+                  searchRef = node;
+                }
               }
-            }
-          />
+              onChange={
+                e => {
+                  filterGoodsGroupsByText(e.target.value.trim());
+                }
+              }
+            />
+            <IconButton
+              style={{height: '32px', width: '32px', padding: '2px'}}
+              onClick={
+                () => {
+                  searchRef.input.value = '';
+                  filterGoodsGroupsByText('');
+                }
+              }
+            >
+              <IconClear />
+            </IconButton>
+          </div>
           <div style={{display: 'flex', flexWrap: 'wrap'}}>
             {getFiltersJsx()}
           </div>

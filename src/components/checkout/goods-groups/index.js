@@ -6,9 +6,14 @@ import { List, ListItem } from 'material-ui/List';
 import TextField          from 'material-ui/TextField';
 import Chip               from 'material-ui/Chip';
 
+import IconButton from 'material-ui/IconButton';
+import IconClear from 'material-ui/svg-icons/content/clear';
+
 import { getGoodsGroupsByIds } from './../../../store/reducers/goods-groups';
 
-import { filterCartItems, addFilterGoodsGroupsCart, removeFilterGoodsGroupsCart, resetFiltersGoodsGroupsCart } from './../../../actions/cart';
+import { filterCartItems, addFilterGoodsGroupsCart, removeFilterGoodsGroupsCart, resetFiltersGoodsGroupsCart, setTextFilterGoodsGroups } from './../../../actions/cart';
+
+import { getVisibleGoodsGroups } from './../../../store/reducers/cart';
 
 import './style.css';
 
@@ -17,13 +22,16 @@ const GoodsGroups =  ({
   filters,
   goodsGroupsSelected,
   // actions
-  // filterGoodsGroupsByText,
   filterCartItems,
   categoryLineSeparator,
   addFilterGoodsGroupsCart,
   removeFilterGoodsGroupsCart,
-  resetFiltersGoodsGroupsCart
+  resetFiltersGoodsGroupsCart,
+  setTextFilterGoodsGroups
 }) => {
+
+  let searchRef;
+
   const style = {
     flex: '1 0 auto',
     padding: '10px',
@@ -47,7 +55,7 @@ const GoodsGroups =  ({
   const getItemsStyledJsx = () => {
     const keys = Object.keys(items);
     return keys.map( key => {
-      const qtySelected = goodsGroupsSelected[key] ? '[' + goodsGroupsSelected[key] + '] ' : '';
+      const qtySelected = goodsGroupsSelected[key] ? '( ' + goodsGroupsSelected[key] + ' ) ' : '';
       return (
         <ListItem
           innerDivStyle={{padding: '5px 10px 5px 10px'}}
@@ -56,6 +64,13 @@ const GoodsGroups =  ({
           primaryText={qtySelected + items[key]}
           onClick={
             () => {
+              addFilterGoodsGroupsCart(key);
+              filterCartItems();
+            }
+          }
+          onDoubleClick={
+            () => {
+              resetFiltersGoodsGroupsCart();
               addFilterGoodsGroupsCart(key);
               filterCartItems();
             }
@@ -92,18 +107,36 @@ const GoodsGroups =  ({
     <Paper className='goodsCategories' style={style} rounded={false} zDepth={2}>
       <List>
         <div style={{paddingLeft: '10px'}}>
-          <TextField
-            placeholder='фильтр категорий'
-            className='search'
-            id='searchGoodsGroupsCart'
-            // autoFocus
-            type="text"
-            onChange={
-              (e) => {
-                // filterGoodsGroupsByText(e.target.value);
+          <div style={{display: 'flex', alignItems: 'center'}}>
+            <TextField
+              placeholder='фильтр категорий'
+              className='search'
+              id='searchGoodsGroupsCart'
+              // autoFocus
+              type="text"
+              ref={
+                node => {
+                  searchRef = node;
+                }
               }
-            }
-          />
+              onChange={
+                e => {
+                  setTextFilterGoodsGroups(e.target.value.trim());
+                }
+              }
+            />
+            <IconButton
+              style={{height: '32px', width: '32px', padding: '2px'}}
+              onClick={
+                () => {
+                  searchRef.input.value = '';
+                  setTextFilterGoodsGroups('');
+                }
+              }
+            >
+              <IconClear />
+            </IconButton>
+          </div>
           <div style={{display: 'flex', flexWrap: 'wrap'}}>
             {getFiltersJsx()}
           </div>
@@ -128,11 +161,11 @@ const GoodsGroups =  ({
 
 export default connect(
   state => {
-    const items = getGoodsGroupsByIds(state.goodsGroups.itemsInitial, state.cart.goodsGroupsIds);
+    const items = getGoodsGroupsByIds(state.goodsGroups.itemsInitial, getVisibleGoodsGroups(state));
     const filters = getGoodsGroupsByIds(state.goodsGroups.itemsInitial, state.cart.filtersGoodsGroupsCartIds);
     const categoryLineSeparator = state.options.categoryLineSeparator;
     const goodsGroupsSelected = state.goodsGroupsSelected;
     return { items, filters, categoryLineSeparator, goodsGroupsSelected };
   },
-  { filterCartItems, addFilterGoodsGroupsCart, removeFilterGoodsGroupsCart, resetFiltersGoodsGroupsCart }
+  { filterCartItems, addFilterGoodsGroupsCart, removeFilterGoodsGroupsCart, resetFiltersGoodsGroupsCart, setTextFilterGoodsGroups }
 )(GoodsGroups);

@@ -311,3 +311,9 @@ export const removeFilterGoodsGroupsCart = guid => ({
 export const resetFiltersGoodsGroupsCart = () => ({
   type: 'RESET_GOODS_GROUPS_FILTERS_CART'
 });
+
+
+export const setTextFilterGoodsGroups = payload => ({
+  type: 'SET_TEXT_FILTER_GOODS_GROUPS',
+  payload
+})

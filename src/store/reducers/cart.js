@@ -91,6 +91,15 @@ const currentGuid = (state = '', action) => {
   }
 };
 
+const textFilterGoodsGroups = (state = '', action) => {
+  switch (action.type) {
+    case 'SET_TEXT_FILTER_GOODS_GROUPS':
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 // Selectors
 
 export const getGoodsVisibleIdsCheckout = state => {
@@ -108,6 +117,18 @@ export const getGoodsItemsByCartGoodsIds = (items, ids) => {
   }, {});
 }
 
+export const getVisibleGoodsGroups = state => {
+  const { textFilterGoodsGroups } = state.cart;
+  const { goodsGroupsIds } = state.cart;
+  const goodsGroups = state.goodsGroups.itemsInitial;
+  if (textFilterGoodsGroups === '') {
+    return goodsGroupsIds;
+  }
+  return goodsGroupsIds.reduce((res, key) => {
+    return goodsGroups[key].includes(textFilterGoodsGroups) ? res.concat(key) : res;
+  }, []);
+}
+
 export default combineReducers({
   items,
   itemsFiltered,
@@ -116,5 +137,6 @@ export default combineReducers({
   goodsGroupsIds,
   filterText,
   filtersGoodsGroupsCartIds,
-  currentGuid
+  currentGuid,
+  textFilterGoodsGroups
 });
