@@ -62,6 +62,33 @@ const isLastPage = (state = false, action) => {
   }
 };
 
+const filters = (state = {status: 'Все', nr: '', dateRange: 'Все', dateStart: '', dateEnd: '', amount: '', guid: '', comment: ''}, action) => {
+  switch (action.type) {
+    case 'SET_ORDER_FILTER':
+      return { ...state, ...action.payload };
+    default:
+      return state;
+  }
+};
+
+const filtersExpanded = (state = false, action) => {
+  switch (action.type) {
+    case 'SET_FILTERS_EXPANDED':
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+const listHeight = (state = '', action) => {
+  switch (action.type) {
+    case 'SET_ORDERS_LIST_HEIGHT':
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 // Selectors
 
 export const getOrdersVisibleIds = state => { //state = orders.state
@@ -73,12 +100,19 @@ export const getOrdersVisibleIds = state => { //state = orders.state
   }, []);
 };
 
+export const getOrdersFilteresIds = state => {
+  return state.orders.items;
+}
+
 export default combineReducers(
   {
     headers,
     items,
     pageNumber,
     qtyPages,
-    isLastPage
+    isLastPage,
+    filters,
+    filtersExpanded,
+    listHeight
   }
 );

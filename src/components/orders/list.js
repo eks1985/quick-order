@@ -8,6 +8,8 @@ import IconRestore from 'material-ui/svg-icons/content/reply';
 import IconDelete from 'material-ui/svg-icons/action/delete-forever';
 import IconDown from 'material-ui/svg-icons/hardware/keyboard-arrow-down';
 import IconUp from 'material-ui/svg-icons/hardware/keyboard-arrow-up';
+import IconOpenOrder from 'material-ui/svg-icons/action/open-in-new';
+import { setModal } from './../../lib/modal/actions/modal';
 
 const OrdersList = ({
   orders,
@@ -18,7 +20,8 @@ const OrdersList = ({
   // actions
   deleteOrder,
   restoreOrder,
-  toggleOrder
+  toggleOrder,
+  setModal
 }) => {
   const style = {
     display: 'flex',
@@ -94,7 +97,7 @@ const OrdersList = ({
     const columnsStyle = {
       container: {
         number: {
-          flex: '0 0 300px',
+          flex: '0 0 250px',
           display: 'flex',
           color: 'rgba(0,0,0,0.70)'
         },
@@ -109,12 +112,12 @@ const OrdersList = ({
           color: 'rgba(0,0,0,0.70)'
         },
         amount: {
-          flex: '1 0 250px',
+          flex: '1 0 200px',
           display: 'flex',
           color: 'rgba(0,0,0,0.70)'
         },
         comment: {
-          flex: '1 0 250px',
+          flex: '1 0 200px',
           display: 'flex'
         },
         status: {
@@ -123,7 +126,7 @@ const OrdersList = ({
           justifyContent: 'flex-end'
         },
         expand: {
-          flex: '0 0 60px',
+          flex: '0 0 250px',
           display: 'flex',
           justifyContent: 'flex-end'
         }
@@ -165,7 +168,7 @@ const OrdersList = ({
     }
     const iconRestoreStyle = {
       cursor: 'pointer',
-      marginLeft: '6px',
+      marginRight: '6px',
       fill: 'white',
       height: '20px',
       width: '20px'
@@ -181,7 +184,7 @@ const OrdersList = ({
     const headerCurrent = headers[key];
     const { nr, date, amount, ref, comment, status } = headerCurrent;
     const statusRu = calculateStatus(status);
-    const com  = ref ? ref + ' # ' + comment || '': comment || '';
+    // const com  = ref ? ref + ' # ' + comment || '': comment || '';
     let dataDate = '';
     let dataTime = '';
     try {
@@ -209,24 +212,24 @@ const OrdersList = ({
               }
             }
           >
-            {`${statusRu}`}
             {status === 'draft' &&
-              <IconRestore
-                style={iconRestoreStyle}
-                onClick={
-                  () => {
-                    if (!cartIsEmpty) {
-                      alert('Восстановление заказа возможно только при пустой корзине');
-                    } else {
-                      const yes = confirm('Заказ будет помещен в корзину. Продолжить?');
-                      if (yes) {
-                        restoreOrder(key);
-                      }
+            <IconRestore
+              style={iconRestoreStyle}
+              onClick={
+                () => {
+                  if (!cartIsEmpty) {
+                    alert('Восстановление заказа возможно только при пустой корзине');
+                  } else {
+                    const yes = confirm('Заказ будет помещен в корзину. Продолжить?');
+                    if (yes) {
+                      restoreOrder(key);
                     }
                   }
                 }
-              />
-            }
+              }
+            />
+          }
+            {`${statusRu}`}
             {allowDeleteOrders &&
               <IconDelete
                 style={iconDeleteStyle}
@@ -257,7 +260,7 @@ const OrdersList = ({
                 toggleOrder(key);
               }
             }
-          >{`${nr}`}</div>
+          >{`${ref}`}</div>
         </div>
         <div
           style={columnsStyle.container.date}
@@ -267,7 +270,7 @@ const OrdersList = ({
             }
           }
         >
-          <div>{`Дата:`}</div>
+          {/* <div>{`Дата:`}</div> */}
           <div style={{fontWeight: 'bold', marginLeft: '5px'}}>
             {`${dataDate} ${dataTime}`}
           </div>
@@ -311,11 +314,12 @@ const OrdersList = ({
           }
         >
           <div style={columnsStyle.field.comment}>
-            {`${com}`}
+            {`${comment}`}
           </div>
         </div>
         <div style={columnsStyle.container.expand}>
           <div style={columnsStyle.field.expand}>
+            {nr}
             {
               ordersState[key]
               ?
@@ -335,6 +339,14 @@ const OrdersList = ({
                 }
               />
             }
+            <IconOpenOrder
+              onClick={
+                e => {
+                  e.stopPropagation();
+                  setModal({ content: 'order', fullScreen: true });
+                }
+              }
+            />
           </div>
         </div>
 
@@ -346,7 +358,7 @@ const OrdersList = ({
     return (
       headersIds.map(key => {
         return (
-          <div key={key} className='orderContainer'>
+          <div key={key} className='orderContainer' style={{borderTop: '3px solid white'}}>
             {getOrderHeaderJsx(key)}
             {ordersState[key] &&
               <div className='orderItems'>
@@ -361,7 +373,10 @@ const OrdersList = ({
   };
 
   return (
-    <Paper style={style}>
+    <Paper
+      id='orderListContainer'
+      style={style}
+    >
       <div style={{padding: '10px'}}>
         {getOrdersJsx()}
       </div>
@@ -399,5 +414,5 @@ export default connect(
       cartIsEmpty: state.cart.totalItems === 0
     }
   },
-  { deleteOrder, restoreOrder }
+  { deleteOrder, restoreOrder, setModal }
 )(OrdersListContainer);

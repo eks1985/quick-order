@@ -89,3 +89,92 @@ export const restoreOrder = id => {
     })
   }
 }
+
+// filters
+
+export const setOrdersListHeight = () => {
+  return dispatch => {
+    const height = document.getElementById('orderListContainer').getBoundingClientRect().height;
+    dispatch({
+      type: 'SET_ORDERS_LIST_HEIGHT',
+      payload: height
+    });
+  }
+}
+
+export const toggleFiltersExpandedOrders = () => {
+  return (dispatch, getState) => {
+    const currentState = getState().orders.filtersExpanded;
+    dispatch({
+      type: 'SET_FILTERS_EXPANDED',
+      payload: !currentState
+    });
+    dispatch(setOrdersListHeight());
+  }
+}
+
+export const setFiltersStatusOrders = status => {
+  return dispatch => {
+    dispatch({
+      type: 'SET_ORDER_FILTER',
+      payload: { status}
+    });
+  }
+}
+
+export const setFiltersDateOrders = dateRange => {
+  return dispatch => {
+    // const dateStart = new Date();
+    // const dateEnd = new Date();
+    dispatch({
+      type: 'SET_ORDER_FILTER',
+      // payload: { dateRange, dateStart, dateEnd }
+      payload: { dateRange }
+    });
+  }
+}
+
+export const setFiltersNumberOrders = number => {
+  return dispatch => {
+    dispatch({
+      type: 'SET_ORDER_FILTER',
+      payload: { number}
+    });
+  }
+}
+
+export const setFiltersCommentOrders = comment => {
+  return dispatch => {
+    dispatch({
+      type: 'SET_ORDER_FILTER',
+      payload: { comment}
+    });
+  }
+}
+
+export const setFiltersAmountOrders = amount => {
+  return dispatch => {
+    dispatch({
+      type: 'SET_ORDER_FILTER',
+      payload: { amount}
+    });
+  }
+}
+
+export const resetOrdersFilters = () => {
+  return dispatch => {
+    dispatch({
+      type: 'SET_ORDER_FILTER',
+      payload: {
+                status: 'Все',
+                dateRange: 'Все',
+                dateStart: '',
+                dateEnd: '',
+                nr: '',
+                comment: '',
+                amount: '',
+                guid: ''
+               }
+    });
+  }
+}

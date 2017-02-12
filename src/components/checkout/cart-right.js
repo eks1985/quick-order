@@ -63,14 +63,15 @@ const Cart = ({
         </div>
         <div style={{width: '100%', borderTop: '2px solid #eee', opacity: '0.8'}}></div>
         <TextField
-          defaultValue={refOrder}
+          value={refOrder}
           placeholder='Номер заказа'
           id='orderRef'
           underlineShow={false}
           style={{width: '95%', padding: '10px', paddingBottom: '0px', paddingTop: '0px'}}
           onChange={
             e => {
-              setRefCheckout(e.target.value.trim())
+              const text = e.target.value.trim();
+              text.length < 21 && setRefCheckout(e.target.value.trim());
             }
           }
         />

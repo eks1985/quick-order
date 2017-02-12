@@ -10,6 +10,7 @@ import FirebaseConfig from './firebase-config';
 import PricesValidation from './options/validations/prices';
 import PageNumberNavigation from './page-number-navigation';
 import CartRowQtyEdit from './checkout/cart-row-qty-edit';
+import Order from './orders/order';
 
 const ModalContent = ({
   modal
@@ -26,6 +27,7 @@ const ModalContent = ({
       {modal.content === 'prices-validation' && <PricesValidation />}
       {modal.content === 'page-number-navigation' && <PageNumberNavigation />}
       {modal.content === 'cart-row-qty-edit' && <CartRowQtyEdit />}
+      {modal.content === 'order' && <Order />}
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 import List from './list';
 import Pagination from './pagination';
+import Filters from './filters';
 
 export default () => {
   const style = {
@@ -10,7 +11,8 @@ export default () => {
   };
   return (
     <div className='orders' style={style}>
-      <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+      <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+        <Filters />
         <Pagination />
       </div>
       <List />
