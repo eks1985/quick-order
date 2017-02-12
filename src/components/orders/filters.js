@@ -29,7 +29,7 @@ const Filters = props => {
         <div style={{ marginTop: '10px', display: 'flex', flexWrap: 'wrap', paddingLeft: '10px' }}>
           <div>
             <SelectField
-              style={{ marginRight: '20px', marginTop: '-16px', width: '200px'}}
+              style={{ marginRight: '20px', width: '200px'}}
               floatingLabelText="Статус"
               value={filters.status}
               onChange={
@@ -47,7 +47,7 @@ const Filters = props => {
           </div>
           <div>
             <SelectField
-              style={{ marginRight: '20px', marginTop: '-16px', width: '200px'}}
+              style={{ marginRight: '20px', width: '200px'}}
               floatingLabelText="Дата"
               value={filters.dateRange}
               onChange={
@@ -65,7 +65,7 @@ const Filters = props => {
           </div>
           <div>
             <TextField
-              style={{ marginRight: '20px', marginTop: '-16px', width: '200px'}}
+              style={{ marginRight: '20px', width: '200px'}}
               floatingLabelText="Номер"
               id='orderFilterNumber'
               placeholder="Номер"
@@ -73,7 +73,7 @@ const Filters = props => {
           </div>
           <div>
             <TextField
-              style={{ marginRight: '20px', marginTop: '-16px', width: '200px'}}
+              style={{ marginRight: '20px', width: '200px'}}
               floatingLabelText="Комментарий"
               id='orderFilterComment'
               placeholder="Комментарий"
@@ -81,7 +81,7 @@ const Filters = props => {
           </div>
           <div>
             <TextField
-              style={{ marginRight: '20px', marginTop: '-16px', width: '200px'}}
+              style={{ marginRight: '20px', width: '200px'}}
               floatingLabelText="Сумма"
               id='orderFilterAmount'
               placeholder="Сумма"

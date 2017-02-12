@@ -97,14 +97,16 @@ const OrdersList = ({
     const columnsStyle = {
       container: {
         number: {
-          flex: '0 0 250px',
-          display: 'flex',
-          color: 'rgba(0,0,0,0.70)'
-        },
-        date: {
           flex: '0 0 200px',
           display: 'flex',
-          color: 'rgba(0,0,0,0.70)'
+          color: 'rgba(0,0,0,0.70)',
+          fontSize: '14px'
+        },
+        date: {
+          flex: '0 0 180px',
+          display: 'flex',
+          color: 'rgba(0,0,0,0.70)',
+          fontSize: '14px'
         },
         rows: {
           flex: '0 0 130px',
@@ -112,23 +114,28 @@ const OrdersList = ({
           color: 'rgba(0,0,0,0.70)'
         },
         amount: {
-          flex: '1 0 200px',
+          flex: '1 0 120px',
           display: 'flex',
-          color: 'rgba(0,0,0,0.70)'
+          color: 'rgba(0,0,0,0.70)',
+          fontSize: '14px'
         },
         comment: {
-          flex: '1 0 200px',
-          display: 'flex'
+          flex: '1 1 200px',
+          display: 'flex',
+          fontSize: '14px'
         },
         status: {
           flex: '0 0 160px',
           display: 'flex',
-          justifyContent: 'flex-end'
+          justifyContent: 'flex-end',
+          // fontSize: '14px',
         },
         expand: {
-          flex: '0 0 250px',
+          flex: '0 0 340px',
           display: 'flex',
-          justifyContent: 'flex-end'
+          justifyContent: 'flex-end',
+          fontSize: '14px',
+          alignItems: 'center'
         }
       },
       field: {
@@ -149,8 +156,10 @@ const OrdersList = ({
           marginLeft: '5px'
         },
         expand: {
+          display: 'flex',
           marginLeft: '5px',
-          cursor: 'pointer'
+          cursor: 'pointer',
+          alignItems: 'center'
         },
         status: {
           marginRight: '5px',
@@ -339,14 +348,14 @@ const OrdersList = ({
                 }
               />
             }
-            <IconOpenOrder
+            {/* <IconOpenOrder
               onClick={
                 e => {
                   e.stopPropagation();
                   setModal({ content: 'order', fullScreen: true });
                 }
               }
-            />
+            /> */}
           </div>
         </div>
 
