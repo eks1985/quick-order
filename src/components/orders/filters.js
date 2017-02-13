@@ -2,34 +2,44 @@ import React from 'react';
 import { connect } from 'react-redux';
 // import IconButton from 'material-ui/IconButton';
 import IconFilters from 'material-ui/svg-icons/content/filter-list';
+// import IconClearFilters from 'material-ui/svg-icons/communication/clear-all';
 import RaisedButton from 'material-ui/RaisedButton';
 import { resetOrdersFilters, toggleFiltersExpandedOrders, setFiltersStatusOrders, setFiltersDateOrders, setFiltersNumberOrders, setFiltersCommentOrders, setFiltersAmountOrders } from './../../actions/orders';
 import TextField  from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import IconButton from 'material-ui/IconButton';
 
 const Filters = props => {
   // setFiltersDateOrders, setFiltersNumberOrders, setFiltersCommentOrders, setFiltersAmountOrders
   const { resetOrdersFilters, filtersExpanded, toggleFiltersExpandedOrders, filters, setFiltersStatusOrders, setFiltersDateOrders } = props;
-  const haveAppliedFilters = filters.status !== 'Все' || filters.dateRange !== 'Все' || filters.dateStart !== '' || filters.dateEnd !== '' || filters.amount !== '' || filters.guid !== '';
+  const haveAppliedFilters = filters.status !== 'Все' || filters.dateRange !== 'Все' || filters.text !== '';
+  const paddingBottom = filtersExpanded ? '0px' : '6px';
   const style = {
     display: 'flex',
-    flexDirection: 'column',
-    padding: '6px'
+    flexDirection: 'row',
+    padding: '6px',
+    paddingBottom
   };
+  let inputTextFilter;
   return (
     <div style={style}>
-      <RaisedButton
+      {/* <RaisedButton
         style={{width: '150px'}}
         label={haveAppliedFilters ? 'Отбор (*)' : 'Отбор'}
         icon={<IconFilters />}
         onClick={toggleFiltersExpandedOrders}
-      ></RaisedButton>
+      ></RaisedButton> */}
+      <IconButton
+        onClick={toggleFiltersExpandedOrders}
+      >
+        <IconFilters />
+      </IconButton>
       {filtersExpanded &&
-        <div style={{ marginTop: '10px', display: 'flex', flexWrap: 'wrap', paddingLeft: '10px' }}>
+        <div style={{ marginTop: '-20px', display: 'flex', flexWrap: 'wrap', paddingLeft: '10px' }}>
           <div>
             <SelectField
-              style={{ marginRight: '20px', width: '200px'}}
+              style={{ marginRight: '20px', width: '160px', height: '66px'}}
               floatingLabelText="Статус"
               value={filters.status}
               onChange={
@@ -47,7 +57,7 @@ const Filters = props => {
           </div>
           <div>
             <SelectField
-              style={{ marginRight: '20px', width: '200px'}}
+              style={{ marginRight: '20px', width: '160px', height: '66px'}}
               floatingLabelText="Дата"
               value={filters.dateRange}
               onChange={
@@ -65,26 +75,16 @@ const Filters = props => {
           </div>
           <div>
             <TextField
-              style={{ marginRight: '20px', width: '200px'}}
-              floatingLabelText="Номер"
-              id='orderFilterNumber'
-              placeholder="Номер"
-            />
-          </div>
-          <div>
-            <TextField
-              style={{ marginRight: '20px', width: '200px'}}
-              floatingLabelText="Комментарий"
-              id='orderFilterComment'
-              placeholder="Комментарий"
-            />
-          </div>
-          <div>
-            <TextField
-              style={{ marginRight: '20px', width: '200px'}}
-              floatingLabelText="Сумма"
-              id='orderFilterAmount'
-              placeholder="Сумма"
+              defaultValue={filters.text}
+              style={{ marginRight: '20px', marginTop: '18px', width: '200px'}}
+              // floatingLabelText="Номер"
+              id='orderFilterText'
+              placeholder="Любая колонка"
+              ref={
+                node => {
+                  inputTextFilter = node;
+                }
+              }
             />
           </div>
         </div>
@@ -96,13 +96,21 @@ const Filters = props => {
             label='Применить'
             // icon={<IconFilters />}
             // onClick={toggleFiltersExpandedOrders}
+            // onClick={}
           ></RaisedButton>
-          <RaisedButton
-            style={{width: '120px', marginLeft: '10px'}}
-            label='Отменить'
-            // icon={<IconFilters />}
-            onClick={resetOrdersFilters}
-          ></RaisedButton>
+          { haveAppliedFilters &&
+            <RaisedButton
+              style={{width: '120px', marginLeft: '10px'}}
+              label='Отменить'
+              // icon={<IconFilters />}
+              onClick={
+                () => {
+                  resetOrdersFilters();
+                  inputTextFilter.input.value = '';
+                }
+              }
+            ></RaisedButton>
+          }
       </div>
       }
     </div>

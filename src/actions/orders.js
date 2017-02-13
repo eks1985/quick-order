@@ -170,10 +170,7 @@ export const resetOrdersFilters = () => {
                 dateRange: 'Все',
                 dateStart: '',
                 dateEnd: '',
-                nr: '',
-                comment: '',
-                amount: '',
-                guid: ''
+                text: ''
                }
     });
   }

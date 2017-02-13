@@ -62,7 +62,7 @@ const isLastPage = (state = false, action) => {
   }
 };
 
-const filters = (state = {status: 'Все', nr: '', dateRange: 'Все', dateStart: '', dateEnd: '', amount: '', guid: '', comment: ''}, action) => {
+const filters = (state = {status: 'Все', dateRange: 'Все', dateStart: '', dateEnd: '',  text: ''}, action) => {
   switch (action.type) {
     case 'SET_ORDER_FILTER':
       return { ...state, ...action.payload };
