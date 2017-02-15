@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import * as cartActions from './../../../actions/cart';
 import * as currentContentActions from './../../../actions/current-content';
 import RaisedButton from 'material-ui/RaisedButton';
-import IconRemoveCart from 'material-ui/svg-icons/action/remove-shopping-cart';
+import IconRemoveCart from 'material-ui/svg-icons/content/clear';
 import IconRowing from 'material-ui/svg-icons/action/rowing';
 import IconShoppingCart from 'material-ui/svg-icons/action/shopping-cart';
 import { format1 } from './../../../utils/format';
@@ -28,10 +28,10 @@ const Cart = ({
 
   const getCartStyledJsx = () => {
     const style = { display: 'flex', height: '73px', alignItems: 'center', paddingLeft: '10px' };
-    
+
     return (
       <div style={{display: 'flex', flexDirection: 'column'}}>
-        <div 
+        <div
           style={hasItems ? { ...style, cursor: 'pointer' } : style }
           onClick={
             () => {
@@ -45,7 +45,7 @@ const Cart = ({
           {hasItems &&
             <div style={{display: 'flex', flexDirection: 'column', paddingLeft: '10px'}}>
               <div style={{fontSize: '16px', fontWeight: 'bold'}}>
-                {format1(totalAmount, 'руб.')}  
+                {format1(totalAmount, 'руб.')}
               </div>
               <div style={{fontSize: '12px'}}>
                 {`${totalItems} позиций`}
@@ -58,7 +58,7 @@ const Cart = ({
             </div>
           }
         </div>
-        
+
         {hasItems &&
           <div style={{display: 'flex', flex: '1 0 100%', justifyContent: 'center'}}>
             <div style={{marginRight: '3px'}}>

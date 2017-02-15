@@ -12,7 +12,8 @@ import OrderNoActivePositions from './option/order-no-active-positions';
 import PositionIsActiveDefinition from './option/position-is-active-definition';
 import ManagePrices from './option/manage-prices';
 import ShowPictures from './option/show-pictures';
-import CategoryLineSeparator from './option/categoryLineSeparator';
+import CategoryLineSeparator from './option/category-line-separator';
+import OrdersRowsSeparator from './option/orders-rows-separator';
 import PictureSource from './option/picture-source';
 import AllowDraftOrders from './option/allow-draft-orders';
 import AllowDeleteOrders from './option/allow-delete-orders';
@@ -135,6 +136,10 @@ const OptionsLogic = props => {
 
       <div style={rowStyle}>
         <PermanentDeleteOrders {...passProps} />
+      </div>
+
+      <div style={rowStyle}>
+        <OrdersRowsSeparator {...passProps} />
       </div>
 
     </div>

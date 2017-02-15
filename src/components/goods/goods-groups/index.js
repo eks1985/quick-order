@@ -59,18 +59,20 @@ const GoodsGroups =  ({
             key={key}
             primaryText={qtySelected + items[key]}
             onClick={
-              () => {
+              (e) => {
+                console.log('onClick', e);
                 addFilter(key);
                 search();
               }
             }
-            onDoubleClick={
-              () => {
-                resetFilters();
-                addFilter(key);
-                search();
-              }
-            }
+            // onDoubleClick={
+            //   () => {
+            //     console.log('onDbClick');
+            //     resetFilters();
+            //     addFilter(key);
+            //     search();
+            //   }
+            // }
           />
         );
     });

@@ -38,6 +38,9 @@ export const setOption = (option, value) => {
     if (option  === 'permanentDeleteOrders') {
       dispatch(setCommonOptionFirebase('permanentDeleteOrders', value));
     }
+    if (option  === 'ordersRowsSeparator') {
+      dispatch(setCommonOptionFirebase('ordersRowsSeparator', value));
+    }
   };
 };
 

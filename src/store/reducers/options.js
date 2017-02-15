@@ -16,6 +16,7 @@ const initialState = {
   allowDraftOrders: false,
   allowDeleteOrders: false,
   permanentDeleteOrders: false,
+  ordersRowsSeparator: false
 };
 
 export default (state, action) => {

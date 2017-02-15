@@ -1,19 +1,29 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import IconButton from 'material-ui/IconButton';
-import IconFilters from 'material-ui/svg-icons/content/filter-list';
-// import IconClearFilters from 'material-ui/svg-icons/communication/clear-all';
+import { resetFiltersOrders, setFiltersOrders } from './../../actions/orders';
 import RaisedButton from 'material-ui/RaisedButton';
-import { resetOrdersFilters, toggleFiltersExpandedOrders, setFiltersStatusOrders, setFiltersDateOrders, setFiltersNumberOrders, setFiltersCommentOrders, setFiltersAmountOrders } from './../../actions/orders';
 import TextField  from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import IconFilters from 'material-ui/svg-icons/content/filter-list';
 import IconButton from 'material-ui/IconButton';
+import IconClear from 'material-ui/svg-icons/content/clear';
 
 const Filters = props => {
-  // setFiltersDateOrders, setFiltersNumberOrders, setFiltersCommentOrders, setFiltersAmountOrders
-  const { resetOrdersFilters, filtersExpanded, toggleFiltersExpandedOrders, filters, setFiltersStatusOrders, setFiltersDateOrders } = props;
-  const haveAppliedFilters = filters.status !== 'Все' || filters.dateRange !== 'Все' || filters.text !== '';
+  const {
+    filtersExpanded,
+    toggleFiltersExpanded,
+    statusFilter,
+    dateFilter,
+    textFilter,
+    //actions
+    setStatusFilter,
+    setDateFilter,
+    setTextFilter,
+    resetFilters,
+    applyFilters
+  } = props;
+  const haveAppliedFilters = statusFilter !== 'Все' || dateFilter !== 'Все' || textFilter !== '';
   const paddingBottom = filtersExpanded ? '0px' : '6px';
   const style = {
     display: 'flex',
@@ -21,17 +31,10 @@ const Filters = props => {
     padding: '6px',
     paddingBottom
   };
-  let inputTextFilter;
   return (
     <div style={style}>
-      {/* <RaisedButton
-        style={{width: '150px'}}
-        label={haveAppliedFilters ? 'Отбор (*)' : 'Отбор'}
-        icon={<IconFilters />}
-        onClick={toggleFiltersExpandedOrders}
-      ></RaisedButton> */}
       <IconButton
-        onClick={toggleFiltersExpandedOrders}
+        onClick={toggleFiltersExpanded}
       >
         <IconFilters />
       </IconButton>
@@ -41,10 +44,10 @@ const Filters = props => {
             <SelectField
               style={{ marginRight: '20px', width: '160px', height: '66px'}}
               floatingLabelText="Статус"
-              value={filters.status}
+              value={statusFilter}
               onChange={
                 (e, index, value) => {
-                  setFiltersStatusOrders(value);
+                  setStatusFilter(value);
                 }
               }
               >
@@ -59,10 +62,10 @@ const Filters = props => {
             <SelectField
               style={{ marginRight: '20px', width: '160px', height: '66px'}}
               floatingLabelText="Дата"
-              value={filters.dateRange}
+              value={dateFilter}
               onChange={
                 (e, index, value) => {
-                  setFiltersDateOrders(value);
+                  setDateFilter(value);
                 }
               }
               >
@@ -75,14 +78,13 @@ const Filters = props => {
           </div>
           <div>
             <TextField
-              defaultValue={filters.text}
+              value={textFilter}
               style={{ marginRight: '20px', marginTop: '18px', width: '200px'}}
-              // floatingLabelText="Номер"
               id='orderFilterText'
               placeholder="Любая колонка"
-              ref={
-                node => {
-                  inputTextFilter = node;
+              onChange={
+                (e, text) => {
+                  setTextFilter(text);
                 }
               }
             />
@@ -93,22 +95,17 @@ const Filters = props => {
         <div>
           <RaisedButton
             style={{width: '120px'}}
+            labelStyle={{fontWeight: 'normal'}}
             label='Применить'
-            // icon={<IconFilters />}
-            // onClick={toggleFiltersExpandedOrders}
-            // onClick={}
+            onClick={applyFilters}
           ></RaisedButton>
           { haveAppliedFilters &&
             <RaisedButton
-              style={{width: '120px', marginLeft: '10px'}}
-              label='Отменить'
-              // icon={<IconFilters />}
-              onClick={
-                () => {
-                  resetOrdersFilters();
-                  inputTextFilter.input.value = '';
-                }
-              }
+              style={{width: '140px', marginLeft: '10px'}}
+              label='Очистить'
+              icon={<IconClear />}
+              labelStyle={{fontWeight: 'normal'}}
+              onClick={resetFilters}
             ></RaisedButton>
           }
       </div>
@@ -117,7 +114,65 @@ const Filters = props => {
   );
 }
 
+class FiltersContainer extends Component {
+
+  constructor (props) {
+    super(props);
+    const { filters } = props;
+    this.state = { filtersExpanded: false, statusFilter: filters.status, dateFilter: filters.dateRange, textFilter:  filters.text }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { filters } = nextProps;
+    this.setState({ statusFilter: filters.status, dateFilter: filters.dateRange, textFilter:  filters.text });
+  }
+
+  toggleFiltersExpanded = () => {
+    this.setState({ filtersExpanded: !this.state.filtersExpanded });
+  }
+
+  setStatusFilter = statusFilter => {
+    this.setState({ statusFilter });
+  }
+
+  setDateFilter = dateFilter => {
+    this.setState({ dateFilter });
+  }
+
+  setTextFilter = textFilter => {
+    this.setState({ textFilter });
+  }
+
+  //reducer action call
+  applyFilters = () => {
+    this.props.setFiltersOrders(this.state.statusFilter, this.state.dateFilter, this.state.textFilter);
+  }
+
+  //reducer action call
+  resetFilters = () => {
+    this.props.resetFiltersOrders();
+  }
+
+  render() {
+    return (
+      <Filters
+        {...this.props}
+        toggleFiltersExpanded={this.toggleFiltersExpanded}
+        applyFilters={this.applyFilters}
+        resetFilters={this.resetFilters}
+        setStatusFilter={this.setStatusFilter}
+        setDateFilter={this.setDateFilter}
+        setTextFilter={this.setTextFilter}
+        statusFilter={this.state.statusFilter}
+        filtersExpanded={this.state.filtersExpanded}
+        dateFilter={this.state.dateFilter}
+        textFilter={this.state.textFilter}
+      />)
+  }
+
+}
+
 export default connect(
-  state => ({ filtersExpanded: state.orders.filtersExpanded, filters: state.orders.filters }),
-  { resetOrdersFilters, toggleFiltersExpandedOrders, setFiltersStatusOrders, setFiltersDateOrders, setFiltersNumberOrders, setFiltersCommentOrders, setFiltersAmountOrders }
-)(Filters);
+  state => ({ filters: state.orders.filters }),
+  { setFiltersOrders, resetFiltersOrders }
+)(FiltersContainer);

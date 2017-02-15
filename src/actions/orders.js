@@ -102,66 +102,16 @@ export const setOrdersListHeight = () => {
   }
 }
 
-export const toggleFiltersExpandedOrders = () => {
-  return (dispatch, getState) => {
-    const currentState = getState().orders.filtersExpanded;
-    dispatch({
-      type: 'SET_FILTERS_EXPANDED',
-      payload: !currentState
-    });
-    dispatch(setOrdersListHeight());
-  }
-}
-
-export const setFiltersStatusOrders = status => {
+export const setFiltersOrders = (status, dateRange, text) => {
   return dispatch => {
     dispatch({
       type: 'SET_ORDER_FILTER',
-      payload: { status}
+      payload: { status, dateRange, text}
     });
   }
 }
 
-export const setFiltersDateOrders = dateRange => {
-  return dispatch => {
-    // const dateStart = new Date();
-    // const dateEnd = new Date();
-    dispatch({
-      type: 'SET_ORDER_FILTER',
-      // payload: { dateRange, dateStart, dateEnd }
-      payload: { dateRange }
-    });
-  }
-}
-
-export const setFiltersNumberOrders = number => {
-  return dispatch => {
-    dispatch({
-      type: 'SET_ORDER_FILTER',
-      payload: { number}
-    });
-  }
-}
-
-export const setFiltersCommentOrders = comment => {
-  return dispatch => {
-    dispatch({
-      type: 'SET_ORDER_FILTER',
-      payload: { comment}
-    });
-  }
-}
-
-export const setFiltersAmountOrders = amount => {
-  return dispatch => {
-    dispatch({
-      type: 'SET_ORDER_FILTER',
-      payload: { amount}
-    });
-  }
-}
-
-export const resetOrdersFilters = () => {
+export const resetFiltersOrders = () => {
   return dispatch => {
     dispatch({
       type: 'SET_ORDER_FILTER',
