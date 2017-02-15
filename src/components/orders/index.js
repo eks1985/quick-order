@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { Component} from 'react';
+import { connect } from 'react-redux';
 import List from './list';
 import Pagination from './pagination';
 import Filters from './filters';
+import { setOrdersListHeight } from './../../actions/orders';
 
-export default () => {
+const Orders = props => {
   const style = {
     display: 'flex',
     flexDirection: 'column',
@@ -19,3 +21,21 @@ export default () => {
     </div>
   );
 };
+
+class OrdersContainer extends Component {
+
+  componentDidMount() {
+    console.log('OrdersContainer did mount');
+    this.props.setOrdersListHeight();
+  }
+
+  render() {
+    return <Orders />
+  }
+
+}
+
+export default connect(
+  null,
+  { setOrdersListHeight }
+)(OrdersContainer);

@@ -14,6 +14,18 @@ const headers = (state = {}, action) => {
   }
 };
 
+const headersFiltered = (state = {}, action) => {
+  switch (action.type) {
+    case 'RECEIVE_ORDERS_HEADERS_FILTERED':
+      return action.payload;
+    case 'CHECKOUT':
+      const { nr, date, amount, enterpriseNr } = action.header;
+      return { ...state, [nr]: { nr, enterpriseNr, date, amount} };
+    default:
+      return state;
+  }
+};
+
 const items = (state = {}, action) => {
   switch (action.type) {
     case 'RECEIVE_ORDERS_ITEMS':
@@ -79,7 +91,7 @@ const filtersExpanded = (state = false, action) => {
   }
 };
 
-const listHeight = (state = '', action) => {
+const listHeight = (state = 0, action) => {
   switch (action.type) {
     case 'SET_ORDERS_LIST_HEIGHT':
       return action.payload;
@@ -90,22 +102,24 @@ const listHeight = (state = '', action) => {
 
 // Selectors
 
-export const getOrdersVisibleIds = state => { //state = orders.state
+export const getOrdersVisibleIds = state  => { //state = orders.state
   const pageNumber = state.pageNumber;
-  const keys = Object.keys(state.headers).reverse();
-  const keysNotDeleted = keys.reduce((res, key) => state.headers[key].deleted ? res : res.concat(key) , []);
-  return  keysNotDeleted.reduce((result, key, i) => {
-    return i >= (pageNumber-1)*3 && i < pageNumber*3 ? result.concat(key) : result;
-  }, []);
+  const keys = Object.keys(state.headersFiltered).reverse();
+  const ordersListHeight = state.listHeight;
+  const rowsPerPage = ordersListHeight > 0 ? Math.floor(ordersListHeight / 42) : 10;
+  return  keys.reduce((result, key, i) => {
+    return i >= (pageNumber-1)*rowsPerPage && i < pageNumber*rowsPerPage ? result.concat(key) : result;
+  }, [])
 };
 
-export const getOrdersFilteresIds = state => {
-  return state.orders.items;
-}
+// export const getOrdersFilteresIds = state => {
+//   return state.orders.items;
+// }
 
 export default combineReducers(
   {
     headers,
+    headersFiltered,
     items,
     pageNumber,
     qtyPages,

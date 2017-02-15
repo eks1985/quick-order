@@ -1,6 +1,6 @@
 import { database } from '../firebase/firebase-app';
 
-import { setQtyPagesOrders } from './orders';
+import { setQtyPagesOrders, filterOrders } from './orders';
 
 const receiveHeaders = (dispatch, data) => {
   return new Promise(resolve => {
@@ -12,6 +12,7 @@ const receiveHeaders = (dispatch, data) => {
       type: 'RECEIVE_ORDERS_HEADERS',
       payload: dataNoDeleted
     });
+    dispatch(filterOrders());
     resolve();
   });
 };

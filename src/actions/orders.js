@@ -5,7 +5,10 @@ import { addCatalogQty } from './catalog-qty';
 export const setQtyPagesOrders = () => {
   return (dispatch, getState) => {
       const keysLength = Object.keys(getState().orders.headers).length;
-      const qtyPages = keysLength % 3 === 0 ? keysLength / 3  : Math.floor(keysLength / 3) + 1;
+      const ordersListHeight = getState().orders.listHeight;
+      const rowsPerPage = ordersListHeight > 0 ? Math.floor(ordersListHeight / 42) : 10;
+      const qtyPages = keysLength % rowsPerPage === 0 ? keysLength / rowsPerPage : Math.floor(keysLength / rowsPerPage) + 1;
+      // const qtyPages = keysLength % 3 === 0 ? keysLength / 3  : Math.floor(keysLength / 3) + 1;
       dispatch({
         type: 'SET_QTY_PAGES_ORDERS',
         qtyPages: qtyPages || 1
@@ -92,6 +95,28 @@ export const restoreOrder = id => {
 
 // filters
 
+export const filterOrders = () => {
+  return (dispatch, getState) => {
+    const ordersState = getState().orders;
+    const { filters, headers } = ordersState;
+    let result;
+    if (filters.status === 'Все' && filters.text === '') {
+      result = headers;
+    } else {
+      result = Object.keys(headers).reduce((res, key) => {
+        // console.log('headers[key].status', headers[key].status);
+        // console.log('filters.status', filters.status);
+        return headers[key].status === filters.status ? { ...res, [key]: headers[key] } : res;
+      }, {})
+    }
+    console.log('result', result);
+    dispatch({
+      type: 'RECEIVE_ORDERS_HEADERS_FILTERED',
+      payload: result
+    })
+  }
+}
+
 export const setOrdersListHeight = () => {
   return dispatch => {
     const height = document.getElementById('orderListContainer').getBoundingClientRect().height;
@@ -99,6 +124,8 @@ export const setOrdersListHeight = () => {
       type: 'SET_ORDERS_LIST_HEIGHT',
       payload: height
     });
+    dispatch(setQtyPagesOrders());
+    dispatch(detectIsLastPage());
   }
 }
 
@@ -108,6 +135,7 @@ export const setFiltersOrders = (status, dateRange, text) => {
       type: 'SET_ORDER_FILTER',
       payload: { status, dateRange, text}
     });
+    dispatch(filterOrders());
   }
 }
 
@@ -123,5 +151,6 @@ export const resetFiltersOrders = () => {
                 text: ''
                }
     });
+    dispatch(filterOrders());
   }
 }

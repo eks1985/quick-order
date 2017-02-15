@@ -52,10 +52,10 @@ const Filters = props => {
               }
               >
                 <MenuItem value='Все' label='Все' primaryText="Все" />
-                <MenuItem value='Черновик' label='Черновик' primaryText="Черновик" />
-                <MenuItem value='Новый' label='Новый' primaryText="Новый" />
-                <MenuItem value='Обработан' label='Обработан' primaryText="Обработан" />
-                <MenuItem value='Исполнен' label='Исполнен' primaryText="Исполнен" />
+                <MenuItem value='draft' label='Черновик' primaryText="Черновик" />
+                <MenuItem value='new' label='Новый' primaryText="Новый" />
+                <MenuItem value='processed' label='Обработан' primaryText="Обработан" />
+                <MenuItem value='complete' label='Исполнен' primaryText="Исполнен" />
               </SelectField>
           </div>
           <div>
