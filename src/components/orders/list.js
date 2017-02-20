@@ -412,7 +412,8 @@ class OrdersListContainer extends Component {
     }, {});
     this.setState({ ordersState });
   }
-  componentDidUpdate(nextProps){
+  componentWillReceiveProps(nextProps){
+    // console.log(nextProps);
     const ordersState = nextProps.headersIds.reduce((res, id) => {
       return { ...res, [id]: !nextProps.listCollapsedAll };
     }, {});
@@ -436,7 +437,7 @@ export default connect(
       allowDeleteOrders: state.options.allowDeleteOrders,
       cartIsEmpty: state.cart.totalItems === 0,
       ordersRowsSeparator: state.options.ordersRowsSeparator,
-      listCollapsedAll: state.orders.setListCollapsedAll
+      listCollapsedAll: state.orders.listCollapsedAll
     }
   },
   { deleteOrder, restoreOrder, setModal }
