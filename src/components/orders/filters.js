@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { resetFiltersOrders, setFiltersOrders } from './../../actions/orders';
+import { resetFiltersOrders, setFiltersOrders, setListCollapsedAll } from './../../actions/orders';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField  from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
@@ -16,23 +16,62 @@ const Filters = props => {
     statusFilter,
     dateFilter,
     textFilter,
+    listCollapsedAll,
     //actions
     setStatusFilter,
     setDateFilter,
     setTextFilter,
     resetFilters,
-    applyFilters
+    setListCollapsedAll
+    // applyFilters,
+    // toggleCollapsedAll
   } = props;
   const haveAppliedFilters = statusFilter !== 'Все' || dateFilter !== 'Все' || textFilter !== '';
-  const paddingBottom = filtersExpanded ? '0px' : '6px';
+  const paddingBottom = filtersExpanded ? '0px' : '0px';
   const style = {
     display: 'flex',
     flexDirection: 'row',
     padding: '6px',
     paddingBottom
   };
+
+  const dateTodayRaw = new Date();
+  const dateToday = dateTodayRaw.toLocaleDateString();
+  let dateYesterdayRaw = new Date();
+  dateYesterdayRaw.setDate(dateTodayRaw.getDate() - 1);
+  const dateYesterday = dateYesterdayRaw.toLocaleDateString();
+  const dateThisMonth = new Date(dateTodayRaw.getFullYear(), dateTodayRaw.getMonth(), 1).toLocaleDateString() + ' - ' + dateToday;
+  const datePrevMonth = new Date(dateTodayRaw.getFullYear(), dateTodayRaw.getMonth() - 1, 1).toLocaleDateString() + ' - ' + new Date(dateTodayRaw.getFullYear(), dateTodayRaw.getMonth(), 0).toLocaleDateString();
+  const labelDateToday =
+    (<div style={{display: 'flex', justifyContent: 'space-between'}}>
+      <span>Сегодня</span>
+      <span style={{marginLeft: '3px', fontSize: '10px', color: '#555'}}>{dateToday}</span>
+    </div>);
+    const labelDateYesterday =
+      (<div style={{display: 'flex', justifyContent: 'space-between'}}>
+        <span>Вчера</span>
+        <span style={{marginLeft: '3px', fontSize: '10px', color: '#555'}}>{dateYesterday}</span>
+      </div>);
+    const labelDateThisMonth =
+      (<div style={{display: 'flex', justifyContent: 'space-between'}}>
+        <span>Этот месяц</span>
+        <span style={{marginLeft: '3px', fontSize: '10px', color: '#555'}}>{dateThisMonth}</span>
+      </div>);
+    const labelDatePrevMonth =
+      (<div style={{display: 'flex', justifyContent: 'space-between'}}>
+        <span>Прошлый месяц</span>
+        <span style={{marginLeft: '3px', fontSize: '10px', color: '#555'}}>{datePrevMonth}</span>
+      </div>);
   return (
     <div style={style}>
+      <div>
+        <RaisedButton
+          label={listCollapsedAll ? 'Развернуть все' : 'Свернуть все'}
+          labelStyle={{fontWeight: 'normal'}}
+          style={{width: '160px'}}
+          onClick={setListCollapsedAll}
+        />
+      </div>
       <IconButton
         onClick={toggleFiltersExpanded}
       >
@@ -42,12 +81,14 @@ const Filters = props => {
         <div style={{ marginTop: '-20px', display: 'flex', flexWrap: 'wrap', paddingLeft: '10px' }}>
           <div>
             <SelectField
+              labelStyle={{height: '45px'}}
               style={{ marginRight: '20px', width: '160px', height: '66px'}}
               floatingLabelText="Статус"
               value={statusFilter}
               onChange={
                 (e, index, value) => {
                   setStatusFilter(value);
+                  // applyFilters();
                 }
               }
               >
@@ -60,20 +101,27 @@ const Filters = props => {
           </div>
           <div>
             <SelectField
-              style={{ marginRight: '20px', width: '160px', height: '66px'}}
+              labelStyle={{height: '45px'}}
+              style={{ marginRight: '20px', width: '260px', height: '66px'}}
               floatingLabelText="Дата"
               value={dateFilter}
               onChange={
                 (e, index, value) => {
+                  // if (value === 'ВыбратьПериод') {
+                  //   alert('Период!');
+                  // }
+
                   setDateFilter(value);
                 }
               }
               >
-                <MenuItem value='Все' label='Все' primaryText="Все" />
-                <MenuItem value='Сегодня' label='Сегодня' primaryText="Сегодня" />
-                <MenuItem value='Неделя' label='Неделя' primaryText="Неделя" />
-                <MenuItem value='Месяц' label='Месяц' primaryText="Месяц" />
-                <MenuItem value='Год' label='Год' primaryText="Год" />
+                <MenuItem value='Все' label='Все' primaryText='Все' />
+                <MenuItem value='Сегодня' label='Сегодня' primaryText={labelDateToday} />
+                <MenuItem value='Вчера' label='Вчера' primaryText={labelDateYesterday}/>
+                <MenuItem value='ЭтотМесяц' label='Этот месяц' primaryText={labelDateThisMonth} />
+                <MenuItem value='ПрошлыйМесяц' label='Прошлый месяц' primaryText={labelDatePrevMonth} />
+                <MenuItem value='БолееРанние' label='Более ранние' primaryText="Более ранние" />
+                {/* <MenuItem value='ВыбратьПериод' label='Выбрать период' primaryText="Выбрать период" /> */}
               </SelectField>
           </div>
           <div>
@@ -93,12 +141,6 @@ const Filters = props => {
       }
       { filtersExpanded &&
         <div>
-          <RaisedButton
-            style={{width: '120px'}}
-            labelStyle={{fontWeight: 'normal'}}
-            label='Применить'
-            onClick={applyFilters}
-          ></RaisedButton>
           { haveAppliedFilters &&
             <RaisedButton
               style={{width: '140px', marginLeft: '10px'}}
@@ -119,7 +161,7 @@ class FiltersContainer extends Component {
   constructor (props) {
     super(props);
     const { filters } = props;
-    this.state = { filtersExpanded: false, statusFilter: filters.status, dateFilter: filters.dateRange, textFilter:  filters.text }
+    this.state = { filtersExpanded: false, statusFilter: filters.status, dateFilter: filters.dateRange, textFilter:  filters.text, collapsedAll: true }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -132,11 +174,11 @@ class FiltersContainer extends Component {
   }
 
   setStatusFilter = statusFilter => {
-    this.setState({ statusFilter });
+    this.setState({ statusFilter }, () => { this.applyFilters() });
   }
 
   setDateFilter = dateFilter => {
-    this.setState({ dateFilter });
+    this.setState({ dateFilter }, () => { this.applyFilters() });
   }
 
   setTextFilter = textFilter => {
@@ -167,12 +209,14 @@ class FiltersContainer extends Component {
         filtersExpanded={this.state.filtersExpanded}
         dateFilter={this.state.dateFilter}
         textFilter={this.state.textFilter}
+        collapsedAll={this.state.collapsedAll}
+        // toggleCollapsedAll={this.toggleCollapsedAll}
       />)
   }
 
 }
 
 export default connect(
-  state => ({ filters: state.orders.filters }),
-  { setFiltersOrders, resetFiltersOrders }
+  state => ({ filters: state.orders.filters, listCollapsedAll: state.orders.listCollapsedAll }),
+  { setFiltersOrders, resetFiltersOrders, setListCollapsedAll }
 )(FiltersContainer);

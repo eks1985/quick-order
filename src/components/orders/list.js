@@ -5,11 +5,9 @@ import { getOrdersVisibleIds } from './../../store/reducers/orders';
 import Paper from 'material-ui/Paper';
 import { deleteOrder, restoreOrder } from './../../actions/orders';
 import IconRestore from 'material-ui/svg-icons/content/reply';
-// import IconDelete from 'material-ui/svg-icons/action/delete-forever';
 import IconDelete from 'material-ui/svg-icons/content/clear';
 import IconDown from 'material-ui/svg-icons/hardware/keyboard-arrow-down';
 import IconUp from 'material-ui/svg-icons/hardware/keyboard-arrow-up';
-// import IconOpenOrder from 'material-ui/svg-icons/action/open-in-new';
 import { setModal } from './../../lib/modal/actions/modal';
 
 const OrdersList = ({
@@ -19,6 +17,7 @@ const OrdersList = ({
   cartIsEmpty,
   ordersState,
   ordersRowsSeparator,
+  // listCollapsedAll,
   // actions
   deleteOrder,
   restoreOrder,
@@ -409,7 +408,13 @@ class OrdersListContainer extends Component {
   }
   componentDidMount(){
     const ordersState = this.props.headersIds.reduce((res, id) => {
-      return { ...res, [id]: false };
+      return { ...res, [id]: !this.props.listCollapsedAll };
+    }, {});
+    this.setState({ ordersState });
+  }
+  componentDidUpdate(nextProps){
+    const ordersState = nextProps.headersIds.reduce((res, id) => {
+      return { ...res, [id]: !nextProps.listCollapsedAll };
     }, {});
     this.setState({ ordersState });
   }
@@ -430,7 +435,8 @@ export default connect(
       headersIds: getOrdersVisibleIds(state.orders),
       allowDeleteOrders: state.options.allowDeleteOrders,
       cartIsEmpty: state.cart.totalItems === 0,
-      ordersRowsSeparator: state.options.ordersRowsSeparator
+      ordersRowsSeparator: state.options.ordersRowsSeparator,
+      listCollapsedAll: state.orders.setListCollapsedAll
     }
   },
   { deleteOrder, restoreOrder, setModal }

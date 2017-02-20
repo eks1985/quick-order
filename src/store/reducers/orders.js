@@ -82,9 +82,9 @@ const filters = (state = {status: 'Все', dateRange: 'Все', dateStart: '', 
   }
 };
 
-const filtersExpanded = (state = false, action) => {
+const listCollapsedAll = (state = true, action) => {
   switch (action.type) {
-    case 'SET_FILTERS_EXPANDED':
+    case 'SET_LIST_COLLAPSED_ALL_ORDERS':
       return action.payload;
     default:
       return state;
@@ -125,7 +125,7 @@ export default combineReducers(
     qtyPages,
     isLastPage,
     filters,
-    filtersExpanded,
+    listCollapsedAll,
     listHeight
   }
 );

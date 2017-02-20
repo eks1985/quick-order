@@ -98,7 +98,11 @@ const CheckoutListColumn = props => {
   };
 
   const getItemJsx = (key, rowIndex) => {
-    let style = applyZebra(rowStyle.common, rowIndex);
+    const applyCurrentRowBorder = style => {
+      let extendedStyle = { ...style, background: 'rgba(255, 215, 0, 0.2)' };
+      return currentCheckout === rowIndex ? { ...style, ...extendedStyle }: style;
+    }
+    let style = applyCurrentRowBorder(applyZebra(rowStyle.common, rowIndex));
     return (
       <div key={`${key}${columnKey}`} style={style}>
         {goodsItems[key][columnKey]}

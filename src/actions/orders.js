@@ -1,6 +1,7 @@
 import { deleteOrderFirebase } from './orders-firebase';
 import { addToCart } from './cart';
 import { addCatalogQty } from './catalog-qty';
+import { dayEnd, dayStart, dayBefore, monthEnd, monthStart, monthBefore } from './../utils/date-time';
 
 export const setQtyPagesOrders = () => {
   return (dispatch, getState) => {
@@ -100,16 +101,48 @@ export const filterOrders = () => {
     const ordersState = getState().orders;
     const { filters, headers } = ordersState;
     let result;
-    if (filters.status === 'Все' && filters.text === '') {
+    if (filters.status === 'Все' && filters.text === '' && filters.dateRange === 'Все') {
       result = headers;
     } else {
+      let filterByStatus = false;
+      let filterByDate = false;
+      if (filters.status !== 'Все') {
+        filterByStatus = true;
+      }
+      let dateStart, dateEnd;
+      if (filters.dateRange !== 'Все') {
+        filterByDate = true;
+        let today = new Date();
+        if (filters.dateRange === 'Сегодня') {
+          dateStart = dayStart(today);
+          dateEnd = dayEnd(today);
+        } else if (filters.dateRange === 'Вчера') {
+          dateStart = dayBefore(today);
+          dateEnd = dayEnd(dayBefore(today));
+        } else if (filters.dateRange === 'ЭтотМесяц') {
+          dateStart = monthStart(today);
+          dateEnd = monthEnd(today);
+        } else if (filters.dateRange === 'ПрошлыйМесяц') {
+          dateStart = monthStart(monthBefore(today));
+          dateEnd = monthEnd(monthBefore(today));
+        } else if (filters.dateRange === 'БолееРанние') {
+          dateStart = new Date(1970, 1, 1);
+          dateEnd = monthStart(monthBefore(today));
+        }
+      }
       result = Object.keys(headers).reduce((res, key) => {
-        // console.log('headers[key].status', headers[key].status);
-        // console.log('filters.status', filters.status);
-        return headers[key].status === filters.status ? { ...res, [key]: headers[key] } : res;
+        let filterMatch = true;
+        if (filterByStatus) {
+          filterMatch = headers[key].status === filters.status ? filterMatch : false;
+        }
+        if (filterByDate) {
+          const orderDate = new Date(headers[key].date);
+          filterMatch = orderDate >= dateStart && orderDate <= dateEnd ? filterMatch : false;
+        }
+        return filterMatch ? { ...res, [key]: headers[key] } : res;
       }, {})
+
     }
-    console.log('result', result);
     dispatch({
       type: 'RECEIVE_ORDERS_HEADERS_FILTERED',
       payload: result
@@ -152,5 +185,15 @@ export const resetFiltersOrders = () => {
                }
     });
     dispatch(filterOrders());
+  }
+}
+
+export const setListCollapsedAll = () => {
+  return (dispatch, getState) => {
+    const listCollapsedAll = getState().orders.listCollapsedAll;
+    dispatch({
+      type: 'SET_LIST_COLLAPSED_ALL_ORDERS',
+      payload: !listCollapsedAll
+    })
   }
 }
