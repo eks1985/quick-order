@@ -23,8 +23,6 @@ const Filters = props => {
     setTextFilter,
     resetFilters,
     setListCollapsedAll
-    // applyFilters,
-    // toggleCollapsedAll
   } = props;
   const haveAppliedFilters = statusFilter !== 'Все' || dateFilter !== 'Все' || textFilter !== '';
   const paddingBottom = filtersExpanded ? '0px' : '0px';
@@ -107,10 +105,6 @@ const Filters = props => {
               value={dateFilter}
               onChange={
                 (e, index, value) => {
-                  // if (value === 'ВыбратьПериод') {
-                  //   alert('Период!');
-                  // }
-
                   setDateFilter(value);
                 }
               }
@@ -121,7 +115,6 @@ const Filters = props => {
                 <MenuItem value='ЭтотМесяц' label='Этот месяц' primaryText={labelDateThisMonth} />
                 <MenuItem value='ПрошлыйМесяц' label='Прошлый месяц' primaryText={labelDatePrevMonth} />
                 <MenuItem value='БолееРанние' label='Более ранние' primaryText="Более ранние" />
-                {/* <MenuItem value='ВыбратьПериод' label='Выбрать период' primaryText="Выбрать период" /> */}
               </SelectField>
           </div>
           <div>
@@ -182,7 +175,7 @@ class FiltersContainer extends Component {
   }
 
   setTextFilter = textFilter => {
-    this.setState({ textFilter });
+    this.setState({ textFilter }, () => { this.applyFilters() });
   }
 
   //reducer action call

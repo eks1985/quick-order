@@ -106,6 +106,7 @@ export const filterOrders = () => {
     } else {
       let filterByStatus = false;
       let filterByDate = false;
+      let filterByText = false;
       if (filters.status !== 'Все') {
         filterByStatus = true;
       }
@@ -130,17 +131,29 @@ export const filterOrders = () => {
           dateEnd = monthStart(monthBefore(today));
         }
       }
+      if (filters.text) {
+        filterByText = true;
+      }
+      // filter by status and date
       result = Object.keys(headers).reduce((res, key) => {
         let filterMatch = true;
+        // filter by status
         if (filterByStatus) {
           filterMatch = headers[key].status === filters.status ? filterMatch : false;
         }
+        // filter by date
         if (filterByDate) {
           const orderDate = new Date(headers[key].date);
           filterMatch = orderDate >= dateStart && orderDate <= dateEnd ? filterMatch : false;
         }
+        // filter by text (nr, comment, ref)
+        if (filterByText) {
+          filterMatch = headers[key].nr.includes(filters.text) || headers[key].comment.includes(filters.text) || headers[key].ref.includes(filters.text);
+        }
+
         return filterMatch ? { ...res, [key]: headers[key] } : res;
-      }, {})
+      }, {});
+
 
     }
     dispatch({
