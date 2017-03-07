@@ -1,11 +1,6 @@
 {
   "main.css": "static/css/main.bb050088.css",
   "main.css.map": "static/css/main.bb050088.css.map",
-  "main.js": "static/js/main.2fa7e799.js",
-  "main.js.map": "static/js/main.2fa7e799.js.map",
-  "static/media/customers.png": "static/media/customers.926bc1c9.png",
-  "static/media/goods.png": "static/media/goods.f74fd2e1.png",
-  "static/media/options.png": "static/media/options.15ba17a9.png",
-  "static/media/orders.png": "static/media/orders.8ca4a05c.png",
-  "static/media/users.png": "static/media/users.dfc02af7.png"
+  "main.js": "static/js/main.b0947c71.js",
+  "main.js.map": "static/js/main.b0947c71.js.map"
 }
