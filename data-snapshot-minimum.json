@@ -7,71 +7,143 @@
       "guid" : "74bdeb37-6457-46e9-a933-bcf7882efba7",
       "inn" : "5544466644",
       "phone" : "+7917000000"
+    },
+    "d95445c4-abd0-40bf-93e7-4dec1d719552" : {
+      "address" : "г. Москва, ул. Пушкина, д. 150, оф. 356",
+      "description" : "Контрагент Альфа",
+      "email" : "info@omega.com",
+      "guid" : "d95445c4-abd0-40bf-93e7-4dec1d719552",
+      "inn" : "1122334455",
+      "phone" : "+7917000000"
     }
   },
   "goods" : {
     "00688cd0-cda3-486d-9416-811fd998b881" : {
+      "brand" : "Веселый молочник",
       "code" : "Тв90e15",
       "description" : "Творог полужирный",
       "groupRef" : "b514d31c-dd4f-486e-b606-5cfa7592ea7b"
+    },
+    "0089db4e-7a3c-414a-b538-b0ec7bcec7e0" : {
+      "brand" : "Лесные ягоды",
+      "code" : "Кл7f8",
+      "description" : "Клюква",
+      "groupRef" : "15fc2991-75ec-4504-bba7-9d804e03f93c"
     }
   },
   "goods-groups" : {
-    "b514d31c-dd4f-486e-b606-5cfa7592ea7b" : "Молочные продукты"
+    "033db93b-845d-4c62-9b4b-1c050e1ed519" : "Рыба",
+    "0730178e-2d40-40a7-a365-64f59abb5abf" : "Мясные продукты",
   },
   "options" : {
-    "common" : {
-      "catalogListSettings" : [ "code", "description", "price", "qty" ],
-      "manageGoodsOnStockQty" : false,
-      "managePositionIsActiveProp" : false,
-      "orderNoActivePositions" : false,
-      "positionIsActiveDefinition" : "positionData",
-      "showGoodsOnStockQty" : false,
-      "showNoActivePosition" : false
-    },
     "74bdeb37-6457-46e9-a933-bcf7882efba7" : {
+      "catalogListSettings" : [ "code", "brand", "description", "qty", "price" ],
+      "catalogListSettingsCheckout" : [ "code", "description", "brand", "price", "amount", "qty", "delete" ]
+    },
+    "common" : {
+      "allowDeleteOrders" : true,
+      "allowDraftOrders" : true,
+      "catalogListColumns" : {
+        "brand" : [ true, true, true ]
+      },
+      "catalogListColumnsCheckout" : {
+        "brand" : [ true, true, true ]
+      },
+      "catalogListSettings" : [ "code", "description", "price", "qty" ],
+      "categoryLineSeparator" : true,
+      "manageGoodsOnStockQty" : true,
+      "managePositionIsActiveProp" : true,
+      "managePrices" : "dontUse",
+      "orderNoActivePositions" : true,
+      "ordersRowsSeparator" : true,
+      "permanentDeleteOrders" : false,
+      "pictureSource" : "url",
+      "positionIsActiveDefinition" : "stock",
+      "showGoodsOnStockQty" : true,
+      "showNoActivePosition" : true,
+      "showPictures" : {
+        "dialog" : true,
+        "row" : true,
+        "side" : true
+      }
+    },
+    "d95445c4-abd0-40bf-93e7-4dec1d719552" : {
       "catalogListSettings" : [ "code", "description", "price", "qty" ]
     }
   },
   "orders" : {
     "headers" : {
       "74bdeb37-6457-46e9-a933-bcf7882efba7" : {
-        "0ba9dc53-5410-4914-9303-296250ce2af3" : {
-          "amount" : 500.00,
-          "date" : "2016-11-21T22:02:26",
-          "enterpriseNr" : "0ba9dc53",
-          "nr" : "0ba9dc53-5410-4914-9303-296250ce2af3"
+        "-KeEYBqKbhMJPFn3Jia7" : {
+          "amount" : 5975,
+          "comment" : "",
+          "date" : "2017-03-02T15:04:14.030Z",
+          "deleted" : true,
+          "enterpriseNr" : "",
+          "nr" : "-KeEYBqKbhMJPFn3Jia7",
+          "ref" : "",
+          "status" : "new"
+        },
+        "-KeIMin8DNZjqccI0J72" : {
+          "amount" : 312,
+          "comment" : "",
+          "date" : "2017-03-03T08:52:36.132Z",
+          "deleted" : true,
+          "enterpriseNr" : "",
+          "nr" : "-KeIMin8DNZjqccI0J72",
+          "ref" : "",
+          "status" : "new"
         }
       }
     },
     "items" : {
       "74bdeb37-6457-46e9-a933-bcf7882efba7" : {
-        "0ba9dc53-5410-4914-9303-296250ce2af3" : {
-          "84866411-224b-4fcc-887d-fd0e5322691f" : {
-            "amount" : 500.00,
-            "code" : "Ка27d",
-            "description" : "Капуста кольраби",
-            "price" : 50.00,
-            "qty" : 10
+        "-KeEYBqKbhMJPFn3Jia7" : {
+          "0089db4e-7a3c-414a-b538-b0ec7bcec7e0" : {
+            "amount" : 1250,
+            "code" : "Кл7f8",
+            "description" : "Клюква",
+            "groupRef" : "15fc2991-75ec-4504-bba7-9d804e03f93c",
+            "price" : 250,
+            "qty" : 5
+          }
+        },
+        "-KeIMin8DNZjqccI0J72" : {
+          "05e26d70-01e4-11dc-a411-00055d80a2d1" : {
+            "amount" : 40,
+            "code" : "СО-90",
+            "description" : "Стол обеденный ",
+            "groupRef" : "9c556d65-720f-11df-b436-0015e92f2802",
+            "price" : 20,
+            "qty" : 2
+          },
+          "1418c677-7307-11df-b338-0011955cba6b" : {
+            "amount" : 156,
+            "code" : "М-1789",
+            "description" : "Спальный гарнитур \"Стелла\"",
+            "groupRef" : "9c556d65-720f-11df-b436-0015e92f2802",
+            "price" : 78,
+            "qty" : 2
           }
         }
       }
     }
   },
   "prices" : {
-    "00688cd0-cda3-486d-9416-811fd998b881" : 923.08
+    "00688cd0-cda3-486d-9416-811fd998b881" : 923.08,
+    "0089db4e-7a3c-414a-b538-b0ec7bcec7e0" : 250
   },
   "users" : {
-    "RVCmibtnIThc8PgCBfOZuW4mhtg1" : {
+    "QNPZiZVucQM3W3OcCfppcb6WY2w1" : {
       "admin" : true,
+      "customerRef" : "74bdeb37-6457-46e9-a933-bcf7882efba7",
       "disabled" : false,
-      "email" : "foo@bar.com"
+      "email" : "alfa1@alfa.com"
     },
-    "jbt2Zl80QrZb4fgK4uqIzsnK7yB2" : {
+    "QcBH87VJzBN48tUS44lN3SBE28F3" : {
       "admin" : false,
-      "email" : "bar@baz.com",
-      "disabled" : false,
-      "customerRef": "74bdeb37-6457-46e9-a933-bcf7882efba7"
+      "customerRef" : "d95445c4-abd0-40bf-93e7-4dec1d719552",
+      "email" : "evgen@evgen.com"
     }
   }
 }
