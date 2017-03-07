@@ -28,6 +28,7 @@ const Nav = ({
           labelStyle={currentContent === 'goods' ? {color: 'white', fontWeight: 'normal'} : {color: 'black', fontWeight: 'normal'}}
           onClick={
             () => {
+              setModal();
               setCurrentContent('goods');
             }
           }
@@ -42,6 +43,7 @@ const Nav = ({
             labelStyle={currentContent === 'checkout' ? {color: 'white', fontWeight: 'normal'} : {color: 'black', fontWeight: 'normal'}}
             onClick={
               () => {
+                setModal();
                 setCurrentContent('checkout');
               }
             }
@@ -56,6 +58,7 @@ const Nav = ({
           labelStyle={currentContent === 'orders' ? {color: 'white', fontWeight: 'normal'} : {color: 'black', fontWeight: 'normal'}}
           onClick={
             () => {
+              setModal();
               setCurrentContent('orders');
             }
           }
@@ -69,6 +72,7 @@ const Nav = ({
           labelStyle={currentContent === 'quick-list' ? {color: 'white', fontWeight: 'normal'} : {color: 'black', fontWeight: 'normal'}}
           onClick={
             () => {
+              setModal();
               setCurrentContent('quick-list');
             }
           }
@@ -82,6 +86,7 @@ const Nav = ({
           labelStyle={currentContent === 'profile' ? {color: 'white', fontWeight: 'normal'} : {color: 'black', fontWeight: 'normal'}}
           onClick={
             () => {
+              setModal();
               setCurrentContent('profile');
               setModal({ content: 'profile', fullScreen: true, showClose: true });
             }
@@ -96,6 +101,7 @@ const Nav = ({
           labelStyle={currentContent === 'help' ? {color: 'white', fontWeight: 'normal'} : {color: 'black', fontWeight: 'normal'}}
           onClick={
             () => {
+              setModal();
               setCurrentContent('help');
               setModal({ content: 'help', fullScreen: true, showClose: true });
             }
@@ -110,6 +116,7 @@ const Nav = ({
           labelStyle={currentContent === 'management' ? {color: 'white', fontWeight: 'normal'} : {color: 'black', fontWeight: 'normal'}}
           onClick={
             () => {
+              setModal();
               setCurrentContent('management');
             }
           }
@@ -124,6 +131,7 @@ const Nav = ({
             labelStyle={currentContent === 'settings' ? {color: 'white', fontWeight: 'normal'} : {color: 'black', fontWeight: 'normal'}}
             onClick={
               () => {
+                setModal();
                 setCurrentContent('settings');
               }
             }

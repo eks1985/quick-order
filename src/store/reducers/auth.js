@@ -1,5 +1,5 @@
 const initialState = {
-	username: null,
+	displayName: null,
 	uid: null,
 	status: 'AUTH_ANONYMOUS',
 	email: '',
