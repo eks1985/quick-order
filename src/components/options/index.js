@@ -6,6 +6,7 @@ import {Tabs, Tab} from 'material-ui/Tabs';
 import BusinessLogic from './tabs/business-logic';
 import Data          from './tabs/data';
 import Ui            from './tabs/ui';
+import DataStructure from './tabs/data-structure';
 // import IntialConfig  from './tabs/initial-config';
 
 const Options = props => {
@@ -13,6 +14,9 @@ const Options = props => {
   return (
     <Paper style={{display: 'flex', flexDirection: 'column', padding: '10px', flex: '1 0 auto'}}>
       <Tabs>
+        <Tab label='Описание структуры данных'>
+          <DataStructure />
+        </Tab>
         <Tab label="Структура данных" >
           <Data />
         </Tab>
