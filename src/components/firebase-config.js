@@ -80,8 +80,8 @@ const Config = ({
       </div>
       <p style={{marginTop: '50px'}}>Где найти <span style={{fontWeight: 'bold'}}>apiKey</span> и  <span style={{fontWeight: 'bold'}}>databaseURL</span> своего приложения?</p>
       <div style={{marginTop: '30px'}}>
-        <img alt='Поясняющая картинка' src='https://firebasestorage.googleapis.com/v0/b/quick-order-de84c.appspot.com/o/settings-fb.png?alt=media&token=858e1c69-97e7-4241-88a4-8b8e6422c1b1' />      
-      </div> 
+        <img alt='Поясняющая картинка' src='https://firebasestorage.googleapis.com/v0/b/quick-order-de84c.appspot.com/o/settings-fb.png?alt=media&token=858e1c69-97e7-4241-88a4-8b8e6422c1b1' />
+      </div>
       <RaisedButton
         style={{position: 'absolute', top: '10px', right: '10px'}}
         label='Подключиться к демо'
@@ -99,12 +99,28 @@ const Config = ({
           }
         }
       />
-      
+
     </div>
   );
 };
 
 export default class firebaseConfigWrapper extends Component {
+
+  componentDidMount() {
+    if (location.href.includes('apiKey') && location.href.includes('databaseName') ) {
+      const params = location.href.split('?')[1];
+      const firebaseParams = params.split('&');
+      const apiKey = firebaseParams[0].slice(7);
+      const databaseURL = 'https://' + firebaseParams[1].slice(13) + '.firebaseio.com';
+      const firebaseConfig = {
+        apiKey,
+        databaseURL,
+      };
+      localStorage.setItem('firebaseConfig', JSON.stringify(firebaseConfig));
+      localStorage.setItem('quickOrderDemo', false);
+      location.reload();
+    }
+  }
 
   render() {
     return (
