@@ -110,11 +110,20 @@ export const generateOrderIndexProp = (propName) => {
 
 // Order index <
 
-export const setCurentGuid = (guid) => {
-  return {
-    type: 'SET_CURRENT_GOODS_GUID',
-    payload: guid
-  };
+export const setCurentGuid = (guid, callContext = '') => {
+  return (dispatch, getState) => {
+    console.log('decr', getState().goods.itemsInitial[guid].description);
+    dispatch({
+      type: 'SET_CURRENT_GOODS_GUID',
+      payload: guid,
+      callContext
+    }) ;
+  }
+  // return {
+  //   type: 'SET_CURRENT_GOODS_GUID',
+  //   payload: guid,
+  //   callContext
+  // };
 };
 
 // Search >

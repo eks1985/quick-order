@@ -117,7 +117,6 @@ export default ({
           style={{textDecoration: 'none', color: 'rgba(0, 0, 0, 0.870588)'}}
           onDoubleClick={
             () => {
-              setCurentGuid(key);
               setModal({ content: 'goodsCard', fullScreen: true, showClose: false, style: { background: '#fff' }, data: { source: 'catalog'} });
             }
           }
@@ -184,7 +183,7 @@ export default ({
           value={catalogQty[key] || ''}
           onFocus={
             () => {
-              setCurentGuid(key);
+              setCurentGuid(key, 'catalog row qty input on focus');
               setFocused(rowIndex);
             }
           }
