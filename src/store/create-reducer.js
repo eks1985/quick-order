@@ -21,7 +21,6 @@ import filtersApplied from './reducers/filters-applied';
 import filtersAppliedCheckout from './reducers/filters-applied-checkout';
 import current from './reducers/current';
 import currentCheckout from './reducers/current-checkout';
-import preventCleanGoodsRow from './reducers/prevent-clean-goods-row';
 import ui from './reducers/ui';
 import goodsGroupsSelected from './reducers/goods-groups-selected';
 import modal from './../lib/modal/reducers/modal';
@@ -50,7 +49,6 @@ export default function createReducer(indexes) {
     filtersAppliedCheckout,
     current,
     currentCheckout,
-    preventCleanGoodsRow,
     ui,
     goodsGroupsSelected,
     ...indexes
