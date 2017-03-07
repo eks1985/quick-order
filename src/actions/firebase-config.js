@@ -9,7 +9,7 @@ export const loadFirebaseConfig = () => {
         dispatch({
           type: 'RECEIVE_FIREBASE_CONFIG',
           payload: {apiKey: firebaseConfig.apiKey, databaseURL: firebaseConfig.databaseURL}
-        });  
+        });
       } else {
         dispatch(setModal({ content: 'firebase-config', fullScreen: true, center: true, showClose: false }));
       }
@@ -19,13 +19,14 @@ export const loadFirebaseConfig = () => {
   };
 };
 
-export const setFirebaseConfig = (config) => {
+export const setFirebaseConfig = config => {
   return dispatch => {
     localStorage.setItem('firebaseConfig', config);
+    const { apiKey, databaseURL } = config;
     dispatch({
       type: 'RECEIVE_FIREBASE_CONFIG',
-      payload: {apiKey: config.apiKey, databaseURL: config.databaseURL}
-    });  
+      payload: { apiKey, databaseURL }
+    });
     firebase.initializeApp(config);
   };
 };
@@ -34,7 +35,7 @@ export const resetFirebaseConfig = () => {
   return dispatch => {
     dispatch({
       type: 'RECEIVE_FIREBASE_CONFIG',
-      payload: {apiKey: '', databaseURL: ''}
+      payload: { apiKey: '', databaseURL: '' }
     });
   };
 };

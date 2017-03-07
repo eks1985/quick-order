@@ -182,7 +182,7 @@ export const createUser = (email, password, admin = false) => {
 	};
 };
 
-export const checkForUsersExist = () => {
+export const checkAppHasUsers = () => {
 	return dispatch => {
 		return authCreateUsers.signInAnonymously().then(
 			user => {

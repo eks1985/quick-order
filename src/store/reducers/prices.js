@@ -1,10 +1,9 @@
-import { pricesInitialState } from './../../utils/init';
 
-export default (state, action) => {
+export default (state = {}, action) => {
   switch (action.type) {
     case 'RECEIVE_PRICES':
-      return { ...state, ...action.payload};
+      return { ...state, ...action.payload };
     default:
-      return state || pricesInitialState();
+      return state;
   }
 };

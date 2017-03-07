@@ -6,7 +6,7 @@ import { listenToGoodsGroups } from './actions/goods-groups-firebase';
 import { listenToGoods } from './actions/goods-firebase';
 import { listenToPrices } from './actions/prices-firebase';
 import { listenToOptions } from './actions/options-firebase';
-import { listenToAuth, checkForUsersExist } from './actions/auth';
+import { listenToAuth, checkAppHasUsers } from './actions/auth';
 import { listenToUsers } from './actions/users-firebase';
 
 import darkBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
@@ -16,7 +16,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 export default class root extends Component {
 
   componentWillMount()  {
-    store.dispatch(checkForUsersExist());
+    store.dispatch(checkAppHasUsers());
 		store.dispatch(listenToAuth());
     store.dispatch(listenToGoodsGroups());
     store.dispatch(listenToGoods());
@@ -31,7 +31,7 @@ export default class root extends Component {
         <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
           <App />
         </MuiThemeProvider>
-      </Provider>
+      </Provider> 
     );
   }
 
