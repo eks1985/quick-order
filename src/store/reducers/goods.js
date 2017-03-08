@@ -211,7 +211,7 @@ export const getGoodsVisibleIds = (state) => { //state = goods.state
 
 export const getPropsValListByIds = (items, ids, propName) => {
   return ids.reduce((res, key) => {
-    return res.concat(items[key][propName]);
+    return items[key][propName] ? res.concat(items[key][propName]) : res;
   }, [])
 }
 

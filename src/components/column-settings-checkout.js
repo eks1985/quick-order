@@ -198,6 +198,7 @@ class ColumnSettingsContainer extends Component {
   constructor (props) {
     super(props);
     const valList = getPropsValListByIds(props.items, props.cartItemsIds, props.columnKey);
+    console.log('val list', valList);
     const filterItems = props.filterApplied === undefined ? valList : props.filterApplied;
     const filterStatus = valList.length === filterItems.length ? 'checked' : 'unchecked';
     this.state = { filterStatus, filterItems, valList, sortDirection: this.props.sortDirection, filterText: '' };
@@ -206,6 +207,7 @@ class ColumnSettingsContainer extends Component {
   componentWillReceiveProps (nextProps) {
     const props = nextProps;
     const valList = getPropsValListByIds(props.items, props.cartItemsIds, props.columnKey);
+    console.log('val list', valList);
     const filterItems = props.filterApplied === undefined ? valList : props.filterApplied;
     const filterStatus = valList.length === filterItems.length ? 'checked' : 'unchecked';
     this.state = { filterStatus, filterItems, valList, sortDirection: this.props.sortDirection, filterText: '' };
