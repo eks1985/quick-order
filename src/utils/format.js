@@ -4,6 +4,5 @@ export const format1 = (n, currency) => {
       return i > 0 && c !== "." && (a.length - i) % 3 === 0 ? " " + c : c;
     }) + ' ' + currency;
   } catch (e) {
-    console.log(e);
   }
 }
