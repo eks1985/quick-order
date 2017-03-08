@@ -63,7 +63,7 @@ export const listenToAuth = () => {
 					//here listen to some data from firebase
 					dispatch(listenToGoodsGroups());
 					dispatch(listenToGoods());
-					dispatch(listenToPrices());
+					// dispatch(listenToPrices());
 	    		if (authData.email) {
 	    			//get customer guid
 	    			const userUID = authData.uid;
@@ -79,6 +79,7 @@ export const listenToAuth = () => {
 		  						dispatch(setCustomer(guid, description, address, phone, email, inn));
 		  						dispatch(listenToOrdersHeaders());
 		  						dispatch(listenToOrdersItems());
+                  dispatch(listenToPrices());
 		  					});
 		  					let customerOptionsRef = database.ref(`options/${customerGuid}`);
 		  					customerOptionsRef.once('value', snapshot => {

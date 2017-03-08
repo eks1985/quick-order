@@ -1,9 +1,11 @@
 import { database } from '../firebase/firebase-app';
 
 export const listenToPrices = () => {
-	return (dispatch) => {
+	return (dispatch, getState) => {
 		try {
-			const pricesRef = database.ref('prices');
+      const  { managePrices } = getState().options;
+      const { guid: customerGuid} = getState().customer;
+			const pricesRef = database.ref(managePrices === 'common' ? 'prices/common' : `prices/${customerGuid}`);
 			pricesRef.off();
 			pricesRef.on('value', (snapshot) => {
 				dispatch({

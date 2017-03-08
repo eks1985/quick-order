@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 import styles from './styles';
 
 import IconButton       from 'material-ui/IconButton';
@@ -6,16 +7,18 @@ import IconArrowBack    from 'material-ui/svg-icons/navigation/arrow-back';
 import IconArrowForward from 'material-ui/svg-icons/navigation/arrow-forward';
 import IconArrowDown    from 'material-ui/svg-icons/hardware/keyboard-arrow-down';
 import IconArrowUp      from 'material-ui/svg-icons/hardware/keyboard-arrow-up';
+import IconFilter       from 'material-ui/svg-icons/content/filter-list';
+import { getIndexByColName } from './../../../actions/indexes';
 
-const HeaderCheckout = (props) => {
+const HeaderCheckout = props => {
 
   const { arrowStyle, arrowSortStyle }  = styles;
 
-  const { headerSettingsMode, columnsKeys, columnKey, columnsQty, i, moveHeaderColumnCheckout, sortDirection, setModal, catalogListColumns } = props;
+  const { headerSettingsMode, columnsKeys, columnKey, columnsQty, i, moveHeaderColumnCheckout, sortDirection, setModal, catalogListColumns, hasFilter, defaultColumn } = props;
 
   const sortable = sortDirection[columnKey] !== undefined;
 
-  const defaultColumn = ['code', 'description', 'price', 'qty', 'amount', 'delete'].includes(columnKey);
+  // const defaultColumn = ['code', 'description', 'price', 'qty', 'amount', 'delete'].includes(columnKey);
 
   const columnNames = {
     code: 'Код',
@@ -64,6 +67,7 @@ const HeaderCheckout = (props) => {
         >
           { (direction === 'forward' || direction === '') && <IconArrowDown style={iconStyle} /> }
           { direction === 'reverse' && <IconArrowUp style={iconStyle} /> }
+          { hasFilter &&<IconFilter style={iconStyle} /> }
         </div>
     );
 
@@ -135,4 +139,18 @@ HeaderCheckout.propTypes = {
   moveHeaderColumnCheckout: PropTypes.func.isRequired
 };
 
-export default HeaderCheckout;
+export default connect(
+  (state, ownProps) => {
+    let hasFilter = false;
+    const { filtersAppliedCheckout } = state;
+    const { columnKey } = ownProps;
+    const defaultColumn = ['code', 'description', 'price', 'qty', 'amount', 'delete'].includes(columnKey);
+    if (defaultColumn) {
+      hasFilter = false;
+    } else {
+      const indexSort = getIndexByColName(state, ownProps.columnKey);
+      hasFilter = filtersAppliedCheckout[columnKey] && filtersAppliedCheckout[columnKey].length !== indexSort.length;
+    }
+    return { defaultColumn, hasFilter };
+  }
+)(HeaderCheckout);

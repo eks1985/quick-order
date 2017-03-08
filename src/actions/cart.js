@@ -2,8 +2,9 @@ import { isNumeric } from './../utils/index';
 import { setCurrentContent } from './../actions/current-content';
 import { setQtyPagesGoodsCheckout, goToGoodsPageCheckout, detectIsLastPageCheckout } from './goods-checkout-navigation';
 import { filterByGroupGuids, setGoodsGroupsSelected } from './../actions/goods-groups';
-import { searchByPropText, getItemsByIds } from './goods';
+import { searchByPropText } from './goods';
 import { filterByPropValCheckout } from './indexes';
+import { getObjectsByIds } from './../utils/index';
 
 export const filterCartItems = () => {
   return (dispatch, getState) => {
@@ -24,10 +25,7 @@ export const filterCartItems = () => {
       const resultCartKeys = resultKeys.reduce((res, key) => {
         return itemsKeys.includes(key) ? res.concat(key) : res;
       } ,[]);
-      // const columns = getState().options.catalogListColumns;
-      // const columnsKeys = Object.keys(columns).reduce((res, key) => columns[key][1] ? [ ...res, key ] : res , []);
-      // resultKeys = columnsKeys.reduce((res, key) => [ ...res, ...searchByPropText(words, getState()['__index__' + key].index, []) ], resultKeys);
-      result = getItemsByIds(resultCartKeys, items);
+      result = getObjectsByIds(resultCartKeys, items);
     }
     // filter by category
     if (filtersGoodsGroupsCartIds.length > 0) {

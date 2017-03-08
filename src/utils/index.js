@@ -6,3 +6,7 @@ export const isNumeric = (obj) => {
   // subtraction forces infinities to NaN
   !isNaN(obj - parseFloat( obj));
 }
+
+export const getObjectsByIds = (ids, objects) => {
+  return ids.reduce((res, key) => ({ ...res, [key]: objects[key] }), {});
+};

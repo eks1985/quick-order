@@ -1,18 +1,21 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import Subheader from 'material-ui/Subheader';
 import IconButton from 'material-ui/IconButton';
 import IconOk from 'material-ui/svg-icons/action/done';
 import IconError from 'material-ui/svg-icons/alert/error-outline';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
+import { listenToPrices } from './../../../../actions/prices-firebase';
 
-export default props => {
+const OptionManagePrices = props => {
 
-  const { items, prices, options, setModal, setOption, radioStyles } = props;
+  const { items, prices, options, setModal, setOption, radioStyles, listenToPrices } = props;
 
   const itemsKeysLength = Object.keys(items).length;
 
-  const dataValidation = itemsKeysLength > 0;
+  let dataValidation = itemsKeysLength > 0;
+  dataValidation = false;
 
   let priceKeys = Object.keys(prices);
   let priceObj = priceKeys.length > 0 ? prices[priceKeys[0]] : undefined;
@@ -98,7 +101,8 @@ export default props => {
         valueSelected={options.managePrices}
         onChange={
           (e, value)=>{
-            setOption("managePrices", value);
+            setOption('managePrices', value);
+            listenToPrices();
           }
         }
       >
@@ -121,3 +125,5 @@ export default props => {
     </div>
   );
 }
+
+export default connect(null, { listenToPrices })(OptionManagePrices);

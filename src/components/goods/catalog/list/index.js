@@ -97,7 +97,8 @@ export default connect(
     columnsKeys: getColumns(state.options),
     sortDirection: state.sortDirection,
     current: state.current,
-    options: state.options
+    options: state.options,
+    filtersApplied: state.filtersApplied
   }),
   { ...cartActions, ...modalActions, ...goodsActions, ...catalogQtyActions, ...optionsActions, ...currentActions }
 )(ListContainer);

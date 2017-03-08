@@ -4,7 +4,7 @@ import store from './store';
 import App from './App';
 import { listenToGoodsGroups } from './actions/goods-groups-firebase';
 import { listenToGoods } from './actions/goods-firebase';
-import { listenToPrices } from './actions/prices-firebase';
+// import { listenToPrices } from './actions/prices-firebase';
 import { listenToOptions } from './actions/options-firebase';
 import { listenToAuth, checkAppHasUsers } from './actions/auth';
 import { listenToUsers } from './actions/users-firebase';
@@ -20,7 +20,7 @@ export default class root extends Component {
 		store.dispatch(listenToAuth());
     store.dispatch(listenToGoodsGroups());
     store.dispatch(listenToGoods());
-    store.dispatch(listenToPrices());
+    // store.dispatch(listenToPrices());
     store.dispatch(listenToOptions());
     store.dispatch(listenToUsers());
 	}
@@ -31,7 +31,7 @@ export default class root extends Component {
         <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
           <App />
         </MuiThemeProvider>
-      </Provider> 
+      </Provider>
     );
   }
 

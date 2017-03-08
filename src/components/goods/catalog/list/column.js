@@ -1,16 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import IconButton       from 'material-ui/IconButton';
 import IconArrowBack    from 'material-ui/svg-icons/navigation/arrow-back';
 import IconArrowForward from 'material-ui/svg-icons/navigation/arrow-forward';
 import IconArrowDown    from 'material-ui/svg-icons/hardware/keyboard-arrow-down';
 import IconArrowUp      from 'material-ui/svg-icons/hardware/keyboard-arrow-up';
-// import { ListItem }     from 'material-ui/List';
+import IconFilter       from 'material-ui/svg-icons/content/filter-list';
+import { getIndexByColName } from './../../../../actions/indexes';
 import styles from './styles';
 import { format1 } from './../../../../utils/format';
 import img1 from './../../../../image.jpg';
 import './columns.css';
 
-export default ({
+const CatalogColumn = ({
   columnsKeys,
   columnKey, //name of column
   i, //number of column
@@ -26,6 +28,9 @@ export default ({
   sortDirection,
   currentId,
   options,
+  filtersApplied,
+  customColumn,
+  hasFilter,
   //actions
   moveHeaderColumn,
   addCatalogQty,
@@ -42,7 +47,7 @@ export default ({
 
   const sortable = sortDirection[columnKey] !== undefined;
 
-  const customColumn = ['code', 'description', 'price', 'qty'].indexOf(columnKey) > - 1;
+  // const customColumn = ['code', 'description', 'price', 'qty'].indexOf(columnKey) > - 1;
 
   const { arrowStyle, arrowSortStyle, incDecSmallQtyPane, qtyInputStyle, zebraStyle, headerStyle, rowStyle, vertBorderLeft, vertBorderRight } = styles;
 
@@ -141,7 +146,7 @@ export default ({
           }
         }
       >
-        {format1(prices[key] || 100, '')}
+        {format1(prices[key] || 0, '')}
       </div>
     );
   };
@@ -287,6 +292,7 @@ export default ({
         >
           { (direction === 'forward' || direction === '') && <IconArrowDown style={iconStyle} /> }
           { direction === 'reverse' && <IconArrowUp style={iconStyle} /> }
+          { hasFilter &&<IconFilter style={iconStyle} /> }
         </div>
     );
   };
@@ -366,3 +372,19 @@ export default ({
   );
 
 };
+
+export default connect(
+  (state, ownProps) => {
+    let hasFilter = false;
+    const { filtersApplied } = state;
+    const { columnKey } = ownProps;
+    const customColumn = ['code', 'description', 'price', 'qty'].indexOf(columnKey) > - 1;
+    if (customColumn) {
+      hasFilter = false;
+    } else {
+      const indexSort = getIndexByColName(state, ownProps.columnKey);
+      hasFilter = filtersApplied[columnKey] && filtersApplied[columnKey].length !== indexSort.length;
+    }
+    return { customColumn, hasFilter };
+  }
+)(CatalogColumn);

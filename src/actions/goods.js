@@ -3,6 +3,7 @@ export { setQtyPagesGoods, detectIsLastPage,  moveGoodsForward, moveGoodsBack, g
 export { setQtyPagesGoodsCheckout, detectIsLastPageCheckout,  moveGoodsForwardCheckout, moveGoodsBackCheckout, goToGoodsPageCheckout } from './goods-checkout-navigation';
 import { setQtyPagesGoods, goToGoodsPage } from './goods-navigation';
 import { filterByPropVal } from './indexes';
+import { getObjectsByIds } from './../utils/index';
 
 // Search index >
 
@@ -112,18 +113,12 @@ export const generateOrderIndexProp = (propName) => {
 
 export const setCurentGuid = (guid, callContext = '') => {
   return (dispatch, getState) => {
-    console.log('decr', getState().goods.itemsInitial[guid].description);
     dispatch({
       type: 'SET_CURRENT_GOODS_GUID',
       payload: guid,
       callContext
     }) ;
   }
-  // return {
-  //   type: 'SET_CURRENT_GOODS_GUID',
-  //   payload: guid,
-  //   callContext
-  // };
 };
 
 // Search >
@@ -135,10 +130,6 @@ const searchByPropWord = (word, indexKeys, index, res) => {
 export const searchByPropText = (words, index,  res) => {
   const indexKeys = Object.keys(index);
   return words.reduce( (res, word) => [ ...res, ...searchByPropWord(word.trim(), indexKeys, index, res) ], res);
-};
-
-export const getItemsByIds = (ids, items) => {
-  return ids.reduce((res, key) => ({ ...res, [key]: items[key] }), {});
 };
 
 export const search = () => {
@@ -158,7 +149,7 @@ export const search = () => {
       const columns = getState().options.catalogListColumns;
       const columnsKeys = Object.keys(columns).reduce((res, key) => columns[key][1] ? [ ...res, key ] : res , []);
       resultKeys = columnsKeys.reduce((res, key) => [ ...res, ...searchByPropText(words, getState()['__index__' + key].index, []) ], resultKeys);
-      result = getItemsByIds(resultKeys, itemsInitial);
+      result = getObjectsByIds(resultKeys, itemsInitial);
     }
     // filter by category
     const goodsGroupsFiltersIds = getState().goodsGroups.filtersIds;
