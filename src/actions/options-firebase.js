@@ -25,21 +25,24 @@ export const listenToOptions = () => {
 		try {
 			const optionsRef = database.ref('options/common');
 			optionsRef.off();
-			optionsRef.on('value', (snapshot) => {
-				dispatch({
-					type: 'RECEIVE_OPTIONS',
-					payload: snapshot.val()
-				});
-				const catalogListColumns = snapshot.val().catalogListColumns;
-				const catalogListColumnsKeys = Object.keys(catalogListColumns);
-				const sortDirection  = {code: '', description: ''};
-				const result = catalogListColumnsKeys.reduce((res, key) => catalogListColumns[key][2] === true ? { ...res, [key]: ''} : res, sortDirection);
-        dispatch(setRowsPerPage());
-        dispatch({
-					type: 'RECEIVE_SORT_DIRECTION',
-					payload: result
-				});
-        dispatch(listenToCustomerOptions());
+			optionsRef.on('value', snapshot => {
+        console.log('snapshot', snapshot.val());
+        if (snapshot.val()) {
+          dispatch({
+            type: 'RECEIVE_OPTIONS',
+            payload: snapshot.val()
+          });
+          const catalogListColumns = snapshot.val().catalogListColumns;
+          const catalogListColumnsKeys = Object.keys(catalogListColumns);
+          const sortDirection  = {code: '', description: ''};
+          const result = catalogListColumnsKeys.reduce((res, key) => catalogListColumns[key][2] === true ? { ...res, [key]: ''} : res, sortDirection);
+          dispatch(setRowsPerPage());
+          dispatch({
+            type: 'RECEIVE_SORT_DIRECTION',
+            payload: result
+          });
+          dispatch(listenToCustomerOptions());
+        }
 			}, (error) => {
 				dispatch({
 					type: 'RECEIVE_OPTIONS_ERROR',
