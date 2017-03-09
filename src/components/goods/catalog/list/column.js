@@ -31,6 +31,7 @@ const CatalogColumn = ({
   filtersApplied,
   customColumn,
   hasFilter,
+  usePrices,
   //actions
   moveHeaderColumn,
   addCatalogQty,
@@ -253,7 +254,7 @@ const CatalogColumn = ({
     );
   };
 
-  const getItemsJsx = () => itemsIds.map( (key, rowIndex) => customColumn ?  getCustomItemJsx(key, rowIndex) : getItemJsx(key, rowIndex));
+  const getItemsJsx = () => itemsIds.map( (key, rowIndex) => customColumn ?  getCustomItemJsx(key, rowIndex) : getItemJsx(key, rowIndex) );
 
   // Header >
 
@@ -361,6 +362,10 @@ const CatalogColumn = ({
     }
   };
 
+  // if (!usePrices && columnKey === 'price') {
+  //   return null;
+  // }
+
   return (
     <div style={prepareStyle()}>
       <div style={sortable ? { ...headerStyle.container, cursor: 'pointer' } : headerStyle.container }
@@ -385,6 +390,7 @@ export default connect(
       const indexSort = getIndexByColName(state, ownProps.columnKey);
       hasFilter = filtersApplied[columnKey] && filtersApplied[columnKey].length !== indexSort.length;
     }
-    return { customColumn, hasFilter };
+    const usePrices = state.options.managePrices !== 'dontUse';
+    return { customColumn, hasFilter, usePrices };
   }
 )(CatalogColumn);
