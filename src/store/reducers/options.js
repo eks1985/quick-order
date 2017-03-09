@@ -32,20 +32,10 @@ export default (state, action) => {
 
 // Selectors
 
-// export const getColumns = state => {
-//   const { catalogListColumns, catalogListSettings } = state;
-//   console.log('catalogListColumns', catalogListColumns);
-//   console.log('catalogListSettings', catalogListSettings);
-//   const columnsKeys = Object.keys(catalogListColumns);
-//   return columnsKeys.reduce((res, key) => {
-//     return res.indexOf(key) === -1 && catalogListColumns[key][0] === true  ? res.concat(key) : res;
-//   }, catalogListSettings);
-// };
-
 export const getColumns = state => {
-  const { catalogListColumns, catalogListSettings } = state;
+  const { catalogListColumns, catalogListSettings, managePrices } = state;
   const columnsKeys = Object.keys(catalogListColumns);
-  return catalogListSettings.reduce((res, key) => {
+  let columns = catalogListSettings.reduce((res, key) => {
     if (!columnsKeys.includes(key)) {
       return res.concat(key);
     } else {
@@ -56,12 +46,14 @@ export const getColumns = state => {
       }
     }
   }, []);
+  columns.includes('price') && managePrices === 'dontUse' && columns.splice(columns.indexOf('price'), 1) ;
+  return columns;
 };
 
 export const getColumnsCheckout = state => {
-  const { catalogListColumnsCheckout, catalogListSettingsCheckout } = state;
+  const { catalogListColumnsCheckout, catalogListSettingsCheckout, managePrices } = state;
   const columnsKeys = Object.keys(catalogListColumnsCheckout);
-  const columns = catalogListSettingsCheckout.reduce((res, key) => {
+  let columns = catalogListSettingsCheckout.reduce((res, key) => {
     if (!columnsKeys.includes(key)) {
       return res.concat(key);
     } else {
@@ -72,7 +64,9 @@ export const getColumnsCheckout = state => {
       }
     }
   }, []);
-  return columnsKeys.reduce((res, key) => {
+  columns = columnsKeys.reduce((res, key) => {
     return catalogListColumnsCheckout[key][0] === true && !columns.includes(key) ? columns.concat(key) : res;
   }, columns);
+  columns.includes('price') && managePrices === 'dontUse' && columns.splice(columns.indexOf('price'), 1) ;
+  return columns;
 };

@@ -26,7 +26,6 @@ export const listenToOptions = () => {
 			const optionsRef = database.ref('options/common');
 			optionsRef.off();
 			optionsRef.on('value', snapshot => {
-        console.log('snapshot', snapshot.val());
         if (snapshot.val()) {
           dispatch({
             type: 'RECEIVE_OPTIONS',
