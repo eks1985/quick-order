@@ -10,13 +10,13 @@ import { format1 } from './../../../utils/format';
 
 const Cart = ({
   cart,
+  managePrices,
   //actions
   cleanCart,
   setCurrentContent
 }) => {
   const { totalItems, totalAmount } = cart;
   const style = {
-    // height: '130px',
     display: 'flex',
     flexDirection: 'column',
     padding: '8px',
@@ -44,9 +44,11 @@ const Cart = ({
           </div>
           {hasItems &&
             <div style={{display: 'flex', flexDirection: 'column', paddingLeft: '10px'}}>
-              <div style={{fontSize: '16px', fontWeight: 'bold'}}>
-                {format1(totalAmount, 'руб.')}
-              </div>
+              { managePrices !== 'dontUse' &&
+                <div style={{fontSize: '16px', fontWeight: 'bold'}}>
+                  {format1(totalAmount, 'руб.')}
+                </div>
+              }
               <div style={{fontSize: '12px'}}>
                 {`${totalItems} позиций`}
               </div>
@@ -103,6 +105,9 @@ const Cart = ({
 };
 
 export default connect(
-  state => ({cart: state.cart}),
+  state => {
+    const { cart, options: { managePrices} } = state;
+    return { cart, managePrices};
+  },
   { ...cartActions, ...currentContentActions }
 )(Cart);

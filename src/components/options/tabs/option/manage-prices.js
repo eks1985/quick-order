@@ -52,7 +52,7 @@ const OptionManagePrices = props => {
             </IconButton>
           );
         }
-      case 'byCustomers':
+      case 'byPriceTypes':
           if (priceObj === undefined) {
             return (
               <IconButton
@@ -112,8 +112,8 @@ const OptionManagePrices = props => {
           style={radioStyles.radioButton}
         />
         <RadioButton
-          value='byCustomers'
-          label='Свои цены для каждого клиента'
+          value='byPriceTypes'
+          label='Цены в разрезе типов цен'
           style={radioStyles.radioButton}
         />
         <RadioButton

@@ -75,8 +75,8 @@ export const listenToAuth = () => {
 	  						let customerRef = database.ref(`customers/${customerGuid}`);
 		  					customerRef.once('value', snapshot => {
 		  						const customerData = snapshot.val();
-		  						const { guid, description, address, phone, email, inn } = customerData;
-		  						dispatch(setCustomer(guid, description, address, phone, email, inn));
+		  						const { guid, description, address, phone, email, inn, priceType } = customerData;
+		  						dispatch(setCustomer(guid, description, address, phone, email, inn, priceType));
 		  						dispatch(listenToOrdersHeaders());
 		  						dispatch(listenToOrdersItems());
                   dispatch(listenToPrices());

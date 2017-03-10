@@ -1,10 +1,11 @@
 const  initialState = {
-  guid: '', 
+  guid: '',
   description: '',
   address: '',
   phone: '',
   email: '',
-  inn: ''
+  inn: '',
+  priceType: ''
 };
 
 export default (state, action) => {

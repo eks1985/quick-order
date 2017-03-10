@@ -1,21 +1,21 @@
-export const setCustomer = (guid, description, address, phone, email, inn) => {
+export const setCustomer = (guid, description, address, phone, email, inn, priceType) => {
   return (dispatch, getState) => {
     dispatch({
       type: 'RECEIVE_CUSTOMER',
-      guid, 
+      guid,
       description,
       address,
       phone,
       email,
-      inn
+      inn,
+      priceType
     });
   };
 };
 
-export const receiveCustomers = (payload) => {
+export const receiveCustomers = payload => {
   return {
     type: 'RECEIVE_CUSTOMERS',
     payload
   };
 };
-

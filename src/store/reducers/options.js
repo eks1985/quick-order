@@ -5,7 +5,7 @@ const initialState = {
   positionIsActiveDefinition: '',
   showGoodsOnStockQty: false,
   showNoActivePosition: false,
-  managePrices: 'common', //common, byCustomers, dontUse
+  managePrices: 'common', //common, byPriceTypes, dontUse
   catalogListSettings: ['code', 'description', 'price', 'qty'], //production
   catalogListSettingsCheckout: ['code', 'description', 'price', 'qty', 'amount', 'delete'],
   catalogListColumns: {}, //production,

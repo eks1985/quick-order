@@ -10,6 +10,7 @@ import IconRemoveCart from 'material-ui/svg-icons/content/clear';
 
 const Cart = ({
   cart,
+  managePrices,
   //actions
   cleanCart,
   checkoutOrder,
@@ -20,9 +21,6 @@ const Cart = ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center'
-    // padding: '8px',
-    // paddingTop: '3px',
-    // paddingBottom: '18px',
   };
   const hasItems = cart.totalItems > 0;
 
@@ -38,7 +36,7 @@ const Cart = ({
             <IconShoppingCart style={{width: 42, height: 42}} />
           </div>
           {hasItems && <div style={{fontSize: '20px'}}>Корзина</div> }
-          {hasItems &&
+          {hasItems && managePrices !== 'dontUse' &&
             <div style={{display: 'flex', flexDirection: 'row', paddingLeft: '10px'}}>
               <div style={{fontSize: '20px', fontWeight: 'bold'}}>
                 {format1(totalAmount, 'руб.')}
@@ -74,6 +72,9 @@ const Cart = ({
 };
 
 export default connect(
-  state => ({cart: state.cart}),
+  state => {
+    const { cart, options: { managePrices} } = state;
+    return { cart, managePrices};
+  },
   { ...cartActions, ...checkoutActions, ...currentContentActions }
 )(Cart);

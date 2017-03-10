@@ -16,7 +16,7 @@ const Profile = ({
   return (
     <div className='profile' style={style}>
       <div style={propTytleStyle}>
-        Код клиента 
+        Код клиента
       </div>
       <div>
         <p>
@@ -37,6 +37,14 @@ const Profile = ({
       <div>
         <p>
           {customer.address}
+        </p>
+      </div>
+      <div style={propTytleStyle}>
+        Тип цен
+      </div>
+      <div>
+        <p>
+          {customer.priceType}
         </p>
       </div>
     </div>
