@@ -47,14 +47,7 @@ export const buildIndex = propName => {
 
 export const getIndexByColName = (state, columnName) => {
   try {
-    switch (columnName) {
-      case 'code':
-        return state.goods.codeOrderIndex;
-      case 'description':
-        return state.goods.descriptionOrderIndex;
-      default:
-        return columnName ? state['__index__' + columnName].indexSort : undefined;
-    }
+    return columnName ? state['__index__' + columnName].indexSort : undefined;
   } catch (e) {
     return undefined;
   }

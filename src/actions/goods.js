@@ -44,7 +44,7 @@ export const search = () => {
     let result = {};
     let resultKeys = [];
     // filter by search field
-    if (text) {
+    if (!text) {
       result = itemsInitial;
     } else {
       // filter codes and description fiels

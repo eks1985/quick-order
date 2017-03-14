@@ -1,73 +1,11 @@
 import { combineReducers } from 'redux';
 
+// ui
+
 const searchText = (state = '', action) => {
   switch (action.type) {
     case 'SET_SEARCH_TEXT':
       return action.payload;
-    default:
-      return state;
-  }
-};
-
-const codes = (state = {}, action) => {
-  switch (action.type) {
-    case 'RECEIVE_CODES':
-      return action.payload;
-    default:
-      return state;
-  }
-};
-
-const descriptions = (state = {}, action) => {
-  switch (action.type) {
-    case 'RECEIVE_DESCRIPTIONS':
-      return { ...state, ...action.payload };
-    default:
-      return state;
-  }
-};
-
-const codeOrderIndex  = (state = [], action) => {
-  switch (action.type) {
-    case 'RECEIVE_GOODS_ORDER_INDEX_CODES':
-      return action.payload;
-    default:
-      return state;
-  }
-};
-
-const codeOrderIndexReverse  = (state = [], action) => {
-  switch (action.type) {
-    case 'RECEIVE_GOODS_ORDER_INDEX_CODES_REVERSE':
-      return action.payload;
-    default:
-      return state;
-  }
-};
-
-const descriptionOrderIndex  = (state = [], action) => {
-  switch (action.type) {
-    case 'RECEIVE_GOODS_ORDER_INDEX_DESCRIPTIONS':
-      return action.payload;
-    default:
-      return state;
-  }
-};
-
-const descriptionOrderIndexReverse  = (state = [], action) => {
-  switch (action.type) {
-    case 'RECEIVE_GOODS_ORDER_INDEX_DESCRIPTIONS_REVERSE':
-      return action.payload;
-    default:
-      return state;
-  }
-};
-
-
-const itemsInitial = (state = {}, action) => {
-  switch (action.type) {
-    case 'RECEIVE_GOODS':
-      return { ...state, ...action.payload };
     default:
       return state;
   }
@@ -91,6 +29,17 @@ const currentGuidCheckout = (state = '', action) => {
   }
 };
 
+// data
+
+const itemsInitial = (state = {}, action) => {
+  switch (action.type) {
+    case 'RECEIVE_GOODS':
+      return { ...state, ...action.payload };
+    default:
+      return state;
+  }
+};
+
 const items = (state = {}, action) => { //production
   switch (action.type) {
     case 'RECEIVE_GOODS':
@@ -101,6 +50,8 @@ const items = (state = {}, action) => { //production
       return state;
   }
 };
+
+// pagination
 
 const pageNumber = (state = 1, action) => {
   switch (action.type) {
@@ -127,7 +78,6 @@ const pageNumberCheckout = (state = 1, action) => {
      return state;
   }
 };
-
 
 const qtyPages = (state = 0, action) => {
   switch (action.type) {
@@ -227,13 +177,7 @@ export default combineReducers({
   isLastPage,
   isLastPageCheckout,
   rowsPerPage,
-  codes,
-  descriptions,
   searchText,
-  codeOrderIndex,
-  codeOrderIndexReverse,
-  descriptionOrderIndex,
-  descriptionOrderIndexReverse,
   sortDirection,
   sortDirectionCheckout
 });
