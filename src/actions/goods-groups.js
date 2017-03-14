@@ -22,10 +22,17 @@ export const filterGoodsGroupsByText = (text) => {
   };
 };
 
-export const addFilter = guid => ({
-  type: 'ADD_GOODS_GROUPS_FILTER',
-  guid
-});
+export const addFilter = guid => {
+  return (dispatch, getState) => {
+    const filtersIds = getState().goodsGroups.filtersIds;
+    if (!filtersIds.includes(guid)) {
+      dispatch({
+        type: 'ADD_GOODS_GROUPS_FILTER',
+        guid
+      })
+    }
+  }
+};
 
 export const removeFilter = guid => ({
   type: 'REMOVE_GOODS_GROUPS_FILTER',

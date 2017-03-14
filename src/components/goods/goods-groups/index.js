@@ -7,7 +7,6 @@ import Paper from 'material-ui/Paper';
 import { List, ListItem } from 'material-ui/List';
 import TextField from 'material-ui/TextField';
 import Chip from 'material-ui/Chip';
-// import throttle from 'lodash/throttle';
 import './style.css';
 
 import IconButton from 'material-ui/IconButton';
@@ -30,7 +29,6 @@ const GoodsGroups =  ({
   const style = {
     flex: '1 0 auto',
     padding: '10px',
-    // height: '60vh',
     height: '30vh',
     overflowY: 'scroll',
     paddingTop: '3px'
@@ -59,7 +57,7 @@ const GoodsGroups =  ({
             key={key}
             primaryText={qtySelected + items[key]}
             onClick={
-              (e) => {
+              e => {
                 addFilter(key);
                 search();
               }
