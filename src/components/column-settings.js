@@ -201,17 +201,10 @@ class ColumnSettingsContainer extends Component {
   constructor (props) {
     super(props);
     this.calculate(props);
-    // const filterItems = props.filterApplied === undefined ? [ ...props.indexSort ] : props.filterApplied;
-    // const filterStatus = props.indexSort.length === filterItems.length ? 'checked' : 'unchecked';
-    // this.state = { filterStatus, filterItems, sortDirection: this.props.sortDirection, filterText: '' };
   }
 
   componentWillReceiveProps (nextProps) {
     this.calculate(nextProps);
-    // const props = nextProps;
-    // const filterItems = props.filterApplied === undefined ? [ ...props.indexSort ] : props.filterApplied;
-    // const filterStatus = props.indexSort.length === filterItems.length ? 'checked' : 'unchecked';
-    // this.setState({ filterStatus, filterItems, sortDirection: nextProps.sortDirection, filterText: '' });
   }
 
   setFilterText = filterText => {
