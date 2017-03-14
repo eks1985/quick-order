@@ -1,5 +1,4 @@
 import { cleanCart } from './cart';
-// import { v4 } from 'node-uuid';
 import { detectIsLastPage, goToOrdersPage } from './orders';
 import { setCurrentContent } from './current-content';
 import { database } from './../firebase/firebase-app';

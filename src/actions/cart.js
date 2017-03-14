@@ -138,7 +138,7 @@ export const removeFromCart = (guid) => {
     dispatch({
       type: 'RESET_FOCUSED_CHECKOUT'
     });
-    // check if cart empty - if yea go to catalogQty
+    // check if cart empty - if yes go to catalogQty
     const cartIsEmpty = Object.keys(getState().cart.items).length === 0;
     cartIsEmpty && dispatch({
       type: 'SET_CURRENT_CONTENT',

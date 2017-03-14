@@ -19,7 +19,7 @@ const generateIndexex = (propName, items, keys) => {
   return { index, indexSort: indexSort.sort() };
 };
 
-export const buildIndex = (propName) => {
+export const buildIndex = propName => {
   return (dispatch, getState) => {
     const items = getState().goods.itemsInitial;
     const keys = Object.keys(items);

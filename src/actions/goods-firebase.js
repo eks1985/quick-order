@@ -1,5 +1,5 @@
 import { database } from '../firebase/firebase-app';
-import { setQtyPagesGoods, generateCodes, generateDescriptions, generateOrderIndexCodes, generateOrderIndexDescriptions } from './goods';
+import { setQtyPagesGoods } from './goods';
 
 import { injectReducer } from './../store/';
 import createIndex from './../store/create-index';
@@ -18,20 +18,20 @@ export const listenToGoods = () => {
 					payload: snapshot.val()
 				});
 				dispatch(setQtyPagesGoods());
-	    	dispatch(generateCodes());
-	    	dispatch(generateDescriptions());
-        dispatch(generateOrderIndexCodes());
-        dispatch(generateOrderIndexDescriptions());
 				dispatch(detectIsLastPage());
-
-        // inject index reducers
+        //> inject index reducers
+        // by code and description
+        injectReducer(store, 'code', createIndex('code'));
+        dispatch(buildIndex('code'));
+        injectReducer(store, 'description', createIndex('description'));
+        dispatch(buildIndex('description'));
+        //by all addition props
         const catalogListColumnsKeys = Object.keys(getState().options.catalogListColumns);
 				catalogListColumnsKeys.forEach(key => {
 					injectReducer(store, key, createIndex(key));
         	dispatch(buildIndex(key));
 				});
-
-
+        //< inject index reducers
 			}, (error) => {
 				dispatch({
 					type: 'RECEIVE_GOODS_ERROR',
