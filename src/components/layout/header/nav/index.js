@@ -147,6 +147,6 @@ const Nav = ({
 };
 
 export default connect(
-  state => ({ currentContent: state.currentContent, auth:  state.auth, cartTotalItems: state.cart.totalItems }),
+  state => ({ currentContent: state.ui.currentContent, auth:  state.auth, cartTotalItems: state.cart.totalItems }),
   { ...currentContentActions, ...modalActions }
 )(Nav);

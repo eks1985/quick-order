@@ -71,7 +71,7 @@ App = connect(
     current: state.current,
     currentCheckout: state.currentCheckout,
     rowsPerPage: state.goods.rowsPerPage,
-    currentContent: state.currentContent,
+    currentContent: state.ui.currentContent,
     modal: state.modal,
     prices: state.prices
   })

@@ -5,7 +5,6 @@ import goods from './reducers/goods';
 import customer from './reducers/customer';
 import goodsGroups from './reducers/goods-groups';
 import orders from './reducers/orders';
-import currentContent from './reducers/current-content';
 import cart from './reducers/cart';
 import checkout from './reducers/checkout';
 import prices from './reducers/prices';
@@ -25,26 +24,26 @@ import modal from './../lib/modal/reducers/modal';
 export default function createReducer(indexes) {
   return combineReducers({
   	auth,
+    users,
+    customers,
+    customer,
   	options,
-  	goods,
-  	customer,
+    goods,
   	goodsGroups,
+    prices,
   	orders,
+    cart,
+    catalogQty,
+    checkout,
+    quickList,
   	modal,
-  	currentContent,
-  	cart,
-  	checkout,
-  	prices,
-  	quickList,
-  	catalogQty,
-  	users,
-  	customers,
+    //ui
+    goodsGroupsSelected,
     filtersApplied,
     filtersAppliedCheckout,
     current,
     currentCheckout,
     ui,
-    goodsGroupsSelected,
     ...indexes
   });
 }

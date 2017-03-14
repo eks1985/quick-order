@@ -28,5 +28,5 @@ const Content = ({
 };
 
 export default connect(
-  state => ({currentContent: state.currentContent})
+  state => ({currentContent: state.ui.currentContent})
 )(Content);

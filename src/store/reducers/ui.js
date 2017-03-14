@@ -54,11 +54,21 @@ const sortDirectionCheckout = (state = {'code': '', 'description': '', brand: ''
   }
 };
 
+const currentContent = (state = 'goods', action) => {
+  switch (action.type) {
+    case 'SET_CURRENT_CONTENT':
+      return action.contentName;
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   bodyHeight,
   pictureHeight,
   rowHeight,
   categoryLineSeparator,
   sortDirection,
-  sortDirectionCheckout
+  sortDirectionCheckout,
+  currentContent
 });
