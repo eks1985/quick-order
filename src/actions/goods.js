@@ -106,7 +106,7 @@ const buildListByOrderIndex = (orderIndex, items, index, columnKey) => {
 export const sortGoods = (columnKey, sortDirection = '') => {
   return (dispatch, getState) => {
     const state = getState();
-    const directionAll = state.sortDirection;
+    const directionAll = state.ui.sortDirection;
     const directionColumn = directionAll[columnKey];
     const directionColumnNew = sortDirection || (directionColumn  === 'forward' ? 'reverse': 'forward');
     const items = state.goods.items;
@@ -135,7 +135,7 @@ const buildListByOrderIndexCheckout = (orderIndex, items, index, columnKey, good
 
 export const sortGoodsCheckout = (columnKey, sortDirection = '') => {
   return (dispatch, getState) => {
-    const directionAll = getState().sortDirectionCheckout;
+    const directionAll = getState().ui.sortDirectionCheckout;
     const directionColumn = directionAll[columnKey];
     const directionColumnNew = sortDirection || (directionColumn  === 'forward' ? 'reverse': 'forward');
     const items = getState().cart.itemsFiltered;
