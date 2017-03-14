@@ -14,7 +14,6 @@ import catalogQty from './reducers/catalog-qty';
 import options from './reducers/options';
 import users from './reducers/users';
 import customers from './reducers/customers';
-import firebaseConfig from './reducers/firebase-config';
 import sortDirection from './reducers/sort-direction';
 import sortDirectionCheckout from './reducers/sort-direction-checkout';
 import filtersApplied from './reducers/filters-applied';
@@ -27,7 +26,6 @@ import modal from './../lib/modal/reducers/modal';
 
 export default function createReducer(indexes) {
   return combineReducers({
-    firebaseConfig,
   	auth,
   	options,
   	goods,
