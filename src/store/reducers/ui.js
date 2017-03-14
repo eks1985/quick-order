@@ -1,30 +1,64 @@
-// import { combineReducers } from 'redux';
+import { combineReducers } from 'redux';
 
-export default (
-  state = {
-    bodyHeight: 0,
-    pictureHeight: 0,
-    rowHeight: 40,
-    categoryLineSeparator: false,
-  },
-  action) => {
+const bodyHeight = (state = 0, action) => {
   switch (action.type) {
-    case 'SET_UI_ELEMENTS_SIZE':
-      return { ...state, ...action.payload};
+    case 'SET_UI_BODY_HEIGHT':
+      return action.p;
     default:
       return state;
   }
 };
 
-// const bodyHeight = (state = 0, action) => {
-//   switch (action.type) {
-//     case 'SET_UI_BODY_HEIGHT':
-//       return { ...state, ...action.payload};
-//     default:
-//       return state;
-//   }
-// };
-//
-// export default combineReducers({
-//   bodyHeight
-// });
+const pictureHeight = (state = 0, action) => {
+  switch (action.type) {
+    case 'SET_UI_PICTURE_HEIGHT':
+      return action.p;
+    default:
+      return state;
+  }
+};
+
+const rowHeight = (state = 40, action) => {
+  switch (action.type) {
+    case 'SET_UI_ROW_HEIGHT':
+      return action.p;
+    default:
+      return state;
+  }
+};
+
+const categoryLineSeparator = (state = false, action) => {
+  switch (action.type) {
+    case 'SET_UI_CATEGORY_LINE_SEPARATOR':
+      return action.p;
+    default:
+      return state;
+  }
+};
+
+const sortDirection = (state = {'code': '', 'description': '', brand: ''}, action) => {
+  switch (action.type) {
+    case 'RECEIVE_SORT_DIRECTION':
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+const sortDirectionCheckout = (state = {'code': '', 'description': '', brand: ''}, action) => {
+  switch (action.type) {
+    case 'RECEIVE_SORT_DIRECTION_CHECKOUT':
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+export default combineReducers({
+  bodyHeight,
+  pictureHeight,
+  rowHeight,
+  categoryLineSeparator,
+  sortDirection,
+  sortDirectionCheckout
+});

@@ -6,7 +6,6 @@ export const setRowsPerPage = () => {
     const showPictureSide = state.options.showPictures.side;
     const { bodyHeight, pictureHeight, rowHeight } = state.ui;
     let rowsSpace;
-    // console.log('showPictureSide', showPictureSide);
     if (showPictureSide) {
       rowsSpace = bodyHeight - pictureHeight - 270;
     } else {
@@ -24,8 +23,12 @@ export const setRowsPerPage = () => {
 export const setUi = bodyHeight => {
   return (dispatch, getState) => {
     dispatch({
-      type: 'SET_UI_ELEMENTS_SIZE',
-      payload: { bodyHeight: bodyHeight, pictureHeight: parseInt(bodyHeight/4, 10)  }
+      type: 'SET_UI_BODY_HEIGHT',
+      p: bodyHeight
+    });
+    dispatch({
+      type: 'SET_UI_PICTURE_HEIGHT',
+      p: parseInt(bodyHeight/4, 10)
     });
     dispatch(setRowsPerPage());
   };

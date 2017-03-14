@@ -36,6 +36,6 @@ const Goods = props => {
 };
 
 export default connect(
-  state => ({ options: state.options, ui: state.ui }),
+  state => ({ options: state.options }),
   dispatch => ({ ...modalActions, dispatch })
 )(Goods);
