@@ -95,7 +95,7 @@ export default connect(
     catalogListSettings: state.options.catalogListSettings,
     catalogListColumns: state.options.catalogListColumns,
     columnsKeys: getColumns(state.options),
-    sortDirection: state.sortDirection,
+    sortDirection: state.ui.sortDirection,
     current: state.current,
     options: state.options,
     filtersApplied: state.filtersApplied

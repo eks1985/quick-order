@@ -100,7 +100,7 @@ export default connect(
       catalogQty: state.catalogQty,
       // columnsKeys: state.options.catalogListSettingsCheckout,
       columnsKeys: getColumnsCheckout(state.options),
-      sortDirection: state.sortDirectionCheckout,
+      sortDirection: state.ui.sortDirectionCheckout,
       currentCheckout: state.currentCheckout,
       catalogListColumns: state.options.catalogListColumnsCheckout
     }

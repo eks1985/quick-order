@@ -267,7 +267,7 @@ const mapStateToProps = state => {
   return {
     columnKey,
     modal,
-    sortDirection: state.sortDirection[columnKey],
+    sortDirection: state.ui.sortDirection[columnKey],
     filterApplied: state.filtersApplied[columnKey],
     indexSort: getIndexByColName(state, columnKey),
   };

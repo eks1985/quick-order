@@ -362,10 +362,6 @@ const CatalogColumn = ({
     }
   };
 
-  // if (!usePrices && columnKey === 'price') {
-  //   return null;
-  // }
-
   return (
     <div style={prepareStyle()}>
       <div style={sortable ? { ...headerStyle.container, cursor: 'pointer' } : headerStyle.container }
