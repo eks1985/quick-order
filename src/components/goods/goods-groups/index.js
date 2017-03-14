@@ -46,13 +46,17 @@ const GoodsGroups =  ({
   }
   categoryItemStyle = categoryLineSeparator ? { ...categoryItemStyle, borderBottom: '1px solid #eee' } : categoryItemStyle;
 
+  const innerListItemStyle = {
+    padding: '5px 10px 5px 10px'
+  };
+
   const getItemsStyledJsx = () => {
     const keys = Object.keys(items);
     return keys.map( key => {
         const qtySelected = goodsGroupsSelected[key] ? '( ' + goodsGroupsSelected[key] + ' ) ' : '';
         return (
           <ListItem
-            innerDivStyle={{padding: '5px 10px 5px 10px'}}
+            innerDivStyle={innerListItemStyle}
             style={categoryItemStyle}
             key={key}
             primaryText={qtySelected + items[key]}
@@ -67,7 +71,23 @@ const GoodsGroups =  ({
     });
   };
 
-  const getFilterJsx = (filterKey, filterDescr) => {
+  const filterStyle = {
+    margin: 2,
+    height: '24px',
+    justifyContent: 'space-between',
+    maxWidth: '100%',
+    whiteSpace: 'initial'
+  };
+
+  const filterLabelStyle = {
+    fontSize: '12px',
+    lineHeight: '24px',
+    maxWidth: '90%',
+    overflow: 'hidden',
+    whiteSpace: 'initial'
+  };
+
+  const getFilterItemJsx = (filterKey, filterDescr) => {
     return (
       <Chip
         className='goodsGroupChip'
@@ -78,8 +98,8 @@ const GoodsGroups =  ({
             search();
           }
         }
-        style={{margin: 2, height: '24px', justifyContent: 'space-between', maxWidth: '100%', whiteSpace: 'initial'}}
-        labelStyle={{fontSize: '12px', lineHeight: '24px', maxWidth: '90%', overflow: 'hidden',  whiteSpace: 'initial'}}
+        style={filterStyle}
+        labelStyle={filterLabelStyle}
       >
         {filterDescr}
       </Chip>
@@ -87,7 +107,7 @@ const GoodsGroups =  ({
   };
 
   const getFiltersJsx = () => {
-    return Object.keys(filters).map(filterKey => getFilterJsx(filterKey, filters[filterKey]));
+    return Object.keys(filters).map(filterKey => getFilterItemJsx(filterKey, filters[filterKey]));
   };
 
   return (
@@ -99,7 +119,6 @@ const GoodsGroups =  ({
               placeholder='фильтр категорий'
               className='search'
               id='searchGoodsGroups'
-              // autoFocus
               type="text"
               ref={
                 node => {

@@ -192,18 +192,26 @@ const ColumnSettings =  ({
 
 class ColumnSettingsContainer extends Component {
 
-  constructor (props) {
-    super(props);
+  calculate = props => {
     const filterItems = props.filterApplied === undefined ? [ ...props.indexSort ] : props.filterApplied;
     const filterStatus = props.indexSort.length === filterItems.length ? 'checked' : 'unchecked';
     this.state = { filterStatus, filterItems, sortDirection: this.props.sortDirection, filterText: '' };
   }
 
+  constructor (props) {
+    super(props);
+    this.calculate(props);
+    // const filterItems = props.filterApplied === undefined ? [ ...props.indexSort ] : props.filterApplied;
+    // const filterStatus = props.indexSort.length === filterItems.length ? 'checked' : 'unchecked';
+    // this.state = { filterStatus, filterItems, sortDirection: this.props.sortDirection, filterText: '' };
+  }
+
   componentWillReceiveProps (nextProps) {
-    const props = nextProps;
-    const filterItems = props.filterApplied === undefined ? [ ...props.indexSort ] : props.filterApplied;
-    const filterStatus = props.indexSort.length === filterItems.length ? 'checked' : 'unchecked';
-    this.setState({ filterStatus, filterItems, sortDirection: nextProps.sortDirection, filterText: '' });
+    this.calculate(nextProps);
+    // const props = nextProps;
+    // const filterItems = props.filterApplied === undefined ? [ ...props.indexSort ] : props.filterApplied;
+    // const filterStatus = props.indexSort.length === filterItems.length ? 'checked' : 'unchecked';
+    // this.setState({ filterStatus, filterItems, sortDirection: nextProps.sortDirection, filterText: '' });
   }
 
   setFilterText = filterText => {
