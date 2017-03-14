@@ -1,7 +1,7 @@
 /* global localStorage */
 import { database, databaseCreateUsers } from '../firebase/firebase-app';
 import { auth, authCreateUsers } from '../firebase/firebase-app';
-import { listenToGoodsGroups } from './goods-groups-firebase';
+import { listenToGoodsGroups } from './api/goods-groups-firebase';
 import { listenToGoods } from './goods-firebase';
 import { listenToPrices } from './prices-firebase';
 import { listenToOptions } from './options-firebase';

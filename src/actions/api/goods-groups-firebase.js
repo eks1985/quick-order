@@ -1,7 +1,7 @@
-import { database } from '../firebase/firebase-app';
+import { database } from '../../firebase/firebase-app';
 
 export const listenToGoodsGroups = () => {
-	return (dispatch) => {
+	return dispatch => {
 		try {
 			const goodsGroupsRef = database.ref('goods-groups');
 			goodsGroupsRef.off();
