@@ -124,30 +124,6 @@ const rowsPerPage = (state = 10, action) => {
   }
 }
 
-// sort
-
-const sortDirection = (state = '', action) => {
-  switch (action.type) {
-    case 'SET_SORT_DIRECTION_FORWARD':
-      return 'forward';
-    case 'SET_SORT_DIRECTION_REVERSE':;
-      return 'reverse';
-    default:
-      return state;
-  }
-};
-
-const sortDirectionCheckout = (state = '', action) => {
-  switch (action.type) {
-    case 'SET_SORT_DIRECTION_FORWARD':
-      return 'forward';
-    case 'SET_SORT_DIRECTION_REVERSE':;
-      return 'reverse';
-    default:
-      return state;
-  }
-};
-
 // Selectors
 
 export const getGoodsVisibleIds = (state) => { //state = goods.state
@@ -177,7 +153,5 @@ export default combineReducers({
   isLastPage,
   isLastPageCheckout,
   rowsPerPage,
-  searchText,
-  sortDirection,
-  sortDirectionCheckout
+  searchText
 });
