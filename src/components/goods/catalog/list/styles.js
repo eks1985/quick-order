@@ -50,6 +50,14 @@ export default {
       alignItems: 'center',
       padding: '5px'
     },
+    stock: {
+      display: 'flex',
+      height: '40px',
+      alignItems: 'center',
+      padding: '5px',
+      justifyContent: 'center',
+      textAlign: 'center'
+    },
     description: {
       display: 'flex',
       height: '40px',

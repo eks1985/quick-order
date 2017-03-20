@@ -33,7 +33,7 @@ export default (state, action) => {
 // Selectors
 
 export const getColumns = state => {
-  const { catalogListColumns, catalogListSettings, managePrices } = state;
+  const { catalogListColumns, catalogListSettings, managePrices, showGoodsOnStockQty } = state;
   const columnsKeys = Object.keys(catalogListColumns);
   let columns = catalogListSettings.reduce((res, key) => {
     if (!columnsKeys.includes(key)) {
@@ -47,6 +47,7 @@ export const getColumns = state => {
     }
   }, []);
   columns.includes('price') && managePrices === 'dontUse' && columns.splice(columns.indexOf('price'), 1) ;
+  showGoodsOnStockQty && columns.push('stock');
   return columns;
 };
 

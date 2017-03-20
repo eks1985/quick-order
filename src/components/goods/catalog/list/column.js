@@ -44,11 +44,9 @@ const CatalogColumn = ({
   setFocused
 }) => {
 
-  const lastColumn = catalogListSettings.indexOf(columnKey) === columnsQty - 1;
+  const lastColumn = i === columnsQty - 1;
 
   const sortable = sortDirection[columnKey] !== undefined;
-
-  // const customColumn = ['code', 'description', 'price', 'qty'].indexOf(columnKey) > - 1;
 
   const { arrowStyle, arrowSortStyle, incDecSmallQtyPane, qtyInputStyle, zebraStyle, headerStyle, rowStyle, vertBorderLeft, vertBorderRight } = styles;
 
@@ -58,6 +56,7 @@ const CatalogColumn = ({
     price: 'Цена',
     qty: 'Количество',
     brand: 'Бренд',
+    stock: 'Остаток',
     add: '',
   };
 
@@ -151,6 +150,18 @@ const CatalogColumn = ({
       </div>
     );
   };
+  const getStockJsx = (key, rowIndex) => {
+    let style = applyCurrentRowBorder(applyZebra(rowStyle.stock, rowIndex), rowIndex);
+    return (
+      <div
+        style={style}
+        className='row-cell'
+        key={`${key}${columnKey}`}
+      >
+        {items[key].stock}
+      </div>
+    );
+  };
   const getQtyJsx = (key, rowIndex) => {
     let style = applyCurrentRowBorder(applyZebra(rowStyle.qty, rowIndex), rowIndex);
     return (
@@ -230,6 +241,8 @@ const CatalogColumn = ({
         return getPriceJsx(key, rowIndex);
       case 'qty':
         return getQtyJsx(key, rowIndex);
+      case 'stock':
+        return getStockJsx(key, rowIndex);
       default:
         return <div></div>;
     }
@@ -379,7 +392,7 @@ export default connect(
     let hasFilter = false;
     const { filtersApplied } = state;
     const { columnKey } = ownProps;
-    const customColumn = ['code', 'description', 'price', 'qty'].indexOf(columnKey) > - 1;
+    const customColumn = ['code', 'description', 'price', 'qty', 'stock'].indexOf(columnKey) > - 1;
     if (customColumn) {
       hasFilter = false;
     } else {
