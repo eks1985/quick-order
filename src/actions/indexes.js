@@ -13,7 +13,11 @@ const generateIndexex = (propName, items, keys) => {
   }, ['']);
   const index =  indexSort.reduce((res, val) => {
     const guids = generateGuids(propName, items, keys, val);
-    res[val.toLowerCase()] = guids;
+    try {
+      res[val.toLowerCase()] = guids;
+    } catch (e) {
+      console.log('val', val);  
+    }
     return res;
   }, {});
   return { index, indexSort: indexSort.sort() };

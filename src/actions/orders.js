@@ -4,6 +4,7 @@ import { addCatalogQty } from './catalog-qty';
 import { dayEnd, dayStart, dayBefore, monthEnd, monthStart, monthBefore } from './../utils/date-time';
 import { setQtyPagesOrders, detectIsLastPage } from './orders-navigation'
 export { setQtyPagesOrders, detectIsLastPage, moveOrdersForward, moveOrdersBack, goToOrdersPage } from './orders-navigation';
+import { setOrderStatus } from './orders-firebase';
 // export
 
 export const deleteOrder = id => {
@@ -21,6 +22,7 @@ export const restoreOrder = id => {
     const items = state.orders.items[id];
     const prices = state.prices;
     const itemsKeys = Object.keys(items);
+    const customerGuid = state.customer.guid;
     itemsKeys.forEach(key => {
       dispatch(addToCart(key, items[key].qty, prices[key]));
       dispatch(addCatalogQty(key, items[key].qty));
@@ -41,6 +43,16 @@ export const restoreOrder = id => {
       type: 'SET_REF_CHECKOUT',
       ref: state.orders.headers[id].ref
     })
+    dispatch(setOrderStatus(id, 'blocked', customerGuid));
+  }
+}
+
+export const setOrderCurrentId = p => {
+  return dispatch => {
+    dispatch({
+      type: 'SET_ORDER_CURRENT_ID',
+      p
+    });
   }
 }
 

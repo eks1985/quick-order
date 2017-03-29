@@ -1,4 +1,4 @@
-import React       from 'react';
+import React, { Component }       from 'react';
 import { connect } from 'react-redux';
 
 import Paper              from 'material-ui/Paper';
@@ -27,7 +27,8 @@ const GoodsGroups =  ({
   addFilterGoodsGroupsCart,
   removeFilterGoodsGroupsCart,
   resetFiltersGoodsGroupsCart,
-  setTextFilterGoodsGroups
+  setTextFilterGoodsGroups,
+  handleClick
 }) => {
 
   let searchRef;
@@ -64,17 +65,18 @@ const GoodsGroups =  ({
           primaryText={qtySelected + items[key]}
           onClick={
             () => {
-              addFilterGoodsGroupsCart(key);
-              filterCartItems();
+              handleClick(key);
+              // addFilterGoodsGroupsCart(key);
+              // filterCartItems();
             }
           }
-          onDoubleClick={
-            () => {
-              resetFiltersGoodsGroupsCart();
-              addFilterGoodsGroupsCart(key);
-              filterCartItems();
-            }
-          }
+          // onDoubleClick={
+          //   () => {
+          //     resetFiltersGoodsGroupsCart();
+          //     addFilterGoodsGroupsCart(key);
+          //     filterCartItems();
+          //   }
+          // }
         />
       );
   });
@@ -159,6 +161,38 @@ const GoodsGroups =  ({
   );
 };
 
+class GoodsGroupsContainer extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = { clickTime: 0 };
+  }
+
+  handleClick = key => {
+    const newClickTime = new Date();
+    if (newClickTime - this.state.clickTime > 500) {
+      setTimeout( () => {
+        const dateNew = new Date();
+        const dateOld = this.state.clickTime;
+        console.log(dateNew - dateOld);
+        const clickType = dateNew - dateOld > 499 ? 'single' : 'double';
+        console.log(clickType);
+
+        this.props.addFilterGoodsGroupsCart(key);
+        this.props.filterCartItems();
+
+        this.setState({ clickTime: dateNew });
+      }, 500);
+    }
+    this.setState({ clickTime: newClickTime });
+  }
+
+  render() {
+    return <GoodsGroups {...this.props} handleClick={this.handleClick} />
+  }
+
+}
+
 export default connect(
   state => {
     const items = getGoodsGroupsByIds(state.goodsGroups.itemsInitial, getVisibleGoodsGroups(state));
@@ -168,4 +202,4 @@ export default connect(
     return { items, filters, categoryLineSeparator, goodsGroupsSelected };
   },
   { filterCartItems, addFilterGoodsGroupsCart, removeFilterGoodsGroupsCart, resetFiltersGoodsGroupsCart, setTextFilterGoodsGroups }
-)(GoodsGroups);
+)(GoodsGroupsContainer);

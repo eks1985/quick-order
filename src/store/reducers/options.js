@@ -40,14 +40,18 @@ export const getColumns = state => {
       return res.concat(key);
     } else {
       if  (catalogListColumns[key][0] === true) {
-        return res.concat(key);
+        return res.includes(key) ? res : res.concat(key);
       } else {
         return res;
       }
     }
   }, []);
   columns.includes('price') && managePrices === 'dontUse' && columns.splice(columns.indexOf('price'), 1) ;
-  showGoodsOnStockQty && columns.push('stock');
+  // showGoodsOnStockQty && !columns.includes('stock') && columns.concat('stock');
+  // console.log('columns', columns);
+  if (showGoodsOnStockQty && columns.indexOf('stock') === -1) {
+    columns.concat('stock');
+  }
   return columns;
 };
 
@@ -68,6 +72,6 @@ export const getColumnsCheckout = state => {
   columns = columnsKeys.reduce((res, key) => {
     return catalogListColumnsCheckout[key][0] === true && !columns.includes(key) ? columns.concat(key) : res;
   }, columns);
-  columns.includes('price') && managePrices === 'dontUse' && columns.splice(columns.indexOf('price'), 1) ;
+  columns.includes('price') && managePrices === 'dontUse' && columns.splice(columns.indexOf('price'), 1) && columns.splice(columns.indexOf('amount'), 1) ;
   return columns;
 };

@@ -27,5 +27,59 @@
       To begin the development, run `npm start`.
       To create a production bundle, use `npm run build`.
     -->
+
+    <!-- Handle printing -->
+    <script type="text/javascript">
+      (function () {
+        var beforePrint = function () {
+            // alert('Functionality to run before printing.');
+        };
+        var afterPrint = function () {
+            // alert('Functionality to run after printing');
+            document.getElementById('printOrder').style.display = 'initial';
+        };
+        if (window.matchMedia) {
+            var mediaQueryList = window.matchMedia('print');
+            mediaQueryList.addListener(function (mql) {
+              //alert($(mediaQueryList).html());
+              if (mql.matches) {
+                  beforePrint();
+              } else {
+                  afterPrint();
+              }
+            });
+        }
+        window.onbeforeprint = beforePrint;
+        window.onafterprint  = afterPrint;
+      }());
+    </script>
+
+    <style media="print">
+      @media print {
+        body: {
+          padding: 0px;
+          background: "#ddd" !important;
+        }
+        div: {
+          color: 'red';
+        }
+        #printOrder: {
+          display: none !important
+        }
+      }
+
+      /*@page {
+        size: A4;
+        margin-left: 0px;
+        margin-right: 0px;
+        margin-top: 0px;
+        margin-bottom: 0px;
+        margin:0 0 0 0;
+        width: 100%;
+        height: 100%;
+      }*/
+
+    </style>
+
   </body>
 </html>

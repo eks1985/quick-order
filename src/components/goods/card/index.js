@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { pictData } from './../../../utils/init-pict';
-import {List, ListItem} from 'material-ui/List';
+import { List, ListItem } from 'material-ui/List';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import { setModal } from './../../../lib/modal/actions/modal';

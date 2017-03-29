@@ -25,7 +25,6 @@ const Orders = props => {
 class OrdersContainer extends Component {
 
   componentDidMount() {
-    console.log('OrdersContainer did mount');
     this.props.setOrdersListHeight();
   }
 

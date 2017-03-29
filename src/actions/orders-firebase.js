@@ -17,6 +17,19 @@ const receiveHeaders = (dispatch, data) => {
   });
 };
 
+export const setOrderStatus = (id, status, customerGuid) => {
+  console.log('id', id);
+  console.log('status', status);
+  console.log('customerGuid', customerGuid);
+  return dispatch => {
+    dispatch({
+      type: 'BLOCK_ORDER_REMOTE'
+    });
+    const firebaseRef = database.ref('orders/headers/' + customerGuid + '/' + id);
+    firebaseRef.update({ status });
+  }
+}
+
 export const listenToOrdersHeaders = () => {
 	return (dispatch, getState) => {
 	  try {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as goodsGroupsActions from './../../../actions/goods-groups';
 import * as goodsActions from './../../../actions/goods';
@@ -16,14 +16,15 @@ const GoodsGroups =  ({
   items,
   filters,
   goodsGroupsSelected,
+  current,
+  categoryLineSeparator,
   // actions
   search,
   filterGoodsGroupsByText,
   addFilter,
   removeFilter,
   resetFilters,
-  current,
-  categoryLineSeparator
+  handleClick
 }) => {
   let searchRef;
   const style = {
@@ -62,8 +63,9 @@ const GoodsGroups =  ({
             primaryText={qtySelected + items[key]}
             onClick={
               e => {
-                addFilter(key);
-                search();
+                handleClick(key);
+                // addFilter(key);
+                // search();
               }
             }
           />
@@ -165,6 +167,50 @@ const GoodsGroups =  ({
   );
 };
 
+// export default connect(
+//   state => {
+//     const items = state.goodsGroups.items;
+//     const filters = getGoodsGroupsByIds(state.goodsGroups.itemsInitial, state.goodsGroups.filtersIds);
+//     const current = state.current;
+//     const categoryLineSeparator = state.options.categoryLineSeparator;
+//     const goodsGroupsSelected = state.goodsGroupsSelected;
+//     return { items, filters, current, categoryLineSeparator, goodsGroupsSelected };
+//   },
+//   { ...goodsGroupsActions, ...goodsActions }
+// )(GoodsGroups);
+
+class GoodsGroupsContainer extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = { clickTime: 0 };
+  }
+
+  handleClick = key => {
+    const newClickTime = new Date();
+    if (newClickTime - this.state.clickTime > 500) {
+      setTimeout( () => {
+        const dateNew = new Date();
+        const dateOld = this.state.clickTime;
+        console.log(dateNew - dateOld);
+        const clickType = dateNew - dateOld > 499 ? 'single' : 'double';
+        console.log(clickType);
+
+        this.props.addFilter(key);
+        this.props.search();
+
+        this.setState({ clickTime: dateNew });
+      }, 500);
+    }
+    this.setState({ clickTime: newClickTime });
+  }
+
+  render() {
+    return <GoodsGroups {...this.props} handleClick={this.handleClick} />
+  }
+
+}
+
 export default connect(
   state => {
     const items = state.goodsGroups.items;
@@ -175,4 +221,4 @@ export default connect(
     return { items, filters, current, categoryLineSeparator, goodsGroupsSelected };
   },
   { ...goodsGroupsActions, ...goodsActions }
-)(GoodsGroups);
+)(GoodsGroupsContainer);

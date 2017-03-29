@@ -63,6 +63,15 @@ const currentContent = (state = 'goods', action) => {
   }
 };
 
+const orderCurrentId = (state = '', action) => {
+  switch (action.type) {
+    case 'SET_ORDER_CURRENT_ID':
+      return action.p;
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   bodyHeight,
   pictureHeight,
@@ -70,5 +79,6 @@ export default combineReducers({
   categoryLineSeparator,
   sortDirection,
   sortDirectionCheckout,
-  currentContent
+  currentContent,
+  orderCurrentId
 });

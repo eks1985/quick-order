@@ -8,7 +8,9 @@ import IconRestore from 'material-ui/svg-icons/content/reply';
 import IconDelete from 'material-ui/svg-icons/content/clear';
 import IconDown from 'material-ui/svg-icons/hardware/keyboard-arrow-down';
 import IconUp from 'material-ui/svg-icons/hardware/keyboard-arrow-up';
+import IconPrint from 'material-ui/svg-icons/action/print';
 import { setModal } from './../../lib/modal/actions/modal';
+import { setOrderCurrentId } from './../../actions/orders';
 
 const OrdersList = ({
   orders,
@@ -17,12 +19,14 @@ const OrdersList = ({
   cartIsEmpty,
   ordersState,
   ordersRowsSeparator,
+  managePrices,
   // listCollapsedAll,
   // actions
   deleteOrder,
   restoreOrder,
   toggleOrder,
-  setModal
+  setModal,
+  setOrderCurrentId
 }) => {
   const style = {
     display: 'flex',
@@ -44,6 +48,8 @@ const OrdersList = ({
         return 'Новый';
       case 'draft':
         return 'Черновик';
+      case 'blocked':
+        return 'Заблокирован';
       default:
         return '';
     }
@@ -55,9 +61,13 @@ const OrdersList = ({
         <div style={{flex: '0 0 10%'}}>Код</div>
         <div style={{flex: '0 0 60%'}}>Наименование</div>
         <div style={{flex: '0 0 10%', display: 'flex', justifyContent: 'flex-end'}}>Количество</div>
-        <div style={{flex: '0 0 10%', display: 'flex', justifyContent: 'flex-end'}}>Цена</div>
-        <div style={{flex: '0 0 10%', display: 'flex', justifyContent: 'flex-end'}}>Сумма</div>
-      </div>
+        { managePrices !== 'dontUse' &&
+          <div style={{flex: '0 0 10%', display: 'flex', justifyContent: 'flex-end'}}>Цена</div>
+        }
+        { managePrices !== 'dontUse' &&
+          <div style={{flex: '0 0 10%', display: 'flex', justifyContent: 'flex-end'}}>Сумма</div>
+        }
+        </div>
     );
   };
 
@@ -77,12 +87,16 @@ const OrdersList = ({
             <div className='orderItemQty' style={{flex: '0 0 10%', display: 'flex', justifyContent: 'flex-end'}}>
               {orderItems[key].qty}
             </div>
-            <div className='orderItemPrice' style={{flex: '0 0 10%', display: 'flex', justifyContent: 'flex-end'}}>
-              {format1(orderItems[key].price, "")}
-            </div>
-            <div className='orderItemAmount' style={{flex: '0 0 10%', display: 'flex', justifyContent: 'flex-end'}}>
-              {format1(orderItems[key].amount, "")}
-            </div>
+            { managePrices !== 'dontUse' &&
+              <div className='orderItemPrice' style={{flex: '0 0 10%', display: 'flex', justifyContent: 'flex-end'}}>
+                {format1(orderItems[key].price, "")}
+              </div>
+            }
+            { managePrices !== 'dontUse' &&
+              <div className='orderItemAmount' style={{flex: '0 0 10%', display: 'flex', justifyContent: 'flex-end'}}>
+                {format1(orderItems[key].amount, "")}
+              </div>
+            }
           </div>
         );
       })
@@ -189,14 +203,21 @@ const OrdersList = ({
       fill: 'white',
       height: '20px',
       width: '20px'
-    }
+    };
+    const iconPrintStyle = {
+      cursor: 'pointer',
+      marginRight: '6px',
+      fill: 'white',
+      height: '20px',
+      width: '20px'
+    };
     const iconDeleteStyle = {
       cursor: 'pointer',
       marginLeft: '6px',
       fill: 'white',
       height: '20px',
       width: '20px'
-    }
+    };
 
     const headerCurrent = headers[key];
     const { nr, date, amount, ref, comment, status } = headerCurrent;
@@ -229,25 +250,35 @@ const OrdersList = ({
               }
             }
           >
-            {status === 'draft' &&
-            <IconRestore
-              style={iconRestoreStyle}
+            <IconPrint
+              style={iconPrintStyle}
               onClick={
                 () => {
-                  if (!cartIsEmpty) {
-                    alert('Восстановление заказа возможно только при пустой корзине');
-                  } else {
-                    const yes = confirm('Заказ будет помещен в корзину. Продолжить?');
-                    if (yes) {
-                      restoreOrder(key);
-                    }
-                  }
+                  setOrderCurrentId(key);
+                  setModal({ content: 'order-print', fullScreen: true, style: {background: '#fff', padding: '0px'} });
                 }
               }
             />
-          }
+
+            {status === 'draft' &&
+              <IconRestore
+                style={iconRestoreStyle}
+                onClick={
+                  () => {
+                    if (!cartIsEmpty) {
+                      alert('Восстановление заказа возможно только при пустой корзине');
+                    } else {
+                      const yes = confirm('Заказ будет помещен в корзину. Продолжить?');
+                      if (yes) {
+                        restoreOrder(key);
+                      }
+                    }
+                  }
+                }
+              />
+            }
             {`${statusRu}`}
-            {allowDeleteOrders &&
+            {allowDeleteOrders && status !== 'blocked' &&
               <IconDelete
                 style={iconDeleteStyle}
                 onClick={
@@ -306,21 +337,23 @@ const OrdersList = ({
             {rowsQty}
           </div>
         </div>
-        <div
-          style={columnsStyle.container.amount}
-          onClick={
-            e => {
-              e.stopPropagation();
+        { managePrices !== 'dontUse' &&
+          <div
+            style={columnsStyle.container.amount}
+            onClick={
+              e => {
+                e.stopPropagation();
+              }
             }
-          }
-        >
-          <div>
-            {`Сумма:`}
+          >
+            <div>
+              {`Сумма:`}
+            </div>
+            <div style={columnsStyle.field.amount}>
+              {`${format1(amount, "руб.")}`}
+            </div>
           </div>
-          <div style={columnsStyle.field.amount}>
-            {`${format1(amount, "руб.")}`}
-          </div>
-        </div>
+        }
         <div
           style={columnsStyle.container.comment}
           onClick={
@@ -339,13 +372,13 @@ const OrdersList = ({
             {
               ordersState[key]
               ?
-              <IconUp
-                onClick={
-                  () => {
-                    toggleOrder(key);
+                <IconUp
+                  onClick={
+                    () => {
+                      toggleOrder(key);
+                    }
                   }
-                }
-              />
+                />
               :
               <IconDown
                 onClick={
@@ -355,14 +388,6 @@ const OrdersList = ({
                 }
               />
             }
-            {/* <IconOpenOrder
-              onClick={
-                e => {
-                  e.stopPropagation();
-                  setModal({ content: 'order', fullScreen: true });
-                }
-              }
-            /> */}
           </div>
         </div>
 
@@ -437,8 +462,9 @@ export default connect(
       allowDeleteOrders: state.options.allowDeleteOrders,
       cartIsEmpty: state.cart.totalItems === 0,
       ordersRowsSeparator: state.options.ordersRowsSeparator,
-      listCollapsedAll: state.orders.listCollapsedAll
+      listCollapsedAll: state.orders.listCollapsedAll,
+      managePrices: state.options.managePrices
     }
   },
-  { deleteOrder, restoreOrder, setModal }
+  { deleteOrder, restoreOrder, setOrderCurrentId, setModal }
 )(OrdersListContainer);
