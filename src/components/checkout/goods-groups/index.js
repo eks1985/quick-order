@@ -131,8 +131,13 @@ const GoodsGroups =  ({
               style={{height: '32px', width: '32px', padding: '2px'}}
               onClick={
                 () => {
-                  searchRef.input.value = '';
-                  setTextFilterGoodsGroups('');
+                  if (searchRef.input.value !== '') {
+                    searchRef.input.value = '';
+                    setTextFilterGoodsGroups('');
+                  } else {
+                    resetFiltersGoodsGroupsCart();
+                    filterCartItems();
+                  }
                 }
               }
             >
@@ -174,13 +179,12 @@ class GoodsGroupsContainer extends Component {
       setTimeout( () => {
         const dateNew = new Date();
         const dateOld = this.state.clickTime;
-        console.log(dateNew - dateOld);
         const clickType = dateNew - dateOld > 499 ? 'single' : 'double';
-        console.log(clickType);
-
+        if (clickType === 'double') {
+          this.props.resetFiltersGoodsGroupsCart();
+        }
         this.props.addFilterGoodsGroupsCart(key);
         this.props.filterCartItems();
-
         this.setState({ clickTime: dateNew });
       }, 500);
     }

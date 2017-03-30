@@ -250,15 +250,17 @@ const OrdersList = ({
               }
             }
           >
-            <IconPrint
-              style={iconPrintStyle}
-              onClick={
-                () => {
-                  setOrderCurrentId(key);
-                  setModal({ content: 'order-print', fullScreen: true, style: {background: '#fff', padding: '0px'} });
+            {status !== 'blocked' &&
+              <IconPrint
+                style={iconPrintStyle}
+                onClick={
+                  () => {
+                    setOrderCurrentId(key);
+                    setModal({ content: 'order-print', fullScreen: true, style: {background: '#fff', padding: '0px'} });
+                  }
                 }
-              }
-            />
+              />
+            }
 
             {status === 'draft' &&
               <IconRestore

@@ -137,8 +137,13 @@ const GoodsGroups =  ({
               style={{height: '32px', width: '32px', padding: '2px'}}
               onClick={
                 () => {
-                  searchRef.input.value = '';
-                  filterGoodsGroupsByText('');
+                  if (searchRef.input.value.trim() === '') {
+                    resetFilters();
+                    search();
+                  } else {
+                      searchRef.input.value = '';
+                    filterGoodsGroupsByText('');
+                  }
                 }
               }
             >
@@ -192,10 +197,10 @@ class GoodsGroupsContainer extends Component {
       setTimeout( () => {
         const dateNew = new Date();
         const dateOld = this.state.clickTime;
-        console.log(dateNew - dateOld);
         const clickType = dateNew - dateOld > 499 ? 'single' : 'double';
-        console.log(clickType);
-
+        if (clickType === 'double') {
+          this.props.resetFilters();
+        }
         this.props.addFilter(key);
         this.props.search();
 

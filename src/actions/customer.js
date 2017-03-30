@@ -10,6 +10,7 @@ export const setCustomer = (guid, description, address, phone, email, inn, price
       inn,
       priceType
     });
+    document.title = 'Quick order - ' + description;
   };
 };
 
