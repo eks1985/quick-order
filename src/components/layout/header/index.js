@@ -10,7 +10,7 @@ export default () => {
     background: '#eee'
   };
   return (
-    <div className='header' style={style}>
+    <div className='header' style={style} id='header'>
       <Nav />
       <div>
       </div>

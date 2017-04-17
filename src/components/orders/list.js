@@ -11,6 +11,7 @@ import IconUp from 'material-ui/svg-icons/hardware/keyboard-arrow-up';
 import IconPrint from 'material-ui/svg-icons/action/print';
 import { setModal } from './../../lib/modal/actions/modal';
 import { setOrderCurrentId } from './../../actions/orders';
+import { setCurrentContent } from './../../actions/current-content';
 
 const OrdersList = ({
   orders,
@@ -26,7 +27,8 @@ const OrdersList = ({
   restoreOrder,
   toggleOrder,
   setModal,
-  setOrderCurrentId
+  setOrderCurrentId,
+  setCurrentContent
 }) => {
   const style = {
     display: 'flex',
@@ -256,7 +258,8 @@ const OrdersList = ({
                 onClick={
                   () => {
                     setOrderCurrentId(key);
-                    setModal({ content: 'order-print', fullScreen: true, style: {background: '#fff', padding: '0px'} });
+                    setCurrentContent('print-order');
+                    //setModal({ content: 'order-print', fullScreen: true, style: {background: '#fff', padding: '0px'} });
                   }
                 }
               />
@@ -468,5 +471,5 @@ export default connect(
       managePrices: state.options.managePrices
     }
   },
-  { deleteOrder, restoreOrder, setOrderCurrentId, setModal }
+  { deleteOrder, restoreOrder, setOrderCurrentId, setModal, setCurrentContent }
 )(OrdersListContainer);

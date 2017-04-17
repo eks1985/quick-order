@@ -9,7 +9,7 @@ export default () => {
     // border: '1px solid gray'
   };
   return (
-    <Paper className='footer' style={style}>
+    <Paper className='footer' style={style} id='footer'>
         <div
           style={{cursor: 'pointer'}}
           onClick={

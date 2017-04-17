@@ -35,7 +35,6 @@ const Pagination = ({
           () => {
             setFocused(0);
             goToGoodsPage(1);
-            // document.getElementById(0).focus();
           }
         }
       >
@@ -60,7 +59,7 @@ const Pagination = ({
         tabIndex="-1"
         id='page'
         value={pageNumber}
-        style={{width: '26px', fontSize: '14px'}}
+        style={{width: '26px', fontSize: '14px', cursor: 'pointer'}}
         inputStyle={{ textAlign: 'center'}}
         onClick={
           (e) => {
@@ -77,7 +76,6 @@ const Pagination = ({
             const page = parseInt(e.target.value, 10) ? parseInt(e.target.value, 10) : 1;
             setFocused(0);
             goToGoodsPage(page);
-            // document.getElementById(0).focus();
           }
         }
       ></TextField>
@@ -104,7 +102,6 @@ const Pagination = ({
           () => {
             setFocused(0);
             goToGoodsPage(qtyPages);
-            // document.getElementById(0).focus();
           }
         }
       >

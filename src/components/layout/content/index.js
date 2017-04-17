@@ -6,6 +6,7 @@ import Checkout from './../../checkout/index';
 import Options from './../../options';
 import QuickList from './../../quick-list';
 import Management from './../../management';
+import PrintOrder from './../../orders/order-print';
 const Content = ({
   currentContent
 }) => {
@@ -23,6 +24,7 @@ const Content = ({
       {currentContent === 'settings' && <Options />}
       {currentContent === 'quick-list' && <QuickList />}
       {currentContent === 'management' && <Management />}
+      {currentContent === 'print-order' && <PrintOrder />}
     </div>
   );
 };
