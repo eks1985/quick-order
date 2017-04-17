@@ -50,10 +50,10 @@ const PageNumberNavigation = props => {
         targetOrigin={{horizontal: 'left', vertical: 'top'}}
         onRequestClose={handleRequestClose}
         animation={PopoverAnimationVertical}
-        style={{marginLeft: '-60px'}}
+        // style={{marginLeft: '-60px'}}
       >
         <Menu
-          style={{width: '200px'}}
+          // style={{width: '200px'}}
           onItemTouchTap={
             (e, target, ind) => {
               handleRequestClose();
