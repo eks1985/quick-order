@@ -11,7 +11,8 @@ import PricesValidation from './options/validations/prices';
 import PageNumberNavigation from './page-number-navigation';
 import CartRowQtyEdit from './checkout/cart-row-qty-edit';
 import Order from './orders/order';
-import OrderPrint from './orders/order-print';
+// import OrderPrint from './orders/order-print';
+import PagesList from './goods/catalog/pages-list';
 
 const ModalContent = ({
   modal
@@ -29,7 +30,8 @@ const ModalContent = ({
       {modal.content === 'page-number-navigation' && <PageNumberNavigation />}
       {modal.content === 'cart-row-qty-edit' && <CartRowQtyEdit />}
       {modal.content === 'order' && <Order />}
-      {modal.content === 'order-print' && <OrderPrint />}
+      {/* {modal.content === 'order-print' && <OrderPrint />} */}
+      {modal.content === 'catalog-pages-list' && <PagesList />}
     </div>
   );
 };

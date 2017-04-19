@@ -5,23 +5,11 @@ import RaisedButton from 'material-ui/FlatButton';
 import { setModal } from './../lib/modal/actions/modal';
 import { goToGoodsPage } from './../actions/goods-navigation';
 
-import Popover, {PopoverAnimationVertical} from 'material-ui/Popover';
-import Menu from 'material-ui/Menu';
-import MenuItem from 'material-ui/MenuItem';
-
 import IconButton from 'material-ui/IconButton';
 import IconSelectPage from 'material-ui/svg-icons/navigation/more-horiz';
 
-const generatePagesListJsx = qtyPages => {
-  const res = [];
-  for (let i = 1; i <= qtyPages; i++) {
-    res.push(<MenuItem key={i} primaryText={i} />)
-  };
-  return res;
-}
-
 const PageNumberNavigation = props => {
-  const { dispatch, pageNumber, open, anchorEl, handleRequestClose, handleTouchTap, qtyPages } = props;
+  const { dispatch, pageNumber, handleTouchTap} = props;
   let input;
   return (
     <div style={{display: 'flex', alignItems: 'center'}}>
@@ -42,29 +30,6 @@ const PageNumberNavigation = props => {
       >
         <IconSelectPage />
       </IconButton>
-
-      <Popover
-        open={open}
-        anchorEl={anchorEl}
-        anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-        targetOrigin={{horizontal: 'left', vertical: 'top'}}
-        onRequestClose={handleRequestClose}
-        animation={PopoverAnimationVertical}
-        // style={{marginLeft: '-60px'}}
-      >
-        <Menu
-          // style={{width: '200px'}}
-          onItemTouchTap={
-            (e, target, ind) => {
-              handleRequestClose();
-              dispatch(setModal());
-              dispatch(goToGoodsPage(parseInt(ind, 10) + 1));
-            }
-          }
-        >
-          {generatePagesListJsx(qtyPages)}
-        </Menu>
-      </Popover>
 
       <RaisedButton
         style={{marginLeft: '5px'}}
@@ -93,6 +58,7 @@ class PageNumberNavigationContainer extends Component {
 
   handleTouchTap = e => {
     event.preventDefault();
+    this.props.dispatch(setModal({ content: 'catalog-pages-list', fullScreen: true, style: {background: '#eee'} }));
     this.setState({
       open: true,
       anchorEl: e.currentTarget

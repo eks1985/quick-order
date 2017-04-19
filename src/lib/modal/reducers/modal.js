@@ -2,7 +2,7 @@ const style = {
   position: 'absolute',
   left: 0,
   top: 0,
-  background: '#ddd',
+  background: '#eee',
   border: '1px solid #bbb',
   padding: '10px',
   zIndex: 1000,

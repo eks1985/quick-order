@@ -27,7 +27,7 @@ let Modal = ({
   }
 
   return (
-    <Paper style={style} zDepth={2}>
+    <Paper style={style} zDepth={2} transitionEnabled={false}>
       {modal.showClose &&
         <div style={{padding: '10px'}}>
           <RaisedButton
